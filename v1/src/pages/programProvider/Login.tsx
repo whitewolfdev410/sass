@@ -1,15 +1,13 @@
-import { Paper } from "@mui/material";
-import { Helmet } from "react-helmet";
-import "../../styles/auth.css";
+import { Typography } from "@mui/material";
+import { AuthPageLayout } from "../../components";
 
 const Login = () => {
   return (
-    <>
-      <Helmet>
-        <title>Signin</title>
-      </Helmet>
-      <section className="auth-wrapper"></section>
-    </>
+    <AuthPageLayout title="Signin">
+      <Typography variant="h1" component="h1">
+        Login in to <br /> Manage Programs
+      </Typography>
+    </AuthPageLayout>
   );
 };
 
