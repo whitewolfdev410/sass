@@ -1,14 +1,15 @@
+import { Paper } from "@mui/material";
 import { Helmet } from "react-helmet";
+import "../../styles/auth.css";
 
 const Login = () => {
   return (
-    <section className="auth-wrapper">
+    <>
       <Helmet>
         <title>Signin</title>
       </Helmet>
-
-      <p>Login</p>
-    </section>
+      <section className="auth-wrapper"></section>
+    </>
   );
 };
 
