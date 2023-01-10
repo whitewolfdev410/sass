@@ -1,10 +1,12 @@
 import "../../styles/auth.css";
 import Helmet from "react-helmet";
-import { Box, Paper } from "@mui/material";
+import Logo from "../../assets/logos/logo.png";
+import { Box, Typography } from "@mui/material";
 
 type Props = {
   children: React.ReactNode;
   title: string;
+  logo?: boolean;
 };
 
 const AuthPageLayout = (props: Props) => {
@@ -14,7 +16,13 @@ const AuthPageLayout = (props: Props) => {
         <title>{props.title}</title>
       </Helmet>
       <section className="auth-wrapper">
-        <Paper sx={{ p: "49px 74px 79px 51px" }}>{props.children}</Paper>
+        {props.logo ? <img src={Logo} /> : <div></div>}
+        <Box className="auth-paper" sx={{ mt: 2 }}>
+          {props.children}
+        </Box>
+        <Typography fontSize="9px" sx={{ mt: 2 }}>
+          Copyright(C) 2023, Recruitable and/or its affiliates.
+        </Typography>
       </section>
     </>
   );

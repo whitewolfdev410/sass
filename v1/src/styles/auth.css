@@ -7,8 +7,31 @@ body {
   background-image: url("../assets/bg/auth-bg.svg");
   background-size: cover;
   background-repeat: no-repeat;
-  min-height: 100vh;
+  min-height: calc(100vh - 70px);
   width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  place-items: center;
+  align-content: center;
+  padding: 35px 12px;
+}
+.auth-paper {
+  width: 558px;
+  max-width: 90%;
+  padding: 49px 74px 79px 51px;
+  background-color: white;
+  box-shadow: var(--shadow-1);
+  box-sizing: border-box;
   display: grid;
-  place-content: center;
+  place-self: center;
+}
+.auth-wrapper label {
+  font-size: 15px;
+  font-weight: 700;
+  color: black;
+}
+
+.MuiInput-root.MuiInputBase-root::before {
+  border-color: var(--light-grey);
 }

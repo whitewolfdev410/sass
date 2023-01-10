@@ -48,6 +48,7 @@ const theme = createTheme({
     button: {
       fontSize: 16,
       fontWeight: 600,
+      textTransform: "none",
     },
     caption: {
       fontSize: 14,

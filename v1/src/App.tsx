@@ -3,6 +3,8 @@ import { Route, Routes } from "react-router-dom";
 import ProgramProvider from "./pages/programProvider";
 import NotFound from "./pages/NotFound";
 
+import "./styles/root.css";
+
 function App() {
   return (
     <Routes>
