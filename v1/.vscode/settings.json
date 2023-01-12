@@ -1,0 +1,9 @@
+{
+    "prettier.useTabs": true,
+    "prettier.bracketSameLine": true,
+    "prettier.proseWrap": "preserve",
+    "prettier.documentSelectors": [
+        "**/*.{ts,js}",
+        "**/*.{tsx,jsx}"
+    ]
+}

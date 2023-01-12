@@ -1,6 +1,11 @@
 import { Typography } from "@mui/material";
 import { Helmet } from "react-helmet";
 
+/**
+ * 404 ( not found ) component
+ * @Todo add param for custom content
+ */
+
 const NotFound = () => (
   <>
     <Helmet>

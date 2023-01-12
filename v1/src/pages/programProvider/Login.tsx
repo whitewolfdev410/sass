@@ -2,53 +2,57 @@ import { FormControl, FormControlLabel, Checkbox, Input, Typography, Stack, Butt
 import { AuthPageLayout } from "../../components";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
+/**
+ * Login component for program providers
+ */
+
 const Login = () => {
-  return (
-    <AuthPageLayout title="Signin" logo>
-      <Typography variant="h1" component="h1" sx={{ mb: 3 }}>
-        Login in to <br /> Manage Programs
-      </Typography>
+	return (
+		<AuthPageLayout title="Signin" logo>
+			<Typography variant="h1" component="h1" sx={{ mb: 3 }}>
+				Login in to <br /> Manage Programs
+			</Typography>
 
-      <form action="">
-        <FormControl variant="standard" fullWidth sx={{ my: 3 }}>
-          <label>First Name*</label>
-          <Input></Input>
-        </FormControl>
+			<form action="">
+				<FormControl variant="standard" fullWidth sx={{ my: 3 }}>
+					<label>First Name*</label>
+					<Input></Input>
+				</FormControl>
 
-        <FormControl variant="standard" fullWidth sx={{ mt: 3, mb: 1 }}>
-          <label>Password*</label>
-          <Input></Input>
-        </FormControl>
+				<FormControl variant="standard" fullWidth sx={{ mt: 3, mb: 1 }}>
+					<label>Password*</label>
+					<Input></Input>
+				</FormControl>
 
-        <Stack direction="row" justifyContent="space-between" alignItems="center">
-          <FormControlLabel
-            label={
-              <Typography fontSize="16px" fontFamily="Inter">
-                Remember me
-              </Typography>
-            }
-            control={<Checkbox />}
-          />
+				<Stack direction="row" justifyContent="space-between" alignItems="center">
+					<FormControlLabel
+						label={
+							<Typography fontSize="16px" fontFamily="Inter">
+								Remember me
+							</Typography>
+						}
+						control={<Checkbox />}
+					/>
 
-          <Link
-            fontSize="14px"
-            fontFamily="Inter"
-            color="primary.main"
-            href=""
-            sx={{
-              textDecoration: "none",
-            }}>
-            Forgot Password
-          </Link>
-        </Stack>
+					<Link
+						fontSize={14}
+						fontFamily="Inter"
+						color="primary.main"
+						href=""
+						sx={{
+							textDecoration: "none",
+						}}>
+						Forgot Password
+					</Link>
+				</Stack>
 
-        <Button variant="contained" size="large" fullWidth sx={{ mt: 3, py: 3 }}>
-          Log in
-          <ArrowForwardIosIcon sx={{ ml: 1 }} />
-        </Button>
-      </form>
-    </AuthPageLayout>
-  );
+				<Button variant="contained" size="large" fullWidth sx={{ mt: 3, py: 3 }}>
+					Log in
+					<ArrowForwardIosIcon sx={{ ml: 1 }} />
+				</Button>
+			</form>
+		</AuthPageLayout>
+	);
 };
 
 export default Login;

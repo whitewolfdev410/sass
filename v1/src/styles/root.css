@@ -4,11 +4,20 @@
   --secondary: #22215b;
   --error: #a80000;
   --success: #087b2f;
-  --light-grey: #c4c4c4;
+  --info: #1d4ed8;
   --link-blue: #039ccc;
+  --light-grey: #c4c4c4;
+  --grey: #a9a5a5;
+  --silver: #a5a5a5;
 
   /* Box Shadows */
   --shadow-1: 0px 0px 28px 0px #0000001a;
+  --shadow-2: 0px 4px 23px 0px #0000000d;
+  --shadow-3: 0px 1px 2px 0px #00000052;
+}
+
+* {
+  box-sizing: border-box;
 }
 body {
   font-family: "Poppins";
@@ -45,4 +54,7 @@ a {
   color: var(--link-blue);
 }
 
-/* MUI style overrides */
+/* Layout classes*/
+.content-wrapper {
+  max-width: 1171px;
+}

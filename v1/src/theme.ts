@@ -8,11 +8,17 @@ const theme = createTheme({
     secondary: {
       main: "#22215B",
     },
+    info: {
+      main: "#1d4ed8",
+    },
     error: {
       main: "#A80000",
     },
     success: {
       main: "#087B2F",
+    },
+    darkgrey: {
+      main: "#A9A5A5",
     },
   },
   typography: {
@@ -45,6 +51,7 @@ const theme = createTheme({
     body2: {
       fontSize: 16,
     },
+
     button: {
       fontSize: 16,
       fontWeight: 600,

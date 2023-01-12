@@ -10,6 +10,15 @@ import App from "./App";
 const container = document.getElementById("root")!;
 const root = createRoot(container);
 
+declare module "@mui/material/styles" {
+  interface Palette {
+    darkgrey: Palette["primary"];
+  }
+  interface PaletteOptions {
+    darkgrey: PaletteOptions["primary"];
+  }
+}
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>
