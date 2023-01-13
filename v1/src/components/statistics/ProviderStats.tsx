@@ -1,7 +1,18 @@
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { Paper, Typography, Stack, Button, ButtonGroup, Menu, MenuItem, Box, Avatar } from "@mui/material";
+import {
+	Paper,
+	Typography,
+	Stack,
+	Button,
+	ButtonGroup,
+	Menu,
+	MenuItem,
+	Box,
+	Avatar,
+	useMediaQuery,
+} from "@mui/material";
 import { maxWidth } from "@mui/system";
 import { useRef, useState } from "react";
 
@@ -11,6 +22,8 @@ import { useRef, useState } from "react";
  * Provider Stats shows all starts for each program
  */
 const ProviderStats = ({ data }: { data: { [index: string]: any } }) => {
+	const shortScreen = useMediaQuery("(max-height: 800px)");
+
 	const [showUnPublish, setShowUnpublish] = useState(false);
 	const anchorEl = useRef<HTMLAnchorElement | null>(null);
 
@@ -20,12 +33,18 @@ const ProviderStats = ({ data }: { data: { [index: string]: any } }) => {
 			sx={{
 				boxShadow: "var(--shadow-3)",
 				p: { xs: "20px", lg: "20px 27px 15px 40px" },
+				border: "1px solid white",
+
+				":hover": {
+					border: "1px solid var(--primary)",
+					bgcolor: "var(--active-text-button)",
+				},
 			}}>
 			<Stack direction={{ lg: "row" }} justifyContent="space-between" alignItems="start">
 				{/* Title and Location */}
 				<Box
 					sx={{
-						marginBottom: 3,
+						marginBottom: shortScreen ? 2 : 3,
 						display: "grid",
 						gridTemplateColumns: "2fr 1fr",
 						gap: 1,
@@ -83,7 +102,7 @@ const ProviderStats = ({ data }: { data: { [index: string]: any } }) => {
 								}}
 								anchorEl={anchorEl.current}
 								sx={{ py: 1 }}>
-								<MenuItem sx={{ py: 0 }}>Unpublish </MenuItem>
+								<MenuItem sx={{ py: 0, fontSize: 12 }}>Unpublish </MenuItem>
 							</Menu>
 						</Button>
 					</ButtonGroup>
@@ -101,14 +120,14 @@ const ProviderStats = ({ data }: { data: { [index: string]: any } }) => {
 					"> button": {
 						borderColor: "var(--light-grey) !important",
 						color: "var(--grey)",
-						height: "78px",
+						height: "71px",
 						display: "grid",
 						gridTemplateRows: "2fr 1fr",
 					},
 
 					" .stat-info": {
-						fontSize: 30,
-						lineHeight: "30px",
+						fontSize: shortScreen ? 22.5 : 30,
+						lineHeight: shortScreen ? "23px" : "30px",
 					},
 					" .stat-title": {
 						fontSize: 12,
@@ -165,7 +184,9 @@ const ProviderStats = ({ data }: { data: { [index: string]: any } }) => {
 						minWidth: "fit-content",
 					}}>
 					<AddCircleOutlineIcon htmlColor="black" fontSize="small" />
-					<Typography fontSize={7}>Invite</Typography>
+					<Typography fontSize={7} color="black">
+						Invite
+					</Typography>
 				</Button>
 			</Stack>
 		</Paper>
