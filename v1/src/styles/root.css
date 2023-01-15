@@ -6,6 +6,7 @@
 	--success: #087b2f;
 	--info: #1d4ed8;
 	--link-blue: #039ccc;
+	--light-blue: #d0f7fa;
 	--light-grey: #c4c4c4;
 	--grey: #a9a5a5;
 	--dark-grey: #ede3f5;
@@ -70,19 +71,27 @@ a {
 	border: 1px dashed black !important;
 }
 
-.custom-form input,
-.custom-form select,
+.custom-form input:not(.MuiTextField-root input),
+.custom-form select:not(.MuiTextField-root input),
 .custom-form .MuiSelect-select,
-.custom-form textarea,
+.custom-form textarea:not(.MuiTextField-root input),
+.MuiTextField-root .MuiOutlinedInput-root,
 .text-editor-wrapper {
 	border: 1px solid black;
-	border-radius: 5px;
 	font-weight: 500;
 	font-size: 14px;
 	line-height: 159.5%;
-	padding: 16px 26px;
 	outline: none;
 }
+.custom-form input:not(.MuiTextField-root input),
+.custom-form select:not(.MuiTextField-root input),
+.custom-form .MuiSelect-select,
+.custom-form textarea:not(.MuiTextField-root input),
+.text-editor-wrapper {
+	border-radius: 5px;
+	padding: 16px 26px;
+}
+
 .custom-form input:focus,
 .custom-form select:focus,
 .custom-form textarea:focus,
@@ -90,6 +99,11 @@ a {
 	border-color: var(--primary);
 	border-width: 2px;
 }
+
+.MuiTextField-root .MuiOutlinedInput-root:focus-within {
+	border: none;
+}
+
 .custom-form .Mui-error input,
 .custom-form .Mui-error select,
 .custom-form .Mui-error textarea {

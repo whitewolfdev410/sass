@@ -74,6 +74,16 @@ const theme = createTheme({
 			fontWeight: 500,
 		},
 	},
+	components: {
+		MuiButton: {
+			variants: [
+				{
+					props: { variant: "text" },
+					style: { color: "black" },
+				},
+			],
+		},
+	},
 });
 
 export default theme;
