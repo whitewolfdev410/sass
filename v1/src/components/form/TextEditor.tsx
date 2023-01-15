@@ -8,6 +8,7 @@ import OrderedIcon from "../../assets/icons/ordered-list.svg";
 import UnorderedIcon from "../../assets/icons/unordered-list.svg";
 import InsertImageIcon from "../../assets/icons/insert-image.svg";
 import LinkIcon from "../../assets/icons/link.svg";
+import "../../styles/text-editor.css";
 
 type Props = {
 	placeholder?: string;
