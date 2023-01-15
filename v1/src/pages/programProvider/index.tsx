@@ -1,7 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 import Login from "./Login";
 import Signup from "./Signup";
-import AllProgrames from "./dashboard/AllProgrames";
+import { AllProgrammes, CreateProgram, ApplicationForm, Preview, Workflow } from "./dashboard";
+import { ProgramProviderLayout } from "../../components";
 
 /**
  * Base Program Provider component.
@@ -9,14 +10,20 @@ import AllProgrames from "./dashboard/AllProgrames";
  */
 
 const ProgramProvider = () => {
-  return (
-    <Routes>
-      <Route index element={<Login />} />
-      <Route path="/signin" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/dashboard" element={<AllProgrames />} />
-    </Routes>
-  );
+	return (
+		<Routes>
+			<Route index element={<Login />} />
+			<Route path="/signin" element={<Login />} />
+			<Route path="/signup" element={<Signup />} />
+			<Route path="/dashboard">
+				<Route index element={<AllProgrammes />} />
+				<Route element={<CreateProgram />} path="create-program" />
+				<Route element={<ApplicationForm />} path="application-form" />
+				<Route element={<Workflow />} path="workflow" />
+				<Route element={<Preview />} path="preview" />
+			</Route>
+		</Routes>
+	);
 };
 
 export default ProgramProvider;
