@@ -34,14 +34,7 @@ const Login = () => {
 						control={<Checkbox />}
 					/>
 
-					<Link
-						fontSize={14}
-						fontFamily="Inter"
-						color="primary.main"
-						href=""
-						sx={{
-							textDecoration: "none",
-						}}>
+					<Link fontSize={14} fontFamily="Inter" color="primary.main" href="">
 						Forgot Password
 					</Link>
 				</Stack>

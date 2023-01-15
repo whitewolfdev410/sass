@@ -15,7 +15,7 @@ const ApplicationForm = ({ nextLink, publishAction, children }: Props) => {
 			<Box>
 				<Stack className="content-wrapper" alignItems="end">
 					{nextLink ? (
-						<Link to={`/provider/dashboard/${nextLink}` || ""} style={{ textDecoration: "none" }}>
+						<Link to={`/provider/dashboard/${nextLink}` || ""}>
 							<Button variant="contained">
 								Save & continue <ArrowForwardIosIcon />
 							</Button>

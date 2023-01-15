@@ -75,7 +75,10 @@ const Signup = () => {
 				</Button>
 
 				<Typography fontSize={16} fontFamily="Inter" textAlign="center">
-					Already have an account? <a href="">Sign in</a>
+					Already have an account?{" "}
+					<a href="" style={{ textDecoration: "underline" }}>
+						Sign in
+					</a>
 				</Typography>
 			</form>
 		</AuthPageLayout>

@@ -57,6 +57,7 @@ h6 {
 
 a {
 	color: var(--link-blue);
+	text-decoration: none;
 }
 /************* Text Classes ************/
 .text-danger {

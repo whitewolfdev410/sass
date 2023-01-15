@@ -1,4 +1,5 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 import { SidebarLayout, ProviderStats } from "../../../components";
 
 /**
@@ -23,7 +24,9 @@ const AllProgrames = () => {
 							Your summary for today
 						</Typography>
 					</Box>
-					<Button variant="contained">Create a new program</Button>
+					<Link to="/provider/dashboard/create-program">
+						<Button variant="contained">Create a new program</Button>
+					</Link>
 				</Stack>
 
 				{/* Statistics */}
