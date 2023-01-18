@@ -1,3 +1,5 @@
+/* @import "~react-draft-wysiwyg/dist/react-draft-wysiwyg.css"; */
+
 :root {
 	/************* Brand colors ************/
 	--primary: #8528c8;
@@ -7,6 +9,7 @@
 	--info: #1d4ed8;
 	--link-blue: #039ccc;
 	--light-blue: #d0f7fa;
+	--dark-blue: #22215b;
 	--light-grey: #c4c4c4;
 	--grey: #a9a5a5;
 	--dark-grey: #ede3f5;
@@ -19,6 +22,7 @@
 	--shadow-2: 0px 4px 23px 0px #0000000d;
 	--shadow-3: 0px 1px 2px 0px #00000052;
 	--shadow-4: 3px 3px 14px 0px #bebebe4d;
+	--shadow-5: 0px 0px 6px 0px #00000033;
 }
 
 * {
@@ -85,17 +89,17 @@ a {
 	outline: none;
 }
 .custom-form input:not(.MuiTextField-root input),
-.custom-form select:not(.MuiTextField-root input),
+.custom-form select:not(.MuiTextField-root select),
 .custom-form .MuiSelect-select,
-.custom-form textarea:not(.MuiTextField-root input),
+.custom-form textarea:not(.MuiTextField-root textarea),
 .text-editor-wrapper {
 	border-radius: 5px;
 	padding: 16px 26px;
 }
 
-.custom-form input:focus,
-.custom-form select:focus,
-.custom-form textarea:focus,
+.custom-form input:not(.MuiTextField-root input):focus,
+.custom-form select:not(.MuiTextField-root select):focus,
+.custom-form textarea:not(.MuiTextField-root textarea):focus,
 .text-editor-wrapper:focus-within {
 	border-color: var(--primary);
 	border-width: 2px;

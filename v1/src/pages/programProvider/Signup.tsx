@@ -74,7 +74,7 @@ const Signup = () => {
 					<ArrowForwardIosIcon sx={{ ml: 1 }} />
 				</Button>
 
-				<Typography fontSize={16} fontFamily="Inter" textAlign="center">
+				<Typography fontFamily="Inter" textAlign="center">
 					Already have an account?{" "}
 					<a href="" style={{ textDecoration: "underline" }}>
 						Sign in

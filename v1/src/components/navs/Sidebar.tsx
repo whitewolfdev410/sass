@@ -1,7 +1,7 @@
 import { Avatar, Box, Button, Menu, Stack } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Logo } from ".././";
+import { Logo } from "..";
 import HomeIcon from "../../assets/icons/home-sidebar-icon.svg";
 import ListIcon from "../../assets/icons/list-sidebar-icon.svg";
 import { useRef, useState } from "react";

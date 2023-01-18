@@ -1,12 +1,14 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Stack, Typography, Button } from "@mui/material";
+import Edit from "../../assets/icons/pencil-outlined.svg";
 
 type Props = {
 	title?: string;
 	header?: React.ReactNode;
 	children?: React.ReactNode;
+	editIcon?: boolean;
 };
 
-const ApplicationFormCard = ({ title, header, children }: Props) => {
+const ApplicationFormCard = ({ title, header, children, editIcon }: Props) => {
 	return (
 		<Box
 			sx={{
@@ -25,9 +27,16 @@ const ApplicationFormCard = ({ title, header, children }: Props) => {
 					borderRadius: "20px 20px 0 0",
 				}}>
 				{title && (
-					<Typography fontSize={25} fontWeight={600} component="h5">
-						{title}
-					</Typography>
+					<Stack direction="row" justifyContent="space-between">
+						<Typography fontSize={25} fontWeight={600} component="h5">
+							{title}
+						</Typography>
+						{editIcon && (
+							<Button>
+								<img src={Edit} alt="" />
+							</Button>
+						)}
+					</Stack>
 				)}
 				{header}
 			</Box>

@@ -25,6 +25,7 @@ const ProgramProviderNav = () => {
 				"a:last-of-type": {
 					pr: 10,
 				},
+				// arrow
 				".active:not(:last-of-type)::after": {
 					content: "close-quote",
 					position: "absolute",
@@ -40,7 +41,7 @@ const ProgramProviderNav = () => {
 				"a:hover, .active": {
 					bgcolor: "var(--dark-grey)",
 				},
-
+				// divider
 				".MuiDivider-root": {
 					height: "3rem",
 					alignSelf: "center",

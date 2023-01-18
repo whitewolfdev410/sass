@@ -1,6 +1,7 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import { SidebarLayout, ProviderStats } from "../../../components";
+import { SidebarLayout } from "../../../components";
+import { ProviderStats } from "../../../components/ProgramProviderComponents";
 
 /**
  * Dashboard for program providers showing current programs and their statistics
