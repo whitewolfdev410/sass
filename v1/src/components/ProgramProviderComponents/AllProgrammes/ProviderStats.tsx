@@ -125,6 +125,10 @@ const ProviderStats = ({ data }: { data: { [index: string]: any } }) => {
 						gridTemplateRows: "2fr 1fr",
 					},
 
+					"> button:hover": {
+						backgroundColor: "transparent",
+					},
+
 					" .stat-info": {
 						fontSize: shortScreen ? 22.5 : 30,
 						lineHeight: shortScreen ? "23px" : "30px",

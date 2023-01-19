@@ -28,7 +28,7 @@ const ApplicationFormCard = ({ title, header, children, editIcon }: Props) => {
 				}}>
 				{title && (
 					<Stack direction="row" justifyContent="space-between">
-						<Typography fontSize={25} fontWeight={600} component="h5">
+						<Typography fontSize={20} fontWeight={600} component="h5">
 							{title}
 						</Typography>
 						{editIcon && (

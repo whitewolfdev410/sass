@@ -1,17 +1,31 @@
-import { Box, Divider, Stack, Typography } from "@mui/material";
+import { Box, Divider, Stack, Typography, Button } from "@mui/material";
 import { ApplicationFormCard, ProgramProviderLayout } from "../../../components";
-import { PersonalInformationForm, ProfileForm, QuestionsForm } from "../../../components/ProgramProviderComponents";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import {
+	PersonalInformationForm,
+	ProfileForm,
+	QuestionsForm,
+	SkillsChip,
+} from "../../../components/ProgramProviderComponents";
+import placeholder from "../../../assets/bg/placeholders/program-publish-placeholder.png";
+import Edit from "../../../assets/icons/pencil-outlined.svg";
 
 const Preview = () => {
 	return (
 		<ProgramProviderLayout>
-			<Stack sx={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 3 }} className="content-wrapper">
+			<Stack sx={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 3, my: 2 }} className="content-wrapper">
+				{/* Left Side */}
 				<Box maxWidth={"690px"}>
-					<Typography variant="h1" fontSize={40} sx={{ my: 3 }}>
-						London internship <br /> programme{" "}
-					</Typography>
+					<Stack direction="row" justifyContent="space-between" alignItems="center">
+						<Typography variant="h1" fontSize={{ xs: 30, xl: 40 }} sx={{ my: 3 }}>
+							London internship <br /> programme{" "}
+						</Typography>
+						<Button>
+							<img src={Edit} alt="" />
+						</Button>
+					</Stack>
 
-					<Typography fontSize={20} fontWeight={400} sx={{ my: 3 }}>
+					<Typography fontSize={{ xs: 17, xl: 20 }} fontWeight={400} sx={{ my: 3 }}>
 						As an intern, you will be working for one of our partner companies in London. Apart from gaining
 						international working experience, you will learn the British working culture, gain international work
 						experience, develop your communication and interper.
@@ -43,6 +57,12 @@ const Preview = () => {
 						Law, Investment Banking, Management Consulting, Marketing, IT and Journalism are some of the 25+ different
 						sectors we provide internships in.
 					</Typography>
+
+					<Stack gap={1} direction="row" mt={4}>
+						<SkillsChip label="UI" />
+						<SkillsChip label="Social Media" />
+						<SkillsChip label="Content Writing" />
+					</Stack>
 
 					<ApplicationFormCard title="Program benefits" editIcon>
 						<Typography>
@@ -83,12 +103,74 @@ const Preview = () => {
 						</Typography>
 					</ApplicationFormCard>
 
+					<Stack
+						direction="row"
+						justifyContent="space-between"
+						alignItems="center"
+						sx={{ mt: 10, mb: 3, maxWidth: "557px" }}>
+						<Typography variant="h1" fontSize={{ xs: 30, xl: 40 }}>
+							Application form preview
+						</Typography>
+						<Button>
+							<img src={Edit} alt="" />
+						</Button>
+					</Stack>
+
 					{/* Personal Info Card */}
 					<PersonalInformationForm />
 					{/* Profile Card */}
 					<ProfileForm />
 					{/* QuestionsForm */}
 					<QuestionsForm />
+				</Box>
+
+				{/* Right Side */}
+				<Box sx={{ boxShadow: " 0px 1px 20px -7px #00000052", alignSelf: "start", borderRadius: "20px" }}>
+					<img src={placeholder} alt="" style={{ maxHeight: "209px", maxWidth: "379.95px" }} />
+					<Box p="20px 30px">
+						<Typography variant="h2" sx={{ maxWidth: "230px" }}>
+							London internship programme
+						</Typography>
+
+						<Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 2, mt: 3, "*": { fontSize: 11 } }}>
+							{/* first column - location*/}
+							<Typography sx={{ display: "grid", gridTemplateColumns: "auto auto", gap: 1 }} fontSize={11}>
+								<LocationOnIcon htmlColor="black" fontSize="inherit" sx={{ mr: 1 }} />
+								Riyadh, Saudi Arabia
+							</Typography>
+
+							{/* second column */}
+							<Stack gap={2}>
+								<Typography>
+									Application open <br /> 13 Jan 2023
+								</Typography>
+								<Typography>
+									Programme type <br /> Internship
+								</Typography>
+								<Typography>
+									Programme start
+									<br />
+									13 Jan 2023
+								</Typography>
+							</Stack>
+
+							{/* third column */}
+							<Stack gap={2}>
+								<Typography>
+									Application close
+									<br />
+									01 March 2023
+								</Typography>
+								<Typography>
+									Duration
+									<br />6 weeks
+								</Typography>
+							</Stack>
+						</Box>
+						<Button variant="contained" size="large" sx={{ bgcolor: "var(--dark-blue)", my: 3 }} fullWidth>
+							Publish
+						</Button>
+					</Box>
 				</Box>
 			</Stack>
 		</ProgramProviderLayout>

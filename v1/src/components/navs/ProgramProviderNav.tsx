@@ -11,12 +11,12 @@ const ProgramProviderNav = () => {
 				maxWidth: "100%",
 				boxShadow: "var(--shadow-4)",
 				a: {
-					height: { xs: "76px", xl: "129px" },
+					height: "100px",
 					display: "grid",
 					placeContent: "center",
 					flexGrow: 1,
 					position: "relative",
-					fontSize: 20,
+					fontSize: 18,
 					fontFamily: "Inter",
 					fontWeight: 500,
 					color: "black",
@@ -41,6 +41,10 @@ const ProgramProviderNav = () => {
 				"a:hover, .active": {
 					bgcolor: "var(--dark-grey)",
 				},
+				"a:hover + .MuiDivider-root, a:active + .MuiDivider-root": {
+					display: "none",
+				},
+
 				// divider
 				".MuiDivider-root": {
 					height: "3rem",

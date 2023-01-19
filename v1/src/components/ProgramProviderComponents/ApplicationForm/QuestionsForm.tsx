@@ -38,7 +38,7 @@ const QuestionsForm = () => {
 			{questionList.map((q, index) => (
 				<>
 					<Accordion sx={{ border: "none", boxShadow: "none" }}>
-						<AccordionSummary>
+						<AccordionSummary sx={{ p: 2 }}>
 							<SavedQuestion type={q.type} question={q.question} editable />
 						</AccordionSummary>
 						<AccordionDetails>

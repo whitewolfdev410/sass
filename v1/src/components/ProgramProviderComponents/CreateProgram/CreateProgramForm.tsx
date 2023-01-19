@@ -1,8 +1,12 @@
 import { TextEditor } from "../../../components";
 import CoverImage from "./CoverImage";
-import { FormControl, InputBase, Box } from "@mui/material";
+import { FormControl, InputBase, Box, Stack } from "@mui/material";
+import { useState } from "react";
+import { SkillsChip } from "../../ProgramProviderComponents";
 
 const CreateProgramForm = () => {
+	const [skills, setSkills] = useState<string[]>(["Social Media ", "UI", "UX", "Content Writing"]);
+
 	return (
 		<Box
 			sx={{
@@ -50,6 +54,11 @@ const CreateProgramForm = () => {
 					<label htmlFor="">Key skills required for this program</label>
 					<InputBase placeholder="Search the skills" />
 				</FormControl>
+				<Stack gap={1} direction="row">
+					{skills.map((skill) => (
+						<SkillsChip label={skill} />
+					))}
+				</Stack>
 
 				{/* Program benefits */}
 				<FormControl sx={{ my: 2 }} fullWidth>

@@ -19,7 +19,7 @@ const StageType = ({ active, arrow, icon, name, desc, ref, onClick }: Props) => 
 			sx={{
 				border: "1px solid #A0A0A0",
 				borderRadius: "6px",
-				p: "30px 35px",
+				p: "18px 23px",
 				position: "relative",
 				width: "557px",
 				maxWidth: "90vw",
@@ -43,14 +43,14 @@ const StageType = ({ active, arrow, icon, name, desc, ref, onClick }: Props) => 
 					border: "2px solid var(--primary)",
 				},
 			}}>
-			<Stack direction="row" gap={2}>
+			<Stack direction="row" gap={1.5} alignItems="center">
 				{icon}
-				<Typography fontSize={18} fontWeight={600}>
+				<Typography fontSize={{ sx: 16, xl: 18 }} fontWeight={600}>
 					{name}
 				</Typography>
 			</Stack>
 
-			<Typography fontSize={14} sx={{ color: "var(--spanish-grey)", mt: 1 }}>
+			<Typography fontSize={{ xs: 13, xl: 14 }} sx={{ color: "var(--spanish-grey)", mt: 0.5 }}>
 				{desc}
 			</Typography>
 		</Box>

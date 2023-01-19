@@ -94,7 +94,7 @@ a {
 .custom-form textarea:not(.MuiTextField-root textarea),
 .text-editor-wrapper {
 	border-radius: 5px;
-	padding: 16px 26px;
+	padding: 12px 26px;
 }
 
 .custom-form input:not(.MuiTextField-root input):focus,
@@ -116,7 +116,7 @@ a {
 }
 
 label {
-	font-size: 20px;
+	font-size: 16px;
 	font-weight: 700;
 	margin-bottom: 8px;
 }

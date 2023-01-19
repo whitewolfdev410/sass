@@ -1,4 +1,4 @@
-import { Box, Select, FormControl, TextField, MenuItem } from "@mui/material";
+import { Box, Select, FormControl, TextField, MenuItem, Radio, Divider, FormControlLabel, Stack } from "@mui/material";
 
 const AdditionalInformationForm = () => {
 	return (
@@ -65,11 +65,30 @@ const AdditionalInformationForm = () => {
 					</FormControl>
 
 					{/* Program location * */}
-					<FormControl sx={{ my: 2 }}>
+					<FormControl sx={{ my: 2, maxWidth: "500px" }}>
 						<label>
 							Program location <span className="text-danger">*</span>
 						</label>
-						<TextField placeholder="London, UK" />
+						<TextField
+							placeholder="London, UK"
+							sx={{
+								".MuiInputBase-input": {
+									maxWidth: "300px",
+								},
+							}}
+							InputProps={{
+								endAdornment: (
+									<Stack direction="row" flexGrow={1} alignItems="center">
+										<Divider orientation="vertical" flexItem sx={{ mr: 2, bgcolor: "black", my: 0.5 }} />
+										<FormControlLabel
+											control={<Radio color="primary" />}
+											label="Fully Remote"
+											sx={{ fontSize: 14, flexGrow: 1 }}
+										/>
+									</Stack>
+								),
+							}}
+						/>
 					</FormControl>
 
 					{/* Min qualifications  */}

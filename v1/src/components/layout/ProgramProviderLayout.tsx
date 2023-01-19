@@ -12,17 +12,17 @@ type Props = {
 const ApplicationForm = ({ nextLink, publishAction, children }: Props) => {
 	return (
 		<SidebarLayout>
-			<Box>
-				<Stack className="content-wrapper" alignItems="end">
+			<Box sx={{}}>
+				<Stack className="content-wrapper" alignItems="end" minHeight="50px">
 					{nextLink ? (
 						<Link to={`/provider/dashboard/${nextLink}` || ""}>
-							<Button variant="contained">
+							<Button variant="contained" size="large">
 								Save & continue <ArrowForwardIosIcon />
 							</Button>
 						</Link>
 					) : (
-						<Button variant="contained" onClick={publishAction}>
-							Publish
+						<Button variant="contained" onClick={publishAction} size="large" sx={{ minWidth: "200px" }}>
+							Publish <ArrowForwardIosIcon />
 						</Button>
 					)}
 				</Stack>

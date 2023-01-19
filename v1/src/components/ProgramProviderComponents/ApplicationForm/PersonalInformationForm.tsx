@@ -55,7 +55,7 @@ const PersonalInformationForm = () => {
 
 			<InputGroupInternal label="Gender" input={<TextField placeholder="Type here" select />} />
 
-			<Typography fontSize={14} sx={{ color: "var(--spanish-grey)" }}>
+			<Typography fontSize={12} sx={{ color: "var(--spanish-grey)" }}>
 				We ask the gender information to ensure that we provide equal opportunity for everyone.{" "}
 			</Typography>
 		</ApplicationFormCard>

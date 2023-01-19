@@ -49,7 +49,7 @@ const theme = createTheme({
 			fontSize: 14,
 		},
 		body1: {
-			fontSize: 20,
+			fontSize: 16,
 		},
 		h5: {
 			fontSize: 12,
@@ -80,6 +80,19 @@ const theme = createTheme({
 				{
 					props: { variant: "text" },
 					style: { color: "black" },
+				},
+				{
+					props: { size: "large" },
+					style: {
+						padding: "16px 46px",
+						minWidth: "155px",
+					},
+				},
+				{
+					props: { size: "medium" },
+					style: {
+						padding: "7px 23px",
+					},
 				},
 			],
 		},

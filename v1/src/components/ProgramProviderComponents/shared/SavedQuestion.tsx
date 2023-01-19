@@ -10,12 +10,14 @@ type Props = {
 
 const SavedQuestion = ({ type, question, editable }: Props) => {
 	return (
-		<Box sx={{ my: 2 }}>
+		<Box sx={{ my: 1 }}>
 			<Typography fontSize={14} fontWeight={500} sx={{ color: "var(--spanish-grey)" }}>
 				{type}
 			</Typography>
 			<Stack direction="row" justifyContent="space-between">
-				<Typography variant="h2">{question}</Typography>
+				<Typography variant="h3" sx={{ flexGrow: 1 }}>
+					{question}
+				</Typography>
 				{editable ? (
 					<Button>
 						<img src={Edit} alt="" />

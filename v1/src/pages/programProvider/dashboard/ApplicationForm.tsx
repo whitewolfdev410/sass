@@ -7,17 +7,17 @@ const ApplicationForm = () => {
 	return (
 		<ProgramProviderLayout nextLink="workflow">
 			<Box className="content-wrapper">
-				<Stack direction="row" justifyContent="end" marginY={3}>
+				<Stack direction="row" justifyContent="end" marginY={1}>
 					<Box>
-						<Button sx={{ fontSize: 18, fontWeight: 600 }}>
+						<Button sx={{ fontSize: 16, fontWeight: 600 }}>
 							<RemoveRedEyeIcon sx={{ mr: 1 }} /> Preview
 						</Button>
-						<Button sx={{ fontSize: 18, fontWeight: 600 }}>Save draft</Button>
+						<Button sx={{ fontSize: 16, fontWeight: 600 }}>Save draft</Button>
 					</Box>
 				</Stack>
 
 				<Stack direction="row" justifyContent="space-between">
-					<Box>
+					<Box mt={-3}>
 						{/* Personal Info Card */}
 						<PersonalInformationForm />
 						{/* Profile Card */}
@@ -34,12 +34,13 @@ const ApplicationForm = () => {
 							boxShadow: "3px 3px 14px rgba(190, 190, 190, 0.3)",
 							display: "grid",
 							placeContent: "center",
-							width: "80%",
-							maxWidth: { xs: "400px", xl: "460px" },
+							width: "100%",
+							maxWidth: "480px",
 							borderRadius: "20px",
-							mt: 3,
 						}}>
-						<Typography fontSize={20}>Preview coming soon</Typography>
+						<Typography fontSize={18} sx={{ color: "var(--spanish-grey)" }}>
+							Preview coming soon
+						</Typography>
 					</Box>
 				</Stack>
 			</Box>

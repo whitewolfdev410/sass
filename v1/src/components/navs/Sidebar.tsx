@@ -2,8 +2,12 @@ import { Avatar, Box, Button, Menu, Stack } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Logo } from "..";
-import HomeIcon from "../../assets/icons/home-sidebar-icon.svg";
-import ListIcon from "../../assets/icons/list-sidebar-icon.svg";
+// import HomeIcon from "../../assets/icons/home-sidebar-icon.svg";
+// import ListIcon from "../../assets/icons/list-sidebar-icon.svg";
+// import BackIcon from "../../assets/icons/back-sidebar-icon.svg";
+import HomeIconPrimary from "../../assets/icons/home-sidebar-icon-primary.svg";
+import ListIconPrimary from "../../assets/icons/list-sidebar-icon-primary.svg";
+import BackIconPrimary from "../../assets/icons/back-sidebar-icon-primary.svg";
 import { useRef, useState } from "react";
 
 type Props = {
@@ -29,7 +33,7 @@ const Sidebar = (props: Props) => {
 	return (
 		<Box
 			sx={{
-				width: { xs: "100%", md: shortScreen ? "85px" : "115px" },
+				width: "60px",
 				boxShadow: "var(--shadow-2)",
 				height: {
 					xs: "59px",
@@ -39,33 +43,44 @@ const Sidebar = (props: Props) => {
 				flexDirection: "column",
 				alignItems: "center",
 				p: "50px 0",
-				gap: "20px",
+				gap: "10px",
 				position: "sticky",
 				top: 0,
 			}}>
 			{props.logo && (
-				<Box sx={{ maxWidth: "78px" }}>
+				<Box sx={{ maxWidth: "50px" }}>
 					{" "}
 					<Logo />
 				</Box>
 			)}
 
-			<Button sx={{ color: "black", mb: props.logo ? 0 : 3 }}>
-				<MenuIcon fontSize="large" />
-			</Button>
+			{/* <Button sx={{ color: "black", mb: props.logo ? 0 : 3 }}>
+				<MenuIcon fontSize="medium" />
+			</Button> */}
 
-			<Stack spacing={4} direction="column">
+			<Stack
+				spacing={2}
+				direction="column"
+				sx={{
+					button: {
+						filter: "grayscale(1)",
+						"&:hover": {
+							filter: "grayscale(0)",
+							bgcolor: "transparent",
+						},
+					},
+				}}>
 				<Button>
-					<img src={HomeIcon} />
+					<img src={BackIconPrimary} width="24px" height="24px" />
 				</Button>
 
 				<Button>
-					<img src={ListIcon} />
+					<img src={HomeIconPrimary} width="24px" height="24px" />
 				</Button>
 			</Stack>
 
 			<Box sx={{ position: "relative", mt: "auto" }}>
-				<Avatar sx={{ bgcolor: "info.main" }} onMouseEnter={openLogout}>
+				<Avatar sx={{ bgcolor: "info.main", width: "28px", height: "28px", fontSize: 14 }} onMouseEnter={openLogout}>
 					NT
 				</Avatar>
 

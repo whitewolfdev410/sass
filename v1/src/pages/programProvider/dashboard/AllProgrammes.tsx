@@ -26,7 +26,9 @@ const AllProgrames = () => {
 						</Typography>
 					</Box>
 					<Link to="/provider/dashboard/create-program">
-						<Button variant="contained">Create a new program</Button>
+						<Button variant="contained" size="large">
+							Create a new program
+						</Button>
 					</Link>
 				</Stack>
 

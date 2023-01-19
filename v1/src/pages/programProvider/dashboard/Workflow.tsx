@@ -23,7 +23,7 @@ const Workflow = () => {
 						<Button
 							variant="contained"
 							size="large"
-							sx={{ bgcolor: "var(--dark-blue)", py: 2, alignItems: "start", gap: 2, justifyContent: "start", my: 2 }}>
+							sx={{ bgcolor: "var(--dark-blue)", alignItems: "start", gap: 2, justifyContent: "start", my: 2 }}>
 							<AddIcon /> Add new stages
 						</Button>
 
@@ -82,7 +82,7 @@ const Workflow = () => {
 								control={<Checkbox />}
 								sx={{ ".MuiFormControlLabel-label": { fontSize: 12, fontWeight: 500 } }}
 							/>
-							<Typography fontSize={14} sx={{ color: "var(--spanish-grey)" }}>
+							<Typography fontSize={{ xs: 13, xl: 14 }} sx={{ color: "var(--spanish-grey)" }}>
 								Keeping candidates informed about their application status is vital part of a best candidate experience.
 								Whenever you move the candidate through stages, we will update the status of their application in the
 								candidate’s portal. If you do not want to show this stage to candidate, please tick the box above.
@@ -93,7 +93,6 @@ const Workflow = () => {
 								size="large"
 								sx={{
 									bgcolor: "var(--dark-blue)",
-									py: 2,
 									my: 2,
 								}}>
 								Save created stage
