@@ -1,5 +1,4 @@
 import { Avatar, Box, Button, Menu, Stack } from "@mui/material";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Logo } from "..";
 // import HomeIcon from "../../assets/icons/home-sidebar-icon.svg";
@@ -20,7 +19,6 @@ type Props = {
  */
 
 const Sidebar = (props: Props) => {
-	const shortScreen = useMediaQuery("(max-height: 800px)");
 	const [avatarRef, setavatarRef] = useState<null | HTMLElement>(null);
 	const showLogout = Boolean(avatarRef);
 	const openLogout = (event: React.MouseEvent<HTMLElement>) => {

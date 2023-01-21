@@ -1,8 +1,11 @@
 import { Route, Routes } from "react-router-dom";
 import Login from "./Login";
 import Signup from "./Signup";
-import { AllProgrammes, CreateProgram, ApplicationForm, Preview, Workflow } from "./dashboard";
-import { ProgramProviderLayout } from "../../components";
+import AllProgrammes from "./dashboard/AllProgrammes";
+import ApplicationForm from "./dashboard/ApplicationForm";
+import CreateProgram from "./dashboard/CreateProgram";
+import Workflow from "./dashboard/Workflow";
+import Preview from "./dashboard/Preview";
 
 /**
  * Base Program Provider component.

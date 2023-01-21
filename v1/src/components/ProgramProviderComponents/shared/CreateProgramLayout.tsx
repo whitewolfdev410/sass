@@ -1,4 +1,5 @@
-import { ProgramProviderNav, SidebarLayout } from "../../components";
+import { SidebarLayout } from "../../";
+import { CreateProgramNav } from ".";
 import { Box, Stack, Button, Input } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Link } from "react-router-dom";
@@ -26,7 +27,7 @@ const ApplicationForm = ({ nextLink, publishAction, children }: Props) => {
 						</Button>
 					)}
 				</Stack>
-				<ProgramProviderNav />
+				<CreateProgramNav />
 			</Box>
 			{children}
 		</SidebarLayout>

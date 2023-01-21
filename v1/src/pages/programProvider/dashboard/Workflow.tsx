@@ -1,5 +1,9 @@
-import { ProgramProviderLayout } from "../../../components";
-import { StageGroupList, StageInterviewPopup, StageType } from "../../../components/ProgramProviderComponents";
+import {
+	StageGroupList,
+	StageInterviewPopup,
+	StageType,
+	CreateProgramLayout,
+} from "../../../components/ProgramProviderComponents";
 import { Box, Stack, Button, TextField, FormControlLabel, Checkbox, FormControl, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import ShortListIcon from "../../../assets/icons/workflow/shortlisting.svg";
@@ -14,7 +18,7 @@ const Workflow = () => {
 	const videoInterviewStageRef = useRef<HTMLDivElement | null>(null);
 
 	return (
-		<ProgramProviderLayout nextLink="preview">
+		<CreateProgramLayout nextLink="preview">
 			<Box maxWidth="1069px" className="content-wrapper">
 				<StageGroupList stages={stages} />
 				<Box>
@@ -101,7 +105,7 @@ const Workflow = () => {
 					</Stack>
 				</Box>
 			</Box>
-		</ProgramProviderLayout>
+		</CreateProgramLayout>
 	);
 };
 

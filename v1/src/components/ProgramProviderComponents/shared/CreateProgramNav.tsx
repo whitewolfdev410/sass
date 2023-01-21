@@ -41,15 +41,17 @@ const ProgramProviderNav = () => {
 				"a:hover, .active": {
 					bgcolor: "var(--dark-grey)",
 				},
-				"a:hover + .MuiDivider-root, a:active + .MuiDivider-root": {
-					display: "none",
-				},
 
 				// divider
 				".MuiDivider-root": {
 					height: "3rem",
 					alignSelf: "center",
 				},
+
+				"a:hover + .MuiDivider-root, a:active + .MuiDivider-root": {
+					display: "none",
+				},
+				".MuiDivider-root:has(+a:active, +a:hover, +a.active)": { display: "none" },
 			}}>
 			<NavLink to="/provider/dashboard/create-program" className={({ isActive }) => (isActive ? "active" : undefined)}>
 				Program Details

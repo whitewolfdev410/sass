@@ -1,11 +1,15 @@
-import { ProgramProviderLayout } from "../../../components";
-import { PersonalInformationForm, ProfileForm, QuestionsForm } from "../../../components/ProgramProviderComponents";
+import {
+	PersonalInformationForm,
+	ProfileForm,
+	QuestionsForm,
+	CreateProgramLayout,
+} from "../../../components/ProgramProviderComponents";
 import { Box, Stack, Button, Typography } from "@mui/material";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 
 const ApplicationForm = () => {
 	return (
-		<ProgramProviderLayout nextLink="workflow">
+		<CreateProgramLayout nextLink="workflow">
 			<Box className="content-wrapper">
 				<Stack direction="row" justifyContent="end" marginY={1}>
 					<Box>
@@ -44,7 +48,7 @@ const ApplicationForm = () => {
 					</Box>
 				</Stack>
 			</Box>
-		</ProgramProviderLayout>
+		</CreateProgramLayout>
 	);
 };
 

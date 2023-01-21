@@ -1,10 +1,13 @@
-import { ProgramProviderLayout } from "../../../components";
-import { AdditionalInfoForm, CreateProgramForm } from "../../../components/ProgramProviderComponents";
+import {
+	AdditionalInfoForm,
+	CreateProgramForm,
+	CreateProgramLayout,
+} from "../../../components/ProgramProviderComponents";
 import { Typography } from "@mui/material";
 
 const CreateProgram = () => {
 	return (
-		<ProgramProviderLayout nextLink="application-form">
+		<CreateProgramLayout nextLink="application-form">
 			{/*  */}
 			{/* Create program form */}
 			<CreateProgramForm />
@@ -15,7 +18,7 @@ const CreateProgram = () => {
 
 			{/* Additional Information */}
 			<AdditionalInfoForm />
-		</ProgramProviderLayout>
+		</CreateProgramLayout>
 	);
 };
 

@@ -1,18 +1,20 @@
 import { Box, Divider, Stack, Typography, Button } from "@mui/material";
-import { ApplicationFormCard, ProgramProviderLayout } from "../../../components";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
+import { ApplicationFormCard } from "../../../components";
+
 import {
 	PersonalInformationForm,
 	ProfileForm,
 	QuestionsForm,
 	SkillsChip,
+	CreateProgramLayout,
 } from "../../../components/ProgramProviderComponents";
 import placeholder from "../../../assets/bg/placeholders/program-publish-placeholder.png";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 import Edit from "../../../assets/icons/pencil-outlined.svg";
 
 const Preview = () => {
 	return (
-		<ProgramProviderLayout>
+		<CreateProgramLayout>
 			<Stack sx={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 3, my: 2 }} className="content-wrapper">
 				{/* Left Side */}
 				<Box maxWidth={"690px"}>
@@ -125,7 +127,7 @@ const Preview = () => {
 				</Box>
 
 				{/* Right Side */}
-				<Box sx={{ boxShadow: " 0px 1px 20px -7px #00000052", alignSelf: "start", borderRadius: "20px" }}>
+				<Box sx={{ boxShadow: "var(--shadow-6)", alignSelf: "start", borderRadius: "20px" }}>
 					<img src={placeholder} alt="" style={{ maxHeight: "209px", maxWidth: "379.95px" }} />
 					<Box p="20px 30px">
 						<Typography variant="h2" sx={{ maxWidth: "230px" }}>
@@ -173,7 +175,7 @@ const Preview = () => {
 					</Box>
 				</Box>
 			</Stack>
-		</ProgramProviderLayout>
+		</CreateProgramLayout>
 	);
 };
 
