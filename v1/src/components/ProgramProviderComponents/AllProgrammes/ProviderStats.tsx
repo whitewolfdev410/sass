@@ -13,7 +13,7 @@ import {
 	Avatar,
 	useMediaQuery,
 } from "@mui/material";
-import { maxWidth } from "@mui/system";
+import { ProgramType } from "../../../types";
 import { useRef, useState } from "react";
 
 /**
@@ -21,7 +21,7 @@ import { useRef, useState } from "react";
  * and change the property names on ProviderStatsBase component
  * Provider Stats shows all starts for each program
  */
-const ProviderStats = ({ data }: { data: { [index: string]: any } }) => {
+const ProviderStats = ({ data }: { data: Partial<ProgramType> }) => {
 	const shortScreen = useMediaQuery("(max-height: 800px)");
 
 	const [showUnPublish, setShowUnpublish] = useState(false);
@@ -65,7 +65,7 @@ const ProviderStats = ({ data }: { data: { [index: string]: any } }) => {
 							display: "flex",
 							alignItems: "center",
 						}}>
-						<LocationOnIcon htmlColor="black" fontSize="inherit" sx={{ mr: 1 }} /> {data.location}
+						<LocationOnIcon htmlColor="black" fontSize="inherit" sx={{ mr: 1 }} /> {data.locationID}
 					</Typography>
 				</Box>
 
@@ -136,38 +136,40 @@ const ProviderStats = ({ data }: { data: { [index: string]: any } }) => {
 					" .stat-title": {
 						fontSize: 12,
 						lineHeight: "12px",
+						fontWeight: 400,
 					},
 				}}>
 				<Button>
-					<span className="stat-info">{data.applied}</span>
+					<span className="stat-info">{data?.programDetails?.programApplied}</span>
 					<span className="stat-title">Applied</span>
 				</Button>
+
 				<Button>
-					<span className="stat-info">{data.shortlisted}</span>
+					<span className="stat-info">{data?.programDetails?.programShortlisted}</span>
 					<span className="stat-title">Shortlisted</span>
 				</Button>
 				<Button>
-					<span className="stat-info">{data.interview}</span>
+					<span className="stat-info">{data?.programDetails?.programInterview}</span>
 					<span className="stat-title">Interview</span>
 				</Button>
 				<Button>
-					<span className="stat-info">{data.second_round_interview}</span>
+					<span className="stat-info">{data?.programDetails?.programSecondRoundInterview}</span>
 					<span className="stat-title">2nd Round Interview</span>
 				</Button>
 				<Button>
-					<span className="stat-info">{data.employer_screening}</span>
+					<span className="stat-info">{data?.programDetails?.programEmployerScreening}</span>
 					<span className="stat-title">Employer Screening</span>
 				</Button>
 				<Button>
-					<span className="stat-info">{data.offer}</span>
+					<span className="stat-info">{data?.programDetails?.programOffer}</span>
 					<span className="stat-title">Offer</span>
 				</Button>
 				<Button>
-					<span className="stat-info">{data.agreement}</span>
+					<span className="stat-info">{data?.programDetails?.programAgreement}</span>
 					<span className="stat-title">Agreement</span>
 				</Button>
 				<Button>
-					<span className="stat-info">{data.approved}</span>
+					<span className="stat-info">{data?.programDetails?.programApproved}</span>
 					<span className="stat-title">Approved</span>
 				</Button>
 			</ButtonGroup>
@@ -177,7 +179,7 @@ const ProviderStats = ({ data }: { data: { [index: string]: any } }) => {
 					TEAM
 				</Typography>
 				<Stack direction="row" spacing={0.5}>
-					{data.team.map(() => (
+					{team.map(() => (
 						<Avatar sx={{ width: "25px", height: "25px" }}></Avatar>
 					))}
 				</Stack>
@@ -198,3 +200,17 @@ const ProviderStats = ({ data }: { data: { [index: string]: any } }) => {
 };
 
 export default ProviderStats;
+let team = [
+	{
+		member_avatar_url: "",
+	},
+	{
+		member_avatar_url: "",
+	},
+	{
+		member_avatar_url: "",
+	},
+	{
+		member_avatar_url: "",
+	},
+];

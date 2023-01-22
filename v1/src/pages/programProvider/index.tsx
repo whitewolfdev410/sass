@@ -6,6 +6,7 @@ import ApplicationForm from "./dashboard/ApplicationForm";
 import CreateProgram from "./dashboard/CreateProgram";
 import Workflow from "./dashboard/Workflow";
 import Preview from "./dashboard/Preview";
+import SingleProgram from "./dashboard/SingleProgram";
 
 /**
  * Base Program Provider component.
@@ -24,6 +25,7 @@ const ProgramProvider = () => {
 				<Route element={<ApplicationForm />} path="application-form" />
 				<Route element={<Workflow />} path="workflow" />
 				<Route element={<Preview />} path="preview" />
+				<Route element={<SingleProgram />} path="program/:id" />
 			</Route>
 		</Routes>
 	);

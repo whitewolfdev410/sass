@@ -81,7 +81,7 @@ a {
 .custom-form select:not(.MuiTextField-root input),
 .custom-form .MuiSelect-select,
 .custom-form textarea:not(.MuiTextField-root input),
-.MuiTextField-root .MuiOutlinedInput-root,
+.MuiTextField-root:not(.default-style) .MuiOutlinedInput-root,
 .text-editor-wrapper {
 	border: 1px solid black;
 	font-weight: 500;
