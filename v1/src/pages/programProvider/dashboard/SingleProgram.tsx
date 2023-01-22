@@ -1,11 +1,22 @@
-import { SingleProgramNav, SingleProgramSidebar } from "../../../components/ProgramProviderComponents";
+import { Stack, Box } from "@mui/material";
+import { SidebarLayout } from "../../../components";
+import {
+	SingleProgramNav,
+	SingleProgramSidebar,
+	SingleProgramCandidateInfo,
+} from "../../../components/ProgramProviderComponents";
 
 const SingleProgram = () => {
 	return (
-		<div>
-			<SingleProgramNav data={data.programDetails} />
-			<SingleProgramSidebar />
-		</div>
+		<SidebarLayout>
+			<Box className="content-wrapper" sx={{ ml: 0 }}>
+				<SingleProgramNav data={data["programDetails"]} />
+				<Stack direction="row" gap={2}>
+					<SingleProgramSidebar />
+					<SingleProgramCandidateInfo />
+				</Stack>
+			</Box>
+		</SidebarLayout>
 	);
 };
 export default SingleProgram;

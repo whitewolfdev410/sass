@@ -140,36 +140,36 @@ const ProviderStats = ({ data }: { data: Partial<ProgramType> }) => {
 					},
 				}}>
 				<Button>
-					<span className="stat-info">{data?.programDetails?.programApplied}</span>
+					<span className="stat-info">{data?.programStats?.programApplied}</span>
 					<span className="stat-title">Applied</span>
 				</Button>
 
 				<Button>
-					<span className="stat-info">{data?.programDetails?.programShortlisted}</span>
+					<span className="stat-info">{data?.programStats?.programShortlisted}</span>
 					<span className="stat-title">Shortlisted</span>
 				</Button>
 				<Button>
-					<span className="stat-info">{data?.programDetails?.programInterview}</span>
+					<span className="stat-info">{data?.programStats?.programInterview}</span>
 					<span className="stat-title">Interview</span>
 				</Button>
 				<Button>
-					<span className="stat-info">{data?.programDetails?.programSecondRoundInterview}</span>
+					<span className="stat-info">{data?.programStats?.programSecondRoundInterview}</span>
 					<span className="stat-title">2nd Round Interview</span>
 				</Button>
 				<Button>
-					<span className="stat-info">{data?.programDetails?.programEmployerScreening}</span>
+					<span className="stat-info">{data?.programStats?.programEmployerScreening}</span>
 					<span className="stat-title">Employer Screening</span>
 				</Button>
 				<Button>
-					<span className="stat-info">{data?.programDetails?.programOffer}</span>
+					<span className="stat-info">{data?.programStats?.programOffer}</span>
 					<span className="stat-title">Offer</span>
 				</Button>
 				<Button>
-					<span className="stat-info">{data?.programDetails?.programAgreement}</span>
+					<span className="stat-info">{data?.programStats?.programAgreement}</span>
 					<span className="stat-title">Agreement</span>
 				</Button>
 				<Button>
-					<span className="stat-info">{data?.programDetails?.programApproved}</span>
+					<span className="stat-info">{data?.programStats?.programApproved}</span>
 					<span className="stat-title">Approved</span>
 				</Button>
 			</ButtonGroup>

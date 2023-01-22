@@ -1,7 +1,7 @@
 import { Box, Button, ButtonGroup, Divider, useMediaQuery } from "@mui/material";
 import { ProgramType } from "../../../types";
 
-const SingleProgramNav = ({ data }: { data: Partial<ProgramType["programDetails"]> }) => {
+const SingleProgramNav = ({ data }: { data: Partial<ProgramType["programStats"]> }) => {
 	const shortScreen = useMediaQuery("(max-height: 800px)");
 	return (
 		<Box

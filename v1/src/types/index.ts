@@ -1,6 +1,6 @@
 export type ProgramType = {
 	id: string;
-	programID: string;
+	programID: number;
 	title: string;
 	description: string;
 	summary: string;
@@ -16,7 +16,7 @@ export type ProgramType = {
 	locationID: number;
 	maxAppCount: number;
 	createdOn: string;
-	programDetails: {
+	programStats: {
 		programApplied: number;
 		programShortlisted: number;
 		programInterview: number;
