@@ -4,16 +4,22 @@ import {
 	SingleProgramNav,
 	SingleProgramSidebar,
 	SingleProgramCandidateInfo,
+	InfoCard,
+	ActionCard,
+	RatingGroup,
 } from "../../../components/ProgramProviderComponents";
+import Add from "@mui/icons-material/Add";
 
 const SingleProgram = () => {
 	return (
 		<SidebarLayout>
-			<Box className="content-wrapper" sx={{ ml: 0 }}>
+			<Box className="content-wrapper" sx={{ mx: 0 }}>
 				<SingleProgramNav data={data["programDetails"]} />
 				<Stack direction="row" gap={2}>
 					<SingleProgramSidebar />
-					<SingleProgramCandidateInfo />
+					<Box sx={{ width: "100%" }}>
+						<SingleProgramCandidateInfo />
+					</Box>
 				</Stack>
 			</Box>
 		</SidebarLayout>

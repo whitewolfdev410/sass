@@ -8,7 +8,8 @@ const SingleProgramNav = ({ data }: { data: Partial<ProgramType["programStats"]>
 			sx={{
 				my: 3,
 				display: "flex",
-				width: "1109px",
+				minWidth: "1109px",
+				width: "100%",
 				maxWidth: "90vw",
 				boxShadow: "var(--shadow-3)",
 				borderRadius: "9px",

@@ -4,7 +4,7 @@ import CloseIcon from "@mui/icons-material/Close";
 const CandidateCTA = ({ disqualified }: { disqualified?: boolean }) => {
 	return (
 		<Stack direction="row" alignItems="center" gap={4}>
-			<Typography fontSize={14} fontWeight={600}>
+			<Button sx={{ fontSize: 14, fontWeight: 600 }}>
 				{disqualified ? (
 					"Move to qualified"
 				) : (
@@ -12,7 +12,7 @@ const CandidateCTA = ({ disqualified }: { disqualified?: boolean }) => {
 						<CloseIcon sx={{ mr: 1 }} fontSize="small" /> Disqualify
 					</span>
 				)}
-			</Typography>
+			</Button>
 			<Button variant="contained" color={disqualified ? "error" : "success"}>
 				{disqualified ? "Disqualified" : "Move to next stage"}
 			</Button>

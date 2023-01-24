@@ -27,3 +27,13 @@ export type ProgramType = {
 		programApproved: number;
 	};
 };
+
+export type ProgramProviderType = {
+	programProviderID: number;
+	firstName: string;
+	lastName: string;
+	email: string;
+	jobTitle: string;
+	phoneNumber: string;
+	userToken: string;
+};
