@@ -41,13 +41,13 @@ const ProgramInfoCard = ({ data, image = true }: { data?: Partial<ProgramType>; 
 				<Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 1.5, mt: 3, "*": { fontSize: 11 } }}>
 					{/* first column - location*/}
 					<Stack>
-						{data?.locationID ? (
+						{data?.location ? (
 							<Typography
 								sx={{ display: "grid", gridTemplateColumns: "auto auto", gap: 1 }}
 								fontSize={12}
 								fontWeight={600}>
 								<LocationOnIcon htmlColor="black" fontSize="inherit" sx={{ mr: 0.4 }} />
-								{data?.locationID}
+								{data?.location}
 							</Typography>
 						) : null}
 					</Stack>

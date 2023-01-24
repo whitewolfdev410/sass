@@ -42,7 +42,7 @@ let data = {
 	appOpenDate: "2023-01-22T00:20:41.450Z",
 	appCloseDate: "2023-01-22T00:20:41.450Z",
 	duration: "string",
-	locationID: 0,
+	location: 0,
 	maxAppCount: 0,
 	createdOn: "2023-01-22T00:20:41.450Z",
 	programDetails: {

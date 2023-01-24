@@ -1,6 +1,6 @@
 export type ProgramType = {
 	programGUID: string;
-	programID: number;
+	programID: number | string;
 	title: string;
 	description: string;
 	summary: string;
@@ -135,3 +135,20 @@ export type ApplicationFormTemplateType = {
 export type ProgramDashboardType = ProgramType[];
 
 export type NewProgramType = ProgramDetailsType & { programApplicationFormDTO: ApplicationFormTemplateType };
+
+export type CandidateType = {
+	candidateID: number | string;
+	firstName: string;
+	lastName: string;
+	phoneNumber: string;
+	email: string;
+	nationality: string;
+	currentlyBased: string;
+	nationalIDNumber: string;
+	dateOfBirth: string;
+	gender: string;
+	education: string;
+	experience: string;
+	resume: string;
+	userToken: string;
+};

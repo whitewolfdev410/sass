@@ -38,3 +38,38 @@ export const programProviderSignup = createAsyncThunk(
 		}
 	}
 );
+
+export const getProgramProvider = createAsyncThunk("programProvider/getAll", async () => {
+	try {
+		let response = await USER_CLIENT.get(`ProgramProvider`, {
+			headers: {
+				accept: "*/*",
+			},
+		});
+		return response.data;
+	} catch (err: any) {
+		let error: AxiosError<any> = err;
+		if (!error.response) {
+			console.log(err);
+		}
+	}
+});
+
+export const getProgramProviderByID = createAsyncThunk(
+	"programProvider/getOne",
+	async ({ id }: { id: string | number }) => {
+		try {
+			let response = await USER_CLIENT.get(`ProgramProvider${id}`, {
+				headers: {
+					accept: "*/*",
+				},
+			});
+			return response.data;
+		} catch (err: any) {
+			let error: AxiosError<any> = err;
+			if (!error.response) {
+				console.log(err);
+			}
+		}
+	}
+);

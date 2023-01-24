@@ -65,7 +65,7 @@ const ProviderStats = ({ data }: { data: Partial<ProgramType> }) => {
 							display: "flex",
 							alignItems: "center",
 						}}>
-						<LocationOnIcon htmlColor="black" fontSize="inherit" sx={{ mr: 1 }} /> {data.locationID}
+						<LocationOnIcon htmlColor="black" fontSize="inherit" sx={{ mr: 1 }} /> {data.location}
 					</Typography>
 				</Box>
 
