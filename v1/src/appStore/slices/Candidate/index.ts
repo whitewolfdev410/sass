@@ -1,27 +1,19 @@
-import { createSlice, current } from "@reduxjs/toolkit";
-import { CandidateType, ProgramProviderType } from "../../../types";
-import { programProviderLogin, programProviderSignup } from "..";
+import { createSlice } from "@reduxjs/toolkit";
+import { CandidateType } from "../../../types";
+import { candidateLogin, candidateSignup, getAllCandidates, getCandidateByID } from "..";
 
 type initialProps = CandidateType & {
 	isLoggedIn: boolean;
 };
 
-const initialState: initialProps = {
-	candidateID: "",
-	firstName: "",
-	lastName: "",
-	phoneNumber: "",
-	email: "",
-	nationality: "",
-	currentlyBased: "",
-	nationalIDNumber: "",
-	dateOfBirth: "",
-	gender: "",
-	education: "",
-	experience: "",
-	resume: "",
-	userToken: "",
-	isLoggedIn: false,
+const initialState: {
+	loggedInCandidate: initialProps | null;
+	allCandidates: CandidateType[];
+	currentCandidate: CandidateType | null;
+} = {
+	loggedInCandidate: null,
+	allCandidates: [],
+	currentCandidate: null,
 };
 
 const candidateSlice = createSlice({
@@ -33,13 +25,19 @@ const candidateSlice = createSlice({
 		},
 	},
 	extraReducers: (builder) => {
-		// builder;
-		// .addCase(programProviderLogin.fulfilled, (state) => {
-		// 	state.isLoggedIn = true;
-		// })
-		// .addCase(programProviderSignup.fulfilled, (state) => {
-		// 	state.isLoggedIn = true;
-		// });
+		builder
+			.addCase(candidateLogin.fulfilled, (state, action) => {
+				state.loggedInCandidate = { ...(action.payload as unknown as CandidateType), isLoggedIn: true };
+			})
+			.addCase(candidateSignup.fulfilled, (state, action) => {
+				state.loggedInCandidate = { ...(action.payload as unknown as CandidateType), isLoggedIn: true };
+			})
+			.addCase(getCandidateByID.fulfilled, (state, action) => {
+				state.currentCandidate = action.payload;
+			})
+			.addCase(getAllCandidates.fulfilled, (state, action) => {
+				state.allCandidates = action.payload;
+			});
 	},
 });
 

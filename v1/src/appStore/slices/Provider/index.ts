@@ -1,4 +1,4 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { ProgramProviderType } from "../../../types";
 import { programProviderLogin, programProviderSignup } from "..";
 
@@ -27,11 +27,13 @@ const programProviderSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder
-			.addCase(programProviderLogin.fulfilled, (state) => {
-				state.isLoggedIn = true;
+			.addCase(programProviderLogin.fulfilled, (state, action) => {
+				state = { ...(action.payload as unknown as ProgramProviderType), isLoggedIn: true };
+				return state;
 			})
-			.addCase(programProviderSignup.fulfilled, (state) => {
-				state.isLoggedIn = true;
+			.addCase(programProviderSignup.fulfilled, (state, action) => {
+				state = { ...(action.payload as unknown as ProgramProviderType), isLoggedIn: true };
+				return state;
 			});
 	},
 });

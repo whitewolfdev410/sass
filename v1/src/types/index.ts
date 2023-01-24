@@ -17,16 +17,6 @@ export type ProgramType = {
 	maxAppCount: number;
 	createdOn: string;
 	updatedOn: string;
-	programStats: {
-		programApplied: number;
-		programShortlisted: number;
-		programInterview: number;
-		programSecondRoundInterview: number;
-		programEmployerScreening: number;
-		programOffer: number;
-		programAgreement: number;
-		programApproved: number;
-	};
 };
 
 export type ProgramProviderType = {
@@ -151,4 +141,20 @@ export type CandidateType = {
 	experience: string;
 	resume: string;
 	userToken: string;
+};
+
+export type WorkflowType = {
+	programID: string;
+	applied: number;
+	videoInterview: number;
+	zoomInterview: number;
+	inPersonMeeting: number;
+	placement: number;
+	offered: number;
+	workflowStagesList: [
+		{
+			stageName: string;
+			stageType: number;
+		}
+	];
 };

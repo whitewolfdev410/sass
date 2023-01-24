@@ -59,7 +59,7 @@ export const getProgramProviderByID = createAsyncThunk(
 	"programProvider/getOne",
 	async ({ id }: { id: string | number }) => {
 		try {
-			let response = await USER_CLIENT.get(`ProgramProvider${id}`, {
+			let response = await USER_CLIENT.get(`ProgramProvider/${id}`, {
 				headers: {
 					accept: "*/*",
 				},

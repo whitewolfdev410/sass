@@ -36,7 +36,7 @@ export const candidateSignup = createAsyncThunk("candidate/signup", async (data:
 	}
 });
 
-export const getcandidate = createAsyncThunk("candidate/getAll", async () => {
+export const getAllCandidates = createAsyncThunk("candidate/getAll", async () => {
 	try {
 		let response = await USER_CLIENT.get(`Candidate`, {
 			headers: {
@@ -52,9 +52,9 @@ export const getcandidate = createAsyncThunk("candidate/getAll", async () => {
 	}
 });
 
-export const getcandidateByID = createAsyncThunk("candidate/getOne", async ({ id }: { id: string | number }) => {
+export const getCandidateByID = createAsyncThunk("candidate/getOne", async ({ id }: { id: string | number }) => {
 	try {
-		let response = await USER_CLIENT.get(`Candidate${id}`, {
+		let response = await USER_CLIENT.get(`Candidate/${id}`, {
 			headers: {
 				accept: "*/*",
 			},
