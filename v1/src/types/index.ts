@@ -124,7 +124,10 @@ export type ApplicationFormTemplateType = {
 
 export type ProgramDashboardType = ProgramType[];
 
-export type NewProgramType = ProgramDetailsType & { programApplicationFormDTO: ApplicationFormTemplateType };
+export type NewProgramType = Omit<ProgramDetailsType, "benefits"> & {
+	programApplicationFormDTO: ApplicationFormTemplateType;
+	programBenefits: string;
+};
 
 export type CandidateType = {
 	candidateID: number | string;
