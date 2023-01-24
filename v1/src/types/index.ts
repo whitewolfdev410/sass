@@ -1,6 +1,6 @@
 export type ProgramType = {
 	id: string;
-	programID: number;
+	programID: number | string;
 	title: string;
 	description: string;
 	summary: string;
