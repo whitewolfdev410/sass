@@ -1,17 +1,15 @@
-import {
-	Button,
-	Card,
-	CardContent,
-	CardMedia,
-	Typography,
-	Box,
-	Divider,
-	Stack,
-	ToggleButton,
-	ToggleButtonGroup,
-} from "@mui/material";
+import { Button, Card, CardContent, CardMedia, Typography, Box, Divider, Stack } from "@mui/material";
+import RatingGroup from "../../../RatingGroup";
 
-const GainsFromProgramCard = (): JSX.Element => {
+const VideoTabCard = ({
+	title,
+	submitDate,
+	video,
+}: {
+	title: string;
+	submitDate: string;
+	video: string;
+}): JSX.Element => {
 	return (
 		<Card
 			sx={{
@@ -22,24 +20,17 @@ const GainsFromProgramCard = (): JSX.Element => {
 			}}>
 			<CardContent sx={{ flex: "1", p: 2 }}>
 				<Typography gutterBottom sx={{ mb: 4 }} component="div" variant="h2">
-					Why do you want to be part of this program and what would you like to
-					gain?
+					{title}
 				</Typography>
 				<Stack spacing={2}>
 					<Typography variant="caption" color="darkgrey.main" component="div">
-						Submitted on 12 Mar 2023
+						{submitDate}
 						<Divider />
 					</Typography>
 					<Typography variant="caption" color="#0B0B0B" component="div">
 						RATE THIS VIDEO
 					</Typography>
-					<ToggleButtonGroup>
-						{[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((value) => (
-							<ToggleButton key={value} sx={{ px: 2 }} value={value}>
-								{value}
-							</ToggleButton>
-						))}
-					</ToggleButtonGroup>
+					<RatingGroup onRate={() => {}} />
 
 					<Box sx={{ display: "flex", justifyContent: "space-between" }}>
 						<Button size="small" sx={{ fontSize: 13 }}>
@@ -51,14 +42,9 @@ const GainsFromProgramCard = (): JSX.Element => {
 					</Box>
 				</Stack>
 			</CardContent>
-			<CardMedia
-				component="img"
-				sx={{ width: "300px", ml: 2 }}
-				image="/dummy2.png"
-				alt="Vid"
-			/>
+			<CardMedia component="img" sx={{ width: "300px", ml: 2 }} image={video} alt="Vid" />
 		</Card>
 	);
 };
 
-export default GainsFromProgramCard;
+export default VideoTabCard;

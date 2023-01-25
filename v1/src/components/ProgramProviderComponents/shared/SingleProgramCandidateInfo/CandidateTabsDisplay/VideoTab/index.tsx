@@ -1,7 +1,6 @@
 import { Typography, Box, Button, Grid, Card } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import AboutCard from "./AboutCard";
-import GainsFromProgramCard from "./GainsFromProgramCard";
+import VideoTabCard from "./VideoTabCard";
 
 const Index = (): JSX.Element => {
 	return (
@@ -10,14 +9,11 @@ const Index = (): JSX.Element => {
 				<Grid container spacing={1}>
 					<Grid item xs={8}>
 						<Typography sx={{ fontSize: 16 }}>
-							Candidate’s video submissions will below below, you can also ask
-							candidate’s to submit further video.
+							Candidate’s video submissions will below below, you can also ask candidate’s to submit further video.
 						</Typography>
 					</Grid>
 					<Grid item xs={4}>
-						<Button
-							startIcon={<Add />}
-							sx={{ color: "secondary", fontSize: 15 }}>
+						<Button startIcon={<Add />} sx={{ color: "secondary", fontSize: 15 }}>
 							Request video
 						</Button>
 					</Grid>
@@ -25,10 +21,14 @@ const Index = (): JSX.Element => {
 			</Card>
 
 			{/* Tell us more about yourself form*/}
-			<AboutCard />
 
+			<VideoTabCard title="Tell us about yourself" submitDate="Submitted on 12 Mar 2023" video="/dummy1.png" />
 			{/* Tell us more about yourself form*/}
-			<GainsFromProgramCard />
+			<VideoTabCard
+				title="Why do you want to be part of this program and what would you like to gain?"
+				submitDate="Submitted on 12 Mar 2023"
+				video="/dummy2.png"
+			/>
 		</Box>
 	);
 };
