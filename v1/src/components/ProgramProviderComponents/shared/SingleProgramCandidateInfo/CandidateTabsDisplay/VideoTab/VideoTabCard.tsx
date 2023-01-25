@@ -13,12 +13,13 @@ const VideoTabCard = ({
 	return (
 		<Card
 			sx={{
-				display: "flex",
+				display: "grid",
+				gridTemplateColumns: "minmax(460px, 3fr) 300px",
 				mt: 3,
 				borderRadius: 3,
 				boxShadow: 3,
 			}}>
-			<CardContent sx={{ flex: "1", p: 2 }}>
+			<CardContent sx={{ p: 2 }}>
 				<Typography gutterBottom sx={{ mb: 4 }} component="div" variant="h2">
 					{title}
 				</Typography>
@@ -42,7 +43,12 @@ const VideoTabCard = ({
 					</Box>
 				</Stack>
 			</CardContent>
-			<CardMedia component="img" sx={{ width: "300px", ml: 2 }} image={video} alt="Vid" />
+			<CardMedia
+				component="img"
+				sx={{ maxWidth: "300px", height: "100%", ml: 2, borderRadius: "20px" }}
+				image={video}
+				alt="Vid"
+			/>
 		</Card>
 	);
 };
