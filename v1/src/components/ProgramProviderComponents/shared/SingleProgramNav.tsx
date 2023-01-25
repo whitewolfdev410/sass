@@ -1,7 +1,7 @@
 import { Box, Button, ButtonGroup, Divider, useMediaQuery } from "@mui/material";
-import { ProgramType } from "../../../types";
+import { ProgramType, WorkflowType } from "../../../types";
 
-const SingleProgramNav = ({ data }: { data: Partial<ProgramType["programStats"]> }) => {
+const SingleProgramNav = ({ data }: { data: Partial<WorkflowType> }) => {
 	const shortScreen = useMediaQuery("(max-height: 800px)");
 	return (
 		<Box
@@ -65,71 +65,17 @@ const SingleProgramNav = ({ data }: { data: Partial<ProgramType["programStats"]>
 				".MuiDivider-root:has(  +button.active)": { display: "none" },
 			}}>
 			<Button>
-				<span className="stat-info">{data.programApplied}</span>
+				<span className="stat-info">{data?.applied}</span>
 				<span className="stat-title">Applied</span>
 			</Button>
-			<Divider orientation="vertical" variant="middle" />
 
-			<Button>
-				<span className="stat-info">{data.programShortlisted}</span>
-				<span className="stat-title">Shortlisted</span>
-			</Button>
-			<Divider orientation="vertical" variant="middle" />
-
-			<Button className="active">
-				<span className="stat-info">{data.programInterview}</span>
-				<span className="stat-title">Interview</span>
-			</Button>
-			<Divider orientation="vertical" variant="middle" />
-
-			<Button>
-				<span className="stat-info">{data.programSecondRoundInterview}</span>
-				<span className="stat-title">
-					2nd Round <br /> Interview
-				</span>
-			</Button>
-			<Divider orientation="vertical" variant="middle" />
-
-			<Button>
-				<span className="stat-info">{data.programEmployerScreening}</span>
-				<span className="stat-title">
-					Employer <br /> Screening
-				</span>
-			</Button>
-			<Divider orientation="vertical" variant="middle" />
-
-			<Button>
-				<span className="stat-info">{data.programOffer}</span>
-				<span className="stat-title">Offer</span>
-			</Button>
-			<Divider orientation="vertical" variant="middle" />
-
-			<Button>
-				<span className="stat-info">{data.programAgreement}</span>
-				<span className="stat-title">Agreement</span>
-			</Button>
-			<Divider orientation="vertical" variant="middle" />
-
-			<Button>
-				<span className="stat-info">{data.programApproved}</span>
-				<span className="stat-title">Approved</span>
-			</Button>
+			{data.workflowStagesList?.map((stage) => (
+				<Button>
+					<span className="stat-info">{stage.stageType}</span>
+					<span className="stat-title">{stage.stageName}</span>
+				</Button>
+			))}
 		</Box>
 	);
 };
 export default SingleProgramNav;
-
-let team = [
-	{
-		member_avatar_url: "",
-	},
-	{
-		member_avatar_url: "",
-	},
-	{
-		member_avatar_url: "",
-	},
-	{
-		member_avatar_url: "",
-	},
-];

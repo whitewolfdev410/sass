@@ -38,8 +38,6 @@ export const programProviderSignup = createAsyncThunk(
 		}
 	}
 );
-<<<<<<< HEAD
-=======
 
 export const getProgramProvider = createAsyncThunk("programProvider/getAll", async () => {
 	try {
@@ -75,4 +73,3 @@ export const getProgramProviderByID = createAsyncThunk(
 		}
 	}
 );
->>>>>>> 6a262b1df297dc43cc9326d7599ee40f3e5cc0bf

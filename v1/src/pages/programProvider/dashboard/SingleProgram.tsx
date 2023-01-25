@@ -14,7 +14,7 @@ const SingleProgram = () => {
 	return (
 		<SidebarLayout>
 			<Box className="content-wrapper" sx={{ mx: 0 }}>
-				<SingleProgramNav data={data["programDetails"]} />
+				<SingleProgramNav data={data} />
 				<Stack direction="row" gap={2}>
 					<SingleProgramSidebar />
 					<Box sx={{ width: "100%" }}>
@@ -45,14 +45,16 @@ let data = {
 	locationID: 0,
 	maxAppCount: 0,
 	createdOn: "2023-01-22T00:20:41.450Z",
-	programDetails: {
-		programApplied: 0,
-		programShortlisted: 0,
-		programInterview: 0,
-		programSecondRoundInterview: 0,
-		programEmployerScreening: 0,
-		programOffer: 0,
-		programAgreement: 0,
-		programApproved: 0,
-	},
+	applied: 0,
+	videoInterview: 0,
+	zoomInterview: 0,
+	inPersonMeeting: 0,
+	placement: 0,
+	offered: 0,
+	workflowStagesList: [
+		{
+			stageName: "string",
+			stageType: 0,
+		},
+	],
 };

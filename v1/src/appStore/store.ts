@@ -1,7 +1,7 @@
 import { configureStore, ThunkAction, Action, Reducer, combineReducers, AnyAction } from "@reduxjs/toolkit";
 import { persistReducer, persistStore, PAUSE, REHYDRATE, FLUSH, PERSIST, PURGE, REGISTER } from "redux-persist";
 import storage from "redux-persist/lib/storage/session";
-import { ProviderReducer } from "./slices";
+import { ProviderReducer, CandidateReducer } from "./slices";
 
 const persistConfig = {
 	key: "root",
@@ -11,11 +11,12 @@ const persistConfig = {
 
 const appReducer = combineReducers({
 	progamProvider: ProviderReducer,
+	candidate: CandidateReducer,
 });
 
 // implement the signout action here to clear out state and return an empty object to redux persist
 const rootReducer: Reducer = (state: RootState, action: AnyAction) => {
-	if (action.type === "user/signout") {
+	if (action.type === "programProvider/signout" || action.type === "candidate/signout") {
 		// this applies to all keys defined in persistConfig(s)
 		storage.removeItem("persist:root");
 		window.location.href = window.location.origin + "/login";

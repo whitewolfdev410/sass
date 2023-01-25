@@ -33,7 +33,7 @@ const AllProgrames = () => {
 				</Stack>
 
 				{/* Statistics */}
-				<Stack gap={4} marginY={10} marginX="auto" width="fit-content">
+				<Stack gap={4} marginY={10} marginX="auto">
 					{mockProgramData.map((data) => (
 						<ProviderStats data={data} />
 					))}
@@ -52,7 +52,7 @@ export default AllProgrames;
 const mockProgramData = [
 	{
 		programGUID: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-		programID: 0,
+		programID: "",
 		title: "Internship Program",
 		description: "string",
 		summary: "string",
@@ -69,17 +69,18 @@ const mockProgramData = [
 		maxAppCount: 0,
 		createdOn: "2023-01-22T15:19:24.983Z",
 		updatedOn: "2023-01-22T15:19:24.983Z",
-		programStats: {
-			programStatsID: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-			programApplied: 283,
-			programShortlisted: 39,
-			programInterview: 6,
-			programSecondRoundInterview: 0,
-			programEmployerScreening: 0,
-			programOffer: 0,
-			programAgreement: 0,
-			programApproved: 0,
-		},
+		applied: 0,
+		videoInterview: 0,
+		zoomInterview: 0,
+		inPersonMeeting: 0,
+		placement: 0,
+		offered: 0,
+		workflowStagesList: [
+			{
+				stageName: "string",
+				stageType: 0,
+			},
+		],
 	},
 	{
 		programGUID: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -100,16 +101,17 @@ const mockProgramData = [
 		maxAppCount: 0,
 		createdOn: "2023-01-22T15:19:24.983Z",
 		updatedOn: "2023-01-22T15:19:24.983Z",
-		programStats: {
-			programStatsID: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-			programApplied: 283,
-			programShortlisted: 39,
-			programInterview: 6,
-			programSecondRoundInterview: 0,
-			programEmployerScreening: 0,
-			programOffer: 0,
-			programAgreement: 0,
-			programApproved: 0,
-		},
+		applied: 0,
+		videoInterview: 0,
+		zoomInterview: 0,
+		inPersonMeeting: 0,
+		placement: 0,
+		offered: 0,
+		workflowStagesList: [
+			{
+				stageName: "string",
+				stageType: 0,
+			},
+		],
 	},
 ];

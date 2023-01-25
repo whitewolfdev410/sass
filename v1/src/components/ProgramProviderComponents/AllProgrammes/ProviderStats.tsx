@@ -13,7 +13,7 @@ import {
 	Avatar,
 	useMediaQuery,
 } from "@mui/material";
-import { ProgramType } from "../../../types";
+import { ProgramType, WorkflowType } from "../../../types";
 import { useRef, useState } from "react";
 
 /**
@@ -21,7 +21,7 @@ import { useRef, useState } from "react";
  * and change the property names on ProviderStatsBase component
  * Provider Stats shows all starts for each program
  */
-const ProviderStats = ({ data }: { data: Partial<ProgramType> }) => {
+const ProviderStats = ({ data }: { data: Partial<WorkflowType & ProgramType> }) => {
 	const shortScreen = useMediaQuery("(max-height: 800px)");
 
 	const [showUnPublish, setShowUnpublish] = useState(false);
@@ -34,6 +34,7 @@ const ProviderStats = ({ data }: { data: Partial<ProgramType> }) => {
 				boxShadow: "var(--shadow-3)",
 				p: { xs: "20px", lg: "20px 27px 15px 40px" },
 				border: "1px solid white",
+				width: "100%",
 
 				":hover": {
 					border: "1px solid var(--primary)",
@@ -140,38 +141,16 @@ const ProviderStats = ({ data }: { data: Partial<ProgramType> }) => {
 					},
 				}}>
 				<Button>
-					<span className="stat-info">{data?.programStats?.programApplied}</span>
+					<span className="stat-info">{data?.applied}</span>
 					<span className="stat-title">Applied</span>
 				</Button>
 
-				<Button>
-					<span className="stat-info">{data?.programStats?.programShortlisted}</span>
-					<span className="stat-title">Shortlisted</span>
-				</Button>
-				<Button>
-					<span className="stat-info">{data?.programStats?.programInterview}</span>
-					<span className="stat-title">Interview</span>
-				</Button>
-				<Button>
-					<span className="stat-info">{data?.programStats?.programSecondRoundInterview}</span>
-					<span className="stat-title">2nd Round Interview</span>
-				</Button>
-				<Button>
-					<span className="stat-info">{data?.programStats?.programEmployerScreening}</span>
-					<span className="stat-title">Employer Screening</span>
-				</Button>
-				<Button>
-					<span className="stat-info">{data?.programStats?.programOffer}</span>
-					<span className="stat-title">Offer</span>
-				</Button>
-				<Button>
-					<span className="stat-info">{data?.programStats?.programAgreement}</span>
-					<span className="stat-title">Agreement</span>
-				</Button>
-				<Button>
-					<span className="stat-info">{data?.programStats?.programApproved}</span>
-					<span className="stat-title">Approved</span>
-				</Button>
+				{data.workflowStagesList?.map((stage) => (
+					<Button>
+						<span className="stat-info">{stage.stageType}</span>
+						<span className="stat-title">{stage.stageName}</span>
+					</Button>
+				))}
 			</ButtonGroup>
 
 			<Stack justifyContent="flex-end" direction="row" gap={2} alignItems="center">

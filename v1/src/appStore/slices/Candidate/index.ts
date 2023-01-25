@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-export default {};
-=======
 import { createSlice } from "@reduxjs/toolkit";
 import { CandidateType } from "../../../types";
 import { candidateLogin, candidateSignup, getAllCandidates, getCandidateByID } from "..";
@@ -47,4 +44,3 @@ const candidateSlice = createSlice({
 export const {} = candidateSlice.actions;
 
 export default candidateSlice.reducer;
->>>>>>> 6a262b1df297dc43cc9326d7599ee40f3e5cc0bf

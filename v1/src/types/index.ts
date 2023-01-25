@@ -16,20 +16,7 @@ export type ProgramType = {
 	locationID: number;
 	maxAppCount: number;
 	createdOn: string;
-<<<<<<< HEAD
-	programStats: {
-		programApplied: number;
-		programShortlisted: number;
-		programInterview: number;
-		programSecondRoundInterview: number;
-		programEmployerScreening: number;
-		programOffer: number;
-		programAgreement: number;
-		programApproved: number;
-	};
-=======
 	updatedOn: string;
->>>>>>> 6a262b1df297dc43cc9326d7599ee40f3e5cc0bf
 };
 
 export type ProgramProviderType = {
@@ -41,8 +28,6 @@ export type ProgramProviderType = {
 	phoneNumber: string;
 	userToken: string;
 };
-<<<<<<< HEAD
-=======
 
 export type ProgramDetailsType = {
 	title: string;
@@ -161,19 +146,18 @@ export type CandidateType = {
 	userToken: string;
 };
 
+export type StageType = {
+	stageName: string;
+	stageType: number;
+};
+
 export type WorkflowType = {
-	programID: string;
+	programID: string | number;
 	applied: number;
 	videoInterview: number;
 	zoomInterview: number;
 	inPersonMeeting: number;
 	placement: number;
 	offered: number;
-	workflowStagesList: [
-		{
-			stageName: string;
-			stageType: number;
-		}
-	];
+	workflowStagesList: StageType[];
 };
->>>>>>> 6a262b1df297dc43cc9326d7599ee40f3e5cc0bf

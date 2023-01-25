@@ -62,14 +62,19 @@ const Documentation = () => {
 export default Documentation;
 
 let navData = {
-	programApplied: 0,
-	programShortlisted: 0,
-	programInterview: 0,
-	programSecondRoundInterview: 0,
-	programEmployerScreening: 0,
-	programOffer: 0,
-	programAgreement: 0,
-	programApproved: 0,
+	programID: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+	applied: 0,
+	videoInterview: 0,
+	zoomInterview: 0,
+	inPersonMeeting: 0,
+	placement: 0,
+	offered: 0,
+	workflowStagesList: [
+		{
+			stageName: "string",
+			stageType: 0,
+		},
+	],
 };
 
 let data = {
@@ -90,14 +95,4 @@ let data = {
 	locationID: 0,
 	maxAppCount: 0,
 	createdOn: "2023-01-22T00:20:41.450Z",
-	programDetails: {
-		programApplied: 0,
-		programShortlisted: 0,
-		programInterview: 0,
-		programSecondRoundInterview: 0,
-		programEmployerScreening: 0,
-		programOffer: 0,
-		programAgreement: 0,
-		programApproved: 0,
-	},
 };
