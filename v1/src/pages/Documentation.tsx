@@ -40,7 +40,7 @@ const Documentation = () => {
 				ActionCard <br /> <input type="text" />
 			</ActionCard>
 			<InfoCard image="icon" title="Title" metadata="date, by any" variant="error" />
-			<RatingGroup onRate={(val) => {}} />
+			<RatingGroup onRate={(val) => {}} name="doc" />
 			<Box sx={{ maxWidth: "557px" }}>
 				<SavedQuestion type="Dropdown" question="question" editable />
 			</Box>

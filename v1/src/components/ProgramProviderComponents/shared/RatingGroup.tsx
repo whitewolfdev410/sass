@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { useRef, ChangeEventHandler } from "react";
-const RatingGroup = ({ onRate }: { onRate: (val: string | number) => void }) => {
+const RatingGroup = ({ onRate, name }: { onRate: (val: string | number) => void; name: string }) => {
 	const group = useRef<HTMLDivElement | null>(null);
 
 	const updateValue: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -33,43 +33,43 @@ const RatingGroup = ({ onRate }: { onRate: (val: string | number) => void }) => 
 			}}>
 			<label>
 				1
-				<input type="radio" value={1} hidden onChange={updateValue} name="rating" />
+				<input type="radio" value={1} hidden onChange={updateValue} name={name} />
 			</label>
 			<label>
 				2
-				<input type="radio" value={2} hidden onChange={updateValue} name="rating" />
+				<input type="radio" value={2} hidden onChange={updateValue} name={name} />
 			</label>
 			<label>
 				3
-				<input type="radio" value={3} hidden onChange={updateValue} name="rating" />
+				<input type="radio" value={3} hidden onChange={updateValue} name={name} />
 			</label>
 			<label>
 				4
-				<input type="radio" value={4} hidden onChange={updateValue} name="rating" />
+				<input type="radio" value={4} hidden onChange={updateValue} name={name} />
 			</label>
 			<label>
 				5
-				<input type="radio" value={5} hidden onChange={updateValue} name="rating" />
+				<input type="radio" value={5} hidden onChange={updateValue} name={name} />
 			</label>
 			<label>
 				6
-				<input type="radio" value={6} hidden onChange={updateValue} name="rating" />
+				<input type="radio" value={6} hidden onChange={updateValue} name={name} />
 			</label>
 			<label>
 				7
-				<input type="radio" value={7} hidden onChange={updateValue} name="rating" />
+				<input type="radio" value={7} hidden onChange={updateValue} name={name} />
 			</label>
 			<label>
 				8
-				<input type="radio" value={8} hidden onChange={updateValue} name="rating" />
+				<input type="radio" value={8} hidden onChange={updateValue} name={name} />
 			</label>
 			<label>
 				9
-				<input type="radio" value={9} hidden onChange={updateValue} name="rating" />
+				<input type="radio" value={9} hidden onChange={updateValue} name={name} />
 			</label>
 			<label>
 				10
-				<input type="radio" value={10} hidden onChange={updateValue} name="rating" />
+				<input type="radio" value={10} hidden onChange={updateValue} name={name} />
 			</label>
 		</Box>
 	);

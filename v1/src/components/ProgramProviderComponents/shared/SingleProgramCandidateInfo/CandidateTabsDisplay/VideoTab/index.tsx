@@ -22,9 +22,15 @@ const Index = (): JSX.Element => {
 
 			{/* Tell us more about yourself form*/}
 
-			<VideoTabCard title="Tell us about yourself" submitDate="Submitted on 12 Mar 2023" video="/dummy1.png" />
+			<VideoTabCard
+				videoRatingName="candidate1"
+				title="Tell us about yourself"
+				submitDate="Submitted on 12 Mar 2023"
+				video="/dummy1.png"
+			/>
 			{/* Tell us more about yourself form*/}
 			<VideoTabCard
+				videoRatingName="candidate2"
 				title="Why do you want to be part of this program and what would you like to gain?"
 				submitDate="Submitted on 12 Mar 2023"
 				video="/dummy2.png"

@@ -5,10 +5,12 @@ const VideoTabCard = ({
 	title,
 	submitDate,
 	video,
+	videoRatingName,
 }: {
 	title: string;
 	submitDate: string;
 	video: string;
+	videoRatingName: string;
 }): JSX.Element => {
 	return (
 		<Card
@@ -31,7 +33,7 @@ const VideoTabCard = ({
 					<Typography variant="caption" color="#0B0B0B" component="div">
 						RATE THIS VIDEO
 					</Typography>
-					<RatingGroup onRate={() => {}} />
+					<RatingGroup onRate={() => {}} name={videoRatingName} />
 
 					<Box sx={{ display: "flex", justifyContent: "space-between" }}>
 						<Button size="small" sx={{ fontSize: 13 }}>

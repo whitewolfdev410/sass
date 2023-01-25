@@ -63,19 +63,19 @@ const CandidateEvaluation = () => {
 						}}>
 						<div>
 							<p>Communication</p>
-							<RatingGroup onRate={() => {}} />
+							<RatingGroup onRate={() => {}} name="communication" />
 						</div>
 						<div>
 							<p>Professionalism</p>
-							<RatingGroup onRate={() => {}} />
+							<RatingGroup onRate={() => {}} name="professionalism" />
 						</div>
 						<div>
 							<p>Attitude</p>
-							<RatingGroup onRate={() => {}} />
+							<RatingGroup onRate={() => {}} name="attitude" />
 						</div>
 						<div>
 							<p>Subject knowledge</p>
-							<RatingGroup onRate={() => {}} />
+							<RatingGroup onRate={() => {}} name="subject-knowledge" />
 						</div>
 					</Box>
 					<h4>Would you recommend the candidate to this program?</h4>
@@ -98,7 +98,7 @@ const CandidateEvaluation = () => {
 							Highly likely to recommend
 						</p>
 					</div>
-					<RatingGroup onRate={() => {}} />
+					<RatingGroup onRate={() => {}} name="recommend" />
 					<h4>Evaluator’s note (optional)</h4>
 					<textarea
 						name=""
