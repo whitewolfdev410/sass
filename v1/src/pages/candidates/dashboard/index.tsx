@@ -2,7 +2,7 @@ import {
 	CandidateApplicationNav,
 	ProgramInfoCard,
 	ProgramStatusCard,
-	ProgramSumaryCard,
+	ProgramSummaryCard,
 } from "../../../components/CandidatesComponents";
 import { SidebarLayout } from "../../../components";
 import { Box, Stack, Divider, Typography } from "@mui/material";

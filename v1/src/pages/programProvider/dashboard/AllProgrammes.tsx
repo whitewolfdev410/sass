@@ -2,12 +2,22 @@ import { Box, Button, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { SidebarLayout } from "../../../components";
 import { ProviderStats } from "../../../components/ProgramProviderComponents";
+import { ProgramType } from "../../../types";
+import { useState, useEffect } from "react";
+import { getAllDashboardPrograms, selectAllDashboardPrograms, useAppDispatch, useAppSelector } from "../../../appStore";
 
 /**
  * Dashboard for program providers showing current programs and their statistics
  */
 
 const AllProgrames = () => {
+	const dispatch = useAppDispatch();
+	const programs = useAppSelector(selectAllDashboardPrograms);
+
+	useEffect(() => {
+		dispatch(getAllDashboardPrograms());
+	}, []);
+
 	return (
 		<div>
 			<SidebarLayout logo>
@@ -34,7 +44,7 @@ const AllProgrames = () => {
 
 				{/* Statistics */}
 				<Stack gap={4} marginY={10} marginX="auto">
-					{mockProgramData.map((data) => (
+					{programs?.map((data) => (
 						<ProviderStats data={data} />
 					))}
 				</Stack>
@@ -44,74 +54,3 @@ const AllProgrames = () => {
 };
 
 export default AllProgrames;
-
-/**
- * @TODO revisit
- * THIS NEEDS TO BE GOTTEN FROM API SCHEMA
- */
-const mockProgramData = [
-	{
-		programGUID: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-		programID: "",
-		title: "Internship Program",
-		description: "string",
-		summary: "string",
-		keySkills: "string",
-		programBenefits: "string",
-		applicationCriteria: "string",
-		programType: 0,
-		minQualification: 0,
-		startDate: "2023-01-22T15:19:24.983Z",
-		appOpenDate: "2023-01-22T15:19:24.983Z",
-		appCloseDate: "2023-01-22T15:19:24.983Z",
-		duration: "string",
-		location: "string",
-		maxAppCount: 0,
-		createdOn: "2023-01-22T15:19:24.983Z",
-		updatedOn: "2023-01-22T15:19:24.983Z",
-		applied: 0,
-		videoInterview: 0,
-		zoomInterview: 0,
-		inPersonMeeting: 0,
-		placement: 0,
-		offered: 0,
-		workflowStagesList: [
-			{
-				stageName: "string",
-				stageType: 0,
-			},
-		],
-	},
-	{
-		programGUID: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-		programID: 0,
-		title: "Internship Program",
-		description: "string",
-		summary: "string",
-		keySkills: "string",
-		programBenefits: "string",
-		applicationCriteria: "string",
-		programType: 0,
-		minQualification: 0,
-		startDate: "2023-01-22T15:19:24.983Z",
-		appOpenDate: "2023-01-22T15:19:24.983Z",
-		appCloseDate: "2023-01-22T15:19:24.983Z",
-		duration: "string",
-		location: "string",
-		maxAppCount: 0,
-		createdOn: "2023-01-22T15:19:24.983Z",
-		updatedOn: "2023-01-22T15:19:24.983Z",
-		applied: 0,
-		videoInterview: 0,
-		zoomInterview: 0,
-		inPersonMeeting: 0,
-		placement: 0,
-		offered: 0,
-		workflowStagesList: [
-			{
-				stageName: "string",
-				stageType: 0,
-			},
-		],
-	},
-];

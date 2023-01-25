@@ -8,9 +8,12 @@ const CandidateApplicationNav = ({ completed }: { completed?: 1 | 2 | 3 }) => {
 			direction="row"
 			alignItems="center"
 			sx={{
-				my: 3,
+				mb: 3,
+
 				maxWidth: "100%",
 				boxShadow: "var(--shadow-4)",
+				position: "sticky",
+				top: 0,
 				a: {
 					height: "100px",
 					display: "flex",

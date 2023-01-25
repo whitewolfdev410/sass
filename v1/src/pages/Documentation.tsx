@@ -5,7 +5,7 @@ import {
 	CustomStepper,
 	ProgramInfoCard,
 	ProgramStatusCard,
-	ProgramSumaryCard,
+	ProgramSummaryCard,
 	SteppedStageGroup,
 } from "../components/CandidatesComponents";
 import {
@@ -52,7 +52,7 @@ const Documentation = () => {
 			<CustomStepper numOfStages={7} currentStage={3} />
 			<CustomStepper numOfStages={7} currentStage={3} error />
 			<ProgramInfoCard image data={data} />
-			<ProgramSumaryCard image data={data} />
+			<ProgramSummaryCard image data={data} />
 			<ProgramStatusCard />
 			<SteppedStageGroup stages={["stage1", "stage2", "stage3", "stage4"]} />
 			<Divider />
