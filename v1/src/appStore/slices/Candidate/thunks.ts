@@ -11,6 +11,7 @@
 // 			containerId: "toast",
 // 		});
 
+<<<<<<< HEAD
 // 		try {
 // 			let response = await axios.post(`${baseURL}users/signin?username=${username}&password=${password}`, {
 // 				headers: {
@@ -66,3 +67,36 @@
 // );
 
 export default {};
+=======
+export const getAllCandidates = createAsyncThunk("candidate/getAll", async () => {
+	try {
+		let response = await USER_CLIENT.get(`Candidate`, {
+			headers: {
+				accept: "*/*",
+			},
+		});
+		return response.data;
+	} catch (err: any) {
+		let error: AxiosError<any> = err;
+		if (!error.response) {
+			console.log(err);
+		}
+	}
+});
+
+export const getCandidateByID = createAsyncThunk("candidate/getOne", async ({ id }: { id: string | number }) => {
+	try {
+		let response = await USER_CLIENT.get(`Candidate/${id}`, {
+			headers: {
+				accept: "*/*",
+			},
+		});
+		return response.data;
+	} catch (err: any) {
+		let error: AxiosError<any> = err;
+		if (!error.response) {
+			console.log(err);
+		}
+	}
+});
+>>>>>>> 6a262b1df297dc43cc9326d7599ee40f3e5cc0bf

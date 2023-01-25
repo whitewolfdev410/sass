@@ -1,5 +1,4 @@
 export {};
-
 // import { createSlice } from "@reduxjs/toolkit";
 // import {
 // 	ApplicationFormTemplateType,
@@ -35,7 +34,10 @@ export {};
 // 				state.allProgrammes = action.payload;
 // 			})
 // 			.addCase(getProgramProviderByID.fulfilled, (state, action) => {})
-// 			.addCase(saveNewProgramApplicationTemplate.fulfilled, (state, action) => {})
+// 			.addCase(
+// 				saveNewProgramApplicationTemplate.fulfilled,
+// 				(state, action) => {}
+// 			)
 // 			.addCase(saveNewProgramDetails.fulfilled, (state, action) => {})
 // 			.addCase(createProgram.fulfilled, (state, action) => {});
 // 	},
