@@ -7,6 +7,7 @@ const ShadowCard = ({ children }: { children: React.ReactNode }) => {
 				boxShadow: "0px 0px 33px 0px #61616121",
 				borderRadius: "20px",
 				width: "100%",
+				height: "fit-content",
 			}}>
 			{children}
 		</Box>
