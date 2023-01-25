@@ -1,4 +1,12 @@
-import { Box, TextField, Checkbox, FormControlLabel, Stack, Typography, Divider } from "@mui/material";
+import {
+	Box,
+	TextField,
+	Checkbox,
+	FormControlLabel,
+	Stack,
+	Typography,
+	Divider,
+} from "@mui/material";
 import TuneIcon from "@mui/icons-material/Tune";
 import SearchIcon from "@mui/icons-material/Search";
 import SidebarTabs from "./SidebarTabs";
@@ -34,7 +42,9 @@ const SingleProgramSidebar = () => {
 					type="email"
 					className="default-style"
 					InputProps={{
-						startAdornment: <SearchIcon sx={{ color: "var(--spanish-grey)", mr: 1 }} />,
+						startAdornment: (
+							<SearchIcon sx={{ color: "var(--spanish-grey)", mr: 1 }} />
+						),
 					}}
 					sx={{
 						bgcolor: "white",
@@ -45,10 +55,17 @@ const SingleProgramSidebar = () => {
 					}}
 				/>
 
-				<Stack direction="row" justifyContent="space-between" alignItems="center">
+				<Stack
+					direction="row"
+					justifyContent="space-between"
+					alignItems="center">
 					<FormControlLabel
 						label="Select all"
-						control={<Checkbox sx={{ "&:has(>input:checked)": { color: "#60C69B" } }} />}
+						control={
+							<Checkbox
+								sx={{ "&:has(>input:checked)": { color: "#60C69B" } }}
+							/>
+						}
 						sx={{ color: "#B5B5B5", mb: 0 }}
 					/>
 

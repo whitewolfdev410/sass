@@ -30,6 +30,7 @@ const SidebarTabs = ({
 				labels.map((label, index) => {
 					return (
 						<Tab
+							key={index}
 							label={label}
 							value={index + 1}
 							onClick={() => {

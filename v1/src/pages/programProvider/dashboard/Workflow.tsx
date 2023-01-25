@@ -4,7 +4,16 @@ import {
 	StageType,
 	CreateProgramLayout,
 } from "../../../components/ProgramProviderComponents";
-import { Box, Stack, Button, TextField, FormControlLabel, Checkbox, FormControl, Typography } from "@mui/material";
+import {
+	Box,
+	Stack,
+	Button,
+	TextField,
+	FormControlLabel,
+	Checkbox,
+	FormControl,
+	Typography,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import ShortListIcon from "../../../assets/icons/workflow/shortlisting.svg";
 import PlacementIcon from "../../../assets/icons/workflow/placement.svg";
@@ -13,7 +22,7 @@ import { useState, useRef } from "react";
 
 type StageTypes = "shortlisting" | "video-interview" | "placement" | undefined;
 
-const Workflow = () => {
+const Workflow = (): JSX.Element => {
 	const [selectedStage, setselectedStage] = useState<StageTypes>();
 	const videoInterviewStageRef = useRef<HTMLDivElement | null>(null);
 
@@ -27,16 +36,31 @@ const Workflow = () => {
 						<Button
 							variant="contained"
 							size="large"
-							sx={{ bgcolor: "var(--dark-blue)", alignItems: "start", gap: 2, justifyContent: "start", my: 2 }}>
+							sx={{
+								bgcolor: "var(--dark-blue)",
+								alignItems: "start",
+								gap: 2,
+								justifyContent: "start",
+								my: 2,
+							}}>
 							<AddIcon /> Add new stages
 						</Button>
 
 						<label>Stage name</label>
-						<TextField placeholder="i.e 1st Round of Interview" fullWidth sx={{ my: 1 }} />
+						<TextField
+							placeholder="i.e 1st Round of Interview"
+							fullWidth
+							sx={{ my: 1 }}
+						/>
 					</Stack>
 
 					{/* Select stage type */}
-					<Stack sx={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(557px, 1fr))", gap: "21px" }}>
+					<Stack
+						sx={{
+							display: "grid",
+							gridTemplateColumns: "repeat(2, minmax(557px, 1fr))",
+							gap: "21px",
+						}}>
 						<Stack gap={2}>
 							<label>Stage type</label>
 							<StageType
@@ -72,7 +96,9 @@ const Workflow = () => {
 							/>
 						</Stack>
 
-						<Box>{selectedStage === "video-interview" && <StageInterviewPopup />}</Box>
+						<Box>
+							{selectedStage === "video-interview" && <StageInterviewPopup />}
+						</Box>
 					</Stack>
 					{/* agree to terms */}
 					<Stack gap={2} maxWidth="557px" my={2.5}>
@@ -84,12 +110,21 @@ const Workflow = () => {
 							<FormControlLabel
 								label="Do not show this stage to candidate"
 								control={<Checkbox />}
-								sx={{ ".MuiFormControlLabel-label": { fontSize: 12, fontWeight: 500 } }}
+								sx={{
+									".MuiFormControlLabel-label": {
+										fontSize: 12,
+										fontWeight: 500,
+									},
+								}}
 							/>
-							<Typography fontSize={{ xs: 13, xl: 14 }} sx={{ color: "var(--spanish-grey)" }}>
-								Keeping candidates informed about their application status is vital part of a best candidate experience.
-								Whenever you move the candidate through stages, we will update the status of their application in the
-								candidate’s portal. If you do not want to show this stage to candidate, please tick the box above.
+							<Typography
+								fontSize={{ xs: 13, xl: 14 }}
+								sx={{ color: "var(--spanish-grey)" }}>
+								Keeping candidates informed about their application status is
+								vital part of a best candidate experience. Whenever you move the
+								candidate through stages, we will update the status of their
+								application in the candidate’s portal. If you do not want to
+								show this stage to candidate, please tick the box above.
 							</Typography>
 
 							<Button

@@ -10,13 +10,15 @@ import InsertImageIcon from "../../assets/icons/insert-image.svg";
 import LinkIcon from "../../assets/icons/link.svg";
 import "../../styles/text-editor.css";
 
-type Props = {
+export type Props = {
 	placeholder?: string;
 	height?: string;
 };
 
 const TextEditor = ({ placeholder, height }: Props) => {
-	const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
+	const [editorState, setEditorState] = useState(() =>
+		EditorState.createEmpty()
+	);
 
 	const handleKeyCommand = (command: any) => {
 		const newState = RichUtils.handleKeyCommand(editorState, command);

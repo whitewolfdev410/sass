@@ -73,8 +73,8 @@ let navData = {
 };
 
 let data = {
-	programGUID: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-	programID: 0,
+	id: "string",
+	programID: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
 	title: "string",
 	description: "string",
 	summary: "string",
@@ -83,15 +83,14 @@ let data = {
 	applicationCriteria: "string",
 	programType: 0,
 	minQualification: 0,
-	startDate: "2023-01-24T14:51:43.808Z",
-	appOpenDate: "2023-01-24T14:51:43.808Z",
-	appCloseDate: "2023-01-24T14:51:43.808Z",
+	startDate: "2023-01-22T00:20:41.450Z",
+	appOpenDate: "2023-01-22T00:20:41.450Z",
+	appCloseDate: "2023-01-22T00:20:41.450Z",
 	duration: "string",
-	location: "string",
+	locationID: 0,
 	maxAppCount: 0,
-	createdOn: "2023-01-24T14:51:43.808Z",
-	updatedOn: "2023-01-24T14:51:43.808Z",
-	programStats: {
+	createdOn: "2023-01-22T00:20:41.450Z",
+	programDetails: {
 		programApplied: 0,
 		programShortlisted: 0,
 		programInterview: 0,
