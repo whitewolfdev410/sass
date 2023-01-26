@@ -1,5 +1,13 @@
-import { Box, Stack, Grid } from "@mui/material";
-// import pencil from "../../../../assets/icons/edit-pencil.svg";
+import {
+  Box,
+  Stack,
+  Grid,
+  Checkbox,
+  FormControlLabel,
+  Typography,
+} from "@mui/material";
+import ActionCard from "../ActionCard";
+import pencil from "../../../../assets/downloadImgjul.png";
 
 const CandidateProfile = () => {
   return (
@@ -15,12 +23,336 @@ const CandidateProfile = () => {
         spacing={{ xs: 1, sm: 2, md: 2 }}
         marginBottom="20px"
       >
+        {/* action cards */}
+        <div style={{ width: "50%" }}>
+          <ActionCard editable title="Aaliyah Samdi">
+            <Stack
+              direction="row"
+              sx={{
+                // justifyContent: "space-between",
+                gap: "2rem",
+                margin: "0.5rem 0",
+              }}
+            >
+              {" "}
+              <input
+                style={{
+                  fontWeight: "400",
+                  fontSize: "11px",
+                  lineHeight: "16px",
+                }}
+                type="text"
+                placeholder="Current Location"
+              />
+              <span
+                style={{
+                  fontWeight: "400",
+                  fontSize: "11px",
+                  lineHeight: "16px",
+                }}
+              >
+                Riyadh
+              </span>
+            </Stack>
+            <Stack
+              direction="row"
+              sx={{
+                // justifyContent: "space-between",
+                gap: "2rem",
+                margin: "0.5rem 0",
+              }}
+            >
+              {" "}
+              <input
+                style={{
+                  fontWeight: "400",
+                  fontSize: "11px",
+                  lineHeight: "16px",
+                }}
+                type="text"
+                placeholder="Phone"
+              />
+              <span
+                style={{
+                  fontWeight: "400",
+                  fontSize: "11px",
+                  lineHeight: "16px",
+                }}
+              >
+                626-398-6547
+              </span>
+            </Stack>
+            <Stack
+              direction="row"
+              sx={{
+                // justifyContent: "space-between",
+                gap: "2rem",
+                margin: "0.5rem 0",
+              }}
+            >
+              {" "}
+              <input
+                style={{
+                  fontWeight: "400",
+                  fontSize: "11px",
+                  lineHeight: "16px",
+                }}
+                type="text"
+                placeholder="Email"
+              />
+              <span
+                style={{
+                  fontWeight: "400",
+                  fontSize: "11px",
+                  lineHeight: "16px",
+                }}
+              >
+                aaliyah.samdi@gmail.com
+              </span>
+            </Stack>
+          </ActionCard>{" "}
+        </div>
+
+        <div style={{ width: "50%" }}>
+          {" "}
+          <ActionCard editable title="Personal Information">
+            <Stack
+              direction="row"
+              sx={{
+                // justifyContent: "space-between",
+                gap: "2rem",
+                margin: "0.5rem 0",
+              }}
+            >
+              {" "}
+              <input
+                style={{
+                  fontWeight: "400",
+                  fontSize: "11px",
+                  lineHeight: "16px",
+                }}
+                type="text"
+                placeholder="Nationality"
+              />
+              <span
+                style={{
+                  fontWeight: "400",
+                  fontSize: "11px",
+                  lineHeight: "16px",
+                }}
+              >
+                Saudi Arabia
+              </span>
+            </Stack>
+            <Stack
+              direction="row"
+              sx={{
+                // justifyContent: "space-between",
+                gap: "2rem",
+                margin: "0.5rem 0",
+              }}
+            >
+              {" "}
+              <input
+                style={{
+                  fontWeight: "400",
+                  fontSize: "11px",
+                  lineHeight: "16px",
+                }}
+                type="text"
+                placeholder="National ID"
+              />
+              <span
+                style={{
+                  fontWeight: "400",
+                  fontSize: "11px",
+                  lineHeight: "16px",
+                }}
+              >
+                235769708967
+              </span>
+            </Stack>
+            <Stack
+              direction="row"
+              sx={{
+                // justifyContent: "space-between",
+                gap: "2rem",
+                margin: "0.5rem 0",
+              }}
+            >
+              {" "}
+              <input
+                style={{
+                  fontWeight: "400",
+                  fontSize: "11px",
+                  lineHeight: "16px",
+                }}
+                type="text"
+                placeholder="Gender"
+              />
+              <span
+                style={{
+                  fontWeight: "400",
+                  fontSize: "11px",
+                  lineHeight: "16px",
+                }}
+              >
+                Female
+              </span>
+            </Stack>
+          </ActionCard>
+        </div>
+        {/* action cards */}
+      </Stack>
+      <Stack
+        direction={{ xs: "column", sm: "row" }}
+        spacing={{ xs: 1, sm: 2, md: 2 }}
+        marginBottom="20px"
+      >
+        {/* action cards */}
+        <div style={{ width: "50%", minHeight: "244px" }}>
+          <ActionCard editable title="Education">
+            <Stack
+              direction="row"
+              sx={{
+                // justifyContent: "space-between",
+                gap: "2rem",
+                margin: "0.5rem 0",
+              }}
+            >
+              {" "}
+              <input
+                style={{
+                  width: "50%",
+                  fontWeight: "400",
+                  fontSize: "11px",
+                  lineHeight: "16px",
+                }}
+                type="text"
+                placeholder="MM/YYYY – MM/YYYY"
+              />
+              <span
+                style={{
+                  fontWeight: "400",
+                  fontSize: "11px",
+                  lineHeight: "16px",
+                  height: "21px",
+                  width: "50%",
+                }}
+              >
+                MA History and Political Science, HBS- Harvard University,
+                United State
+              </span>
+            </Stack>
+            <Stack
+              direction="row"
+              sx={{
+                // justifyContent: "space-between",
+                gap: "2rem",
+                margin: "4rem 0 0 0",
+              }}
+            >
+              {" "}
+              <input
+                style={{
+                  fontWeight: "400",
+                  fontSize: "11px",
+                  lineHeight: "16px",
+                  height: "21px",
+                  width: "50%",
+                }}
+                type="text"
+                placeholder="MM/YYYY – MM/YYYY"
+              />
+              <span
+                style={{
+                  fontWeight: "400",
+                  fontSize: "11px",
+                  lineHeight: "16px",
+                  width: "50%",
+                }}
+              >
+                MA History King’s College London, United Kingdom
+              </span>
+            </Stack>
+          </ActionCard>
+        </div>
+
+        <div style={{ width: "50%", minHeight: "244px" }}>
+          <ActionCard editable title="Experience">
+            <Stack
+              direction="row"
+              sx={{
+                // justifyContent: "space-between",
+                gap: "2rem",
+                margin: "0.5rem 0",
+              }}
+            >
+              {" "}
+              <input
+                style={{
+                  fontWeight: "400",
+                  fontSize: "11px",
+                  lineHeight: "16px",
+                  height: "21px",
+                  width: "50%",
+                }}
+                type="text"
+                placeholder="09/2022 – Current"
+              />
+              <span
+                style={{
+                  fontWeight: "400",
+                  fontSize: "11px",
+                  lineHeight: "16px",
+                  height: "21px",
+                  width: "50%",
+                }}
+              >
+                Business Development, Saudi Corp, UAE
+              </span>
+            </Stack>
+            <Stack
+              direction="row"
+              sx={{
+                // justifyContent: "space-between",
+                gap: "2rem",
+                margin: "3rem 0 0 0",
+              }}
+            >
+              {" "}
+              <input
+                style={{
+                  fontWeight: "400",
+                  fontSize: "11px",
+                  lineHeight: "16px",
+                  height: "21px",
+                  width: "50%",
+                }}
+                type="text"
+                placeholder=" 08/2020 – 08/2022"
+              />
+              <span
+                style={{
+                  fontWeight: "400",
+                  fontSize: "11px",
+                  lineHeight: "16px",
+                  width: "50%",
+                }}
+              >
+                Job Title, Company name, Country
+              </span>
+            </Stack>
+          </ActionCard>
+        </div>
+        {/* action cards */}
+      </Stack>
+      <Stack>
         <div
           style={{
             boxShadow: "0px 0px 33px rgba(97, 97, 97, 0.13)",
             borderRadius: "20px",
-            width: "50%",
-            padding: "1px 30px 30px 30px",
+            width: "100%",
           }}
         >
           <div
@@ -28,49 +360,85 @@ const CandidateProfile = () => {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "start",
+              padding: "1px 1px 0px 20px",
             }}
           >
-            <h3>Aaliyah Samdi</h3>
+            <h3>Resume</h3>
             <div
               style={{
                 display: "flex",
-                width: "20%",
+                width: "32%",
                 justifyContent: "space-between",
                 margin: "auto 0 auto",
               }}
             >
-              <p style={{ fontSize: "14px", height: "15px", color: "#087B2F" }}>
-                Save
-              </p>
-              {/* <img src={pencil} alt="" width="25%" /> */}
+              <span
+                style={{ fontSize: "14px", height: "15px", color: "#087B2F" }}
+              >
+                Change CV
+              </span>
+              <span
+                style={{
+                  fontSize: "14px",
+                  height: "15px",
+                  color: "#087B2F",
+                  marginRight: "10px",
+                }}
+              >
+                Download{" "}
+                <img
+                  style={{ margin: "0 4px", cursor: "pointer" }}
+                  src={pencil}
+                  alt=""
+                  width="15%"
+                />
+              </span>
             </div>
           </div>
-
+          <hr
+            style={{
+              border: "1px solid #B5B5B5",
+              height: "0px",
+              width: "100%",
+              color: "#B5B5B5",
+            }}
+          />
           <div
             style={{
-              display: "flex",
-              justifyContent: "space-between",
-              padding: "10px 0",
+              padding: "10px 20px",
               fontSize: "12px",
+              marginLeft: "4rem",
             }}
           >
-            <div style={{ color: "#A5A5A5" }}>
-              <p>Current Location</p>
-              <p>Phone</p>
-              <p>Email</p>
+            <div style={{ color: "#000" }}>
+              <Typography variant="h2" sx={{ margin: "1rem 0" }}>
+                [Your Name]
+              </Typography>
             </div>
             <div>
-              <p>Riyadh</p>
-              <p>626-398-6547</p>
-              <p>aaliyah.samdi@gmail.com</p>
+              <Typography variant="h3" sx={{ margin: "2rem 0 0.6rem  0" }}>
+                Objective
+              </Typography>
+              <Typography variant="h5" sx={{ marginBottom: "1rem" }}>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Non
+                repudiandae necessitatibus minima labore, eaque nemo ipsam quas
+                amet natus quo voluptas voluptatibus ducimus, odit porro animi
+                autem aperiam tempore odio. Eius ea quos cum ut unde repudiandae
+                aperiam repellendus quo eveniet culpa eaque, voluptatem
+                distinctio molestias
+              </Typography>
             </div>
           </div>
         </div>
+      </Stack>
+
+      <Stack>
         <div
           style={{
             boxShadow: "0px 0px 33px rgba(97, 97, 97, 0.13)",
             borderRadius: "20px",
-            width: "50%",
+            width: "100%",
+            margin: "1.6rem 0",
           }}
         >
           <div
@@ -81,7 +449,7 @@ const CandidateProfile = () => {
               padding: "1px 30px",
             }}
           >
-            <h5 style={{ color: "#8528C8" }}>Personal Information</h5>
+            <h5 style={{ color: "#8528C8" }}>Answers</h5>
             <div
               style={{
                 width: "10%",
@@ -109,144 +477,33 @@ const CandidateProfile = () => {
             }}
           >
             <div style={{ color: "#A5A5A5" }}>
-              <p>Nationality</p>
-              <p>National ID </p>
-              <p>Gender </p>
-            </div>
-            <div>
-              <p>Saudi Arabia</p>
-              <p>235769708967</p>
-              <p>Female</p>
+              <p style={{ marginBottom: "0" }}>
+                Are you a fresh graduate and completed your studies in 2021 or
+                2022?
+              </p>
+              <FormControlLabel
+                control={<Checkbox defaultChecked />}
+                label="Yes"
+              />
             </div>
           </div>
-        </div>
-      </Stack>
-      <Stack
-        direction={{ xs: "column", sm: "row" }}
-        spacing={{ xs: 1, sm: 2, md: 2 }}
-      >
-        <div
-          style={{
-            boxShadow: "0px 0px 33px rgba(97, 97, 97, 0.13)",
-            borderRadius: "20px",
-            width: "50%",
 
-            // alignItems: "center",
-          }}
-        >
           <div
             style={{
               display: "flex",
               justifyContent: "space-between",
-              alignItems: "start",
-              padding: "1px 30px",
+              padding: "0px 30px",
+              fontSize: "12px",
             }}
           >
-            <h5 style={{ color: "#8528C8" }}>Education</h5>
-            <div
-              style={{
-                width: "10%",
-                justifyContent: "space-between",
-                //   height: "25px",
-                margin: "auto 0 auto",
-              }}
-            >
-              {/* <img src={pencil} alt="" width="45%" /> */}
-            </div>
-          </div>
-          <hr
-            style={{
-              border: "1px solid #B5B5B5",
-              height: "0px",
-              width: "100%",
-              color: "#B5B5B5",
-            }}
-          />
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              padding: "0px 10px 0 30px",
-              fontSize: "11px",
-            }}
-          >
-            <div style={{ width: "20%" }}>
-              <p>MM/YYYY – MM/YYYY</p>
-              <p>MM/YYYY – MM/YYYY</p>
-            </div>
-            <div style={{ width: "70%" }}>
+            <div style={{ color: "#A5A5A5" }}>
               <p>
-                MA History and Political Science, HBS- Harvard University,
-                United State
-              </p>
-              <p>MA History King’s College London, United Kingdom</p>
-            </div>
-          </div>
-        </div>
-        <div
-          style={{
-            boxShadow: "0px 0px 33px rgba(97, 97, 97, 0.13)",
-            borderRadius: "20px",
-            width: "50%",
-            paddingBottom: "30px",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "start",
-              padding: "1px 30px",
-            }}
-          >
-            <h5 style={{ color: "#8528C8" }}>Experience</h5>
-            <div
-              style={{
-                width: "10%",
-                justifyContent: "space-between",
-                margin: "auto 0 auto",
-              }}
-            >
-              {/* <img src={pencil} alt="" width="45%" /> */}
-            </div>
-          </div>
-          <hr
-            style={{
-              border: "1px solid #B5B5B5",
-              height: "0px",
-              width: "100%",
-              color: "#B5B5B5",
-            }}
-          />
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              padding: "0px 10px 0 30px",
-              fontSize: "11px",
-            }}
-          >
-            <div style={{ width: "20%" }}>
-              <p>09/2022 – Current</p>
-              <p>08/2020 – 08/2022</p>
-            </div>
-            <div style={{ width: "50%" }}>
-              <p>
-                <strong> Business Development,</strong> Saudi Corp, UAE
-              </p>
-              <p>
-                <strong>Job Title, </strong>
+                What is your GPA?
                 <br />
-                Company name, Country
+                3.78
               </p>
             </div>
           </div>
-        </div>
-      </Stack>
-      <Stack>
-        <div>
-          <p></p>
-          <div></div>
         </div>
       </Stack>
     </Box>
