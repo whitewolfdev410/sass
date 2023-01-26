@@ -1,7 +1,7 @@
 import { configureStore, ThunkAction, Action, Reducer, combineReducers, AnyAction } from "@reduxjs/toolkit";
 import { persistReducer, persistStore, PAUSE, REHYDRATE, FLUSH, PERSIST, PURGE, REGISTER } from "redux-persist";
 import storage from "redux-persist/lib/storage/session";
-import { ProviderReducer, CandidateReducer } from "./slices";
+import { ProviderReducer, CandidateReducer, ProgramDashboardReducer, WorkflowReducer, ProgramReducer } from "./slices";
 
 const persistConfig = {
 	key: "root",
@@ -12,6 +12,9 @@ const persistConfig = {
 const appReducer = combineReducers({
 	progamProvider: ProviderReducer,
 	candidate: CandidateReducer,
+	programDashboard: ProgramDashboardReducer,
+	workflow: WorkflowReducer,
+	program: ProgramReducer,
 });
 
 // implement the signout action here to clear out state and return an empty object to redux persist

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 type Props = {
 	nextLink?: string;
-	publishAction?: () => {};
+	publishAction?: () => void;
 	children?: React.ReactNode;
 };
 

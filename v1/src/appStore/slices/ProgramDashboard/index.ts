@@ -10,16 +10,16 @@ import {
 
 type initialProps = {
 	allProgrammes: ProgramDashboardType;
-	newProgram: NewProgramType | null;
-	newProgramDetails: ProgramDetailsType | null;
-	newProgramApplicationTemplate: ApplicationFormTemplateType | null;
+	newProgram: NewProgramType;
+	newProgramDetails: ProgramDetailsType;
+	newProgramApplicationTemplate: ApplicationFormTemplateType;
 };
 
 const initialState: initialProps = {
 	allProgrammes: [],
-	newProgram: null,
-	newProgramDetails: null,
-	newProgramApplicationTemplate: null,
+	newProgram: {} as NewProgramType,
+	newProgramDetails: {} as ProgramDetailsType,
+	newProgramApplicationTemplate: {} as ApplicationFormTemplateType,
 };
 
 const programProviderSlice = createSlice({

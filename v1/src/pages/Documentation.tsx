@@ -1,16 +1,25 @@
 import { Box, Divider, Stack, Typography } from "@mui/material";
 import {
+  // <<<<<<< HEAD
   ApplicationFormCard,
   AuthPageLayout,
   SidebarLayout,
 } from "../components";
 import {
+  //   CandidateApplicationNav,
+  //   CustomStepper,
+  //   ProgramInfoCard,
+  //   ProgramStatusCard,
+  //   ProgramSumaryCard,
+  //   SteppedStageGroup,
+  // =======
   CandidateApplicationNav,
   CustomStepper,
   ProgramInfoCard,
   ProgramStatusCard,
-  ProgramSumaryCard,
+  ProgramSummaryCard,
   SteppedStageGroup,
+  // >>>>>>> c6ee55327449213632b34fb00d2ae8c62430a74b
 } from "../components/CandidatesComponents";
 import {
   ActionCard,
@@ -56,6 +65,7 @@ const Documentation = () => {
       <SingleProgramNav data={navData} />
       <Divider />
 
+      {/* <<<<<<< HEAD
       <Typography variant="h2">shared throughout candidate</Typography>
       <CandidateApplicationNav />
       <CustomStepper numOfStages={7} currentStage={3} />
@@ -67,6 +77,19 @@ const Documentation = () => {
       <Divider />
     </Stack>
   );
+======= */}
+      <Typography variant="h2">shared throughout candidate</Typography>
+      <CandidateApplicationNav />
+      <CustomStepper numOfStages={7} currentStage={3} />
+      <CustomStepper numOfStages={7} currentStage={3} error />
+      <ProgramInfoCard image data={data} />
+      <ProgramSummaryCard image data={data} />
+      <ProgramStatusCard />
+      <SteppedStageGroup stages={["stage1", "stage2", "stage3", "stage4"]} />
+      <Divider />
+    </Stack>
+  );
+  // >>>>>>> c6ee55327449213632b34fb00d2ae8c62430a74b
 };
 export default Documentation;
 
