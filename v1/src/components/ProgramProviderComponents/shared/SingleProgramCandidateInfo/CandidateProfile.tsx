@@ -363,7 +363,7 @@ const CandidateProfile = () => {
               padding: "1px 1px 0px 20px",
             }}
           >
-            <h3>Resume</h3>
+            <h5 style={{ color: "#8528C8" }}>Resume</h5>
             <div
               style={{
                 display: "flex",
@@ -372,16 +372,14 @@ const CandidateProfile = () => {
                 margin: "auto 0 auto",
               }}
             >
-              <span
-                style={{ fontSize: "14px", height: "15px", color: "#087B2F" }}
-              >
+              <span style={{ fontSize: "14px", height: "15px", color: "#000" }}>
                 Change CV
               </span>
               <label
                 style={{
                   fontSize: "14px",
                   height: "15px",
-                  color: "#087B2F",
+                  color: "#000",
                   marginRight: "10px",
                   cursor: "pointer",
                 }}
