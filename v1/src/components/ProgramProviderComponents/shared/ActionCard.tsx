@@ -18,7 +18,7 @@ const ActionCard = ({
 	const content = useRef<HTMLDivElement | null>(null);
 
 	useEffect(() => {
-		let inputs = content.current ? Array.from(content.current?.getElementsByTagName("input")) : [];
+		let inputs = content.current ? Array.from(content.current?.querySelectorAll("input, textarea")) : [];
 
 		if (currentlyEditing) {
 			inputs.map((input) => {
