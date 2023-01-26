@@ -377,22 +377,25 @@ const CandidateProfile = () => {
               >
                 Change CV
               </span>
-              <span
+              <label
                 style={{
                   fontSize: "14px",
                   height: "15px",
                   color: "#087B2F",
                   marginRight: "10px",
+                  cursor: "pointer",
                 }}
+                htmlFor="downloadImg"
               >
                 Download{" "}
                 <img
-                  style={{ margin: "0 4px", cursor: "pointer" }}
+                  style={{ margin: "0 4px" }}
                   src={pencil}
                   alt=""
                   width="15%"
                 />
-              </span>
+              </label>
+              <input style={{ display: "none" }} id="downloadImg" type="file" />
             </div>
           </div>
           <hr
