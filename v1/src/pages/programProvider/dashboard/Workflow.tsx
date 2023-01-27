@@ -23,11 +23,25 @@ import { useState, useRef } from "react";
 type StageTypes = "shortlisting" | "video-interview" | "placement" | undefined;
 
 const Workflow = (): JSX.Element => {
+
 	const [selectedStage, setselectedStage] = useState<StageTypes>();
+	const [workFlowData, setWorkFlowData] = useState({
+		stageName: "",
+		stageType: "",
+		agree: false
+	});
 	const videoInterviewStageRef = useRef<HTMLDivElement | null>(null);
 
+	const onHandleChange = (event: any) => {
+		setWorkFlowData({...workFlowData, [event.target.name] : event.target.value})
+	};
+
 	return (
-		<CreateProgramLayout nextLink="preview">
+		<CreateProgramLayout
+			screen="workFlow"
+			nextLink="preview"
+			data={workFlowData}
+		>
 			<Box maxWidth="1069px" className="content-wrapper">
 				<StageGroupList stages={stages} />
 				<Box>
@@ -48,6 +62,7 @@ const Workflow = (): JSX.Element => {
 
 						<label>Stage name</label>
 						<TextField
+							name="stageName" onChange={onHandleChange}
 							placeholder="i.e 1st Round of Interview"
 							fullWidth
 							sx={{ my: 1 }}
@@ -69,6 +84,7 @@ const Workflow = (): JSX.Element => {
 								desc="If your stage is about filtering candidates then you can use this option"
 								onClick={() => {
 									setselectedStage("shortlisting");
+									setWorkFlowData({...workFlowData, stageType: "shortlisting"})
 								}}
 								active={selectedStage === "shortlisting"}
 							/>
@@ -82,6 +98,7 @@ const Workflow = (): JSX.Element => {
 								ref={videoInterviewStageRef}
 								onClick={() => {
 									setselectedStage("video-interview");
+									setWorkFlowData({...workFlowData, stageType: "video-interview"})
 								}}
 							/>
 
@@ -91,6 +108,7 @@ const Workflow = (): JSX.Element => {
 								desc="If there is an option for employer to view candidates and candidates to apply for job opportunities within the program then you will need this stage"
 								onClick={() => {
 									setselectedStage("placement");
+									setWorkFlowData({...workFlowData, stageType: "placement"})
 								}}
 								active={selectedStage === "placement"}
 							/>
@@ -109,7 +127,7 @@ const Workflow = (): JSX.Element => {
 
 							<FormControlLabel
 								label="Do not show this stage to candidate"
-								control={<Checkbox />}
+								control={<Checkbox checked={workFlowData.agree} onChange={(event)=> setWorkFlowData({...workFlowData, agree: event.target.checked})}/>}
 								sx={{
 									".MuiFormControlLabel-label": {
 										fontSize: 12,

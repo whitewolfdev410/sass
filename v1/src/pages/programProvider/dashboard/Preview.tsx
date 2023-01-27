@@ -1,6 +1,7 @@
+import {useEffect} from "react";
 import { Box, Divider, Stack, Typography, Button } from "@mui/material";
-import { ApplicationFormCard } from "../../../components";
 
+import { ApplicationFormCard } from "../../../components";
 import {
 	PersonalInformationForm,
 	ProfileForm,
@@ -13,6 +14,11 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import Edit from "../../../assets/icons/pencil-outlined.svg";
 
 const Preview = () => {
+
+	useEffect(()=> {
+
+	},[]);
+
 	return (
 		<CreateProgramLayout>
 			<Stack sx={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 3, my: 2 }} className="content-wrapper">

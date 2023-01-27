@@ -33,21 +33,20 @@ const CreateProgram = () => {
 
 	return (
 		<CreateProgramLayout
-			// nextLink="application-form"
-			publishAction={() => {
-				// dispatch(saveNewProgramDetails({ data }));
-				console.log(data.applicationCloseDate);
-			}}>
+			screen="programDetail"
+			data={data}
+			nextLink="application-form"
+		>
 			{/*  */}
 			{/* Create program form */}
-			<CreateProgramForm />
+			<CreateProgramForm setData={setData} data={data}/>
 
 			<Typography component="h4" fontSize="25px" fontWeight={600} sx={{ ml: { lg: 25 }, my: 4 }}>
 				Additional program information
 			</Typography>
 
 			{/* Additional Information */}
-			<AdditionalInfoForm />
+			<AdditionalInfoForm setData={setData} data={data}/>
 		</CreateProgramLayout>
 	);
 };
