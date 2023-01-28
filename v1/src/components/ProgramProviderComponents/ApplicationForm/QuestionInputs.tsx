@@ -23,10 +23,16 @@ type Props = {
 };
 
 const QuestionInputs = ({ type = "Paragraph", typeInput, onSave, onDelete }: Props) => {
+
+	const [index, setIndex] = useState([1]);
 	const [currentQuestion, setCurrentQuestion] = useState<QuestionInputType>({
 		type: type,
 		question: "",
 	});
+
+	const onAdd = () => {
+		setIndex(oldArray => [...oldArray,index.length + 1] );
+	};
 
 	return (
 		<Box>
@@ -40,7 +46,7 @@ const QuestionInputs = ({ type = "Paragraph", typeInput, onSave, onDelete }: Pro
 						}}>
 						<MenuItem value="Paragraph">Paragraph</MenuItem>
 						<MenuItem value="Short answer">Short answer</MenuItem>
-						<MenuItem value="Yes/No">Yes/No</MenuItem>
+						<MenuItem value="YesNo">Yes/No</MenuItem>
 						<MenuItem value="Dropdown">Dropdown</MenuItem>
 						<MenuItem value="Multiple choice">Multiple choice</MenuItem>
 						<MenuItem value="Date">Date</MenuItem>
@@ -64,13 +70,19 @@ const QuestionInputs = ({ type = "Paragraph", typeInput, onSave, onDelete }: Pro
 					<label htmlFor="" style={{ marginLeft: "25px", fontWeight: 500 }}>
 						Choice
 					</label>
-					<Stack direction="row" gap={1} alignItems="center">
-						<ListIcon fontSize="medium" />
-						<TextField placeholder="Type here" fullWidth />
-						<AddIcon fontSize="medium" />
+					<Stack direction="column" gap={1} >
+						{
+							index?.map((item, i) => (
+								<Stack direction="row" gap={1} alignItems="center">
+									<ListIcon fontSize="medium"/>
+									<TextField placeholder="Type here" fullWidth/>
+									{(i === (index.length - 1))  && <AddIcon fontSize="medium" onClick={()=>onAdd()}/>}
+								</Stack>
+							))
+						}
 					</Stack>
 				</FormControl>
-			) : currentQuestion.type === "Yes/No" ? (
+			) : currentQuestion.type === "YesNo" ? (
 				<FormControlLabel
 					label={<Typography fontSize={15}>Disqualify candidate if the answer is no</Typography>}
 					control={<Checkbox color="success" />}

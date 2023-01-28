@@ -1,7 +1,8 @@
+import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import { FormControl, FormControlLabel, Checkbox, Input, Typography, Stack, Button, Link } from "@mui/material";
 import { AuthPageLayout } from "../../components";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { useState } from "react";
 import { useAppDispatch, programProviderLogin as login } from "../../appStore";
 
 /**
@@ -10,6 +11,7 @@ import { useAppDispatch, programProviderLogin as login } from "../../appStore";
 
 const Login = () => {
 	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
 
 	const [form, setForm] = useState({
 		emailID: "",
@@ -27,9 +29,11 @@ const Login = () => {
 
 			<form
 				action=""
-				onSubmit={(e) => {
+				onSubmit={async (e) => {
 					e.preventDefault();
-					dispatch(login(form));
+					const response = await dispatch(login(form));
+					console.log("response",response);
+					navigate('/provider/dashboard', {replace: true})
 				}}>
 				<FormControl variant="standard" fullWidth sx={{ my: 3 }}>
 					<label>Email*</label>

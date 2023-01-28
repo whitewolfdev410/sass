@@ -1,6 +1,6 @@
 import Add from "@mui/icons-material/Add";
 import { Accordion, AccordionDetails, AccordionSummary, Button, Typography } from "@mui/material";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { ApplicationFormCard } from "../../../components";
 import {
 	SavedQuestion,
@@ -8,7 +8,12 @@ import {
 	QuestionInput,
 } from "../../../components/ProgramProviderComponents";
 
-const QuestionsForm = () => {
+export type Props = {
+	setApplicationData?: any;
+	applicationData?: any;
+};
+
+const QuestionsForm = ({setApplicationData, applicationData}: Props) => {
 	const [questionList, setQuestionList] = useState<QuestionProps[]>([
 		{
 			type: "Paragraph",
@@ -19,11 +24,17 @@ const QuestionsForm = () => {
 			question: "Please select the year of graduation from the dropdown below",
 		},
 		{
-			type: "Yes/No",
+			type: "YesNo",
 			question: "Have you ever been rejected by the UK embassy?",
 		},
 	]);
 	const [newQuestion, setNewQuestion] = useState(false);
+
+	useEffect(()=> {
+		if(setApplicationData){
+			setApplicationData({...applicationData, listOfQuestions : questionList || []})
+		}
+	},[]);
 
 	const onSaveNew = (newQ: QuestionProps) => {
 		setQuestionList((prev) => [...prev, newQ]);
