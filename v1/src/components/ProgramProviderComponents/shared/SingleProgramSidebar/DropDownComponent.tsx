@@ -9,7 +9,7 @@ import EmailModal from "./EmailModal";
 import { Typography } from "@mui/material";
 
 const DropDownComponent = () => {
-	const [item, setItem] = React.useState("");
+	const [item, setItem] = React.useState("0");
 	const [rejectModal, setRejectModal] = React.useState(false);
 	const [deleteModal, setDeleteModal] = React.useState(false);
 	const [emailModal, setEmailModal] = React.useState(false);
@@ -18,6 +18,7 @@ const DropDownComponent = () => {
 		setDeleteModal(false);
 		setRejectModal(false);
 		setEmailModal(false);
+		setItem("0");
 	};
 
 	const handleChange = (event: SelectChangeEvent) => {
@@ -34,21 +35,22 @@ const DropDownComponent = () => {
 			<FormControl
 				variant="standard"
 				sx={{ m: 1, minWidth: 80 }}>
-				<InputLabel id="demo-simple-select-standard-label">Action</InputLabel>
 				<Select
 					labelId="demo-simple-select-standard-label"
 					id="demo-simple-select-standard"
 					value={item}
-					onChange={handleChange}
-					label="Action">
+					onChange={handleChange}>
+					<MenuItem value={0}>
+						<Typography variant="h4">Action</Typography>
+					</MenuItem>
 					<MenuItem value={1}>
-						<Typography variant="h5">Bulk Delete</Typography>
+						<Typography variant="h4">Bulk Delete</Typography>
 					</MenuItem>
 					<MenuItem value={2}>
-						<Typography variant="h5">Bulk Reject</Typography>
+						<Typography variant="h4">Bulk Reject</Typography>
 					</MenuItem>
 					<MenuItem value={3}>
-						<Typography variant="h5">Bulk email</Typography>
+						<Typography variant="h4">Bulk email</Typography>
 					</MenuItem>
 				</Select>
 			</FormControl>

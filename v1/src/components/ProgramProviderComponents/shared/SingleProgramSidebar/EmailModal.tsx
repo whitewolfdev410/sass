@@ -17,12 +17,12 @@ const inputform: Props = {
 
 const style = {
 	position: "absolute" as "absolute",
-	top: "60%",
 	left: "50%",
-	transform: "translate(-50%, -50%)",
+	top: "10%",
+	transform: "translateX(-50%)",
 	bgcolor: "background.paper",
-	width: "60%",
-	p: 4,
+	width: "802px",
+	p: "30px 42px 39px 45px",
 	borderRadius: "20px",
 	boxShadow: "0px 0px 33px rgba(190, 190, 190, 0.5)",
 };
@@ -48,9 +48,11 @@ const EmailModal = (openProp: any) => {
 					display: "block",
 				}}>
 				<Box sx={style}>
-					<span onClick={handleClose}>
-						<CancelIcon sx={{ float: "right" }} />
-					</span>
+					<Stack>
+						<span onClick={handleClose}>
+							<CancelIcon sx={{ float: "right" }} />
+						</span>
+					</Stack>
 					<Stack>
 						<Typography variant="h2">Send Email</Typography>
 						<TextField
@@ -90,7 +92,7 @@ const EmailModal = (openProp: any) => {
 							}}
 						/>
 					</Stack>
-					<Stack>
+					<Stack sx={{ marginTop: "56px" }}>
 						<Typography variant="h2">Email Subject</Typography>
 						<TextField
 							fullWidth
@@ -99,7 +101,8 @@ const EmailModal = (openProp: any) => {
 							className="default-style"
 							sx={{
 								bgcolor: "white",
-								my: 2,
+								marginTop: 4,
+								marginBottom: "40px",
 								input: {
 									fontSize: 11,
 								},

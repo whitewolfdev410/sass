@@ -18,8 +18,13 @@ const SidebarLayout = (props: Props) => {
 			<Sidebar logo={props.logo || false} />
 			<Box
 				sx={{
-					p: { xs: "20px 15px", lg: "50px 0 50px 0", xl: "80px 0 50px 0" },
+					p: {
+						xs: "20px 15px",
+						lg: "50px 44px 50px 50px",
+						xl: "80px 44px 50px 50px",
+					},
 					flexGrow: "1",
+					minWidth: 0,
 				}}>
 				<Outlet />
 				{props.children}
