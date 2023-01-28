@@ -19,21 +19,55 @@ import ShortListIcon from "../../../assets/icons/workflow/shortlisting.svg";
 import PlacementIcon from "../../../assets/icons/workflow/placement.svg";
 import InterviewIcon from "../../../assets/icons/workflow/interviewing.svg";
 import { useState, useRef } from "react";
+import {saveWorkflow} from "../../../appStore/slices";
+import {useAppDispatch} from "../../../appStore";
 
 type StageTypes = "shortlisting" | "video-interview" | "placement" | undefined;
 
 const Workflow = (): JSX.Element => {
 
+	const dispatch = useAppDispatch();
+	const programId = localStorage.getItem("programId");
+
+	const [stageFlag, setStageFlag] = useState(false);
 	const [selectedStage, setselectedStage] = useState<StageTypes>();
+	const [stageName, setStageName] = useState("");
+	const [stage, setStage] = useState(["Applied", "Shortlisted"]);
 	const [workFlowData, setWorkFlowData] = useState({
 		stageName: "",
-		stageType: "",
+		stageType: 0,
 		agree: false
 	});
 	const videoInterviewStageRef = useRef<HTMLDivElement | null>(null);
 
 	const onHandleChange = (event: any) => {
 		setWorkFlowData({...workFlowData, [event.target.name] : event.target.value})
+	};
+
+	const onSaveStage = async () => {
+		const payload = {
+			programID: programId,
+			stageName: workFlowData.stageName,
+			stageType: workFlowData.stageType,
+			stageShownToCandidate: workFlowData.agree
+		};
+		// @ts-ignore
+		const response = await dispatch(saveWorkflow( { payload } ));
+		console.log("response",response)
+	};
+
+	const handleChange = (e: any) => {
+		setStageName(e.target.value)
+	};
+
+	const onAddStage = () => {
+		setStageFlag(true);
+	};
+
+	const onAddStageData = () => {
+		setStage(oldArray => [...oldArray,stageName] );
+		setStageFlag(false);
+		setStageName("")
 	};
 
 	return (
@@ -43,11 +77,28 @@ const Workflow = (): JSX.Element => {
 			data={workFlowData}
 		>
 			<Box maxWidth="1069px" className="content-wrapper">
-				<StageGroupList stages={stages} />
+				<StageGroupList stages={stage} />
 				<Box>
 					{/* Add new stage */}
+					{stageFlag && <Stack mt={2.5} maxWidth="557px" gap={2} direction="row" spacing={2}>
+						<TextField  placeholder="Type here" name="stage" onChange={handleChange}/>
+						<Button
+							disabled={stageName === ""}
+							onClick={()=>onAddStageData()}
+							variant="contained"
+							sx={{
+								bgcolor: "var(--dark-blue)",
+								alignItems: "start",
+								gap: 2,
+								justifyContent: "start",
+								my: 2,
+							}}>
+							<AddIcon /> Add
+						</Button>
+					</Stack>}
 					<Stack gap={2} maxWidth="557px" my={2.5}>
 						<Button
+							onClick={()=>onAddStage()}
 							variant="contained"
 							size="large"
 							sx={{
@@ -84,7 +135,7 @@ const Workflow = (): JSX.Element => {
 								desc="If your stage is about filtering candidates then you can use this option"
 								onClick={() => {
 									setselectedStage("shortlisting");
-									setWorkFlowData({...workFlowData, stageType: "shortlisting"})
+									setWorkFlowData({...workFlowData, stageType: 1})
 								}}
 								active={selectedStage === "shortlisting"}
 							/>
@@ -98,7 +149,7 @@ const Workflow = (): JSX.Element => {
 								ref={videoInterviewStageRef}
 								onClick={() => {
 									setselectedStage("video-interview");
-									setWorkFlowData({...workFlowData, stageType: "video-interview"})
+									setWorkFlowData({...workFlowData, stageType: 2})
 								}}
 							/>
 
@@ -108,7 +159,7 @@ const Workflow = (): JSX.Element => {
 								desc="If there is an option for employer to view candidates and candidates to apply for job opportunities within the program then you will need this stage"
 								onClick={() => {
 									setselectedStage("placement");
-									setWorkFlowData({...workFlowData, stageType: "placement"})
+									setWorkFlowData({...workFlowData, stageType: 3})
 								}}
 								active={selectedStage === "placement"}
 							/>
@@ -146,6 +197,7 @@ const Workflow = (): JSX.Element => {
 							</Typography>
 
 							<Button
+								onClick={()=>onSaveStage()}
 								variant="contained"
 								size="large"
 								sx={{
@@ -163,13 +215,3 @@ const Workflow = (): JSX.Element => {
 };
 
 export default Workflow;
-
-let stages = [
-	"Applied",
-	"Shortlisted",
-	"Video interview",
-	"1st Round Zoom Interview",
-	"In person meeting",
-	"Placement",
-	"Offered",
-];

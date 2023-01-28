@@ -1,7 +1,7 @@
 export type QuestionTypes =
 	| "Paragraph"
 	| "Short answer"
-	| "Yes/No"
+	| "YesNo"
 	| "Dropdown"
 	| "Multiple choice"
 	| "Date"

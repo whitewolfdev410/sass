@@ -21,20 +21,31 @@ type Props = {
 const ApplicationForm = ({ screen, data, nextLink, publishAction, children }: Props) => {
 
 	const dispatch = useAppDispatch();
+	const programId = localStorage.getItem("programId");
 
 	const handleOnClick = async () => {
-		let response = {};
+		let response = {
+			payload: {
+				ProgramGUID: ""
+			}
+		};
 		if(screen === "programDetail"){
 			// @ts-ignore
 			response = await dispatch(saveNewProgramDetails( { data } ));
+			if(response?.payload){
+				localStorage.setItem("programId", response?.payload?.ProgramGUID)
+			}
 		} else if(screen === "applicationForm"){
 			// @ts-ignore
-			response = await dispatch(saveNewProgramApplicationTemplate( { data } ));
+			response = await dispatch(saveNewProgramApplicationTemplate( { data, programId } ));
 		} else if(screen === "workFlow"){
 			// @ts-ignore
-			response = await dispatch(createWorkflow( { data } ));
+			// response = await dispatch(createWorkflow( { data } ));
 		}
-		console.log("====",response)
+	};
+
+	const OnPublish = () => {
+		localStorage.removeItem("programId")
 	};
 
 	return (
@@ -48,9 +59,11 @@ const ApplicationForm = ({ screen, data, nextLink, publishAction, children }: Pr
 							</Button>
 						</Link>
 					) : (
-						<Button variant="contained" onClick={publishAction} size="large" sx={{ minWidth: "200px" }}>
-							Publish <ArrowForwardIosIcon />
-						</Button>
+						<Link to={`/provider/dashboard` || ""}>
+							<Button variant="contained" onClick={()=>OnPublish()} size="large" sx={{minWidth: "200px"}}>
+								Publish <ArrowForwardIosIcon/>
+							</Button>
+						</Link>
 					)}
 				</Stack>
 				<CreateProgramNav />

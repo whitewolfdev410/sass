@@ -11,69 +11,43 @@ import {useState} from "react";
 const ApplicationForm = () => {
 
 	const [applicationData, setApplicationData] = useState({
-		firstName: "",
-		lastName: "",
-		email: "",
 		phone: {
-			"id": "",
-			"controlName": "",
-			"info": 0,
+			"internalUse": false,
+			"show": false
+		},
+		EmailID: {
 			"internalUse": false,
 			"show": false
 		},
 		nationality: {
-			"id": "",
-			"controlName": "",
-			"info": "",
 			"internalUse": false,
 			"show": false
 		},
 		currentlyBased: {
-			"id": "",
-			"controlName": "",
-			"info": "",
 			"internalUse": false,
 			"show": false
 		},
-		saudiIDNumber: {
-			"id": "",
-			"controlName": "",
-			"info": "",
+		NationalIDNumber: {
 			"internalUse": false,
 			"show": false
 		},
 		dateOfBirth: {
-			"id": "",
-			"controlName": "",
-			"info": "",
 			"internalUse": false,
 			"show": false
 		},
 		gender: {
-			"id": "",
-			"controlName": "",
-			"info": 0,
 			"internalUse": false,
 			"show": false
 		},
 		education: {
-			"id": "",
-			"controlName": "",
-			"info": "",
 			"internalUse": false,
 			"show": false
 		},
 		experience: {
-			"id": "",
-			"controlName": "",
-			"info": "",
 			"internalUse": false,
 			"show": false
 		},
 		resume: {
-			"id": "",
-			"controlName": "",
-			"info": "",
 			"internalUse": false,
 			"show": false
 		},

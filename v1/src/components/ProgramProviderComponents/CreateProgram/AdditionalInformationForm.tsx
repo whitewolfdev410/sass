@@ -33,16 +33,16 @@ const AdditionalInformationForm = ({setData, data}: Props) => {
 						<label htmlFor="">
 							Program type <span className="text-danger">*</span>
 						</label>
-						<Select name="programType" value="" onChange={onHandleChange}>
-							<MenuItem value="1">Internship</MenuItem>
-							<MenuItem value="2">Job</MenuItem>
-							<MenuItem value="3">Training</MenuItem>
-							<MenuItem value="4">Masterclass</MenuItem>
-							<MenuItem value="5">Webinar</MenuItem>
-							<MenuItem value="6">Course</MenuItem>
-							<MenuItem value="7">Live Seminar</MenuItem>
-							<MenuItem value="8">Volunteering</MenuItem>
-							<MenuItem value="9">Other</MenuItem>
+						<Select name="programType" value={data?.programType} onChange={onHandleChange}>
+							<MenuItem value={1}>Internship</MenuItem>
+							<MenuItem value={2}>Job</MenuItem>
+							<MenuItem value={3}>Training</MenuItem>
+							<MenuItem value={4}>Masterclass</MenuItem>
+							<MenuItem value={5}>Webinar</MenuItem>
+							<MenuItem value={6}>Course</MenuItem>
+							<MenuItem value={7}>Live Seminar</MenuItem>
+							<MenuItem value={8}>Volunteering</MenuItem>
+							<MenuItem value={9}>Other</MenuItem>
 						</Select>
 					</FormControl>
 
@@ -105,14 +105,14 @@ const AdditionalInformationForm = ({setData, data}: Props) => {
 					{/* Min qualifications  */}
 					<FormControl sx={{ my: 2, maxWidth: "300px" }}>
 						<label htmlFor="">Min qualifications</label>
-						<Select value="" onChange={onHandleChange} name="minQualification">
-							<MenuItem value="High School">High School</MenuItem>
-							<MenuItem value="College">College</MenuItem>
-							<MenuItem value="Graduate">Graduate</MenuItem>
-							<MenuItem value="University">University</MenuItem>
-							<MenuItem value="Masters">Masters</MenuItem>
-							<MenuItem value="Ph.D">Ph.D</MenuItem>
-							<MenuItem value="Any">Any</MenuItem>
+						<Select value={data?.minQualification} onChange={onHandleChange} name="minQualification">
+							<MenuItem value={1}>High School</MenuItem>
+							<MenuItem value={2}>College</MenuItem>
+							<MenuItem value={3}>Graduate</MenuItem>
+							<MenuItem value={4}>University</MenuItem>
+							<MenuItem value={5}>Masters</MenuItem>
+							<MenuItem value={6}>Ph.D</MenuItem>
+							<MenuItem value={7}>Any</MenuItem>
 						</Select>
 					</FormControl>
 

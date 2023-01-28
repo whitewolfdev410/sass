@@ -24,18 +24,20 @@ const PersonalInformationForm = ({setApplicationData, applicationData}: Props) =
 			<Stack direction="row" columnGap={4}>
 				<FormControl sx={{ my: 2 }} fullWidth>
 					<label>First Name</label>
-					<TextField placeholder="Type here" name="firstName" onChange={handleOnChange}/>
+					<TextField placeholder="Type here" disabled name="firstName" onChange={handleOnChange}/>
 				</FormControl>
 
 				<FormControl sx={{ my: 2 }} fullWidth>
 					<label>Last Name</label>
-					<TextField placeholder="Type here" name="lastName" onChange={handleOnChange}/>
+					<TextField placeholder="Type here" disabled name="lastName" onChange={handleOnChange}/>
 				</FormControl>
 			</Stack>
 
 			<InputGroupInternal
-				label="Email"
-				input={<TextField placeholder="Type here" type="email" name="email" onChange={handleOnChange}/>}
+				label="EmailID"
+				name="EmailID"
+				setApplicationData={setApplicationData} applicationData={applicationData}
+				input={<TextField disabled placeholder="Type here" type="email" name="EmailID" onChange={handleChange}/>}
 				internal={false}
 				show={false}
 			/>
@@ -50,7 +52,7 @@ const PersonalInformationForm = ({setApplicationData, applicationData}: Props) =
 				show={false}
 				name="phone"
 				setApplicationData={setApplicationData} applicationData={applicationData}
-				input={<TextField placeholder="Type here" name="phone" onChange={handleChange}/>}
+				input={<TextField disabled placeholder="Type here" name="phone" onChange={handleChange}/>}
 			/>
 
 			<InputGroupInternal label="Nationality"
@@ -58,17 +60,18 @@ const PersonalInformationForm = ({setApplicationData, applicationData}: Props) =
 								show={false}
 								name="nationality"
 								setApplicationData={setApplicationData} applicationData={applicationData}
-								input={<TextField placeholder="Type here" name="nationality" onChange={handleChange}/>}
+								input={<TextField disabled placeholder="Type here" name="nationality" onChange={handleChange}/>}
 			/>
 
 			<InputGroupInternal
-				label="Currently based"
+				label="Country of residence"
 				internal={false}
 				show={false}
 				name="currentlyBased"
 				setApplicationData={setApplicationData} applicationData={applicationData}
 				input={
 					<TextField
+						disabled
 						name="currentlyBased" onChange={handleChange}
 						placeholder="Select location"
 						type="email"
@@ -82,16 +85,16 @@ const PersonalInformationForm = ({setApplicationData, applicationData}: Props) =
 			<InputGroupInternal label="Saudi ID number"
 								internal={false}
 								show={false}
-								name="saudiIDNumber"
+								name="NationalIDNumber"
 								setApplicationData={setApplicationData} applicationData={applicationData}
-								input={<TextField placeholder="Please type your number here" name="saudiIDNumber" onChange={handleChange}/>}
+								input={<TextField disabled placeholder="Please type your number here" name="NationalIDNumber" onChange={handleChange}/>}
 			/>
 			<InputGroupInternal label="Date of birth"
 								internal={false}
 								show={false}
 								name="dateOfBirth"
 								setApplicationData={setApplicationData} applicationData={applicationData}
-								input={<TextField placeholder="Type here" type="date" name="dateOfBirth" onChange={handleChange}/>}
+								input={<TextField disabled placeholder="Type here" type="date" name="dateOfBirth" onChange={handleChange}/>}
 			/>
 
 			<InputGroupInternal label="Gender"
@@ -99,7 +102,7 @@ const PersonalInformationForm = ({setApplicationData, applicationData}: Props) =
 								show={false}
 								name="gender"
 								setApplicationData={setApplicationData} applicationData={applicationData}
-								input={<TextField placeholder="Type here" name="gender" onChange={handleChange}/>}
+								input={<TextField disabled placeholder="Type here" name="gender" onChange={handleChange}/>}
 			/>
 
 			<Typography fontSize={12} sx={{ color: "var(--spanish-grey)" }}>

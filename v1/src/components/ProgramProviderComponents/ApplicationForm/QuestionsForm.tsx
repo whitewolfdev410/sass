@@ -24,7 +24,7 @@ const QuestionsForm = ({setApplicationData, applicationData}: Props) => {
 			question: "Please select the year of graduation from the dropdown below",
 		},
 		{
-			type: "Yes/No",
+			type: "YesNo",
 			question: "Have you ever been rejected by the UK embassy?",
 		},
 	]);

@@ -16,13 +16,13 @@ const CreateProgram = () => {
 		keySkills: "",
 		benefits: "",
 		criteria: "",
-		programType: 0,
+		programType: 1,
 		programStartDate: "",
 		applicationOpenDate: "",
 		applicationCloseDate: "",
 		duration: "",
 		location: "",
-		minQualification: 0,
+		minQualification: 1,
 		maxApplications: 0,
 	});
 	const dispatch = useAppDispatch();
@@ -41,7 +41,12 @@ const CreateProgram = () => {
 			{/* Create program form */}
 			<CreateProgramForm setData={setData} data={data}/>
 
-			<Typography component="h4" fontSize="25px" fontWeight={600} sx={{ ml: { lg: 25 }, my: 4 }}>
+			<Typography sx={{
+				width: { lg: "967px" },
+				p: 5,
+				mx: "auto",
+				my: 4
+			}} component="h4" fontSize="25px" fontWeight={600}>
 				Additional program information
 			</Typography>
 
