@@ -29,6 +29,19 @@ body {
   display: grid;
   place-self: center;
 }
+.auth-candidate {
+  --scale: 0.8;
+
+  width: 558px;
+  max-width: 90%;
+  max-height: fit-content;
+  padding: 49px 74px 79px 51px;
+  background-color: white;
+  box-shadow: var(--shadow-1);
+  box-sizing: border-box;
+  display: grid;
+  place-self: center;
+}
 .auth-wrapper label {
   font-size: 15px;
   font-weight: 700;

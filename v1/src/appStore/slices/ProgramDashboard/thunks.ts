@@ -40,7 +40,7 @@ export const saveNewProgramDetails = createAsyncThunk(
 	"programDashboard/saveDetails",
 	async ({ data }: { data: ProgramDetailsType }) => {
 		try {
-			const response = await PROGRAM_CLIENT.post(`/api/ProgramDashboard/SaveProgramDetails`, data, {
+			const response = await PROGRAM_CLIENT.post(`ProgramDashboard/SaveProgramDetails`, data, {
 				headers: {
 					accept: "*/*",
 				},
@@ -56,8 +56,9 @@ export const saveNewProgramDetails = createAsyncThunk(
 );
 export const saveNewProgramApplicationTemplate = createAsyncThunk(
 	"programDashboard/saveAppTemplate",
-	async ({ data }: { data: ApplicationFormTemplateType }) => {
+	async ({ data, programId }: { data: ApplicationFormTemplateType, programId: string }) => {
 		try {
+			data.programGUID = programId
 			const response = await PROGRAM_CLIENT.post(`ProgramDashboard/SaveApplicationFormTemplate`, data, {
 				headers: {
 					accept: "*/*",

@@ -25,7 +25,7 @@ const StageGroupList = ({ stages }: { stages: string[] }) => {
 					},
 				}}>
 				<ButtonGroup variant="text" sx={{ minWidth: "100%" }} color="inherit">
-					{stages.map((stage) => (
+					{stages?.map((stage) => (
 						<Button sx={{ px: 2, py: 0.5, maxWidth: "180px", minWidth: "100px" }}>{stage}</Button>
 					))}
 				</ButtonGroup>

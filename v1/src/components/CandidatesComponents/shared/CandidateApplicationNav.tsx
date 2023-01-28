@@ -64,19 +64,19 @@ const CandidateApplicationNav = ({ completed }: { completed?: 1 | 2 | 3 }) => {
 			}}>
 			<CustomLink
 				completed={(completed && completed >= 1) || false}
-				href="/candidate/dashboard/apply"
+				href="/candidate/apply/program-application"
 				label="Program Application"
 			/>
 			<Divider orientation="vertical" variant="middle" />
 			<CustomLink
 				completed={(completed && completed >= 2) || false}
-				href="/candidate/dashboard/create-account"
+				href="/candidate/apply/create-account"
 				label="Create your account"
 			/>
 			<Divider orientation="vertical" variant="middle" />
 			<CustomLink
 				completed={(completed && completed >= 3) || false}
-				href="/candidate/dashboard/program-status"
+				href="/candidate/apply/program-status"
 				label="View program status"
 			/>
 		</Stack>

@@ -1,15 +1,32 @@
 import { Divider } from "@mui/material";
-import { InputGroupMandatory } from "..";
+import {InputGroupInternal, InputGroupMandatory} from "..";
 import { ApplicationFormCard } from "../..";
 
-const ProfileForm = () => {
+export type Props = {
+	setApplicationData?: any;
+	applicationData?: any;
+};
+
+const ProfileForm = ({setApplicationData, applicationData}: Props) => {
 	return (
 		<ApplicationFormCard title="Profile">
-			<InputGroupMandatory label="Education" />
+			<InputGroupMandatory label="Education"
+								 mandatory={false}
+								 show={false}
+								 name="education"
+								 setApplicationData={setApplicationData} applicationData={applicationData}/>
 			<Divider />
-			<InputGroupMandatory label="Experience" mandatory show />
+			<InputGroupMandatory label="Experience"
+								 mandatory={false}
+								 show={false}
+								 name="experience"
+								 setApplicationData={setApplicationData} applicationData={applicationData}/>
 			<Divider />
-			<InputGroupMandatory label="Resume" />
+			<InputGroupMandatory label="Resume"
+								 mandatory={false}
+								 show={false}
+								 name="resume"
+								 setApplicationData={setApplicationData} applicationData={applicationData}/>
 		</ApplicationFormCard>
 	);
 };

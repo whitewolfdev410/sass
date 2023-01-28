@@ -151,6 +151,13 @@ export type StageType = {
 	stageType: number;
 };
 
+export type workFlowType = {
+	programID: string,
+	stageName: string,
+	stageType: number,
+	stageShownToCandidate: boolean
+};
+
 export type WorkflowType = {
 	programID: string | number;
 	applied: number;

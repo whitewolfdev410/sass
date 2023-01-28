@@ -7,9 +7,12 @@ type Props = {
 	label: React.ReactNode;
 	internal?: boolean;
 	show?: boolean;
+	setApplicationData?: any;
+	applicationData?: any;
+	name?: string;
 };
 
-const InternalShowGroup = ({ input, label, internal = true, show = true }: Props) => {
+const InternalShowGroup = ({ input, label, internal = true, show = true, setApplicationData, applicationData, name }: Props) => {
 	let [internalUse, setinternalUse] = useState(internal);
 	let [showState, setShowState] = useState(show);
 
@@ -28,8 +31,9 @@ const InternalShowGroup = ({ input, label, internal = true, show = true }: Props
 							<Checkbox
 								checked={internalUse}
 								color="success"
-								onClick={() => {
+								onChange={(event) => {
 									setinternalUse((prev) => !prev);
+									setApplicationData({...applicationData, [`${name}`] : {...applicationData[`${name}`], internalUse:  event.target.checked}})
 								}}
 							/>
 						}
@@ -40,8 +44,9 @@ const InternalShowGroup = ({ input, label, internal = true, show = true }: Props
 							<Switch
 								checked={showState}
 								color="success"
-								onClick={() => {
+								onChange={(event) => {
 									setShowState((prev) => !prev);
+									setApplicationData({...applicationData, [`${name}`] : {...applicationData[`${name}`], show:  event.target.checked}})
 								}}
 							/>
 						}
