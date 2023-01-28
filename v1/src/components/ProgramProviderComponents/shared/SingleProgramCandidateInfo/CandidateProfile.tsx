@@ -1,8 +1,53 @@
-import { Box, Stack, Grid, Checkbox, FormControlLabel, Typography } from "@mui/material";
+import React, { useState, useRef } from "react";
+import {
+	Box,
+	Stack,
+	Grid,
+	Checkbox,
+	FormControlLabel,
+	Typography,
+} from "@mui/material";
 import ActionCard from "../ActionCard";
 import pencil from "../../../../assets/downloadImgjul.png";
+import MyPdfViewer from "./MyPdfViewer";
+import { Document, Page, pdfjs } from "react-pdf";
+// import taskPDF from "https://www.nypl.org/sites/default/files/Learn_ESOL_Aug_2010.pdf";
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
+const options = {
+	cMapUrl: "cmaps/",
+	cMapPacked: true,
+	standardFontDataUrl: "standard_fonts/",
+};
 const CandidateProfile = () => {
+	const fileInputRef = useRef<HTMLInputElement>(null);
+	const [file, setFile] = useState<any>({
+		lastModified: 1627896209000,
+		name: "Task.pdf",
+		size: 800554,
+		type: "application/pdf",
+		webkitRelativePath: "",
+	});
+	const [numPages, setNumPages] = useState(null);
+	const onFileChange = (event: any) => {
+		console.log("aaaa===", event.target.files[0]);
+		setFile(event.target.files[0]);
+	};
+
+	// console.log(taskPDF);
+
+	const handleFileUpload = () => {
+		if (fileInputRef.current) {
+			fileInputRef.current.click();
+		}
+	};
+
+	const onDocumentLoadSuccess = ({ numPages: nextNumPages }: any) => {
+		setNumPages(nextNumPages);
+	};
+	const handleDownload = () => {
+		window.open(file);
+	};
 	return (
 		<Box
 			sx={{
@@ -28,7 +73,9 @@ const CandidateProfile = () => {
 				marginBottom="20px">
 				{/* action cards */}
 				{/* Contact information */}
-				<ActionCard editable title="Aaliyah Samdi">
+				<ActionCard
+					editable
+					title="Aaliyah Samdi">
 					<Stack
 						direction="row"
 						sx={{
@@ -67,7 +114,9 @@ const CandidateProfile = () => {
 					</Stack>
 				</ActionCard>{" "}
 				{/* Personal Information */}
-				<ActionCard editable title="Personal Information">
+				<ActionCard
+					editable
+					title="Personal Information">
 					<Stack
 						direction="row"
 						sx={{
@@ -129,7 +178,9 @@ const CandidateProfile = () => {
 				marginBottom="20px">
 				{/* action cards */}
 
-				<ActionCard editable title="Education">
+				<ActionCard
+					editable
+					title="Education">
 					<Stack
 						sx={{
 							display: "grid",
@@ -155,7 +206,9 @@ const CandidateProfile = () => {
 					</Stack>
 				</ActionCard>
 
-				<ActionCard editable title="Experience">
+				<ActionCard
+					editable
+					title="Experience">
 					<Stack
 						direction="row"
 						sx={{
@@ -206,7 +259,21 @@ const CandidateProfile = () => {
 								justifyContent: "space-between",
 								margin: "auto 0 auto",
 							}}>
-							<span style={{ fontSize: "14px", height: "15px", color: "#000" }}>Change CV</span>
+							<span
+								style={{
+									fontSize: "14px",
+									height: "15px",
+									color: "#000",
+								}}
+								onClick={handleFileUpload}>
+								Change CV
+							</span>
+							<input
+								ref={fileInputRef}
+								onChange={onFileChange}
+								type="file"
+								hidden
+							/>
 							<label
 								style={{
 									fontSize: "14px",
@@ -214,11 +281,23 @@ const CandidateProfile = () => {
 									color: "#000",
 									marginRight: "10px",
 									cursor: "pointer",
+									display: "flex",
 								}}
 								htmlFor="downloadImg">
-								Download <img style={{ margin: "0 4px" }} src={pencil} alt="" width="15%" />
+								Download{" "}
+								<img
+									style={{ margin: "0 4px" }}
+									src={pencil}
+									alt=""
+									width="15%"
+								/>
 							</label>
-							<input hidden id="downloadImg" type="file" />
+							<input
+								hidden
+								id="downloadImg"
+								type="button"
+								onClick={handleDownload}
+							/>
 						</div>
 					</div>
 					<hr
@@ -230,27 +309,25 @@ const CandidateProfile = () => {
 						}}
 					/>
 					<div
+						className="Example__container__document"
 						style={{
-							padding: "10px 20px",
-							fontSize: "12px",
-							marginLeft: "4rem",
+							overflow: "auto",
+							height: 200,
+							marginBottom: 11,
+							marginLeft: 10,
 						}}>
-						<div style={{ color: "#000" }}>
-							<Typography variant="h2" sx={{ margin: "1rem 0" }}>
-								[Your Name]
-							</Typography>
-						</div>
-						<div>
-							<Typography variant="h3" sx={{ margin: "2rem 0 0.6rem  0" }}>
-								Objective
-							</Typography>
-							<Typography variant="h5" sx={{ marginBottom: "1rem" }}>
-								Lorem ipsum dolor sit amet consectetur adipisicing elit. Non repudiandae necessitatibus minima labore,
-								eaque nemo ipsam quas amet natus quo voluptas voluptatibus ducimus, odit porro animi autem aperiam
-								tempore odio. Eius ea quos cum ut unde repudiandae aperiam repellendus quo eveniet culpa eaque,
-								voluptatem distinctio molestias
-							</Typography>
-						</div>
+						<Document
+							file={"http://localhost:3000/Task.pdf"}
+							onLoadSuccess={onDocumentLoadSuccess}
+							options={options}
+							onLoadError={console.error}>
+							{Array.from(new Array(numPages), (el, index) => (
+								<Page
+									key={`page_${index + 1}`}
+									pageNumber={index + 1}
+								/>
+							))}
+						</Document>
 					</div>
 				</div>
 			</Stack>
@@ -296,8 +373,14 @@ const CandidateProfile = () => {
 							fontSize: "12px",
 						}}>
 						<div style={{ color: "#A5A5A5" }}>
-							<p style={{ marginBottom: "0" }}>Are you a fresh graduate and completed your studies in 2021 or 2022?</p>
-							<FormControlLabel control={<Checkbox defaultChecked />} label="Yes" />
+							<p style={{ marginBottom: "0" }}>
+								Are you a fresh graduate and completed your studies in 2021 or
+								2022?
+							</p>
+							<FormControlLabel
+								control={<Checkbox defaultChecked />}
+								label="Yes"
+							/>
 						</div>
 					</div>
 
