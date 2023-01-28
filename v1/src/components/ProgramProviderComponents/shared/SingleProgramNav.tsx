@@ -1,4 +1,11 @@
-import { Box, Button, ButtonGroup, Divider, useMediaQuery } from "@mui/material";
+import {
+	Box,
+	Button,
+	ButtonGroup,
+	Divider,
+	Typography,
+	useMediaQuery,
+} from "@mui/material";
 import { ProgramType, WorkflowType } from "../../../types";
 
 const SingleProgramNav = ({ data }: { data: Partial<WorkflowType> }) => {
@@ -6,7 +13,7 @@ const SingleProgramNav = ({ data }: { data: Partial<WorkflowType> }) => {
 	return (
 		<Box
 			sx={{
-				my: 3,
+				my: 4.75,
 				display: "flex",
 				minWidth: "1109px",
 				width: "100%",
@@ -70,7 +77,7 @@ const SingleProgramNav = ({ data }: { data: Partial<WorkflowType> }) => {
 			</Button>
 
 			{data.workflowStagesList?.map((stage) => (
-				<Button>
+				<Button key={stage.stageName}>
 					<span className="stat-info">{stage.stageType}</span>
 					<span className="stat-title">{stage.stageName}</span>
 				</Button>
