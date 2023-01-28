@@ -1,6 +1,6 @@
-import { EditorState, RichUtils, convertToRaw} from "draft-js";
+import { EditorState, RichUtils, convertToRaw } from "draft-js";
 // @ts-ignore
-import draftToHtml from 'draftjs-to-html';
+import draftToHtml from "draftjs-to-html";
 import { useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import BoldIcon from "../../assets/icons/bold.svg";
@@ -36,7 +36,10 @@ const TextEditor = ({ placeholder, height, setData, data, name }: Props) => {
 
 	const onEditorStateChange = (newState: any) => {
 		setEditorState(newState);
-		setData({...data, [`${name}`]: draftToHtml(convertToRaw(newState.getCurrentContent()))})
+		setData({
+			...data,
+			[`${name}`]: draftToHtml(convertToRaw(newState.getCurrentContent())),
+		});
 	};
 
 	return (

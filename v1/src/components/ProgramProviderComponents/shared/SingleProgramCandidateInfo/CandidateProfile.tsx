@@ -21,16 +21,9 @@ const options = {
 };
 const CandidateProfile = () => {
 	const fileInputRef = useRef<HTMLInputElement>(null);
-	const [file, setFile] = useState<any>({
-		lastModified: 1627896209000,
-		name: "Task.pdf",
-		size: 800554,
-		type: "application/pdf",
-		webkitRelativePath: "",
-	});
+	const [file, setFile] = useState<any>("");
 	const [numPages, setNumPages] = useState(null);
 	const onFileChange = (event: any) => {
-		console.log("aaaa===", event.target.files[0]);
 		setFile(event.target.files[0]);
 	};
 
@@ -51,7 +44,6 @@ const CandidateProfile = () => {
 	return (
 		<Box
 			sx={{
-				p: 2,
 				paddingTop: "60px",
 				width: "100%",
 			}}>
@@ -67,6 +59,11 @@ const CandidateProfile = () => {
 						border: "none",
 						outline: "none",
 						backgroundColor: "transparent",
+					},
+					"div:first-of-type > div:first-of-type > p:first-of-type": {
+						fontSize: "20px !important",
+						fontWeight: 700,
+						color: "black",
 					},
 				}}
 				gap={4}

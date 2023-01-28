@@ -18,14 +18,14 @@ const SingleProgram = () => {
 		<SidebarLayout>
 			<Box
 				className="content-wrapper"
-				sx={{ mx: 0, paddingLeft: "44px" }}>
+				sx={{ mx: 0 }}>
 				<SingleProgramTitle />
 				<SingleProgramNav data={data} />
 				<Stack
 					direction="row"
 					gap={2}>
 					<SingleProgramSidebar />
-					<Box sx={{ width: "100%" }}>
+					<Box sx={{ minWidth: 0 }}>
 						<SingleProgramCandidateInfo />
 					</Box>
 				</Stack>

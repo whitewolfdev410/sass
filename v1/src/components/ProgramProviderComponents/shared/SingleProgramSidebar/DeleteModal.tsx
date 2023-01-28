@@ -20,14 +20,14 @@ import CancelIcon from "@mui/icons-material/Cancel";
 
 const style = {
 	position: "absolute" as "absolute",
-	// top: "5%",
 	left: "50%",
 	transform: "translateX(-50%)",
 	bgcolor: "background.paper",
-	width: "60%",
-	p: 4,
+	width: "708px",
+	p: "30px 33px 50px 50px",
 	borderRadius: "20px",
 	boxShadow: "0px 0px 33px rgba(190, 190, 190, 0.5)",
+	top: "5%",
 };
 
 const DeleteModal = (openProp: any) => {
@@ -51,13 +51,18 @@ const DeleteModal = (openProp: any) => {
 					display: "block",
 				}}>
 				<Box sx={style}>
-					<span onClick={handleClose}>
-						<CancelIcon sx={{ float: "right" }} />
-					</span>
+					<Stack>
+						<span onClick={handleClose}>
+							<CancelIcon sx={{ float: "right" }} />
+						</span>
+					</Stack>
 					<Stack>
 						<Typography
-							variant="h4"
-							sx={{ fontWeight: "bold" }}>
+							sx={{
+								fontFamily: "Poppins",
+								fontWeight: 700,
+								fontSize: "13px",
+							}}>
 							Locations
 						</Typography>
 						<TextField
@@ -87,8 +92,11 @@ const DeleteModal = (openProp: any) => {
 								item
 								xs={5}>
 								<Typography
-									variant="h4"
-									sx={{ fontWeight: "bold" }}>
+									sx={{
+										fontFamily: "Poppins",
+										fontWeight: 700,
+										fontSize: "13px",
+									}}>
 									Example of yes or no question filter
 								</Typography>
 								<FormControlLabel
@@ -118,8 +126,11 @@ const DeleteModal = (openProp: any) => {
 								item
 								xs={7}>
 								<Typography
-									variant="h4"
-									sx={{ fontWeight: "bold" }}>
+									sx={{
+										fontFamily: "Poppins",
+										fontWeight: 700,
+										fontSize: "13px",
+									}}>
 									Example of yes or no question filter
 								</Typography>
 								<Stack direction="column">
@@ -162,8 +173,11 @@ const DeleteModal = (openProp: any) => {
 					</Stack>
 					<Stack>
 						<Typography
-							variant="h4"
-							sx={{ fontWeight: "bold" }}>
+							sx={{
+								fontFamily: "Poppins",
+								fontWeight: 700,
+								fontSize: "13px",
+							}}>
 							If the dropdown which allow you to select multiple answers
 						</Typography>
 						<TextField
@@ -189,8 +203,11 @@ const DeleteModal = (openProp: any) => {
 					</Stack>
 					<Stack>
 						<Typography
-							variant="h4"
-							sx={{ fontWeight: "bold" }}>
+							sx={{
+								fontFamily: "Poppins",
+								fontWeight: 700,
+								fontSize: "13px",
+							}}>
 							Example of number question, filter between the value
 						</Typography>
 						<Stack
@@ -228,8 +245,11 @@ const DeleteModal = (openProp: any) => {
 					</Stack>
 					<Stack spacing={2}>
 						<Typography
-							variant="h4"
-							sx={{ fontWeight: "bold" }}>
+							sx={{
+								fontFamily: "Poppins",
+								fontWeight: 700,
+								fontSize: "13px",
+							}}>
 							Date range filter, show the calendar to filter between two
 						</Typography>
 						<LocalizationProvider
@@ -259,22 +279,18 @@ const DeleteModal = (openProp: any) => {
 					</Stack>
 					<Stack
 						spacing={2}
-						sx={{ mt: "20px" }}>
-						<Typography variant="h2">Evaluation Filter</Typography>
-						<hr
-							style={{
-								border: "1px solid #B5B5B5",
-								height: "0px",
-								width: "100%",
-								color: "#B5B5B5",
-							}}
-						/>
+						sx={{ mt: "57px" }}>
+						<Typography
+							sx={{ fontSize: "24px", fontWeight: 700, fontFamily: "Poppins" }}>
+							Evaluation Filter
+						</Typography>
 						<Box
 							sx={{
 								">*": {
 									display: "flex",
 									gridTemplateColumns: "2fr 3fr",
 									mb: 2,
+									mt: "50px",
 									alignItems: "center",
 								},
 							}}>

@@ -14,8 +14,8 @@ const style = {
 	left: "50%",
 	transform: "translate(-50%, -50%)",
 	bgcolor: "background.paper",
-	width: "60%",
-	p: 4,
+	width: "802px",
+	p: "40px 46px 40px 43px",
 	borderRadius: "20px",
 	boxShadow: "0px 0px 33px rgba(190, 190, 190, 0.5)",
 };
@@ -36,9 +36,11 @@ const RejectModal = (openProp: any) => {
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description">
 				<Box sx={style}>
-					<span onClick={handleClose}>
-						<CancelIcon sx={{ float: "right" }} />
-					</span>
+					<Stack>
+						<span onClick={handleClose}>
+							<CancelIcon sx={{ float: "right" }} />
+						</span>
+					</Stack>
 					<Stack>
 						<Typography variant="h2">
 							Record why you are bulk rejecting
@@ -69,7 +71,9 @@ const RejectModal = (openProp: any) => {
 							*rejection reasons will not be shared with the application
 						</Typography>
 					</Stack>
-					<Stack spacing={2}>
+					<Stack
+						spacing={2}
+						sx={{ marginTop: "23px" }}>
 						<Typography variant="h2">Additional note</Typography>
 						<textarea
 							name=""
@@ -88,7 +92,15 @@ const RejectModal = (openProp: any) => {
 						spacing={2}
 						justifyContent="end">
 						<Button>Cancel</Button>
-						<Button sx={{ background: "red", color: "white" }}>Reject</Button>
+						<Button
+							sx={{
+								background: "red",
+								color: "white",
+								width: "153px",
+								height: "41px",
+							}}>
+							Reject
+						</Button>
 					</Stack>
 				</Box>
 			</Modal>
