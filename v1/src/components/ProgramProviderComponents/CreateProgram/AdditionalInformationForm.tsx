@@ -1,6 +1,16 @@
 import { Box, Select, FormControl, TextField, MenuItem, Radio, Divider, FormControlLabel, Stack } from "@mui/material";
 
-const AdditionalInformationForm = () => {
+export type Props = {
+	setData?: any;
+	data?: any;
+};
+
+const AdditionalInformationForm = ({setData, data}: Props) => {
+
+	const onHandleChange = (event: any) => {
+		setData({...data, [event.target.name] : event.target.value})
+	};
+
 	return (
 		<Box
 			sx={{
@@ -23,23 +33,23 @@ const AdditionalInformationForm = () => {
 						<label htmlFor="">
 							Program type <span className="text-danger">*</span>
 						</label>
-						<Select value="">
-							<MenuItem value="Internship">Internship</MenuItem>
-							<MenuItem value="Job">Job</MenuItem>
-							<MenuItem value="Training">Training</MenuItem>
-							<MenuItem value="Masterclass">Masterclass</MenuItem>
-							<MenuItem value="Webinar">Webinar</MenuItem>
-							<MenuItem value="Course">Course</MenuItem>
-							<MenuItem value="Live Seminar">Live Seminar</MenuItem>
-							<MenuItem value="Volunteering">Volunteering</MenuItem>
-							<MenuItem value="Other">Other</MenuItem>
+						<Select name="programType" value={data?.programType} onChange={onHandleChange}>
+							<MenuItem value={1}>Internship</MenuItem>
+							<MenuItem value={2}>Job</MenuItem>
+							<MenuItem value={3}>Training</MenuItem>
+							<MenuItem value={4}>Masterclass</MenuItem>
+							<MenuItem value={5}>Webinar</MenuItem>
+							<MenuItem value={6}>Course</MenuItem>
+							<MenuItem value={7}>Live Seminar</MenuItem>
+							<MenuItem value={8}>Volunteering</MenuItem>
+							<MenuItem value={9}>Other</MenuItem>
 						</Select>
 					</FormControl>
 
 					{/* Program start */}
 					<FormControl sx={{ my: 2, maxWidth: "300px" }}>
 						<label>Program start</label>
-						<TextField type="date" />
+						<TextField type="date" onChange={onHandleChange} name="programStartDate"/>
 					</FormControl>
 
 					{/* Application open  */}
@@ -47,7 +57,7 @@ const AdditionalInformationForm = () => {
 						<label>
 							Application open <span className="text-danger">*</span>
 						</label>
-						<TextField type="date" />
+						<TextField type="date" onChange={onHandleChange} name="applicationOpenDate"/>
 					</FormControl>
 
 					{/* Application close */}
@@ -55,13 +65,13 @@ const AdditionalInformationForm = () => {
 						<label>
 							Application close <span className="text-danger">*</span>
 						</label>
-						<TextField type="date" />
+						<TextField type="date" onChange={onHandleChange} name="applicationCloseDate"/>
 					</FormControl>
 
 					{/* Duration */}
 					<FormControl sx={{ my: 2, maxWidth: "300px" }}>
 						<label>Duration</label>
-						<TextField placeholder="6 Months" />
+						<TextField placeholder="6 Months" onChange={onHandleChange} name="duration"/>
 					</FormControl>
 
 					{/* Program location * */}
@@ -70,6 +80,7 @@ const AdditionalInformationForm = () => {
 							Program location <span className="text-danger">*</span>
 						</label>
 						<TextField
+							onChange={onHandleChange} name="location"
 							placeholder="London, UK"
 							sx={{
 								".MuiInputBase-input": {
@@ -94,21 +105,21 @@ const AdditionalInformationForm = () => {
 					{/* Min qualifications  */}
 					<FormControl sx={{ my: 2, maxWidth: "300px" }}>
 						<label htmlFor="">Min qualifications</label>
-						<Select value="">
-							<MenuItem value="High School">High School</MenuItem>
-							<MenuItem value="College">College</MenuItem>
-							<MenuItem value="Graduate">Graduate</MenuItem>
-							<MenuItem value="University">University</MenuItem>
-							<MenuItem value="Masters">Masters</MenuItem>
-							<MenuItem value="Ph.D">Ph.D</MenuItem>
-							<MenuItem value="Any">Any</MenuItem>
+						<Select value={data?.minQualification} onChange={onHandleChange} name="minQualification">
+							<MenuItem value={1}>High School</MenuItem>
+							<MenuItem value={2}>College</MenuItem>
+							<MenuItem value={3}>Graduate</MenuItem>
+							<MenuItem value={4}>University</MenuItem>
+							<MenuItem value={5}>Masters</MenuItem>
+							<MenuItem value={6}>Ph.D</MenuItem>
+							<MenuItem value={7}>Any</MenuItem>
 						</Select>
 					</FormControl>
 
 					{/* Max number of application */}
 					<FormControl sx={{ my: 2, maxWidth: "300px" }}>
 						<label>Max number of application</label>
-						<TextField placeholder="20,000" />
+						<TextField placeholder="20,000" type="number" onChange={onHandleChange} name="maxApplications"/>
 					</FormControl>
 				</Box>
 			</form>

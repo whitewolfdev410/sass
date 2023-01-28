@@ -6,9 +6,12 @@ type Props = {
 	label: React.ReactNode;
 	mandatory?: boolean;
 	show?: boolean;
+	setApplicationData?: any;
+	applicationData?: any;
+	name?: string;
 };
 
-const InputGroupMandatory = ({ label, mandatory, show }: Props) => {
+const InputGroupMandatory = ({ label, mandatory, show, setApplicationData, applicationData, name }: Props) => {
 	let [mandatoryState, setMandatoryState] = useState(mandatory);
 	let [showState, setShowState] = useState(show);
 	return (
@@ -26,8 +29,9 @@ const InputGroupMandatory = ({ label, mandatory, show }: Props) => {
 						<Checkbox
 							checked={mandatoryState}
 							color="success"
-							onClick={() => {
+							onChange={(event) => {
 								setMandatoryState((prev) => !prev);
+								setApplicationData({...applicationData, [`${name}`] : {...applicationData[`${name}`], internalUse:  event.target.checked}})
 							}}
 						/>
 					}
@@ -38,8 +42,9 @@ const InputGroupMandatory = ({ label, mandatory, show }: Props) => {
 						<Switch
 							checked={showState}
 							color="success"
-							onClick={() => {
+							onChange={(event) => {
 								setShowState((prev) => !prev);
+								setApplicationData({...applicationData, [`${name}`] : {...applicationData[`${name}`], show:  event.target.checked}})
 							}}
 						/>
 					}

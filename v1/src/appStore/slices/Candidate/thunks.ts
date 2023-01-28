@@ -67,3 +67,19 @@ export const getCandidateByID = createAsyncThunk("candidate/getOne", async ({ id
 		}
 	}
 });
+
+export const checkCandidateEmail = createAsyncThunk("candidate/checkCandidateEmailExists", async ({ emailID }: { emailID: string }) => {
+	try {
+		let response = await USER_CLIENT.get(`Candidate/CheckCandidateEmailExists?emailID=${emailID}`, {
+			headers: {
+				accept: "*/*",
+			},
+		});
+		return response.data;
+	} catch (err: any) {
+		let error: AxiosError<any> = err;
+		if (!error.response) {
+			console.log(err);
+		}
+	}
+});

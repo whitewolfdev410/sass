@@ -1,7 +1,8 @@
+import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import { FormControl, FormControlLabel, Checkbox, Input, Typography, Stack, Button, Grid } from "@mui/material";
 import { AuthPageLayout } from "../../components";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { useState } from "react";
 import { useAppDispatch, programProviderSignup as signup } from "../../appStore";
 import { ProgramProviderType } from "../../types";
 
@@ -11,6 +12,7 @@ import { ProgramProviderType } from "../../types";
 
 const Signup = () => {
 	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
 
 	const [form, setForm] = useState<ProgramProviderType>({
 		programProviderID: 0,
@@ -33,42 +35,43 @@ const Signup = () => {
 
 			<form
 				action=""
-				onSubmit={(e) => {
+				onSubmit={async (e) => {
 					e.preventDefault();
-					dispatch(signup(form));
+					await dispatch(signup(form));
+					navigate('/provider/signin', {replace: true})
 				}}>
 				{/*  */}
 				<Grid container columnSpacing={4}>
 					<Grid item md={6}>
 						<FormControl variant="standard" sx={{ my: 3 }}>
 							<label>First Name*</label>
-							<Input onChange={handleChange} value={form.firstName} name="firstName" required></Input>
+							<Input onChange={handleChange} value={form.firstName} name="firstName" required />
 						</FormControl>
 					</Grid>
 					<Grid item md={6}>
 						<FormControl variant="standard" sx={{ my: 3 }}>
 							<label>Last Name*</label>
-							<Input onChange={handleChange} value={form.lastName} name="lastName" required></Input>
+							<Input onChange={handleChange} value={form.lastName} name="lastName" required/>
 						</FormControl>
 					</Grid>
 				</Grid>
 
 				<FormControl variant="standard" fullWidth sx={{ mt: 3, mb: 1 }}>
 					<label>Email*</label>
-					<Input onChange={handleChange} value={form.email} name="email" required></Input>
+					<Input onChange={handleChange} value={form.email} name="email" required/>
 				</FormControl>
 
 				<Grid container columnSpacing={4}>
 					<Grid item md={6}>
 						<FormControl variant="standard" sx={{ my: 3 }}>
 							<label>Job title</label>
-							<Input onChange={handleChange} value={form.jobTitle} name="jobTitle"></Input>
+							<Input onChange={handleChange} value={form.jobTitle} name="jobTitle"/>
 						</FormControl>
 					</Grid>
 					<Grid item md={6}>
 						<FormControl variant="standard" sx={{ my: 3 }}>
 							<label>Phone number</label>
-							<Input onChange={handleChange} value={form.phoneNumber} name="phoneNumber"></Input>
+							<Input onChange={handleChange} value={form.phoneNumber} name="phoneNumber"/>
 						</FormControl>
 					</Grid>
 				</Grid>
@@ -77,13 +80,13 @@ const Signup = () => {
 					<Grid item md={6}>
 						<FormControl variant="standard" sx={{ my: 3 }}>
 							<label>Password*</label>
-							<Input onChange={handleChange} value={form.userToken} name="userToken" required></Input>
+							<Input onChange={handleChange} value={form.userToken} name="userToken" required />
 						</FormControl>
 					</Grid>
 					<Grid item md={6}>
 						<FormControl variant="standard" sx={{ my: 3 }}>
 							<label>Re enter Password*</label>
-							<Input onChange={handleChange} name="" required></Input>
+							<Input onChange={handleChange} name="" required />
 						</FormControl>
 					</Grid>
 				</Grid>
