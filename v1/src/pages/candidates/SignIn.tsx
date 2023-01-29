@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import {ProgramSummaryCard} from "../../components/CandidatesComponents/shared";
-import {useAppDispatch} from "../../appStore";
+import {candidateLogin, useAppDispatch} from "../../appStore";
 
 const SignIn = () => {
 
@@ -44,9 +44,10 @@ const SignIn = () => {
                     action=""
                     onSubmit={async (e) => {
                         e.preventDefault();
-                        // const response = await dispatch(login(form));
-                        // console.log("response",response);
-                        // navigate('/provider/dashboard', {replace: true})
+                        const response = await dispatch(candidateLogin(form));
+                        console.log("response",response)
+                        localStorage.setItem("login", "true")
+                        navigate('/candidate/dashboard', {replace: true})
                     }}>
                     <FormControl variant="standard" fullWidth sx={{ my: 3 }}>
                         <label>Email*</label>

@@ -8,7 +8,7 @@ const ProgramStatus = () => {
     return (
         <SidebarLayout>
             <Box sx={{mt: "-50px"}}>
-                <CandidateApplicationNav completed={1}/>
+                <CandidateApplicationNav completed={3}/>
             </Box>
             <Box sx={{width: "1144px", maxWidth: "95vw", mx: "auto", my: 2}}>
                 <Typography variant="h1" component="h1" sx={{mb: 3, mt: 12}}>
