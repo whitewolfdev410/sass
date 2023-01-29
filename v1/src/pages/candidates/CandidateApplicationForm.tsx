@@ -85,7 +85,7 @@ const CandidateApplicationForm = () => {
                     <Profile setProfileData={setProfileData} profileData={profileData}/>
                     <Resume setCandidateData={setCandidateData} candidateData={candidateData}/>
                     <AdditionalQuestion/>
-                    <VideoQuestion/>
+                    {/*<VideoQuestion/>*/}
                     <Button
                         onClick={() => onSaveApplication()}
                         variant="contained"
