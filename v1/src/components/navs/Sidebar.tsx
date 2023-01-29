@@ -33,7 +33,7 @@ const Sidebar = (props: Props) => {
 	return (
 		<Box
 			sx={{
-				width: "60px",
+				width: "77px",
 				boxShadow: "var(--shadow-2)",
 				height: {
 					xs: "59px",
@@ -71,7 +71,11 @@ const Sidebar = (props: Props) => {
 					},
 				}}>
 				<Button>
-					<img src={BackIconPrimary} width="24px" height="24px" />
+					<img
+						src={BackIconPrimary}
+						width="24px"
+						height="24px"
+					/>
 				</Button>
 
 				{flag === "true" &&<Button>

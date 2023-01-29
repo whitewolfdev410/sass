@@ -12,9 +12,15 @@ import SearchIcon from "@mui/icons-material/Search";
 import SidebarTabs from "./SidebarTabs";
 import { useState } from "react";
 import CandidateInfo from "./CandidateInfo";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import DropDownComponent from "./DropDownComponent";
 
 const SingleProgramSidebar = () => {
 	const [currentTab, setCurrentTab] = useState<number>(1);
+	const [checked, setChecked] = useState(false);
+	const handleChange = () => {
+		setChecked(!checked);
+	};
 
 	return (
 		<Box
@@ -63,13 +69,20 @@ const SingleProgramSidebar = () => {
 						label="Select all"
 						control={
 							<Checkbox
+								checked={checked}
+								onChange={handleChange}
+								inputProps={{ "aria-label": "controlled" }}
 								sx={{ "&:has(>input:checked)": { color: "#60C69B" } }}
 							/>
 						}
 						sx={{ color: "#B5B5B5", mb: 0 }}
 					/>
+					{checked && <DropDownComponent />}
 
-					<Stack direction="row" gap={3} sx={{ color: "#B5B5B5" }}>
+					<Stack
+						direction="row"
+						gap={3}
+						sx={{ color: "#B5B5B5" }}>
 						<Typography>Filter</Typography>
 						<TuneIcon color="inherit" />
 					</Stack>

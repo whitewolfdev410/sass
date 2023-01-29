@@ -16,16 +16,43 @@ import SingleProgram from "./dashboard/SingleProgram";
 const ProgramProvider = () => {
 	return (
 		<Routes>
-			<Route index element={<Login />} />
-			<Route path="/signin" element={<Login />} />
-			<Route path="/signup" element={<Signup />} />
+			<Route
+				index
+				element={<Login />}
+			/>
+			<Route
+				path="/signin"
+				element={<Login />}
+			/>
+			<Route
+				path="/signup"
+				element={<Signup />}
+			/>
 			<Route path="/dashboard">
-				<Route index element={<AllProgrammes />} />
-				<Route element={<CreateProgram />} path="create-program" />
-				<Route element={<ApplicationForm />} path="application-form" />
-				<Route element={<Workflow />} path="workflow" />
-				<Route element={<Preview />} path="preview" />
-				<Route element={<SingleProgram />} path="program/:id" />
+				<Route
+					index
+					element={<AllProgrammes />}
+				/>
+				<Route
+					element={<CreateProgram />}
+					path="create-program"
+				/>
+				<Route
+					element={<ApplicationForm />}
+					path="application-form"
+				/>
+				<Route
+					element={<Workflow />}
+					path="workflow"
+				/>
+				<Route
+					element={<Preview />}
+					path="preview"
+				/>
+				<Route
+					element={<SingleProgram />}
+					path="program/:id"
+				/>
 			</Route>
 		</Routes>
 	);
