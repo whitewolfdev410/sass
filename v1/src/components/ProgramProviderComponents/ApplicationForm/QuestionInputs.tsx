@@ -18,20 +18,29 @@ import X from "../../../assets/icons/delete-x-danger.svg";
 type Props = {
 	type?: QuestionTypes;
 	typeInput?: boolean;
-	onSave?: (q: QuestionInputType) => void;
+	onSave?: (q: QuestionInputType, o: any) => void;
 	onDelete?: () => void;
+	setNewQuestion?: any
 };
 
-const QuestionInputs = ({ type = "Paragraph", typeInput, onSave, onDelete }: Props) => {
+const QuestionInputs = ({ type = "Paragraph", typeInput, onSave, onDelete, setNewQuestion }: Props) => {
 
-	const [index, setIndex] = useState([1]);
+	const [index, setIndex] = useState([{index: 1, value: ""}]);
 	const [currentQuestion, setCurrentQuestion] = useState<QuestionInputType>({
 		type: type,
 		question: "",
+		disqualify: false,
+		choices: index
 	});
 
 	const onAdd = () => {
-		setIndex(oldArray => [...oldArray,index.length + 1] );
+		setIndex(oldArray => [...oldArray, {index: index.length + 1, value: ""}]);
+	};
+
+	const handleChange = (e: any, i: any) => {
+		let newArr = [...index];
+		newArr[i].value = e.target.value;
+		setIndex(newArr);
 	};
 
 	return (
@@ -75,7 +84,7 @@ const QuestionInputs = ({ type = "Paragraph", typeInput, onSave, onDelete }: Pro
 							index?.map((item, i) => (
 								<Stack direction="row" gap={1} alignItems="center">
 									<ListIcon fontSize="medium"/>
-									<TextField placeholder="Type here" fullWidth/>
+									<TextField placeholder="Type here" fullWidth onChange={(e)=>handleChange(e, i)}/>
 									{(i === (index.length - 1))  && <AddIcon fontSize="medium" onClick={()=>onAdd()}/>}
 								</Stack>
 							))
@@ -85,7 +94,7 @@ const QuestionInputs = ({ type = "Paragraph", typeInput, onSave, onDelete }: Pro
 			) : currentQuestion.type === "YesNo" ? (
 				<FormControlLabel
 					label={<Typography fontSize={15}>Disqualify candidate if the answer is no</Typography>}
-					control={<Checkbox color="success" />}
+					control={<Checkbox color="success" onChange={(e)=>setCurrentQuestion((prev) => ({ ...prev, disqualify: e.target.checked }))}/>}
 					sx={{ my: 2 }}
 				/>
 			) : null}
@@ -106,7 +115,8 @@ const QuestionInputs = ({ type = "Paragraph", typeInput, onSave, onDelete }: Pro
 					color="success"
 					variant="contained"
 					onClick={() => {
-						onSave && onSave(currentQuestion);
+						onSave && onSave(currentQuestion, index);
+						setNewQuestion(false)
 					}}>
 					Save
 				</Button>

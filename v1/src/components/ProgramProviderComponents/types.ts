@@ -11,5 +11,6 @@ export type QuestionTypes =
 export type QuestionInputType = {
 	type: QuestionTypes;
 	question: string;
-	choices?: string[];
+	disqualify?: boolean;
+	choices?: any;
 };

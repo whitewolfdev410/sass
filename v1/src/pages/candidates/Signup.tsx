@@ -57,8 +57,9 @@ const Signup = () => {
 			<form action=""
 				  onSubmit={async (e) => {
 					  e.preventDefault();
-					  await dispatch(candidateSignup(form));
-					  // navigate('/provider/signin', {replace: true})
+					  const response = await dispatch(candidateSignup(form));
+					  console.log("response",response)
+					  navigate('/candidate/dashboard', {replace: true})
 				  }}>
 				{/*  */}
 				<Grid container columnSpacing={4}>

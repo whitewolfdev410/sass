@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useNavigate} from "react-router";
 import {Box, Button, Stack} from "@mui/material";
 import {SidebarLayout} from "../../components";
@@ -8,19 +8,21 @@ import Profile from "../../components/CandidatesComponents/programApplication/pr
 import Resume from "../../components/CandidatesComponents/programApplication/resume";
 import AdditionalQuestion from "../../components/CandidatesComponents/programApplication/additionalQuestion";
 import VideoQuestion from "../../components/CandidatesComponents/programApplication/videoQuestion";
-import {checkCandidateEmail} from "../../appStore/slices";
+import {checkCandidateEmail, getApplicationTemplate, SaveCandidateApplicationForm} from "../../appStore/slices";
 import {useAppDispatch} from "../../appStore";
 
 const CandidateApplicationForm = () => {
 
 	const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const programId = localStorage.getItem("programId");
 
+    const [country, setCountry] = useState("");
     const [candidateData, setCandidateData] = useState({
         firstName: "",
         lastName: "",
         email: "",
-        phone: "",
+        PhoneNumber: "",
         nationality: "",
         currentlyBased: "",
         NationalIDNumber: "",
@@ -30,12 +32,43 @@ const CandidateApplicationForm = () => {
         experience: "",
         resume: "",
     });
+    const [profileData, setProfileData] = useState({
+        candidateEducationListDTO: [],
+        candidateWorkExperienceListDTO: []
+    });
+
+    useEffect(() => {
+        getQuestionList()
+    },[]);
+
+    const getQuestionList = async () => {
+        // @ts-ignore
+        const response = await dispatch(getApplicationTemplate({programID: programId}));
+        console.log("response",response)
+    };
 
     const onSaveApplication = async () => {
-        localStorage.setItem("candidateData", JSON.stringify(candidateData))
+        const data = {
+            programID: programId,
+            firstName: candidateData?.firstName,
+            lastName: candidateData?.lastName,
+            emailID: candidateData?.email,
+            phoneNumber: candidateData?.PhoneNumber,
+            nationality: candidateData?.nationality,
+            currentlyBased: candidateData?.currentlyBased,
+            nationalIDNumber: candidateData?.NationalIDNumber,
+            dateOfBirth: candidateData?.dateOfBirth,
+            gender: candidateData?.gender,
+            educationList: profileData?.candidateEducationListDTO,
+            workExperienceList: profileData?.candidateWorkExperienceListDTO,
+            resume: ""
+        };
+        const candidateResponse = await dispatch(SaveCandidateApplicationForm({ data }));
+        console.log("===============",candidateResponse)
+        localStorage.setItem("candidateData", JSON.stringify(candidateData));
         const response = await dispatch(checkCandidateEmail({emailID: candidateData?.email}));
 		if(response?.payload){
-            navigate('/candidate/apply/signIn', {replace: true})
+            navigate('/candidate/apply/program-status', {replace: true})
 		}else {
             navigate('/candidate/apply/create-account', {replace: true})
 		}
@@ -43,14 +76,14 @@ const CandidateApplicationForm = () => {
 
     return (
         <SidebarLayout>
-            <Box sx={{mt: "-50px"}}>
+            <Box sx={{mt: "-50px"}} className="header">
                 <CandidateApplicationNav completed={1}/>
             </Box>
             <Stack direction="row" flexWrap="wrap" gap={5} className="content-wrapper" justifyContent="space-between">
                 <Box>
-                    <CandidatePersonalInformation setCandidateData={setCandidateData} candidateData={candidateData}/>
-                    <Profile/>
-                    <Resume/>
+                    <CandidatePersonalInformation setCandidateData={setCandidateData} candidateData={candidateData} setCountry={setCountry} country={country}/>
+                    <Profile setProfileData={setProfileData} profileData={profileData}/>
+                    <Resume setCandidateData={setCandidateData} candidateData={candidateData}/>
                     <AdditionalQuestion/>
                     <VideoQuestion/>
                     <Button

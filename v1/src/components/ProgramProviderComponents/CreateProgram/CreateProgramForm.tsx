@@ -57,7 +57,6 @@ const CreateProgramForm = ({setData, data}: Props) => {
 						setData={setData} data={data}
 						placeholder="You can provide all information about the program here. 
 						Please make sure to set the expectation and keep it clear"
-						height="150px"
 					/>
 				</FormControl>
 

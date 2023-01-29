@@ -1,4 +1,7 @@
-import React from 'react';
+import React,{ useMemo } from 'react';
+import Select from 'react-select'
+// @ts-ignore
+import countryList from 'react-select-country-list'
 import {FormControl, Stack, TextField, Typography} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import {ApplicationFormCard} from "../../cards";
@@ -6,9 +9,18 @@ import {ApplicationFormCard} from "../../cards";
 export type Props = {
     setCandidateData?: any;
     candidateData?: any;
+    country?: any;
+    setCountry?: any;
 };
 
-const CandidatePersonalInformation = ({setCandidateData, candidateData}: Props) => {
+const CandidatePersonalInformation = ({setCandidateData, candidateData, country, setCountry}: Props) => {
+
+    const options = useMemo(() => countryList().getData(), [])
+
+    const changeHandler = (value: any) => {
+        setCandidateData({...candidateData, nationality : value?.label})
+        setCountry(value)
+    };
 
     const handleOnChange = (event: any) => {
         setCandidateData({...candidateData, [event.target.name] : event.target.value})
@@ -31,21 +43,21 @@ const CandidatePersonalInformation = ({setCandidateData, candidateData}: Props) 
             <Stack>
                 <FormControl sx={{ my: 2 }} fullWidth>
                     <label>Email</label>
-                    <TextField placeholder="Type here" type="email" name="email" onChange={handleOnChange}/>
+                    <TextField required placeholder="Type here" type="email" name="email" onChange={handleOnChange}/>
                 </FormControl>
             </Stack>
 
             <Stack>
                 <FormControl sx={{ my: 2 }} fullWidth>
-                    <label><span>Phone <Typography fontSize={15}>(without dial code)</Typography></span></label>
-                    <TextField placeholder="Type here" name="phone" onChange={handleOnChange}/>
+                    <label><span>Phone Number <Typography fontSize={15}>(without dial code)</Typography></span></label>
+                    <TextField required placeholder="Type here" name="PhoneNumber" onChange={handleOnChange}/>
                 </FormControl>
             </Stack>
 
             <Stack>
                 <FormControl sx={{ my: 2 }} fullWidth>
                     <label>Nationality</label>
-                    <TextField placeholder="Type here" name="nationality" onChange={handleOnChange}/>
+                    <Select options={options} value={country} onChange={changeHandler}/>
                 </FormControl>
             </Stack>
 
@@ -70,7 +82,7 @@ const CandidatePersonalInformation = ({setCandidateData, candidateData}: Props) 
             <Stack>
                 <FormControl sx={{ my: 2 }} fullWidth>
                     <label>Date of birth</label>
-                    <TextField type="date" placeholder="Type here" name="dateOfBirth" onChange={handleOnChange}/>
+                    <TextField required type="date" placeholder="Type here" name="dateOfBirth" onChange={handleOnChange}/>
                 </FormControl>
             </Stack>
 
