@@ -3,22 +3,33 @@ import {Box, Button, FormControl, Grid, Input, Stack, Typography} from "@mui/mat
 import {CandidateApplicationNav, ProgramSummaryCard} from "../../components/CandidatesComponents/shared";
 import {SidebarLayout} from "../../components/layout";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import {candidateSignup} from "../../appStore/slices";
+import {useAppDispatch} from "../../appStore";
 
 const CreateAccount = () => {
+
+    const dispatch = useAppDispatch();
+    const applicationData = JSON.parse(localStorage.getItem('candidateData') || '[]');
 
     const [form, setForm] = useState({
         userToken: "",
         rePassword: ""
-    })
+    });
 
-    const handleChange = () => {
+    const handleChange = (event: any) => {
+        setForm({...form, [event.target.name]: event.target.value})
+    };
 
+    const onHandleSubmit = async () => {
+        applicationData.userToken = form.userToken;
+        const response = await dispatch(candidateSignup(applicationData));
+        console.log("response",response)
     };
 
     return (
         <SidebarLayout>
             <Box sx={{mt: "-50px"}}>
-                <CandidateApplicationNav completed={1}/>
+                <CandidateApplicationNav completed={2}/>
             </Box>
             <Stack direction="row" flexWrap="wrap" gap={5} mt={20} className="content-wrapper" justifyContent="space-between">
                 <Box className="auth-candidate">
@@ -28,15 +39,7 @@ const CreateAccount = () => {
                     <Typography fontSize={14} sx={{ mb: 3 }}>
                         By creating the account, I have agreed to the Terms and Conditions and Privacy Policy.
                     </Typography>
-                    <form
-                        action=""
-                        onSubmit={async (e) => {
-                            e.preventDefault();
-                            // await dispatch(signup(form));
-                            // navigate('/provider/signin', {replace: true})
-                        }}>
-                        {/*  */}
-
+                    <form>
                         <Grid container columnSpacing={4}>
                             <Grid item md={6}>
                                 <FormControl variant="standard" sx={{ my: 3 }}>
@@ -52,7 +55,7 @@ const CreateAccount = () => {
                             </Grid>
                         </Grid>
 
-                        <Button variant="contained" size="large" fullWidth sx={{ my: 3, py: 3 }} type="submit">
+                        <Button variant="contained" size="large" fullWidth sx={{ my: 3, py: 3 }} onClick={()=>onHandleSubmit()}>
                             Create an account
                             <ArrowForwardIosIcon sx={{ ml: 1 }} />
                         </Button>

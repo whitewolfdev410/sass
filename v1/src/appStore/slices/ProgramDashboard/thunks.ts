@@ -36,6 +36,26 @@ export const getAllDashboardProgramsByLocation = createAsyncThunk(
 		}
 	}
 );
+
+export const getApplicationTemplate = createAsyncThunk(
+	"programDashboard/GetApplicationTemplate",
+	async ({ programID }: { programID: string }) => {
+		try {
+			const response = await PROGRAM_CLIENT.get(`ProgramDashboard/GetApplicationTemplate?programID=${programID}`, {
+				headers: {
+					accept: "*/*",
+				},
+			});
+			return response.data;
+		} catch (err: any) {
+			let error: AxiosError<any> = err;
+			if (!error.response) {
+				console.log(err);
+			}
+		}
+	}
+);
+
 export const saveNewProgramDetails = createAsyncThunk(
 	"programDashboard/saveDetails",
 	async ({ data }: { data: ProgramDetailsType }) => {
@@ -73,6 +93,26 @@ export const saveNewProgramApplicationTemplate = createAsyncThunk(
 		}
 	}
 );
+
+export const SaveCandidateApplicationForm = createAsyncThunk(
+	"programDashboard/SaveCandidateApplication",
+	async ({ data }: { data: any }) => {
+		try {
+			const response = await PROGRAM_CLIENT.post(`ProgramDashboard/SaveCandidateApplicationForm`, data, {
+				headers: {
+					accept: "*/*",
+				},
+			});
+			return response.data;
+		} catch (err: any) {
+			let error: AxiosError<any> = err;
+			if (!error.response) {
+				console.log(err);
+			}
+		}
+	}
+);
+
 export const createProgram = createAsyncThunk(
 	"programDashboard/createProgram",
 	async ({ data }: { data: NewProgramType }) => {

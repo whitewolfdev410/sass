@@ -33,6 +33,7 @@ const Login = () => {
 					e.preventDefault();
 					const response = await dispatch(login(form));
 					console.log("response",response);
+					localStorage.setItem("login", "true")
 					navigate('/provider/dashboard', {replace: true})
 				}}>
 				<FormControl variant="standard" fullWidth sx={{ my: 3 }}>

@@ -130,7 +130,7 @@ export type NewProgramType = Omit<ProgramDetailsType, "benefits"> & {
 };
 
 export type CandidateType = {
-	candidateID: number | string;
+	// candidateID: number | string;
 	firstName: string;
 	lastName: string;
 	phoneNumber: string;

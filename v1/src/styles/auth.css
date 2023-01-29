@@ -52,6 +52,14 @@ body {
   border-color: var(--light-grey);
 }
 
+.header{
+  top: 0;
+  left: 0;
+  z-index: 2;
+  position: sticky;
+  background-color: #fafafa;
+}
+
 @media screen and (min-height: 600px) and (max-height: 1023px) {
   .auth-paper {
     --scale: 0.8;

@@ -19,6 +19,8 @@ type Props = {
  */
 
 const Sidebar = (props: Props) => {
+
+	const flag = localStorage.getItem("login")
 	const [avatarRef, setavatarRef] = useState<null | HTMLElement>(null);
 	const showLogout = Boolean(avatarRef);
 	const openLogout = (event: React.MouseEvent<HTMLElement>) => {
@@ -72,12 +74,12 @@ const Sidebar = (props: Props) => {
 					<img src={BackIconPrimary} width="24px" height="24px" />
 				</Button>
 
-				<Button>
+				{flag === "true" &&<Button>
 					<img src={HomeIconPrimary} width="24px" height="24px" />
-				</Button>
+				</Button>}
 			</Stack>
 
-			<Box sx={{ position: "relative", mt: "auto" }}>
+			{flag === "true" && <Box sx={{ position: "relative", mt: "auto" }}>
 				<Avatar sx={{ bgcolor: "info.main", width: "28px", height: "28px", fontSize: 14 }} onMouseEnter={openLogout}>
 					NT
 				</Avatar>
@@ -96,7 +98,7 @@ const Sidebar = (props: Props) => {
 					}}>
 					<Box sx={{ width: "100px", p: "0px 13px" }}>Log out</Box>
 				</Menu>
-			</Box>
+			</Box>}
 		</Box>
 	);
 };
