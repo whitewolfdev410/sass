@@ -77,7 +77,7 @@ const CandidateInfo = (prop: any) => {
 							fontSize={10}
 							sx={{ display: "flex", gap: 1 }}>
 							<SchoolIcon sx={{ height: 14 }} />{" "}
-							{`${candidateProfileData?.EducationList[0].CourseName}`}
+							{`${candidateProfileData?.EducationList?.[0]?.CourseName ?? ""}`}
 						</Typography>
 					</Box>
 				</Stack>

@@ -200,26 +200,27 @@ const CandidateProfile = () => {
 				<ActionCard
 					editable
 					title="Education">
-					{EducationList.map((Education: any) => {
-						return (
-							<Stack
-								sx={{
-									display: "grid",
-									gridTemplateColumns: "1fr 2fr",
-									gap: { xs: 5, md: 15, xl: 20 },
-									margin: "0.5rem 0",
-								}}>
-								{" "}
-								<Typography>
-									{new Date(Education.StartDate).toLocaleDateString()} –{" "}
-									{new Date(Education.EndDate).toLocaleDateString()}
-								</Typography>
-								<textarea
-									value={`${Education?.CourseName} ${Education?.SchoolName} ${Education?.LocationOfStudy}`}
-								/>
-							</Stack>
-						);
-					})}
+					{EducationList &&
+						EducationList.map((Education: any) => {
+							return (
+								<Stack
+									sx={{
+										display: "grid",
+										gridTemplateColumns: "1fr 2fr",
+										gap: { xs: 5, md: 15, xl: 20 },
+										margin: "0.5rem 0",
+									}}>
+									{" "}
+									<Typography>
+										{new Date(Education.StartDate).toLocaleDateString()} –{" "}
+										{new Date(Education.EndDate).toLocaleDateString()}
+									</Typography>
+									<textarea
+										value={`${Education?.CourseName} ${Education?.SchoolName} ${Education?.LocationOfStudy}`}
+									/>
+								</Stack>
+							);
+						})}
 				</ActionCard>
 
 				<ActionCard
