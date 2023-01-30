@@ -214,6 +214,7 @@ const Profile = ({setProfileData, profileData}: Props) => {
                         fontSize: 20,
                         fontWeight: 700,
                         color: "var(--primary)",
+                        m: 3
                     }}>
                     Education
                 </Typography>
@@ -350,6 +351,7 @@ const Profile = ({setProfileData, profileData}: Props) => {
                         fontSize: 20,
                         fontWeight: 700,
                         color: "var(--primary)",
+                        m: 3
                     }}>
                     Work Experience
                 </Typography>
