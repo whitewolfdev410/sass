@@ -1,14 +1,23 @@
+import React, { useState } from "react";
 import { Box, Checkbox, Stack, Typography } from "@mui/material";
 import SchoolIcon from "@mui/icons-material/School";
 import LocationOn from "@mui/icons-material/LocationOn";
+import { CandidateProfileType } from "../../../../types";
 
-const CandidateInfo = () => {
+const CandidateInfo = (prop: any) => {
+	const candidateProfileData = prop.data;
 	return (
 		<label>
-			<Stack direction="row" gap={2.5}>
+			<Stack
+				direction="row"
+				gap={2.5}>
 				<Checkbox
 					disableRipple
-					sx={{ px: 0, "&:has(>input:checked)": { color: "#60C69B" }, "&:hover": { bgcolor: "transparent" } }}
+					sx={{
+						px: 0,
+						"&:has(>input:checked)": { color: "#60C69B" },
+						"&:hover": { bgcolor: "transparent" },
+					}}
 				/>
 				<Stack
 					direction="row"
@@ -42,18 +51,33 @@ const CandidateInfo = () => {
 						},
 					}}>
 					<Box>
-						<img src="" alt="" width={54} height={54} style={{ borderRadius: "50%" }} />
+						<img
+							src=""
+							alt=""
+							width={54}
+							height={54}
+							style={{ borderRadius: "50%" }}
+						/>
 					</Box>
 					<Box>
-						<Typography fontSize={16} fontWeight={700} mb={1}>
-							Sulaiman Ahmed
+						<Typography
+							fontSize={16}
+							fontWeight={700}
+							mb={1}>
+							{`${candidateProfileData?.FirstName}  ${candidateProfileData?.LastName}`}
 						</Typography>
 
-						<Typography fontSize={10} sx={{ display: "flex", gap: 1, mb: 0.5 }}>
-							<LocationOn sx={{ height: 14 }} /> Riyadh, Saudi Arabia
+						<Typography
+							fontSize={10}
+							sx={{ display: "flex", gap: 1, mb: 0.5 }}>
+							<LocationOn sx={{ height: 14 }} />
+							{`${candidateProfileData?.CurrentlyBased}  ${candidateProfileData?.Nationality}`}
 						</Typography>
-						<Typography fontSize={10} sx={{ display: "flex", gap: 1 }}>
-							<SchoolIcon sx={{ height: 14 }} /> MSc Computer Science
+						<Typography
+							fontSize={10}
+							sx={{ display: "flex", gap: 1 }}>
+							<SchoolIcon sx={{ height: 14 }} />{" "}
+							{`${candidateProfileData?.EducationList[0].CourseName}`}
 						</Typography>
 					</Box>
 				</Stack>

@@ -12,6 +12,7 @@ import Add from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
 import SingleProgramTitle from "./SingleProgramTitle";
+import { selectCandidateProfileData, useAppSelector } from "../../../appStore";
 
 const SingleProgram = () => {
 	return (
