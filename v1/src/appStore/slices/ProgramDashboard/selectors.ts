@@ -17,3 +17,7 @@ export const selectDashboardApplicationTemplate = createSelector(
 	[(state: RootState) => state?.programDashboard.newProgramApplicationTemplate],
 	(programs) => programs
 );
+export const selectCandidateProfileData = createSelector(
+	[(state: RootState) => state?.programDashboard.candidateProfileData],
+	(programs) => programs
+);

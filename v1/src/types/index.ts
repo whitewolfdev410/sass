@@ -152,10 +152,10 @@ export type StageType = {
 };
 
 export type workFlowType = {
-	programID: string,
-	stageName: string,
-	stageType: number,
-	stageShownToCandidate: boolean
+	programID: string;
+	stageName: string;
+	stageType: number;
+	stageShownToCandidate: boolean;
 };
 
 export type WorkflowType = {
@@ -167,4 +167,65 @@ export type WorkflowType = {
 	placement: number;
 	offered: number;
 	workflowStagesList: StageType[];
+};
+export type CandidateProfileType = {
+	CandidateID: string;
+	ProgramID: string;
+	FirstName: string;
+	LastName: string;
+	EmailID: string;
+	PhoneNumber: string;
+	Nationality: string;
+	CurrentlyBased: string;
+	NationalIDNumber: string;
+	DateOfBirth: string;
+	Gender: string;
+	EducationList: [
+		{
+			SchoolName: string;
+			Degree: string;
+			CourseName: string;
+			LocationOfStudy: string;
+			StartDate: string;
+			EndDate: string;
+			CurrentlyStudyHere: boolean;
+		}
+	];
+	WorkExperienceList: [
+		{
+			CompanyName: string;
+			Title: string;
+			WorkLocation: string;
+			StartDate: string;
+			EndDate: string;
+			CurrentlyWorkHere: boolean;
+		}
+	];
+	Resume: string;
+	Answers: [
+		{
+			QuestionID: string;
+			Answer: string;
+			SelectedChoices: string | null;
+			Type: string;
+			Question: string;
+			Disqualify: string | null;
+		},
+		{
+			QuestionID: string;
+			Answer: string;
+			SelectedChoices: string | null;
+			Type: string;
+			Question: string;
+			Disqualify: boolean;
+		},
+		{
+			QuestionID: string;
+			Answer: string;
+			SelectedChoices: string[];
+			Type: string;
+			Question: string;
+			Disqualify: string | null;
+		}
+	];
 };

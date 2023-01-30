@@ -10,10 +10,18 @@ import {
 import TuneIcon from "@mui/icons-material/Tune";
 import SearchIcon from "@mui/icons-material/Search";
 import SidebarTabs from "./SidebarTabs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CandidateInfo from "./CandidateInfo";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import DropDownComponent from "./DropDownComponent";
+import {
+	getAllCandidates,
+	getCandidateProfileData,
+	selectLoggedInProvider,
+	useAppDispatch,
+	useAppSelector,
+	selectCandidateProfileData,
+} from "../../../../appStore";
 
 const SingleProgramSidebar = () => {
 	const [currentTab, setCurrentTab] = useState<number>(1);
@@ -21,6 +29,12 @@ const SingleProgramSidebar = () => {
 	const handleChange = () => {
 		setChecked(!checked);
 	};
+	const candidataID = "ae7489ce-5496-495b-aaca-df191546006f";
+	const dispatch = useAppDispatch();
+	const candidateProfileData = useAppSelector(selectCandidateProfileData);
+	useEffect(() => {
+		dispatch(getCandidateProfileData({ candidateID: candidataID }));
+	}, []);
 
 	return (
 		<Box
@@ -92,7 +106,7 @@ const SingleProgramSidebar = () => {
 			<Divider sx={{ mb: 1 }} />
 
 			{/* Candidate Lists */}
-			<CandidateInfo />
+			<CandidateInfo data={candidateProfileData} />
 		</Box>
 	);
 };

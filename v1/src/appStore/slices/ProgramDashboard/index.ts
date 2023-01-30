@@ -1,11 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ApplicationFormTemplateType, NewProgramType, ProgramDashboardType, ProgramDetailsType } from "../../../types";
+import {
+	ApplicationFormTemplateType,
+	CandidateProfileType,
+	NewProgramType,
+	ProgramDashboardType,
+	ProgramDetailsType,
+} from "../../../types";
 import {
 	createProgram,
 	saveNewProgramApplicationTemplate,
 	saveNewProgramDetails,
 	getAllDashboardPrograms,
 	getAllDashboardProgramsByLocation,
+	getCandidateProfileData,
 } from "./thunks";
 
 type initialProps = {
@@ -13,6 +20,7 @@ type initialProps = {
 	newProgram: NewProgramType;
 	newProgramDetails: ProgramDetailsType;
 	newProgramApplicationTemplate: ApplicationFormTemplateType;
+	candidateProfileData: CandidateProfileType;
 };
 
 const initialState: initialProps = {
@@ -20,6 +28,7 @@ const initialState: initialProps = {
 	newProgram: {} as NewProgramType,
 	newProgramDetails: {} as ProgramDetailsType,
 	newProgramApplicationTemplate: {} as ApplicationFormTemplateType,
+	candidateProfileData: {} as CandidateProfileType,
 };
 
 const programProviderSlice = createSlice({
@@ -42,6 +51,9 @@ const programProviderSlice = createSlice({
 			})
 			.addCase(createProgram.fulfilled, (state, action) => {
 				state.newProgram = action.payload;
+			})
+			.addCase(getCandidateProfileData.fulfilled, (state, action) => {
+				state.candidateProfileData = action.payload;
 			});
 	},
 });

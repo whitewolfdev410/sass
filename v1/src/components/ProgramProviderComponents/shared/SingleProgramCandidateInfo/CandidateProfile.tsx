@@ -11,6 +11,10 @@ import ActionCard from "../ActionCard";
 import pencil from "../../../../assets/downloadImgjul.png";
 import MyPdfViewer from "./MyPdfViewer";
 import { Document, Page, pdfjs } from "react-pdf";
+import {
+	selectCandidateProfileData,
+	useAppSelector,
+} from "../../../../appStore";
 // import taskPDF from "https://www.nypl.org/sites/default/files/Learn_ESOL_Aug_2010.pdf";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -20,9 +24,14 @@ const options = {
 	standardFontDataUrl: "standard_fonts/",
 };
 const CandidateProfile = () => {
+	const candidateProfileData = useAppSelector(selectCandidateProfileData);
+	const EducationList = candidateProfileData.EducationList;
+	const ExperienceList = candidateProfileData.WorkExperienceList;
+	const Answers = candidateProfileData.Answers;
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [file, setFile] = useState<any>("");
 	const [numPages, setNumPages] = useState(null);
+	const [showDropDown, setShowDropDown] = useState<boolean>(false);
 	const onFileChange = (event: any) => {
 		setFile(event.target.files[0]);
 	};
@@ -40,6 +49,17 @@ const CandidateProfile = () => {
 	};
 	const handleDownload = () => {
 		window.open(file);
+	};
+	const toggleDropDown = () => {
+		setShowDropDown(!showDropDown);
+	};
+	const dismissHandler = (event: React.FocusEvent<HTMLButtonElement>): void => {
+		if (event.currentTarget === event.target) {
+			setShowDropDown(false);
+		}
+	};
+	const onClickHandler = (option: string): void => {
+		// citySelection(option);
 	};
 	return (
 		<Box
@@ -72,7 +92,7 @@ const CandidateProfile = () => {
 				{/* Contact information */}
 				<ActionCard
 					editable
-					title="Aaliyah Samdi">
+					title={`${candidateProfileData?.FirstName} ${candidateProfileData?.LastName}`}>
 					<Stack
 						direction="row"
 						sx={{
@@ -83,7 +103,7 @@ const CandidateProfile = () => {
 						}}>
 						{" "}
 						<Typography>Current Location</Typography>
-						<input value="Riyadh" />
+						<input value={candidateProfileData?.CurrentlyBased} />
 					</Stack>
 					<Stack
 						direction="row"
@@ -95,7 +115,7 @@ const CandidateProfile = () => {
 						}}>
 						{" "}
 						<Typography>Phone</Typography>
-						<input value="626-398-6547" />
+						<input value={candidateProfileData?.PhoneNumber} />
 					</Stack>
 					<Stack
 						direction="row"
@@ -107,7 +127,7 @@ const CandidateProfile = () => {
 						}}>
 						{" "}
 						<Typography>Email</Typography>
-						<input value="aaliyah.samdi@gmail.com" />
+						<input value={candidateProfileData?.EmailID} />
 					</Stack>
 				</ActionCard>{" "}
 				{/* Personal Information */}
@@ -124,7 +144,7 @@ const CandidateProfile = () => {
 						}}>
 						{" "}
 						<Typography>Nationality</Typography>
-						<input value="Saudi Arabia" />
+						<input value={candidateProfileData?.Nationality} />
 					</Stack>
 					<Stack
 						direction="row"
@@ -136,7 +156,7 @@ const CandidateProfile = () => {
 						}}>
 						{" "}
 						<Typography>National ID</Typography>
-						<input value="235769708967" />
+						<input value={candidateProfileData?.NationalIDNumber} />
 					</Stack>
 					<Stack
 						direction="row"
@@ -148,7 +168,9 @@ const CandidateProfile = () => {
 						}}>
 						{" "}
 						<Typography>Gender</Typography>
-						<input value="Female" />
+						<input
+							value={candidateProfileData?.Gender === "M" ? "Male" : "Female"}
+						/>
 					</Stack>
 				</ActionCard>
 				{/* action cards */}
@@ -178,58 +200,57 @@ const CandidateProfile = () => {
 				<ActionCard
 					editable
 					title="Education">
-					<Stack
-						sx={{
-							display: "grid",
-							gridTemplateColumns: "1fr 2fr",
-							gap: { xs: 5, md: 15, xl: 20 },
-							margin: "0.5rem 0",
-						}}>
-						{" "}
-						<Typography>MM/YYYY – MM/YYYY</Typography>
-						<textarea value="MA History and Political Science, HBS- Harvard University, United State" />
-					</Stack>
-					<Stack
-						direction="row"
-						sx={{
-							display: "grid",
-							gridTemplateColumns: "1fr 2fr",
-							gap: { xs: 5, md: 15, xl: 20 },
-							margin: "4rem 0 0 0",
-						}}>
-						{" "}
-						<Typography>MM/YYYY – MM/YYYY</Typography>
-						<textarea value="MA History King’s College London, United Kingdom" />
-					</Stack>
+					{EducationList.map((Education: any) => {
+						return (
+							<Stack
+								sx={{
+									display: "grid",
+									gridTemplateColumns: "1fr 2fr",
+									gap: { xs: 5, md: 15, xl: 20 },
+									margin: "0.5rem 0",
+								}}>
+								{" "}
+								<Typography>
+									{new Date(Education.StartDate).toLocaleDateString()} –{" "}
+									{new Date(Education.EndDate).toLocaleDateString()}
+								</Typography>
+								<textarea
+									value={`${Education?.CourseName} ${Education?.SchoolName} ${Education?.LocationOfStudy}`}
+								/>
+							</Stack>
+						);
+					})}
 				</ActionCard>
 
 				<ActionCard
 					editable
 					title="Experience">
-					<Stack
-						direction="row"
-						sx={{
-							display: "grid",
-							gridTemplateColumns: "1fr 2fr",
-							gap: { xs: 5, md: 15, xl: 20 },
-							margin: "0.5rem 0",
-						}}>
-						{" "}
-						<Typography>09/2022 – Current</Typography>
-						<textarea value="Business Development, Saudi Corp, UAE" />
-					</Stack>
-					<Stack
-						direction="row"
-						sx={{
-							display: "grid",
-							gridTemplateColumns: "1fr 2fr",
-							gap: { xs: 5, md: 15, xl: 20 },
-							margin: "3rem 0 0 0",
-						}}>
-						{" "}
-						<Typography>08/2020 – 08/2022</Typography>
-						<textarea value="Job Title, Company name, Country" />
-					</Stack>
+					{ExperienceList?.map((Experience: any) => {
+						return (
+							<Stack
+								direction="row"
+								sx={{
+									display: "grid",
+									gridTemplateColumns: "1fr 2fr",
+									gap: { xs: 5, md: 15, xl: 20 },
+									margin: "0.5rem 0",
+								}}>
+								{" "}
+								{Experience?.CurrentlyWorkHere ? (
+									<Typography>{`${new Date(
+										Experience?.StartDate
+									).toLocaleDateString()} - NOW`}</Typography>
+								) : (
+									<Typography>{`${new Date(
+										Experience?.StartDate
+									).toLocaleDateString()} - ${Experience?.EndDate.toLocaleDateString()}`}</Typography>
+								)}
+								<textarea
+									value={`${Experience?.Title}-${Experience?.CompanyName}-${Experience?.WorkLocation}`}
+								/>
+							</Stack>
+						);
+					})}
 				</ActionCard>
 
 				{/* action cards */}
@@ -369,16 +390,27 @@ const CandidateProfile = () => {
 							padding: "0px 30px",
 							fontSize: "12px",
 						}}>
-						<div style={{ color: "#A5A5A5" }}>
-							<p style={{ marginBottom: "0" }}>
-								Are you a fresh graduate and completed your studies in 2021 or
-								2022?
-							</p>
-							<FormControlLabel
-								control={<Checkbox defaultChecked />}
-								label="Yes"
-							/>
-						</div>
+						{Answers?.map((Answer: any) => {
+							{
+								if (Answer?.Type === "yesNo")
+									return (
+										<div style={{ color: "#A5A5A5" }}>
+											<p style={{ marginBottom: "0" }}>{Answer?.Question}</p>
+											{Answer?.Answer === "yes" ? (
+												<FormControlLabel
+													control={<Checkbox defaultChecked />}
+													label="Yes"
+												/>
+											) : (
+												<FormControlLabel
+													control={<Checkbox defaultChecked />}
+													label="No"
+												/>
+											)}
+										</div>
+									);
+							}
+						})}
 					</div>
 
 					<div
@@ -388,13 +420,81 @@ const CandidateProfile = () => {
 							padding: "0px 30px",
 							fontSize: "12px",
 						}}>
-						<div style={{ color: "#A5A5A5" }}>
-							<p>
-								What is your GPA?
-								<br />
-								3.78
-							</p>
-						</div>
+						{Answers?.map((Answer: any) => {
+							{
+								if (Answer?.Type === "paragraph")
+									return (
+										<div style={{ color: "#A5A5A5" }}>
+											<p>
+												{Answer?.Question}
+												<br />
+												<br />
+												{Answer?.Answer}
+											</p>
+										</div>
+									);
+							}
+						})}
+					</div>
+					<div
+						style={{
+							display: "flex",
+							justifyContent: "space-between",
+							padding: "0px 30px",
+							fontSize: "12px",
+						}}>
+						{Answers?.map((Answer: any) => {
+							{
+								if (Answer?.Type === "dropDown")
+									return (
+										<div style={{ color: "#A5A5A5" }}>
+											<p>
+												{Answer?.Question}
+												<br />
+												<br />
+												<button
+													className={showDropDown ? "active" : undefined}
+													onClick={(): void => toggleDropDown()}
+													style={{
+														position: "relative",
+														color: "#A5A5A5",
+														background: "#ddd",
+														border: "#ddd",
+														fontWeight: "400",
+														cursor: "pointer",
+													}}
+													onBlur={(
+														e: React.FocusEvent<HTMLButtonElement>
+													): void => dismissHandler(e)}>
+													<div>
+														{Answer?.Answer ? Answer?.Answer : "No Answer"}{" "}
+													</div>
+													{showDropDown && (
+														<div>
+															{Answer.SelectedChoices.map(
+																(
+																	option: string,
+																	index: number
+																): JSX.Element => {
+																	return (
+																		<p
+																			key={index}
+																			onClick={(): void => {
+																				onClickHandler(option);
+																			}}>
+																			{option}
+																		</p>
+																	);
+																}
+															)}
+														</div>
+													)}
+												</button>
+											</p>
+										</div>
+									);
+							}
+						})}
 					</div>
 				</div>
 			</Stack>
