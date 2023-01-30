@@ -70,6 +70,15 @@ const QuestionsForm = ({setApplicationData, applicationData}: Props) => {
 		setNewQuestion(false);
 	};
 
+	const onDeleteEdit = (index: any) => {
+		const data = questionList.filter((item, i) => i !== index)
+		setQuestionList(data);
+	};
+
+	const onSaveEdit = () => {
+
+	};
+
 	return (
 		<ApplicationFormCard title="Create customised questions">
 			{questionList.map((q, index) => (
@@ -79,7 +88,7 @@ const QuestionsForm = ({setApplicationData, applicationData}: Props) => {
 							<SavedQuestion type={q.type} question={q.question} editable />
 						</AccordionSummary>
 						<AccordionDetails>
-							<QuestionInput type={q.type} />
+							<QuestionInput type={q.type} q={q} onDelete={()=>onDeleteEdit(index)} onSave={onSaveEdit}/>
 						</AccordionDetails>
 					</Accordion>
 				</>

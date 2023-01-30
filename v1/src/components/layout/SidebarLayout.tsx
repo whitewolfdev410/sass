@@ -5,6 +5,7 @@ import { Sidebar } from "../.";
 type Props = {
 	logo?: boolean;
 	children?: React.ReactNode;
+	screen?: any;
 };
 
 /**
@@ -15,7 +16,7 @@ type Props = {
 const SidebarLayout = (props: Props) => {
 	return (
 		<Box sx={{ display: "flex", flexDirection: { xs: "column", lg: "row" } }}>
-			<Sidebar logo={props.logo || false} />
+			<Sidebar logo={props.logo || false} screen={props.screen}/>
 			<Box
 				sx={{
 					p: {
