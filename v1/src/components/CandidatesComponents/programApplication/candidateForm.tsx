@@ -63,11 +63,13 @@ const CandidatePersonalInformation = ({setCandidateData, candidateData}: Props) 
             <Stack>
                 <FormControl sx={{ my: 2 }} fullWidth>
                     <label>Country of residence</label>
-                    <TextField
-                        InputProps={{
-                            startAdornment: <SearchIcon sx={{ color: "var(--spanish-grey)", mr: 1 }} />,
-                        }}
-                        placeholder="Select location" name="currentlyBased" onChange={handleOnChange}/>
+                    <Select name="currentlyBased" value={candidateData?.currentlyBased} onChange={handleOnChange}>
+                        {
+                            options.map((item: any) => (
+                                <MenuItem value={item?.label}>{item?.label}</MenuItem>
+                            ))
+                        }
+                    </Select>
                 </FormControl>
             </Stack>
 
@@ -88,7 +90,10 @@ const CandidatePersonalInformation = ({setCandidateData, candidateData}: Props) 
             <Stack>
                 <FormControl sx={{ my: 2 }} fullWidth>
                     <label>Gender</label>
-                    <TextField placeholder="Type here" name="gender" onChange={handleOnChange}/>
+                    <Select name="gender" value={candidateData?.gender} onChange={handleOnChange}>
+                        <MenuItem value="Male">Male</MenuItem>
+                        <MenuItem value="Female">Female</MenuItem>
+                    </Select>
                 </FormControl>
             </Stack>
 
