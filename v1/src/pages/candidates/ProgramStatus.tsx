@@ -6,8 +6,8 @@ import placeholder from "../../assets/bg/placeholders/program-status-placeholder
 
 const ProgramStatus = () => {
     return (
-        <SidebarLayout>
-            <Box sx={{mt: "-50px"}}>
+        <SidebarLayout screen="/candidate/apply/create-account">
+            <Box sx={{mt: "-50px"}} className="header">
                 <CandidateApplicationNav completed={3}/>
             </Box>
             <Box sx={{width: "1144px", maxWidth: "95vw", mx: "auto", my: 2}}>

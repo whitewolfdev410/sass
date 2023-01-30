@@ -1,7 +1,7 @@
 import React, {useMemo, useState} from 'react';
 // @ts-ignore
 import countryList from 'react-select-country-list'
-import Select from 'react-select'
+// import Select from 'react-select'
 import {ApplicationFormCard} from "../../cards";
 import {
     Button,
@@ -12,7 +12,8 @@ import {
     MenuItem,
     Stack,
     TextField,
-    Typography
+    Typography,
+    Select
 } from "@mui/material";
 import Add from "@mui/icons-material/Add";
 import X from "../../../assets/icons/delete-x-danger.svg";
@@ -26,9 +27,11 @@ export type Props = {
 
 const Profile = ({setProfileData, profileData}: Props) => {
 
-    const [educationCountry, setEducationCountry] = useState("");
-    const [experienceCountry, setExperienceCountry] = useState("");
+    const [editEducationIndex, setEditEducationIndex] = useState(null);
+    const [editExperienceIndex, setEditExperienceIndex] = useState(null);
     const [educationFlag, setEducationFlag] = useState(false);
+    const [educationEditFlag, setEducationEditFlag] = useState(false);
+    const [experienceEditFlag, setExperienceEditFlag] = useState(false);
     const [experienceFlag, setExperienceFlag] = useState(false);
     const [educationDetail, setEducationDetail] = useState({
         schoolName: "",
@@ -49,10 +52,27 @@ const Profile = ({setProfileData, profileData}: Props) => {
     });
 
     const onAddEducation = () => {
+        setEducationDetail({
+            schoolName: "",
+            degree: "",
+            courseName: "",
+            locationOfStudy: "",
+            startDate: "",
+            endDate: "",
+            currentlyStudyHere: false
+        });
         setEducationFlag(!educationFlag)
     };
 
     const onAddExperience = () => {
+        setExperienceDetail({
+            companyName: "",
+            title: "",
+            workLocation: "",
+            startDate: "",
+            endDate: "",
+            currentlyStudyHere: false
+        });
         setExperienceFlag(!experienceFlag)
     };
 
@@ -66,20 +86,20 @@ const Profile = ({setProfileData, profileData}: Props) => {
 
     const option = useMemo(() => countryList().getData(), []);
 
-    const changeHandler = (value: any) => {
-        setEducationDetail({...educationDetail, locationOfStudy : value?.label})
-        setEducationCountry(value)
-    };
-
-    const changeExHandler = (value: any) => {
-        setExperienceDetail({...experienceDetail, workLocation : value?.label})
-        setExperienceCountry(value)
-    };
-
     const onAddEducationDetail = () => {
-        const data = profileData.candidateEducationListDTO;
-        data.push(educationDetail);
-        setProfileData({...profileData, candidateEducationListDTO: data})
+        if(educationEditFlag){
+            const data = profileData.candidateEducationListDTO;
+            data.forEach((item: any, index: any) => {
+                if(index === editEducationIndex){
+                    data[index] = educationDetail
+                }
+            });
+            setProfileData({...profileData, candidateEducationListDTO: data});
+        }else {
+            const data = profileData.candidateEducationListDTO;
+            data.push(educationDetail);
+            setProfileData({...profileData, candidateEducationListDTO: data});
+        }
         setEducationDetail({
             schoolName: "",
             degree: "",
@@ -88,14 +108,24 @@ const Profile = ({setProfileData, profileData}: Props) => {
             startDate: "",
             endDate: "",
             currentlyStudyHere: false
-        })
+        });
         setEducationFlag(!educationFlag)
     };
 
     const onAddExperienceDetail = () => {
-        const data = profileData.candidateWorkExperienceListDTO;
-        data.push(experienceDetail);
-        setProfileData({...profileData, candidateWorkExperienceListDTO: data})
+        if(experienceEditFlag){
+            const data = profileData.candidateWorkExperienceListDTO;
+            data.forEach((item: any, index: any) => {
+                if(index === editExperienceIndex){
+                    data[index] = experienceDetail
+                }
+            });
+            setProfileData({...profileData, candidateWorkExperienceListDTO: data});
+        }else {
+            const data = profileData.candidateWorkExperienceListDTO;
+            data.push(experienceDetail);
+            setProfileData({...profileData, candidateWorkExperienceListDTO: data})
+        }
         setExperienceDetail({
             companyName: "",
             title: "",
@@ -105,6 +135,74 @@ const Profile = ({setProfileData, profileData}: Props) => {
             currentlyStudyHere: false
         });
         setExperienceFlag(!experienceFlag)
+    };
+
+    const onEditEducation = (item: any, index: any) => {
+        setEditEducationIndex(index);
+        setEducationFlag(true);
+        setEducationEditFlag(true);
+        setEducationDetail(item)
+    };
+
+    const onEditExperience = (item: any, index: any) => {
+        setEditExperienceIndex(index);
+        setExperienceFlag(true);
+        setExperienceEditFlag(true);
+        setExperienceDetail(item)
+    };
+
+    const onDeleteEducationQuestion = (index: any) => {
+        if(educationEditFlag){
+            const data = profileData.candidateEducationListDTO.filter((item:any, i:any) => i !== index);
+            setProfileData({...profileData, candidateEducationListDTO: data})
+            setEducationDetail({
+                schoolName: "",
+                degree: "",
+                courseName: "",
+                locationOfStudy: "",
+                startDate: "",
+                endDate: "",
+                currentlyStudyHere: false
+            });
+            setEducationFlag(!educationFlag)
+        }else {
+            setEducationDetail({
+                schoolName: "",
+                degree: "",
+                courseName: "",
+                locationOfStudy: "",
+                startDate: "",
+                endDate: "",
+                currentlyStudyHere: false
+            });
+            setEducationFlag(!educationFlag)
+        }
+    };
+
+    const onDeleteExperienceQuestion = (index: any) => {
+        if(experienceEditFlag){
+            const data = profileData.candidateWorkExperienceListDTO.filter((item:any, i:any) => i !== index);
+            setProfileData({...profileData, candidateWorkExperienceListDTO: data})
+            setExperienceDetail({
+                companyName: "",
+                title: "",
+                workLocation: "",
+                startDate: "",
+                endDate: "",
+                currentlyStudyHere: false
+            });
+            setExperienceFlag(!experienceFlag)
+        }else {
+            setExperienceDetail({
+                companyName: "",
+                title: "",
+                workLocation: "",
+                startDate: "",
+                endDate: "",
+                currentlyStudyHere: false
+            });
+            setExperienceFlag(!experienceFlag)
+        }
     };
 
     return (
@@ -128,7 +226,7 @@ const Profile = ({setProfileData, profileData}: Props) => {
                 </Button>
             </Stack>
             {
-                profileData?.candidateEducationListDTO?.map((item: any) => (
+                profileData?.candidateEducationListDTO?.map((item: any, index: any) => (
                     <Stack>
                         <Stack
                             direction="row"
@@ -143,7 +241,7 @@ const Profile = ({setProfileData, profileData}: Props) => {
                             <Typography>{item?.courseName}</Typography>
                             <Button sx={{px: 0}}>
                                 {" "}
-                                <img src={Edit} alt=""/>{" "}
+                                <img src={Edit} alt="" onClick={()=>onEditEducation(item, index)}/>{" "}
                             </Button>
                         </Stack>
                         <Stack
@@ -188,7 +286,13 @@ const Profile = ({setProfileData, profileData}: Props) => {
                     <Stack>
                         <FormControl sx={{my: 2}} fullWidth>
                             <label>Location of your study</label>
-                            <Select options={option} value={educationCountry} onChange={changeHandler}/>
+                            <Select name="locationOfStudy" value={educationDetail?.locationOfStudy} onChange={handleOnChange}>
+                                {
+                                    option.map((item: any) => (
+                                        <MenuItem value={item?.label}>{item?.label}</MenuItem>
+                                    ))
+                                }
+                            </Select>
                         </FormControl>
                     </Stack>
                     <Stack direction="row" columnGap={4}>
@@ -205,7 +309,7 @@ const Profile = ({setProfileData, profileData}: Props) => {
                         </FormControl>
                     </Stack>
                     <Stack direction="row" justifyContent="space-between">
-                        <Button>
+                        <Button onClick={()=>onDeleteEducationQuestion(editEducationIndex)}>
                             {" "}
                             <img src={X}/>
                             <Typography color="error.main" fontSize={15} fontWeight={600}>
@@ -258,7 +362,7 @@ const Profile = ({setProfileData, profileData}: Props) => {
                 </Button>
             </Stack>
             {
-                profileData?.candidateWorkExperienceListDTO?.map((item: any) => (
+                profileData?.candidateWorkExperienceListDTO?.map((item: any, index: any) => (
                     <Stack>
                         <Stack
                             direction="row"
@@ -273,7 +377,7 @@ const Profile = ({setProfileData, profileData}: Props) => {
                             <Typography>{item?.companyName}</Typography>
                             <Button sx={{px: 0}}>
                                 {" "}
-                                <img src={Edit} alt=""/>{" "}
+                                <img src={Edit} alt="" onClick={()=>onEditExperience(item, index)}/>{" "}
                             </Button>
                         </Stack>
                         <Stack
@@ -312,7 +416,13 @@ const Profile = ({setProfileData, profileData}: Props) => {
                     <Stack>
                         <FormControl sx={{my: 2}} fullWidth>
                             <label>Location of your work</label>
-                            <Select options={option} value={experienceCountry} onChange={changeExHandler}/>
+                            <Select name="workLocation" value={experienceDetail?.workLocation} onChange={handleChange}>
+                                {
+                                    option.map((item: any) => (
+                                        <MenuItem value={item?.label}>{item?.label}</MenuItem>
+                                    ))
+                                }
+                            </Select>
                         </FormControl>
                     </Stack>
                     <Stack direction="row" columnGap={4}>
@@ -329,7 +439,7 @@ const Profile = ({setProfileData, profileData}: Props) => {
                         </FormControl>
                     </Stack>
                     <Stack direction="row" justifyContent="space-between">
-                        <Button>
+                        <Button onClick={()=>onDeleteExperienceQuestion(editExperienceIndex)}>
                             {" "}
                             <img src={X}/>
                             <Typography color="error.main" fontSize={15} fontWeight={600}>

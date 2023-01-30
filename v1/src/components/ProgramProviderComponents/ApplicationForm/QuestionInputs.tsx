@@ -20,10 +20,11 @@ type Props = {
 	typeInput?: boolean;
 	onSave?: (q: QuestionInputType, o: any) => void;
 	onDelete?: () => void;
-	setNewQuestion?: any
+	setNewQuestion?: any;
+	q?: any;
 };
 
-const QuestionInputs = ({ type = "Paragraph", typeInput, onSave, onDelete, setNewQuestion }: Props) => {
+const QuestionInputs = ({ type = "Paragraph", typeInput, onSave, onDelete, setNewQuestion, q }: Props) => {
 
 	const [index, setIndex] = useState([{index: 1, value: ""}]);
 	const [currentQuestion, setCurrentQuestion] = useState<QuestionInputType>({
@@ -67,6 +68,7 @@ const QuestionInputs = ({ type = "Paragraph", typeInput, onSave, onDelete, setNe
 			<FormControl fullWidth sx={{ my: 2 }}>
 				<label htmlFor="">Question</label>
 				<TextField
+					value={q?.question}
 					placeholder="Type here"
 					onChange={(e) => {
 						setCurrentQuestion((prev) => ({ ...prev, question: e.target.value as QuestionTypes }));

@@ -1,3 +1,5 @@
+import { useRef, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import { Avatar, Box, Button, Menu, Stack } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Logo } from "..";
@@ -7,10 +9,10 @@ import { Logo } from "..";
 import HomeIconPrimary from "../../assets/icons/home-sidebar-icon-primary.svg";
 import ListIconPrimary from "../../assets/icons/list-sidebar-icon-primary.svg";
 import BackIconPrimary from "../../assets/icons/back-sidebar-icon-primary.svg";
-import { useRef, useState } from "react";
 
 type Props = {
 	logo?: boolean;
+	screen?: any;
 };
 
 /**
@@ -20,6 +22,7 @@ type Props = {
 
 const Sidebar = (props: Props) => {
 
+	const navigate = useNavigate();
 	const flag = localStorage.getItem("login")
 	const [avatarRef, setavatarRef] = useState<null | HTMLElement>(null);
 	const showLogout = Boolean(avatarRef);
@@ -70,7 +73,7 @@ const Sidebar = (props: Props) => {
 						},
 					},
 				}}>
-				<Button>
+				<Button onClick={()=> navigate(`${props.screen}`, {replace: true})}>
 					<img
 						src={BackIconPrimary}
 						width="24px"

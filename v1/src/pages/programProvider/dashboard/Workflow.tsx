@@ -77,6 +77,11 @@ const Workflow = (): JSX.Element => {
 		setStageName("")
 	};
 
+	const onDeleteStage = (index: any) => {
+		const data = stage.filter((item, i) => i !== index)
+		setStage(data)
+	};
+
 	return (
 		<CreateProgramLayout
 			screen="workFlow"
@@ -84,7 +89,7 @@ const Workflow = (): JSX.Element => {
 			data={workFlowData}
 		>
 			<Box maxWidth="1069px" className="content-wrapper">
-				<StageGroupList stages={stage} />
+				<StageGroupList stages={stage} onDeleteStage={onDeleteStage}/>
 				<Box>
 					{/* Add new stage */}
 					{/*{stageFlag && <Stack mt={2.5} maxWidth="557px" gap={2} direction="row" spacing={2}>*/}

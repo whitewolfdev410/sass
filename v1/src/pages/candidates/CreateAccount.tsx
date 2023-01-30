@@ -5,6 +5,7 @@ import {SidebarLayout} from "../../components/layout";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import {candidateSignup} from "../../appStore/slices";
 import {useAppDispatch} from "../../appStore";
+import Hidden from '@mui/material/Hidden';
 
 const CreateAccount = () => {
 
@@ -27,8 +28,8 @@ const CreateAccount = () => {
     };
 
     return (
-        <SidebarLayout>
-            <Box sx={{mt: "-50px"}}>
+        <SidebarLayout screen="/candidate/apply/program-application">
+            <Box sx={{mt: "-50px"}} className="header">
                 <CandidateApplicationNav completed={2}/>
             </Box>
             <Stack direction="row" flexWrap="wrap" gap={5} mt={20} className="content-wrapper" justifyContent="space-between">
@@ -61,9 +62,11 @@ const CreateAccount = () => {
                         </Button>
                     </form>
                 </Box>
-                <Box>
-                    <ProgramSummaryCard image data={data}/>
-                </Box>
+                <Hidden smDown>
+                    <Box>
+                        <ProgramSummaryCard image data={data}/>
+                    </Box>
+                </Hidden>
             </Stack>
         </SidebarLayout>
     )

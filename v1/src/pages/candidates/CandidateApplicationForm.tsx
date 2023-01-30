@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router";
 import {Box, Button, Stack} from "@mui/material";
+import Hidden from '@mui/material/Hidden';
 import {SidebarLayout} from "../../components";
 import {CandidateApplicationNav, ProgramSummaryCard} from "../../components/CandidatesComponents";
 import CandidatePersonalInformation from "../../components/CandidatesComponents/programApplication/candidateForm";
@@ -17,7 +18,6 @@ const CandidateApplicationForm = () => {
     const navigate = useNavigate();
     const programId = localStorage.getItem("programId");
 
-    const [country, setCountry] = useState("");
     const [candidateData, setCandidateData] = useState({
         firstName: "",
         lastName: "",
@@ -33,8 +33,23 @@ const CandidateApplicationForm = () => {
         resume: "",
     });
     const [profileData, setProfileData] = useState({
-        candidateEducationListDTO: [],
-        candidateWorkExperienceListDTO: []
+        candidateEducationListDTO: [{
+            schoolName: "saint jain",
+            degree: "BE",
+            courseName: "IT",
+            locationOfStudy: "India",
+            startDate: "2023-01-19",
+            endDate: "2023-01-19",
+            currentlyStudyHere: false
+        }],
+        candidateWorkExperienceListDTO: [{
+            companyName: "infotech",
+            title: "admin",
+            workLocation: "india",
+            startDate: "2023-01-19",
+            endDate: "2023-01-19",
+            currentlyStudyHere: false
+        }]
     });
 
     useEffect(() => {
@@ -75,13 +90,13 @@ const CandidateApplicationForm = () => {
     };
 
     return (
-        <SidebarLayout>
+        <SidebarLayout screen="/candidate/dashboard">
             <Box sx={{mt: "-50px"}} className="header">
                 <CandidateApplicationNav completed={1}/>
             </Box>
             <Stack direction="row" flexWrap="wrap" gap={5} className="content-wrapper" justifyContent="space-between">
                 <Box>
-                    <CandidatePersonalInformation setCandidateData={setCandidateData} candidateData={candidateData} setCountry={setCountry} country={country}/>
+                    <CandidatePersonalInformation setCandidateData={setCandidateData} candidateData={candidateData}/>
                     <Profile setProfileData={setProfileData} profileData={profileData}/>
                     <Resume setCandidateData={setCandidateData} candidateData={candidateData}/>
                     <AdditionalQuestion/>
@@ -99,9 +114,11 @@ const CandidateApplicationForm = () => {
                         Submit & next
                     </Button>
                 </Box>
-                <Box>
-                    <ProgramSummaryCard image data={data}/>
-                </Box>
+                <Hidden smDown>
+                    <Box>
+                        <ProgramSummaryCard image data={data}/>
+                    </Box>
+                </Hidden>
             </Stack>
         </SidebarLayout>
     );
