@@ -1,26 +1,19 @@
 import React,{ useMemo } from 'react';
-import Select from 'react-select'
+// import Select from 'react-select'
 // @ts-ignore
 import countryList from 'react-select-country-list'
-import {FormControl, Stack, TextField, Typography} from "@mui/material";
+import {FormControl, MenuItem, Stack, TextField, Typography, Select} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import {ApplicationFormCard} from "../../cards";
 
 export type Props = {
     setCandidateData?: any;
     candidateData?: any;
-    country?: any;
-    setCountry?: any;
 };
 
-const CandidatePersonalInformation = ({setCandidateData, candidateData, country, setCountry}: Props) => {
+const CandidatePersonalInformation = ({setCandidateData, candidateData}: Props) => {
 
     const options = useMemo(() => countryList().getData(), [])
-
-    const changeHandler = (value: any) => {
-        setCandidateData({...candidateData, nationality : value?.label})
-        setCountry(value)
-    };
 
     const handleOnChange = (event: any) => {
         setCandidateData({...candidateData, [event.target.name] : event.target.value})
@@ -57,7 +50,13 @@ const CandidatePersonalInformation = ({setCandidateData, candidateData, country,
             <Stack>
                 <FormControl sx={{ my: 2 }} fullWidth>
                     <label>Nationality</label>
-                    <Select options={options} value={country} onChange={changeHandler}/>
+                    <Select name="nationality" value={candidateData?.nationality} onChange={handleOnChange}>
+                        {
+                            options.map((item: any) => (
+                                <MenuItem value={item?.label}>{item?.label}</MenuItem>
+                            ))
+                        }
+                    </Select>
                 </FormControl>
             </Stack>
 
