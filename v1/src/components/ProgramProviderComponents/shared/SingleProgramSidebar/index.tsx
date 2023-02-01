@@ -45,6 +45,8 @@ const SingleProgramSidebar = () => {
 				height: "100%",
 				p: "16px 12px 16px 16px",
 				borderRadius: "5px",
+				position: "sticky",
+				top: "0px",
 			}}>
 			<Box px={2}>
 				<SidebarTabs
