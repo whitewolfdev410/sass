@@ -6,12 +6,19 @@ import { ProgramType } from "../../../types";
 import { useEffect, useState } from "react";
 import { checkPastDate, getFormattedDate } from "../../../utils/functions";
 
-const ProgramInfoCard = ({ data, image = true }: { data?: Partial<ProgramType>; image?: boolean }) => {
+const ProgramInfoCard = ({
+	data,
+	image = true,
+}: {
+	data?: Partial<ProgramType>;
+	image?: boolean;
+}) => {
 	const shortScreen = useMediaQuery("(max-height: 800px)");
 	const [isAppOpen, setIsAppOpen] = useState<boolean>(false);
 
 	useEffect(() => {
-		if (data?.appCloseDate) setIsAppOpen(checkPastDate(new Date(data?.appCloseDate)));
+		if (data?.appCloseDate)
+			setIsAppOpen(checkPastDate(new Date(data?.appCloseDate)));
 	}, [data?.appCloseDate]);
 
 	return (
@@ -24,29 +31,60 @@ const ProgramInfoCard = ({ data, image = true }: { data?: Partial<ProgramType>; 
 				maxWidth: "90vw",
 			}}>
 			{image && (
-				<img src={placeholder} alt="" style={{ maxHeight: shortScreen ? "209px" : "209px", maxWidth: "380px" }} />
+				<img
+					src={placeholder}
+					alt=""
+					style={{
+						maxHeight: shortScreen ? "209px" : "209px",
+						maxWidth: "380px",
+					}}
+				/>
 			)}
 			<Box p="20px 30px">
-				<Stack direction="row" justifyContent="space-between">
-					<Typography variant="h2" sx={{ maxWidth: "230px" }} fontSize={18}>
+				<Stack
+					direction="row"
+					justifyContent="space-between">
+					<Typography
+						variant="h2"
+						sx={{ maxWidth: "230px" }}
+						fontSize={18}>
 						{data?.title}
 					</Typography>
 
 					<Chip
 						label={isAppOpen ? "open" : "closed"}
-						sx={{ bgcolor: isAppOpen ? "#21B592" : "var(--error)", color: "white", px: 1 }}
+						sx={{
+							bgcolor: isAppOpen ? "#21B592" : "var(--error)",
+							color: "white",
+							px: 1,
+						}}
 					/>
 				</Stack>
 
-				<Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 1.5, mt: 3, "*": { fontSize: 11 } }}>
+				<Box
+					sx={{
+						display: "grid",
+						gridTemplateColumns: "1fr 1fr 1fr",
+						gap: 1.5,
+						mt: 3,
+						"*": { fontSize: 11 },
+					}}>
 					{/* first column - location*/}
 					<Stack>
 						{data?.locationID ? (
 							<Typography
-								sx={{ display: "grid", gridTemplateColumns: "auto auto", gap: 1 }}
+								sx={{
+									display: "grid",
+									gridTemplateColumns: "auto auto",
+									gap: 1,
+								}}
 								fontSize={12}
 								fontWeight={600}>
-								<LocationOnIcon htmlColor="black" fontSize="inherit" sx={{ mr: 0.4 }} />
+								<LocationOnIcon
+									htmlColor="black"
+									fontSize="inherit"
+									sx={{ mr: 0.4 }}
+								/>
 								{data?.locationID}
 							</Typography>
 						) : null}
@@ -94,7 +132,10 @@ const ProgramInfoCard = ({ data, image = true }: { data?: Partial<ProgramType>; 
 					</Stack>
 				</Box>
 				{isAppOpen ? (
-					<Button variant="contained" sx={{ bgcolor: "var(--dark-blue)", my: 2, fontSize: 18 }} fullWidth>
+					<Button
+						variant="contained"
+						sx={{ bgcolor: "var(--dark-blue)", my: 2, fontSize: 18 }}
+						fullWidth>
 						Apply now
 					</Button>
 				) : null}

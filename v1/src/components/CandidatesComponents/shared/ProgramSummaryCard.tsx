@@ -7,7 +7,13 @@ import { useEffect, useState } from "react";
 import { checkPastDate, getFormattedDate } from "../../../utils/functions";
 import Logo from "../../logo";
 
-const ProgramSummaryCard = ({ data, image = true }: { data?: Partial<ProgramType>; image?: boolean }) => {
+const ProgramSummaryCard = ({
+	data,
+	image = true,
+}: {
+	data?: Partial<ProgramType>;
+	image?: boolean;
+}) => {
 	const shortScreen = useMediaQuery("(max-height: 800px)");
 
 	return (
@@ -20,12 +26,23 @@ const ProgramSummaryCard = ({ data, image = true }: { data?: Partial<ProgramType
 				maxWidth: "90vw",
 			}}>
 			{image && (
-				<img src={placeholder} alt="" style={{ maxHeight: shortScreen ? "209px" : "209px", maxWidth: "379.95px" }} />
+				<img
+					src={placeholder}
+					alt=""
+					style={{
+						maxHeight: shortScreen ? "209px" : "209px",
+						maxWidth: "379.95px",
+					}}
+				/>
 			)}
 			<Box p="20px 30px">
-				<Stack direction="row" justifyContent="space-between">
+				<Stack
+					direction="row"
+					justifyContent="space-between">
 					<Box>
-						<Typography variant="h2" sx={{ maxWidth: "230px" }}>
+						<Typography
+							variant="h2"
+							sx={{ maxWidth: "230px" }}>
 							MiSK Startup School, Masterclasses
 						</Typography>
 						<Typography
@@ -33,16 +50,26 @@ const ProgramSummaryCard = ({ data, image = true }: { data?: Partial<ProgramType
 							fontSize={14}
 							fontWeight={600}
 							fontFamily="Inter">
-							<LocationOnIcon htmlColor="black" fontSize="inherit" sx={{ mr: 0.4 }} />
+							<LocationOnIcon
+								htmlColor="black"
+								fontSize="inherit"
+								sx={{ mr: 0.4 }}
+							/>
 							New York
 						</Typography>
 					</Box>
-					<Box width={60} height={80}>
+					<Box
+						width={60}
+						height={80}>
 						<Logo />
 					</Box>
 				</Stack>
 
-				<Typography textAlign="right" fontWeight={500} fontSize={14} mt={2.5}>
+				<Typography
+					textAlign="right"
+					fontWeight={500}
+					fontSize={14}
+					mt={2.5}>
 					Internship
 				</Typography>
 
