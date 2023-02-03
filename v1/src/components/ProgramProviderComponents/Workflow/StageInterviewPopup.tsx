@@ -8,6 +8,10 @@ import {
   Button,
   InputAdornment,
   IconButton,
+  InputLabel,
+  Select,
+  FormControl,
+  SelectChangeEvent,
 } from "@mui/material";
 import videoIcon from "../../../assets/icons/workflow/video.svg";
 import X from "../../../assets/icons/delete-x-danger.svg";
@@ -34,11 +38,11 @@ const StageInterviewPopup = () => {
     ...initialFormData,
   });
   const [videoQuestions, setVideoQuestions] = useState<VideoQuestionType[]>([]);
-  const editQuestion = (id: number) => {
-    console.log("id", id);
-    // save before edit
-    saveEdit();
+  const [timeUnit, setTimeUnit] = useState<number>(0);
 
+  const maxVideosNum = 3; // maximum number of video interview questions
+
+  const editQuestion = (id: number) => {
     setEditID(id);
     setFormData({ ...videoQuestions[id] });
   };
@@ -52,99 +56,26 @@ const StageInterviewPopup = () => {
     setFormData({ ...initialFormData });
   };
   const addQuestion = () => {
-    // save before add
-    saveEdit();
-
     setEditID(videoQuestions.length);
     setVideoQuestions([...videoQuestions, { ...initialFormData }]);
   };
   const saveEdit = () => {
-    // do not save when nothing is being edited
-    if (editID === -1) return;
-    // do not save initial state
-    if (JSON.stringify(formData) !== JSON.stringify(initialFormData)) {
-      // save edited question
-      let newArr = [...videoQuestions];
-      newArr[editID] = { ...formData };
-      setVideoQuestions(newArr);
-      // initialize editID and formData
-      setEditID(-1);
-      setFormData({ ...initialFormData });
-    } else {
-      console.log("!@#$%^");
-      deleteQuestion();
-    }
+    // save edited question
+    let newArr = [...videoQuestions];
+    newArr[editID] = { ...formData };
+    setVideoQuestions(newArr);
+    // initialize editID and formData
+    setEditID(-1);
+    setFormData({ ...initialFormData });
   };
   const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     // handle data change of editQuestionForm
     setFormData({ ...formData, [ev.target.name]: ev.target.value });
   };
+  const handleTimeUnit = (ev: SelectChangeEvent<number>) => {
+    setTimeUnit(ev.target.value as number);
+  };
   const { timeDuration, question, description, deadline } = formData;
-  const editQuestionForm = (
-    <form>
-      <Stack gap={2}>
-        <TextField
-          multiline
-          fullWidth
-          placeholder="What is your video interview question, please type it here"
-          name="question"
-          value={question}
-          onChange={handleChange}
-        />
-        <TextField
-          multiline
-          fullWidth
-          placeholder="Additional information about this video and how they should record. We recommend giving tips to candidates to get the best outcome. You can even put a link to sample video here"
-          name="description"
-          value={description}
-          onChange={handleChange}
-        />
-        <TextField
-          fullWidth
-          select
-          name="timeDuration"
-          value={timeDuration}
-          onChange={handleChange}
-        >
-          <MenuItem value={timeDuration} selected>
-            Max duration of this video
-          </MenuItem>
-        </TextField>
-        <TextField
-          fullWidth
-          select
-          name="deadline"
-          value={deadline}
-          onChange={handleChange}
-        >
-          <MenuItem value={deadline} selected>
-            Deadline for submission
-          </MenuItem>
-        </TextField>
-      </Stack>
-
-      <Stack
-        direction="row"
-        justifyContent="space-between"
-        alignItems="center"
-        marginTop={8}
-      >
-        <Stack direction="row" justifyContent="space-between">
-          <Button onClick={deleteQuestion}>
-            {" "}
-            <img src={X} />
-            <Typography color="error.main" fontSize={15} fontWeight={600}>
-              Delete question
-            </Typography>
-          </Button>
-        </Stack>
-
-        <Button color="success" variant="contained" onClick={saveEdit}>
-          Save question
-        </Button>
-      </Stack>
-    </form>
-  );
   return (
     <Box
       sx={{
@@ -172,10 +103,8 @@ const StageInterviewPopup = () => {
           </Typography>
         </Stack>
         <Stack gap={2}>
-          {videoQuestions.map(({ timeDuration, question, ...rest }, index) => {
-            return index === editID ? (
-              editQuestionForm
-            ) : (
+          {editID === -1 ? (
+            videoQuestions.map(({ timeDuration, question, ...rest }, index) => (
               <TextField
                 key={question}
                 variant="standard"
@@ -194,17 +123,108 @@ const StageInterviewPopup = () => {
                   readOnly: true,
                 }}
               />
-            );
-          })}
+            ))
+          ) : (
+            <form>
+              <Stack gap={2}>
+                <TextField
+                  multiline
+                  fullWidth
+                  placeholder="What is your video interview question, please type it here"
+                  name="question"
+                  value={question}
+                  onChange={handleChange}
+                />
+                <TextField
+                  multiline
+                  fullWidth
+                  placeholder="Additional information about this video and how they should record. We recommend giving tips to candidates to get the best outcome. You can even put a link to sample video here"
+                  name="description"
+                  value={description}
+                  onChange={handleChange}
+                />
+                <Stack direction="row">
+                  <TextField
+                    type={"number"}
+                    label="Max duration of video"
+                    name="timeDuration"
+                    sx={{ flexGrow: 1 }}
+                    InputLabelProps={{
+                      shrink: timeDuration ? true : false,
+                    }}
+                    value={timeDuration}
+                    onChange={handleChange}
+                  />
+                  <FormControl
+                    sx={{
+                      minWidth: 150,
+                      fontSize: 12,
+                      ml: 1,
+                    }}
+                  >
+                    <InputLabel id="video-duration-in-sec-or-min-label">
+                      {"in (sec/min)"}
+                    </InputLabel>
+                    <Select
+                      labelId="video-duration-in-sec-or-min-label"
+                      label="in (sec/min)"
+                      value={timeUnit}
+                      onChange={handleTimeUnit}
+                    >
+                      <MenuItem value={0}>Seconds</MenuItem>
+                      <MenuItem value={1}>Minutes</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Stack>
+                <TextField
+                  fullWidth
+                  type={"number"}
+                  name="deadline"
+                  label="Deadline for video submission- number of days"
+                  InputLabelProps={{
+                    shrink: deadline ? true : false,
+                  }}
+                  value={deadline}
+                  onChange={handleChange}
+                />
+              </Stack>
+
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+                marginTop={8}
+              >
+                <Stack direction="row" justifyContent="space-between">
+                  <Button onClick={deleteQuestion}>
+                    {" "}
+                    <img src={X} />
+                    <Typography
+                      color="error.main"
+                      fontSize={15}
+                      fontWeight={600}
+                    >
+                      Delete question
+                    </Typography>
+                  </Button>
+                </Stack>
+
+                <Button color="success" variant="contained" onClick={saveEdit}>
+                  Save question
+                </Button>
+              </Stack>
+            </form>
+          )}
         </Stack>
       </form>
-      <Button sx={{ m: 2 }} onClick={addQuestion}>
-        {" "}
-        <Add fontSize="large" color="primary" sx={{ mr: 2 }} />
-        <Typography color="primary.main" fontSize={15} fontWeight={600}>
-          Add a question
-        </Typography>
-      </Button>
+      {videoQuestions.length < maxVideosNum && editID === -1 && (
+        <Button sx={{ m: 2 }} onClick={addQuestion}>
+          <Add fontSize="large" color="primary" sx={{ mr: 2 }} />
+          <Typography color="primary.main" fontSize={15} fontWeight={600}>
+            Add a question
+          </Typography>
+        </Button>
+      )}
     </Box>
   );
 };
