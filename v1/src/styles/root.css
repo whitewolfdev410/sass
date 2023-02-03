@@ -70,6 +70,11 @@ a {
 }
 
 /************* Form Classes & Text Editor ************/
+
+.css-14kycix-MuiFormLabel-root-MuiInputLabel-root {
+	background-color: white;
+}
+
 .custom-file-upload {
 	display: flex;
 	flex-direction: column;
