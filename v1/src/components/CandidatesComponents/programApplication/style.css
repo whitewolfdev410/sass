@@ -1,0 +1,12 @@
+.optionContainer li:hover,
+.optionContainer .highlight {
+	background: #c4c4c4;
+	color: black;
+}
+.searchWrapper {
+	height: 60px;
+	justify-content: center;
+}
+select {
+	height: 60px;
+}

@@ -37,6 +37,7 @@ const CandidateApplicationForm = () => {
 		education: "",
 		experience: "",
 		resume: "",
+		questionApplication: "",
 	});
 	const [profileData, setProfileData] = useState({
 		candidateEducationListDTO: [
@@ -89,6 +90,7 @@ const CandidateApplicationForm = () => {
 			educationList: profileData?.candidateEducationListDTO,
 			workExperienceList: profileData?.candidateWorkExperienceListDTO,
 			resume: "",
+			questionApplication: candidateData?.questionApplication,
 		};
 		const candidateResponse = await dispatch(
 			SaveCandidateApplicationForm({ data })
@@ -131,14 +133,17 @@ const CandidateApplicationForm = () => {
 						setCandidateData={setCandidateData}
 						candidateData={candidateData}
 					/>
-					<AdditionalQuestion />
+					<AdditionalQuestion
+						setCandidateData={setCandidateData}
+						candidateData={candidateData}
+					/>
 					<VideoQuestion />
 					<Button
 						onClick={() => onSaveApplication()}
 						variant="contained"
 						size="large"
 						sx={{
-							bgcolor: "var(--dark-blue)",
+							bgcolor: "#21B592",
 							my: "70px",
 							width: { xs: "555px", xl: "595px" },
 							maxWidth: "90vw",
