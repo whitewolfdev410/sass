@@ -4,9 +4,10 @@ import { Logo } from "../";
 import { Box, Typography } from "@mui/material";
 
 type Props = {
-	children: React.ReactNode;
-	title: string;
-	logo?: boolean;
+  children: React.ReactNode;
+  title: string;
+  logo?: boolean;
+  extraChildren?: React.ReactNode;
 };
 
 /**
@@ -18,22 +19,23 @@ type Props = {
  */
 
 const AuthPageLayout = (props: Props) => {
-	return (
-		<>
-			<Helmet>
-				<title>{props.title}</title>
-			</Helmet>
-			<section className="auth-wrapper">
-				{props.logo ? <Logo /> : <div></div>}
-				<Box className="auth-paper" sx={{ mt: 2 }}>
-					{props.children}
-				</Box>
-				<Typography fontSize={9} sx={{ mt: 2 }}>
-					Copyright(C) 2023, Recruitable and/or its affiliates.
-				</Typography>
-			</section>
-		</>
-	);
+  return (
+    <>
+      <Helmet>
+        <title>{props.title}</title>
+      </Helmet>
+      <section className="auth-wrapper" style={{ minHeight: "100vh" }}>
+        {props.logo ? <Logo /> : <div></div>}
+        <Box className="auth-paper" sx={{ mt: 2 }}>
+          {props.children}
+        </Box>
+        {props.extraChildren}
+        <Typography fontSize={9} sx={{ mt: 2 }}>
+          Copyright(C) 2023, Recruitable and/or its affiliates.
+        </Typography>
+      </section>
+    </>
+  );
 };
 
 export default AuthPageLayout;

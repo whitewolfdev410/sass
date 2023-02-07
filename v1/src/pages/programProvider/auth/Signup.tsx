@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   FormControl,
   FormControlLabel,
@@ -10,49 +10,70 @@ import {
   Button,
   Grid,
 } from "@mui/material";
-import { AuthPageLayout } from "../../components";
+import { AuthPageLayout } from "../../../components";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import {
   useAppDispatch,
+  useAppSelector,
   programProviderSignup as signup,
-} from "../../appStore";
-import { ProgramProviderType } from "../../types";
+  selectProviderProfile,
+} from "../../../appStore";
+import { ProviderSignupType } from "../../../types";
+import Alert from "../../Alert";
 
 /**
  * Signup component for program providers
  */
 
+interface SignupType extends ProviderSignupType {
+  confirmPassword: string;
+}
+
 const Signup = () => {
   const dispatch = useAppDispatch();
+  const providerProfile = useAppSelector(selectProviderProfile);
   const navigate = useNavigate();
 
-  const [form, setForm] = useState<ProgramProviderType>({
-    programProviderID: 0,
-    firstName: "",
-    lastName: "",
-    email: "",
-    userToken: "",
-    phoneNumber: "",
-    jobTitle: "",
+  const { invitationCode } = useParams();
+
+  const [formData, setFormData] = useState<SignupType>({
+    firstName: providerProfile.firstName ?? "",
+    lastName: providerProfile.lastName ?? "",
+    email: providerProfile.email ?? "",
+    password: "",
+    confirmPassword: "",
+    invitationCode: invitationCode ?? "",
+    jobTitle: providerProfile.jobTitle ?? "",
+    phoneNumber: providerProfile.phoneNumber ?? "",
   });
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setForm({ ...form, [name]: value });
+    setFormData({ ...formData, [name]: value });
   };
+  const handleSubmit = async (ev: React.SyntheticEvent) => {
+    ev.preventDefault();
+    const res = await dispatch(signup(formData));
+    if (res.payload) {
+      navigate("/provider/signin");
+    }
+  };
+  const {
+    email,
+    password,
+    confirmPassword,
+    firstName,
+    lastName,
+    jobTitle,
+    phoneNumber,
+  } = formData;
   return (
     <AuthPageLayout title="Signup" logo>
       <Typography variant="h1" component="h1" sx={{ mb: 3 }}>
         Get Access to <br /> Manage Programs
       </Typography>
 
-      <form
-        action=""
-        onSubmit={async (e) => {
-          e.preventDefault();
-          await dispatch(signup(form));
-          navigate("/provider/signin", { replace: true });
-        }}
-      >
+      <form action="" onSubmit={handleSubmit}>
         {/*  */}
         <Grid container columnSpacing={4}>
           <Grid item md={6}>
@@ -60,7 +81,7 @@ const Signup = () => {
               <label>First Name*</label>
               <Input
                 onChange={handleChange}
-                value={form.firstName}
+                value={firstName}
                 name="firstName"
                 required
               />
@@ -71,7 +92,7 @@ const Signup = () => {
               <label>Last Name*</label>
               <Input
                 onChange={handleChange}
-                value={form.lastName}
+                value={lastName}
                 name="lastName"
                 required
               />
@@ -81,23 +102,14 @@ const Signup = () => {
 
         <FormControl variant="standard" fullWidth sx={{ mt: 3, mb: 1 }}>
           <label>Email*</label>
-          <Input
-            onChange={handleChange}
-            value={form.email}
-            name="email"
-            required
-          />
+          <Input onChange={handleChange} value={email} name="email" required />
         </FormControl>
 
         <Grid container columnSpacing={4}>
           <Grid item md={6}>
             <FormControl variant="standard" sx={{ my: 3 }}>
               <label>Job title</label>
-              <Input
-                onChange={handleChange}
-                value={form.jobTitle}
-                name="jobTitle"
-              />
+              <Input onChange={handleChange} value={jobTitle} name="jobTitle" />
             </FormControl>
           </Grid>
           <Grid item md={6}>
@@ -105,7 +117,7 @@ const Signup = () => {
               <label>Phone number</label>
               <Input
                 onChange={handleChange}
-                value={form.phoneNumber}
+                value={phoneNumber}
                 name="phoneNumber"
               />
             </FormControl>
@@ -117,9 +129,10 @@ const Signup = () => {
             <FormControl variant="standard" sx={{ my: 3 }}>
               <label>Password*</label>
               <Input
+                type="password"
+                name="password"
+                value={password}
                 onChange={handleChange}
-                value={form.userToken}
-                name="userToken"
                 required
               />
             </FormControl>
@@ -127,7 +140,13 @@ const Signup = () => {
           <Grid item md={6}>
             <FormControl variant="standard" sx={{ my: 3 }}>
               <label>Re enter Password*</label>
-              <Input onChange={handleChange} name="" required />
+              <Input
+                onChange={handleChange}
+                type="password"
+                name="confirmPassword"
+                value={confirmPassword}
+                required
+              />
             </FormControl>
           </Grid>
         </Grid>
