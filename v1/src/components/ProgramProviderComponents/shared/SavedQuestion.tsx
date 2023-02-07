@@ -6,21 +6,34 @@ type Props = {
 	type: QuestionTypes;
 	question: string;
 	editable: boolean;
+	key: number;
 };
 
-const SavedQuestion = ({ type, question, editable }: Props) => {
+const SavedQuestion = ({ type, question, editable, key }: Props) => {
 	return (
-		<Box sx={{ my: 1 }}>
-			<Typography fontSize={14} fontWeight={500} sx={{ color: "var(--spanish-grey)" }}>
+		<Box
+			sx={{ my: 1 }}
+			key={key}>
+			<Typography
+				fontSize={14}
+				fontWeight={500}
+				sx={{ color: "var(--spanish-grey)" }}>
 				{type}
 			</Typography>
-			<Stack direction="row" justifyContent="space-between">
-				<Typography variant="h3" sx={{ flexGrow: 1 }}>
+			<Stack
+				direction="row"
+				justifyContent="space-between">
+				<Typography
+					variant="h3"
+					sx={{ flexGrow: 1 }}>
 					{question}
 				</Typography>
 				{editable ? (
 					<Button>
-						<img src={Edit} alt="" />
+						<img
+							src={Edit}
+							alt=""
+						/>
 					</Button>
 				) : null}
 			</Stack>

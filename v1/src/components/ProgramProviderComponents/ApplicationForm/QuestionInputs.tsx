@@ -24,18 +24,27 @@ type Props = {
 	q?: any;
 };
 
-const QuestionInputs = ({ type = "Paragraph", typeInput, onSave, onDelete, setNewQuestion, q }: Props) => {
-
-	const [index, setIndex] = useState([{index: 1, value: ""}]);
+const QuestionInputs = ({
+	type = "Paragraph",
+	typeInput,
+	onSave,
+	onDelete,
+	setNewQuestion,
+	q,
+}: Props) => {
+	const [index, setIndex] = useState([{ index: 1, value: "" }]);
 	const [currentQuestion, setCurrentQuestion] = useState<QuestionInputType>({
 		type: type,
 		question: "",
 		disqualify: false,
-		choices: index
+		choices: index,
 	});
 
 	const onAdd = () => {
-		setIndex(oldArray => [...oldArray, {index: index.length + 1, value: ""}]);
+		setIndex((oldArray) => [
+			...oldArray,
+			{ index: index.length + 1, value: "" },
+		]);
 	};
 
 	const handleChange = (e: any, i: any) => {
@@ -47,12 +56,17 @@ const QuestionInputs = ({ type = "Paragraph", typeInput, onSave, onDelete, setNe
 	return (
 		<Box>
 			{typeInput && (
-				<FormControl fullWidth sx={{ my: 2 }}>
+				<FormControl
+					fullWidth
+					sx={{ my: 2 }}>
 					<label htmlFor="">Type</label>
 					<TextField
 						select
 						onChange={(e) => {
-							setCurrentQuestion((prev) => ({ ...prev, type: e.target.value as QuestionTypes }));
+							setCurrentQuestion((prev) => ({
+								...prev,
+								type: e.target.value as QuestionTypes,
+							}));
 						}}>
 						<MenuItem value="Paragraph">Paragraph</MenuItem>
 						<MenuItem value="Short answer">Short answer</MenuItem>
@@ -65,50 +79,92 @@ const QuestionInputs = ({ type = "Paragraph", typeInput, onSave, onDelete, setNe
 					</TextField>
 				</FormControl>
 			)}
-			<FormControl fullWidth sx={{ my: 2 }}>
+			<FormControl
+				fullWidth
+				sx={{ my: 2 }}>
 				<label htmlFor="">Question</label>
 				<TextField
 					value={q?.question}
 					placeholder="Type here"
 					onChange={(e) => {
-						setCurrentQuestion((prev) => ({ ...prev, question: e.target.value as QuestionTypes }));
+						setCurrentQuestion((prev) => ({
+							...prev,
+							question: e.target.value as QuestionTypes,
+						}));
 					}}
 				/>
 			</FormControl>
 
-			{currentQuestion.type === "Dropdown" || currentQuestion.type === "Multiple choice" ? (
-				<FormControl fullWidth sx={{ my: 2 }}>
-					<label htmlFor="" style={{ marginLeft: "25px", fontWeight: 500 }}>
+			{currentQuestion.type === "Dropdown" ||
+			currentQuestion.type === "Multiple choice" ? (
+				<FormControl
+					fullWidth
+					sx={{ my: 2 }}>
+					<label
+						htmlFor=""
+						style={{ marginLeft: "25px", fontWeight: 500 }}>
 						Choice
 					</label>
-					<Stack direction="column" gap={1} >
-						{
-							index?.map((item, i) => (
-								<Stack direction="row" gap={1} alignItems="center">
-									<ListIcon fontSize="medium"/>
-									<TextField placeholder="Type here" fullWidth onChange={(e)=>handleChange(e, i)}/>
-									{(i === (index.length - 1))  && <AddIcon fontSize="medium" onClick={()=>onAdd()}/>}
-								</Stack>
-							))
-						}
+					<Stack
+						direction="column"
+						gap={1}>
+						{index?.map((item, i) => (
+							<Stack
+								direction="row"
+								gap={1}
+								alignItems="center">
+								<ListIcon fontSize="medium" />
+								<TextField
+									placeholder="Type here"
+									fullWidth
+									onChange={(e) => handleChange(e, i)}
+								/>
+								{i === index.length - 1 && (
+									<AddIcon
+										fontSize="medium"
+										onClick={() => onAdd()}
+									/>
+								)}
+							</Stack>
+						))}
 					</Stack>
 				</FormControl>
 			) : currentQuestion.type === "YesNo" ? (
 				<FormControlLabel
-					label={<Typography fontSize={15}>Disqualify candidate if the answer is no</Typography>}
-					control={<Checkbox color="success" onChange={(e)=>setCurrentQuestion((prev) => ({ ...prev, disqualify: e.target.checked }))}/>}
+					label={
+						<Typography fontSize={15}>
+							Disqualify candidate if the answer is no
+						</Typography>
+					}
+					control={
+						<Checkbox
+							color="success"
+							onChange={(e) =>
+								setCurrentQuestion((prev) => ({
+									...prev,
+									disqualify: e.target.checked,
+								}))
+							}
+						/>
+					}
 					sx={{ my: 2 }}
 				/>
 			) : null}
 
-			<Stack direction="row" justifyContent="space-between" marginTop={8}>
+			<Stack
+				direction="row"
+				justifyContent="space-between"
+				marginTop={8}>
 				<Button
 					onClick={() => {
 						onDelete && onDelete();
 					}}>
 					{" "}
 					<img src={X} />
-					<Typography color="error.main" fontSize={15} fontWeight={600}>
+					<Typography
+						color="error.main"
+						fontSize={15}
+						fontWeight={600}>
 						Delete question
 					</Typography>
 				</Button>
@@ -118,7 +174,7 @@ const QuestionInputs = ({ type = "Paragraph", typeInput, onSave, onDelete, setNe
 					variant="contained"
 					onClick={() => {
 						onSave && onSave(currentQuestion, index);
-						setNewQuestion(false)
+						setNewQuestion(false);
 					}}>
 					Save
 				</Button>

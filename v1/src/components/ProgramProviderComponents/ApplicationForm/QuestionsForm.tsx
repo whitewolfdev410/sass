@@ -1,6 +1,12 @@
 import Add from "@mui/icons-material/Add";
-import { Accordion, AccordionDetails, AccordionSummary, Button, Typography } from "@mui/material";
-import {useEffect, useState} from "react";
+import {
+	Accordion,
+	AccordionDetails,
+	AccordionSummary,
+	Button,
+	Typography,
+} from "@mui/material";
+import { useEffect, useState } from "react";
 import { ApplicationFormCard } from "../../../components";
 import {
 	SavedQuestion,
@@ -13,7 +19,7 @@ export type Props = {
 	applicationData?: any;
 };
 
-const QuestionsForm = ({setApplicationData, applicationData}: Props) => {
+const QuestionsForm = ({ setApplicationData, applicationData }: Props) => {
 	const [questionList, setQuestionList] = useState<QuestionProps[]>([
 		{
 			type: "Paragraph",
@@ -22,45 +28,45 @@ const QuestionsForm = ({setApplicationData, applicationData}: Props) => {
 		{
 			type: "Dropdown",
 			question: "Please select the year of graduation from the dropdown below",
-			choices: [
-				"option1",
-				"option2"
-			]
+			choices: ["option1", "option2"],
 		},
 		{
 			type: "YesNo",
 			question: "Have you ever been rejected by the UK embassy?",
-			disqualify: true
+			disqualify: true,
 		},
 	]);
 	const [newQuestion, setNewQuestion] = useState(false);
 
-	useEffect(()=> {
-		if(setApplicationData){
-			setApplicationData({...applicationData, listOfQuestions : questionList || []})
+	useEffect(() => {
+		if (setApplicationData) {
+			setApplicationData({
+				...applicationData,
+				listOfQuestions: questionList || [],
+			});
 		}
-	},[]);
+	}, []);
 
 	const onSaveNew = (newQ: QuestionProps, option: any) => {
 		let data = {};
-		if(newQ.type === "YesNo"){
+		if (newQ.type === "YesNo") {
 			data = {
 				type: "YesNo",
 				question: newQ.question,
-				disqualify: newQ.disqualify
-			}
-		} else if(newQ.type === "Dropdown" || newQ.type === "Multiple choice"){
+				disqualify: newQ.disqualify,
+			};
+		} else if (newQ.type === "Dropdown" || newQ.type === "Multiple choice") {
 			const choice = option.map((item: any) => item.value);
 			data = {
 				type: newQ.type,
 				question: newQ.question,
-				choices: choice
-			}
+				choices: choice,
+			};
 		} else {
 			data = {
 				type: newQ.type,
 				question: newQ.question,
-			}
+			};
 		}
 		// @ts-ignore
 		setQuestionList((prev) => [...prev, data]);
@@ -71,13 +77,11 @@ const QuestionsForm = ({setApplicationData, applicationData}: Props) => {
 	};
 
 	const onDeleteEdit = (index: any) => {
-		const data = questionList.filter((item, i) => i !== index)
+		const data = questionList.filter((item, i) => i !== index);
 		setQuestionList(data);
 	};
 
-	const onSaveEdit = () => {
-
-	};
+	const onSaveEdit = () => {};
 
 	return (
 		<ApplicationFormCard title="Create customised questions">
@@ -85,16 +89,33 @@ const QuestionsForm = ({setApplicationData, applicationData}: Props) => {
 				<>
 					<Accordion sx={{ border: "none", boxShadow: "none" }}>
 						<AccordionSummary sx={{ p: 2 }}>
-							<SavedQuestion type={q.type} question={q.question} editable />
+							<SavedQuestion
+								type={q.type}
+								question={q.question}
+								editable
+								key={index}
+							/>
 						</AccordionSummary>
 						<AccordionDetails>
-							<QuestionInput type={q.type} q={q} onDelete={()=>onDeleteEdit(index)} onSave={onSaveEdit}/>
+							<QuestionInput
+								type={q.type}
+								q={q}
+								onDelete={() => onDeleteEdit(index)}
+								onSave={onSaveEdit}
+							/>
 						</AccordionDetails>
 					</Accordion>
 				</>
 			))}
 
-			{newQuestion && <QuestionInput typeInput onDelete={onDeleteNew} onSave={onSaveNew} setNewQuestion={setNewQuestion}/>}
+			{newQuestion && (
+				<QuestionInput
+					typeInput
+					onDelete={onDeleteNew}
+					onSave={onSaveNew}
+					setNewQuestion={setNewQuestion}
+				/>
+			)}
 
 			<Button
 				sx={{ m: 2 }}
@@ -102,8 +123,15 @@ const QuestionsForm = ({setApplicationData, applicationData}: Props) => {
 					setNewQuestion(true);
 				}}>
 				{" "}
-				<Add fontSize="large" color="primary" sx={{ mr: 2 }} />
-				<Typography color="primary.main" fontSize={15} fontWeight={600}>
+				<Add
+					fontSize="large"
+					color="primary"
+					sx={{ mr: 2 }}
+				/>
+				<Typography
+					color="primary.main"
+					fontSize={15}
+					fontWeight={600}>
 					Add a question
 				</Typography>
 			</Button>
