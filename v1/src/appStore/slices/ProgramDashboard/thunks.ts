@@ -25,6 +25,24 @@ export const getAllDashboardPrograms = createAsyncThunk(
     }
   }
 );
+export const getProgramSummary = createAsyncThunk(
+  "programDashboard/getProgramSummary",
+  async () => {
+    try {
+      const response = await PROGRAM_CLIENT.get(`/1.0/program`, {
+        headers: {
+          accept: "*/*",
+        },
+      });
+      return response.data;
+    } catch (err: any) {
+      let error: AxiosError<any> = err;
+      if (!error.response) {
+        console.log(err);
+      }
+    }
+  }
+);
 export const getAllDashboardProgramsByLocation = createAsyncThunk(
   "programDashboard/getAllProgramsByLocation",
   async ({ location }: { location: string }) => {
