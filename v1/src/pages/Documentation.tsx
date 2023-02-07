@@ -1,71 +1,85 @@
 import { Box, Divider, Stack, Typography } from "@mui/material";
 import {
-  // <<<<<<< HEAD
-  ApplicationFormCard,
-  AuthPageLayout,
-  SidebarLayout,
+	// <<<<<<< HEAD
+	ApplicationFormCard,
+	AuthPageLayout,
+	SidebarLayout,
 } from "../components";
 import {
-  //   CandidateApplicationNav,
-  //   CustomStepper,
-  //   ProgramInfoCard,
-  //   ProgramStatusCard,
-  //   ProgramSumaryCard,
-  //   SteppedStageGroup,
-  // =======
-  CandidateApplicationNav,
-  CustomStepper,
-  ProgramInfoCard,
-  ProgramStatusCard,
-  ProgramSummaryCard,
-  SteppedStageGroup,
-  // >>>>>>> c6ee55327449213632b34fb00d2ae8c62430a74b
+	//   CandidateApplicationNav,
+	//   CustomStepper,
+	//   ProgramInfoCard,
+	//   ProgramStatusCard,
+	//   ProgramSumaryCard,
+	//   SteppedStageGroup,
+	// =======
+	CandidateApplicationNav,
+	CustomStepper,
+	ProgramInfoCard,
+	ProgramStatusCard,
+	ProgramSummaryCard,
+	SteppedStageGroup,
+	// >>>>>>> c6ee55327449213632b34fb00d2ae8c62430a74b
 } from "../components/CandidatesComponents";
 import {
-  ActionCard,
-  InfoCard,
-  RatingGroup,
-  SavedQuestion,
-  SingleProgramCandidateInfo,
-  SingleProgramNav,
-  SingleProgramSidebar,
+	ActionCard,
+	InfoCard,
+	RatingGroup,
+	SavedQuestion,
+	SingleProgramCandidateInfo,
+	SingleProgramNav,
+	SingleProgramSidebar,
 } from "../components/ProgramProviderComponents";
 
 const Documentation = () => {
-  return (
-    <Stack gap={4} p={4}>
-      <Typography variant="h2">Reused components throughout app</Typography>
+	return (
+		<Stack
+			gap={4}
+			p={4}>
+			<Typography variant="h2">Reused components throughout app</Typography>
 
-      <ApplicationFormCard title="Title" editIcon>
-        ApplicationFormCard
-      </ApplicationFormCard>
+			<ApplicationFormCard
+				title="Title"
+				editIcon>
+				ApplicationFormCard
+			</ApplicationFormCard>
 
-      <Typography variant="h3">Layouts</Typography>
-      <SidebarLayout>SidebarLayout</SidebarLayout>
-      <AuthPageLayout title="Title">auth page layout</AuthPageLayout>
+			<Typography variant="h3">Layouts</Typography>
+			<SidebarLayout>SidebarLayout</SidebarLayout>
+			<AuthPageLayout title="Title">auth page layout</AuthPageLayout>
 
-      <Divider />
+			<Divider />
 
-      <Typography variant="h2">Shared throughtout program provider</Typography>
-      <SingleProgramCandidateInfo />
-      <SingleProgramSidebar />
-      <ActionCard editable title="Title">
-        ActionCard <br /> <input type="text" />
-      </ActionCard>
-      <InfoCard
-        image="icon"
-        title="Title"
-        metadata="date, by any"
-        variant="error"
-      />
-      <RatingGroup onRate={(val) => {}} name="doc" />
-      <Box sx={{ maxWidth: "557px" }}>
-        <SavedQuestion type="Dropdown" question="question" editable />
-      </Box>
-      <SingleProgramNav data={navData} />
-      <Divider />
+			<Typography variant="h2">Shared throughtout program provider</Typography>
+			<SingleProgramCandidateInfo />
+			<SingleProgramSidebar />
+			<ActionCard
+				editable
+				title="Title">
+				ActionCard <br /> <input type="text" />
+			</ActionCard>
+			<InfoCard
+				image="icon"
+				title="Title"
+				metadata="date, by any"
+				variant="error"
+			/>
+			<RatingGroup
+				onRate={(val) => {}}
+				name="doc"
+			/>
+			<Box sx={{ maxWidth: "557px" }}>
+				<SavedQuestion
+					type="Dropdown"
+					question="question"
+					editable
+					key={0}
+				/>
+			</Box>
+			<SingleProgramNav data={navData} />
+			<Divider />
 
-      {/* <<<<<<< HEAD
+			{/* <<<<<<< HEAD
       <Typography variant="h2">shared throughout candidate</Typography>
       <CandidateApplicationNav />
       <CustomStepper numOfStages={7} currentStage={3} />
@@ -78,53 +92,66 @@ const Documentation = () => {
     </Stack>
   );
 ======= */}
-      <Typography variant="h2">shared throughout candidate</Typography>
-      <CandidateApplicationNav />
-      <CustomStepper numOfStages={7} currentStage={3} />
-      <CustomStepper numOfStages={7} currentStage={3} error />
-      <ProgramInfoCard image data={data} />
-      <ProgramSummaryCard image data={data} />
-      <ProgramStatusCard />
-      <SteppedStageGroup stages={["stage1", "stage2", "stage3", "stage4"]} />
-      <Divider />
-    </Stack>
-  );
-  // >>>>>>> c6ee55327449213632b34fb00d2ae8c62430a74b
+			<Typography variant="h2">shared throughout candidate</Typography>
+			<CandidateApplicationNav />
+			<CustomStepper
+				numOfStages={7}
+				currentStage={3}
+			/>
+			<CustomStepper
+				numOfStages={7}
+				currentStage={3}
+				error
+			/>
+			<ProgramInfoCard
+				image
+				data={data}
+			/>
+			<ProgramSummaryCard
+				image
+				data={data}
+			/>
+			<ProgramStatusCard />
+			<SteppedStageGroup stages={["stage1", "stage2", "stage3", "stage4"]} />
+			<Divider />
+		</Stack>
+	);
+	// >>>>>>> c6ee55327449213632b34fb00d2ae8c62430a74b
 };
 export default Documentation;
 
 let navData = {
-  programID: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  applied: 0,
-  videoInterview: 0,
-  zoomInterview: 0,
-  inPersonMeeting: 0,
-  placement: 0,
-  offered: 0,
-  workflowStagesList: [
-    {
-      stageName: "string",
-      stageType: 0,
-    },
-  ],
+	programID: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+	applied: 0,
+	videoInterview: 0,
+	zoomInterview: 0,
+	inPersonMeeting: 0,
+	placement: 0,
+	offered: 0,
+	workflowStagesList: [
+		{
+			stageName: "string",
+			stageType: 0,
+		},
+	],
 };
 
 let data = {
-  id: "string",
-  programID: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  title: "string",
-  description: "string",
-  summary: "string",
-  keySkills: "string",
-  programBenefits: "string",
-  applicationCriteria: "string",
-  programType: 0,
-  minQualification: 0,
-  startDate: "2023-01-22T00:20:41.450Z",
-  appOpenDate: "2023-01-22T00:20:41.450Z",
-  appCloseDate: "2023-01-22T00:20:41.450Z",
-  duration: "string",
-  locationID: 0,
-  maxAppCount: 0,
-  createdOn: "2023-01-22T00:20:41.450Z",
+	id: "string",
+	programID: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+	title: "string",
+	description: "string",
+	summary: "string",
+	keySkills: "string",
+	programBenefits: "string",
+	applicationCriteria: "string",
+	programType: 0,
+	minQualification: 0,
+	startDate: "2023-01-22T00:20:41.450Z",
+	appOpenDate: "2023-01-22T00:20:41.450Z",
+	appCloseDate: "2023-01-22T00:20:41.450Z",
+	duration: "string",
+	locationID: 0,
+	maxAppCount: 0,
+	createdOn: "2023-01-22T00:20:41.450Z",
 };
