@@ -18,7 +18,7 @@ import {
 const AllProgrames = () => {
 	const dispatch = useAppDispatch();
 	const programs = useAppSelector(allProgramSummary);
-	const programList = programs.data.attributes.programs;
+	const programList = programs?.data?.attributes?.programs;
 	// const programs = [
 	// 	{
 	// 		id: "string",
