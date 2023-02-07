@@ -6,62 +6,97 @@ import {
 } from "../../../components/ProgramProviderComponents";
 import { Box, Stack, Button, Typography } from "@mui/material";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import {useState} from "react";
+import { useState } from "react";
+import { ApplicationFormTemplateType } from "../../../types";
 
 const ApplicationForm = () => {
-
-	const [applicationData, setApplicationData] = useState({
-		phone: {
-			"internalUse": false,
-			"show": false
-		},
-		EmailID: {
-			"internalUse": false,
-			"show": false
-		},
-		nationality: {
-			"internalUse": false,
-			"show": false
-		},
-		currentlyBased: {
-			"internalUse": false,
-			"show": false
-		},
-		NationalIDNumber: {
-			"internalUse": false,
-			"show": false
-		},
-		dateOfBirth: {
-			"internalUse": false,
-			"show": false
-		},
-		gender: {
-			"internalUse": false,
-			"show": false
-		},
-		education: {
-			"internalUse": false,
-			"show": false
-		},
-		experience: {
-			"internalUse": false,
-			"show": false
-		},
-		resume: {
-			"internalUse": false,
-			"show": false
-		},
-		listOfQuestions: []
-	});
+	const [applicationData, setApplicationData] =
+		useState<ApplicationFormTemplateType>({
+			programGUID: "",
+			firstName: "",
+			lastName: "",
+			phone: {
+				id: "",
+				controlName: "",
+				info: 0,
+				internalUse: false,
+				show: false,
+			},
+			nationality: {
+				id: "",
+				controlName: "",
+				info: "",
+				internalUse: false,
+				show: false,
+			},
+			currentlyBased: {
+				id: "",
+				controlName: "",
+				info: "",
+				internalUse: false,
+				show: false,
+			},
+			nationalIDNumber: {
+				id: "",
+				controlName: "",
+				info: "",
+				internalUse: false,
+				show: false,
+			},
+			dateOfBirth: {
+				id: "",
+				controlName: "",
+				info: "",
+				internalUse: false,
+				show: false,
+			},
+			gender: {
+				id: "",
+				controlName: "",
+				info: 0,
+				internalUse: false,
+				show: false,
+			},
+			education: {
+				id: "",
+				controlName: "",
+				info: "",
+				internalUse: false,
+				show: false,
+			},
+			experience: {
+				id: "",
+				controlName: "",
+				info: "",
+				internalUse: false,
+				show: false,
+			},
+			resume: {
+				id: "",
+				controlName: "",
+				info: "",
+				internalUse: false,
+				show: false,
+			},
+			listOfQuestions: [
+				{
+					id: "",
+					question: "",
+					answer: "",
+				},
+			],
+		});
 
 	return (
 		<CreateProgramLayout
 			screen="applicationForm"
 			nextLink="workflow"
-			data={applicationData}
-		>
+			data={applicationData}>
 			<Box className="content-wrapper">
-				<Stack direction="row" justifyContent="end" marginY={1}>
+				<Stack
+					direction="row"
+					justifyContent="end"
+					marginY={1}>
 					<Box>
 						<Button sx={{ fontSize: 16, fontWeight: 600 }}>
 							<RemoveRedEyeIcon sx={{ mr: 1 }} /> Preview
@@ -70,14 +105,25 @@ const ApplicationForm = () => {
 					</Box>
 				</Stack>
 
-				<Stack direction="row" justifyContent="space-between">
+				<Stack
+					direction="row"
+					justifyContent="space-between">
 					<Box mt={-3}>
 						{/* Personal Info Card */}
-						<PersonalInformationForm setApplicationData={setApplicationData} applicationData={applicationData}/>
+						<PersonalInformationForm
+							setApplicationData={setApplicationData}
+							applicationData={applicationData}
+						/>
 						{/* Profile Card */}
-						<ProfileForm setApplicationData={setApplicationData} applicationData={applicationData}/>
+						<ProfileForm
+							setApplicationData={setApplicationData}
+							applicationData={applicationData}
+						/>
 						{/* QuestionsForm */}
-						<QuestionsForm setApplicationData={setApplicationData} applicationData={applicationData}/>
+						<QuestionsForm
+							setApplicationData={setApplicationData}
+							applicationData={applicationData}
+						/>
 					</Box>
 					{/* Preview Coming soon */}
 					<Box
@@ -92,7 +138,9 @@ const ApplicationForm = () => {
 							maxWidth: "480px",
 							borderRadius: "20px",
 						}}>
-						<Typography fontSize={18} sx={{ color: "var(--spanish-grey)" }}>
+						<Typography
+							fontSize={18}
+							sx={{ color: "var(--spanish-grey)" }}>
 							Preview coming soon
 						</Typography>
 					</Box>

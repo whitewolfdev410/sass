@@ -21,3 +21,7 @@ export const selectCandidateProfileData = createSelector(
 	[(state: RootState) => state?.programDashboard.candidateProfileData],
 	(programs) => programs
 );
+export const allProgramSummary = createSelector(
+	[(state: RootState) => state?.programDashboard.programSummary],
+	(programs) => programs
+);

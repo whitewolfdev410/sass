@@ -5,6 +5,7 @@ import {
 	NewProgramType,
 	ProgramDashboardType,
 	ProgramDetailsType,
+	ProgramSummaryType,
 } from "../../../types";
 import {
 	createProgram,
@@ -13,9 +14,11 @@ import {
 	getAllDashboardPrograms,
 	getAllDashboardProgramsByLocation,
 	getCandidateProfileData,
+	getProgramSummary,
 } from "./thunks";
 
 type initialProps = {
+	programSummary: ProgramSummaryType;
 	allProgrammes: ProgramDashboardType;
 	newProgram: NewProgramType;
 	newProgramDetails: ProgramDetailsType;
@@ -24,6 +27,7 @@ type initialProps = {
 };
 
 const initialState: initialProps = {
+	programSummary: {} as ProgramSummaryType,
 	allProgrammes: [],
 	newProgram: {} as NewProgramType,
 	newProgramDetails: {} as ProgramDetailsType,
@@ -54,6 +58,9 @@ const programProviderSlice = createSlice({
 			})
 			.addCase(getCandidateProfileData.fulfilled, (state, action) => {
 				state.candidateProfileData = action.payload;
+			})
+			.addCase(getProgramSummary.fulfilled, (state, action) => {
+				state.programSummary = action.payload;
 			});
 	},
 });

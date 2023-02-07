@@ -13,17 +13,21 @@ const CreateProgram = () => {
 		title: "",
 		summary: "",
 		description: "",
-		keySkills: "",
+		skills: ["Social Media ", "UI", "UX", "Content Writing"],
 		benefits: "",
-		criteria: "",
-		programType: 1,
-		programStartDate: "",
+		applicationCriteria: "",
+		programType: "",
+		startDate: "",
 		applicationOpenDate: "",
 		applicationCloseDate: "",
 		duration: "",
 		location: "",
-		minQualification: 1,
-		maxApplications: 0,
+		minimumQualification: "",
+		maxApplication: 0,
+		isFullyRemote: false,
+		status: "Draft",
+		programProviderId: "7c162f93-32e3-499d-b49e-b848d3134f82",
+		coverImage: "http://example.com",
 	});
 	const dispatch = useAppDispatch();
 
@@ -35,23 +39,32 @@ const CreateProgram = () => {
 		<CreateProgramLayout
 			screen="programDetail"
 			data={data}
-			nextLink="application-form"
-		>
+			nextLink="application-form">
 			{/*  */}
 			{/* Create program form */}
-			<CreateProgramForm setData={setData} data={data}/>
+			<CreateProgramForm
+				setData={setData}
+				data={data}
+			/>
 
-			<Typography sx={{
-				width: { lg: "967px" },
-				p: 5,
-				mx: "auto",
-				my: 4
-			}} component="h4" fontSize="25px" fontWeight={600}>
+			<Typography
+				sx={{
+					width: { lg: "967px" },
+					p: 5,
+					mx: "auto",
+					my: 4,
+				}}
+				component="h4"
+				fontSize="25px"
+				fontWeight={600}>
 				Additional program information
 			</Typography>
 
 			{/* Additional Information */}
-			<AdditionalInfoForm setData={setData} data={data}/>
+			<AdditionalInfoForm
+				setData={setData}
+				data={data}
+			/>
 		</CreateProgramLayout>
 	);
 };
