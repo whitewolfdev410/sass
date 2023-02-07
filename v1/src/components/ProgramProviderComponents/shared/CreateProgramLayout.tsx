@@ -7,61 +7,85 @@ import {
 	useAppDispatch,
 	saveNewProgramDetails,
 	saveNewProgramApplicationTemplate,
-	createWorkflow
+	createWorkflow,
 } from "../../../appStore";
+import { ProgramDetailsType } from "../../../types";
 
 type Props = {
 	screen?: string;
-	data?: object;
+	data: any;
+	programData?: ProgramDetailsType;
 	nextLink?: string;
 	publishAction?: () => void;
 	children?: React.ReactNode;
 };
 
-const ApplicationForm = ({ screen, data, nextLink, publishAction, children }: Props) => {
-
+const ApplicationForm = ({
+	screen,
+	data,
+	nextLink,
+	publishAction,
+	children,
+}: Props) => {
 	const dispatch = useAppDispatch();
-	const programId = localStorage.getItem("programId");
+	const programId = localStorage.getItem("programId") ?? "";
 
 	const handleOnClick = async () => {
 		let response = {
 			payload: {
-				ProgramGUID: ""
-			}
+				ProgramGUID: "",
+			},
 		};
-		if(screen === "programDetail"){
+		if (screen === "programDetail") {
 			// @ts-ignore
-			response = await dispatch(saveNewProgramDetails( { data } ));
-			if(response?.payload){
-				localStorage.setItem("programId", response?.payload?.ProgramGUID)
+			response = await dispatch(
+				saveNewProgramDetails({
+					type: "program",
+					attributes: data,
+				})
+			);
+			if (response?.payload) {
+				localStorage.setItem("programId", response?.payload?.ProgramGUID);
 			}
-		} else if(screen === "applicationForm"){
+		} else if (screen === "applicationForm") {
 			// @ts-ignore
-			response = await dispatch(saveNewProgramApplicationTemplate( { data, programId } ));
-		} else if(screen === "workFlow"){
+			response = await dispatch(
+				saveNewProgramApplicationTemplate({ data, programId })
+			);
+		} else if (screen === "workFlow") {
 			// @ts-ignore
-			// response = await dispatch(createWorkflow( { data } ));
+			response = await dispatch(createWorkflow({ data }));
 		}
 	};
 
 	const OnPublish = () => {
-		localStorage.removeItem("programId")
+		localStorage.removeItem("programId");
 	};
 
 	return (
 		<SidebarLayout>
 			<Box sx={{}}>
-				<Stack className="content-wrapper" alignItems="end" minHeight="50px">
+				<Stack
+					className="content-wrapper"
+					alignItems="end"
+					minHeight="50px">
 					{nextLink ? (
 						<Link to={`/provider/dashboard/${nextLink}` || ""}>
-							<Button variant="contained" size="large" onClick={()=>handleOnClick()}>
+							<Button
+								variant="contained"
+								size="large"
+								onClick={() => handleOnClick()}>
 								Save & continue <ArrowForwardIosIcon />
 							</Button>
 						</Link>
 					) : (
 						<Link to={`/provider/dashboard` || ""}>
-							<Button variant="contained" onClick={()=>OnPublish()} size="large" sx={{minWidth: "200px"}}>
-								Publish <ArrowForwardIosIcon/>
+							<Button
+								variant="contained"
+								onClick={() => OnPublish()}
+								size="large"
+								sx={{ minWidth: "200px" }}>
+								Publish <ArrowForwardIosIcon />
 							</Button>
 						</Link>
 					)}

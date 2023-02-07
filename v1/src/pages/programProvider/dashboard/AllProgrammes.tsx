@@ -5,8 +5,8 @@ import { ProviderStats } from "../../../components/ProgramProviderComponents";
 import { ProgramType } from "../../../types";
 import { useState, useEffect } from "react";
 import {
-  getAllDashboardPrograms,
-  selectAllDashboardPrograms,
+  allProgramSummary,
+  getProgramSummary,
   useAppDispatch,
   useAppSelector,
 } from "../../../appStore";
@@ -17,10 +17,53 @@ import {
 
 const AllProgrames = () => {
   const dispatch = useAppDispatch();
-  const programs = useAppSelector(selectAllDashboardPrograms);
-  
+  const programs = useAppSelector(allProgramSummary);
+  const programList = programs.data.attributes.programs;
+  // const programs = [
+  // 	{
+  // 		id: "string",
+  // 		programID: "tring",
+  // 		title: "string",
+  // 		description: "string",
+  // 		summary: "string",
+  // 		keySkills: "string",
+  // 		programBenefits: "string",
+  // 		applicationCriteria: "string",
+  // 		programType: 1,
+  // 		minQualification: 2,
+  // 		startDate: "string",
+  // 		appOpenDate: "string",
+  // 		appCloseDate: "string",
+  // 		duration: "string",
+  // 		locationID: 12,
+  // 		maxAppCount: 23,
+  // 		createdOn: "string",
+  // 		updatedOn: "string",
+
+  // 		applied: 123123,
+  // 		videoInterview: 122,
+  // 		zoomInterview: 121,
+  // 		placement: 12,
+  // 		offered: 2,
+  // 		workflowStagesList: [
+  // 			{
+  // 				stageName: "pipipi",
+  // 				stageType: 6,
+  // 			},
+  // 			{
+  // 				stageName: "poop",
+  // 				stageType: 6,
+  // 			},
+  // 			{
+  // 				stageName: "pupupu",
+  // 				stageType: 6,
+  // 			},
+  // 		],
+  // 	},
+  // ];
+
   useEffect(() => {
-    dispatch(getAllDashboardPrograms());
+    dispatch(getProgramSummary());
   }, []);
 
   return (
@@ -54,7 +97,7 @@ const AllProgrames = () => {
 
         {/* Statistics */}
         <Stack gap={4} marginY={10} marginX="auto">
-          {programs?.map((data) => (
+          {programList?.map((data) => (
             <ProviderStats data={data} />
           ))}
         </Stack>

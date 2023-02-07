@@ -44,14 +44,14 @@ const Resume = ({ setCandidateData, candidateData }: Props) => {
 					hidden
 				/>
 				{file ? (
-					<div>{file && `${file.name} - ${file.type}`}</div>
+					<div>{file && `${file.name}`}</div>
 				) : (
 					<div
 						style={{
 							color: "#B5B5B5",
 							fontSize: "15px",
 						}}>
-						"Upload here"
+						Upload here
 					</div>
 				)}
 			</Stack>

@@ -1,14 +1,25 @@
-import { Box, Select, FormControl, TextField, MenuItem, Radio, Divider, FormControlLabel, Stack } from "@mui/material";
+import {
+	Box,
+	Select,
+	FormControl,
+	TextField,
+	MenuItem,
+	Radio,
+	Divider,
+	FormControlLabel,
+	Stack,
+	Input,
+} from "@mui/material";
 
 export type Props = {
 	setData?: any;
 	data?: any;
 };
 
-const AdditionalInformationForm = ({setData, data}: Props) => {
-
+const AdditionalInformationForm = ({ setData, data }: Props) => {
 	const onHandleChange = (event: any) => {
-		setData({...data, [event.target.name] : event.target.value})
+		const { name, value } = event.target;
+		setData({ ...data, [name]: value });
 	};
 
 	return (
@@ -21,7 +32,9 @@ const AdditionalInformationForm = ({setData, data}: Props) => {
 				mt: { xs: 5, xl: 10 },
 			}}>
 			{/* Create program form */}
-			<form action="" className="custom-form">
+			<form
+				action=""
+				className="custom-form">
 				<Box
 					sx={{
 						display: "grid",
@@ -33,23 +46,30 @@ const AdditionalInformationForm = ({setData, data}: Props) => {
 						<label htmlFor="">
 							Program type <span className="text-danger">*</span>
 						</label>
-						<Select name="programType" value={data?.programType} onChange={onHandleChange}>
-							<MenuItem value={1}>Internship</MenuItem>
-							<MenuItem value={2}>Job</MenuItem>
-							<MenuItem value={3}>Training</MenuItem>
-							<MenuItem value={4}>Masterclass</MenuItem>
-							<MenuItem value={5}>Webinar</MenuItem>
-							<MenuItem value={6}>Course</MenuItem>
-							<MenuItem value={7}>Live Seminar</MenuItem>
-							<MenuItem value={8}>Volunteering</MenuItem>
-							<MenuItem value={9}>Other</MenuItem>
+						<Select
+							name="programType"
+							value={data?.programType}
+							onChange={onHandleChange}>
+							<MenuItem value="Internship">Internship</MenuItem>
+							<MenuItem value="Job">Job</MenuItem>
+							<MenuItem value="Training">Training</MenuItem>
+							<MenuItem value="Masterclass">Masterclass</MenuItem>
+							<MenuItem value="Webinar">Webinar</MenuItem>
+							<MenuItem value="Course">Course</MenuItem>
+							<MenuItem value="LiveSeminar">LiveSeminar</MenuItem>
+							<MenuItem value="Volunteering">Volunteering</MenuItem>
+							<MenuItem value="Other">Other</MenuItem>
 						</Select>
 					</FormControl>
 
 					{/* Program start */}
 					<FormControl sx={{ my: 2, maxWidth: "300px" }}>
 						<label>Program start</label>
-						<TextField type="date" onChange={onHandleChange} name="programStartDate"/>
+						<TextField
+							type="date"
+							onChange={onHandleChange}
+							name="startDate"
+						/>
 					</FormControl>
 
 					{/* Application open  */}
@@ -57,7 +77,11 @@ const AdditionalInformationForm = ({setData, data}: Props) => {
 						<label>
 							Application open <span className="text-danger">*</span>
 						</label>
-						<TextField type="date" onChange={onHandleChange} name="applicationOpenDate"/>
+						<TextField
+							type="date"
+							onChange={onHandleChange}
+							name="applicationOpenDate"
+						/>
 					</FormControl>
 
 					{/* Application close */}
@@ -65,13 +89,21 @@ const AdditionalInformationForm = ({setData, data}: Props) => {
 						<label>
 							Application close <span className="text-danger">*</span>
 						</label>
-						<TextField type="date" onChange={onHandleChange} name="applicationCloseDate"/>
+						<TextField
+							type="date"
+							onChange={onHandleChange}
+							name="applicationCloseDate"
+						/>
 					</FormControl>
 
 					{/* Duration */}
 					<FormControl sx={{ my: 2, maxWidth: "300px" }}>
 						<label>Duration</label>
-						<TextField placeholder="6 Months" onChange={onHandleChange} name="duration"/>
+						<TextField
+							placeholder="6 Months"
+							onChange={onHandleChange}
+							name="duration"
+						/>
 					</FormControl>
 
 					{/* Program location * */}
@@ -80,7 +112,8 @@ const AdditionalInformationForm = ({setData, data}: Props) => {
 							Program location <span className="text-danger">*</span>
 						</label>
 						<TextField
-							onChange={onHandleChange} name="location"
+							onChange={onHandleChange}
+							name="location"
 							placeholder="London, UK"
 							sx={{
 								".MuiInputBase-input": {
@@ -89,8 +122,15 @@ const AdditionalInformationForm = ({setData, data}: Props) => {
 							}}
 							InputProps={{
 								endAdornment: (
-									<Stack direction="row" flexGrow={1} alignItems="center">
-										<Divider orientation="vertical" flexItem sx={{ mr: 2, bgcolor: "black", my: 0.5 }} />
+									<Stack
+										direction="row"
+										flexGrow={1}
+										alignItems="center">
+										<Divider
+											orientation="vertical"
+											flexItem
+											sx={{ mr: 2, bgcolor: "black", my: 0.5 }}
+										/>
 										<FormControlLabel
 											control={<Radio color="primary" />}
 											label="Fully Remote"
@@ -105,21 +145,29 @@ const AdditionalInformationForm = ({setData, data}: Props) => {
 					{/* Min qualifications  */}
 					<FormControl sx={{ my: 2, maxWidth: "300px" }}>
 						<label htmlFor="">Min qualifications</label>
-						<Select value={data?.minQualification} onChange={onHandleChange} name="minQualification">
-							<MenuItem value={1}>High School</MenuItem>
-							<MenuItem value={2}>College</MenuItem>
-							<MenuItem value={3}>Graduate</MenuItem>
-							<MenuItem value={4}>University</MenuItem>
-							<MenuItem value={5}>Masters</MenuItem>
-							<MenuItem value={6}>Ph.D</MenuItem>
-							<MenuItem value={7}>Any</MenuItem>
+						<Select
+							value={data?.minimumQualification}
+							onChange={onHandleChange}
+							name="minimumQualification">
+							<MenuItem value="HighSchool">HighSchool</MenuItem>
+							<MenuItem value="College">College</MenuItem>
+							<MenuItem value="Graduate">Graduate</MenuItem>
+							<MenuItem value="University">University</MenuItem>
+							<MenuItem value="Phd">Phd</MenuItem>
+							<MenuItem value="Any">Any</MenuItem>
 						</Select>
 					</FormControl>
 
 					{/* Max number of application */}
 					<FormControl sx={{ my: 2, maxWidth: "300px" }}>
 						<label>Max number of application</label>
-						<TextField placeholder="20,000" type="number" onChange={onHandleChange} name="maxApplications"/>
+						<TextField
+							placeholder="20000"
+							type="number"
+							onChange={onHandleChange}
+							name="maxApplication"
+							value={data.maxApplication}
+						/>
 					</FormControl>
 				</Box>
 			</form>

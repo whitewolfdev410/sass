@@ -18,6 +18,22 @@ export type ProgramType = {
 	createdOn: string;
 	updatedOn: string;
 };
+export type summaryProgramType = {
+	programId: string;
+	title: string;
+	location: string;
+	workflowStages: WorkflowStageType[];
+	teamMembers: TeamMemberType[];
+};
+export type WorkflowStageType = {
+	stageId: string;
+	name: string;
+	count: number;
+};
+export type TeamMemberType = {
+	userId: string;
+	displayPicture: string;
+};
 
 export type ProgramProviderType = {
 	programProviderID: number;
@@ -33,17 +49,21 @@ export type ProgramDetailsType = {
 	title: string;
 	summary: string;
 	description: string;
-	keySkills: string;
+	skills: string[];
 	benefits: string;
-	criteria: string;
-	programType: number;
-	programStartDate: string;
+	applicationCriteria: string;
+	programType: string;
+	startDate: string;
 	applicationOpenDate: string;
 	applicationCloseDate: string;
 	duration: string;
 	location: string;
-	minQualification: number;
-	maxApplications: number;
+	minimumQualification: string;
+	maxApplication: number;
+	isFullyRemote: boolean;
+	status: string;
+	programProviderId: string;
+	coverImage: string;
 };
 
 export type ApplicationFormTemplateType = {
@@ -123,6 +143,23 @@ export type ApplicationFormTemplateType = {
 };
 
 export type ProgramDashboardType = ProgramType[];
+export type ProgramSummaryType = {
+	data: {
+		id: string;
+		type: string;
+		attributes: {
+			programs: [
+				{
+					programId: string;
+					title: string;
+					location: string;
+					workflowStages: WorkflowStageType[];
+					teamMembers: TeamMemberType[];
+				}
+			];
+		};
+	};
+};
 
 export type NewProgramType = Omit<ProgramDetailsType, "benefits"> & {
 	programApplicationFormDTO: ApplicationFormTemplateType;

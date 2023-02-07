@@ -5,7 +5,7 @@ export const baseUserURL: string =
   "https://stoplight.io/mocks/scott-perham/cp-api/2763286/";
 export const baseProgramURL: string =
   // "https://cp-services-dev.azurewebsites.net/api/1.0/";
-  "https://stoplight.io/mocks/surija/cp/134330842/api/1.0/";
+  "https://stoplight.io/mocks/surija/cp/134330842/api/";
 export const baseWorkflowURL: string =
   "https://cpworkflowmicroservice.azurewebsites.net/api/";
 
