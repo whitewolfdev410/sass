@@ -6,6 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme";
 import App from "./App";
+import Alert from "./pages/Alert";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
@@ -24,6 +25,7 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <ThemeProvider theme={theme}>
+          <Alert />
           <App />
         </ThemeProvider>
       </BrowserRouter>
