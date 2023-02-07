@@ -1,7 +1,8 @@
 import axios from "axios";
 
 export const baseUserURL: string =
-	"https://cpusermicroservice.azurewebsites.net/api/";
+	// "https://cp-services-dev.azurewebsites.net/api/1.0/";
+	"https://stoplight.io/mocks/scott-perham/cp-api/2763286/";
 export const baseProgramURL: string =
 	"https://stoplight.io/mocks/surija/cp/134330842/api/1.0";
 export const baseWorkflowURL: string =
@@ -9,6 +10,9 @@ export const baseWorkflowURL: string =
 
 export const USER_CLIENT = axios.create({
 	baseURL: baseUserURL,
+	headers: {
+		"Content-Type": "application/json",
+	},
 });
 export const PROGRAM_CLIENT = axios.create({
 	baseURL: baseProgramURL,
