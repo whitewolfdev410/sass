@@ -22,7 +22,7 @@ body {
   width: 558px;
   max-width: 90%;
   max-height: fit-content;
-  padding: 49px 74px 79px 51px;
+  padding: 50px 50px 80px 50px;
   background-color: white;
   box-shadow: var(--shadow-1);
   box-sizing: border-box;
@@ -52,7 +52,7 @@ body {
   border-color: var(--light-grey);
 }
 
-.header{
+.header {
   top: 0;
   left: 0;
   z-index: 2;

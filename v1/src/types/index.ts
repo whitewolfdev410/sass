@@ -146,6 +146,16 @@ export type CandidateType = {
 	userToken: string;
 };
 
+export type ProviderSignupType = {
+	email: string;
+	password: string;
+	firstName: string;
+	lastName: string;
+	invitationCode: string;
+	jobTitle: string;
+	phoneNumber: string;
+}
+
 export type StageType = {
 	stageName: string;
 	stageType: number;

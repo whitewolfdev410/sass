@@ -18,3 +18,7 @@ export { default as WorkflowReducer } from "./Workflow";
 export * from "./Workflow";
 export * from "./Workflow/thunks";
 export * from "./Workflow/selectors";
+export { default as AuthReducer } from "./Auth";
+export * from "./Auth";
+export * from "./Auth/thunks";
+export * from "./Auth/selectors";
