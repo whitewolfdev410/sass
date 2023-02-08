@@ -6,14 +6,11 @@ type Props = {
 	type: QuestionTypes;
 	question: string;
 	editable: boolean;
-	key: number;
 };
 
-const SavedQuestion = ({ type, question, editable, key }: Props) => {
+const SavedQuestion = ({ type, question, editable }: Props) => {
 	return (
-		<Box
-			sx={{ my: 1 }}
-			key={key}>
+		<Box sx={{ my: 1 }}>
 			<Typography
 				fontSize={14}
 				fontWeight={500}

@@ -184,8 +184,8 @@ const ProviderStats = ({ data }: { data: Partial<summaryProgramType> }) => {
 					<span className="stat-title">Applied</span>
 				</Button> */}
 
-				{data.workflowStages?.map((stage) => (
-					<Button>
+				{data.workflowStages?.map((stage, index) => (
+					<Button key={index}>
 						<span className="stat-info">{stage.count}</span>
 						<span className="stat-title">{stage.name}</span>
 					</Button>
@@ -206,8 +206,9 @@ const ProviderStats = ({ data }: { data: Partial<summaryProgramType> }) => {
 				<Stack
 					direction="row"
 					spacing={0.5}>
-					{data?.teamMembers?.map((url) => (
+					{data?.teamMembers?.map((url, index) => (
 						<Avatar
+							key={index}
 							sx={{ width: "25px", height: "25px" }}
 							src={url.displayPicture}></Avatar>
 					))}

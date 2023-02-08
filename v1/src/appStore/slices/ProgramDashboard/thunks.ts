@@ -31,7 +31,7 @@ export const getProgramSummary = createAsyncThunk(
 		try {
 			const response = await PROGRAM_CLIENT.get(`/program`, {
 				headers: {
-					accept: "*/*",
+					"Content-Type": "application/json",
 				},
 			});
 			return response.data;
@@ -145,21 +145,23 @@ export const saveNewProgramDetails = createAsyncThunk(
 );
 export const saveNewProgramApplicationTemplate = createAsyncThunk(
 	"programDashboard/saveAppTemplate",
-	async ({
-		data,
-		programId,
-	}: {
-		data: ApplicationFormTemplateType;
-		programId: string;
+	async (data: {
+		id: string;
+		type: string;
+		attributes: ApplicationFormTemplateType;
 	}) => {
 		try {
-			data.programGUID = programId;
-			const response = await PROGRAM_CLIENT.post(
-				`${programId}/program/applicationForm`,
-				data,
+			// data.programGUID = programId;
+			const response = await PROGRAM_CLIENT.put(
+				`program/${data.id}/applicationForm`,
+				{ data },
 				{
 					headers: {
 						"Content-Type": "application/json",
+					},
+					params: {
+						programId: data.id,
+						version: "1.0",
 					},
 				}
 			);
