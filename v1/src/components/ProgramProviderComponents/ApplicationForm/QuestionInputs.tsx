@@ -33,11 +33,15 @@ const QuestionInputs = ({
 	q,
 }: Props) => {
 	const [index, setIndex] = useState([{ index: 1, value: "" }]);
+	const programId = localStorage.getItem("programId") ?? "";
 	const [currentQuestion, setCurrentQuestion] = useState<QuestionInputType>({
+		id: programId,
 		type: type,
 		question: "",
 		disqualify: false,
 		choices: index,
+		maxChoice: 0,
+		other: true,
 	});
 
 	const onAdd = () => {
@@ -69,13 +73,13 @@ const QuestionInputs = ({
 							}));
 						}}>
 						<MenuItem value="Paragraph">Paragraph</MenuItem>
-						<MenuItem value="Short answer">Short answer</MenuItem>
+						<MenuItem value="ShortAnswer">ShortAnswer</MenuItem>
 						<MenuItem value="YesNo">Yes/No</MenuItem>
 						<MenuItem value="Dropdown">Dropdown</MenuItem>
-						<MenuItem value="Multiple choice">Multiple choice</MenuItem>
+						<MenuItem value="MultipleChoice">Multiple choice</MenuItem>
 						<MenuItem value="Date">Date</MenuItem>
 						<MenuItem value="Number">Number</MenuItem>
-						<MenuItem value="File upload">File upload</MenuItem>
+						<MenuItem value="FileUpload">File upload</MenuItem>
 					</TextField>
 				</FormControl>
 			)}
@@ -96,39 +100,77 @@ const QuestionInputs = ({
 			</FormControl>
 
 			{currentQuestion.type === "Dropdown" ||
-			currentQuestion.type === "Multiple choice" ? (
-				<FormControl
-					fullWidth
-					sx={{ my: 2 }}>
-					<label
-						htmlFor=""
-						style={{ marginLeft: "25px", fontWeight: 500 }}>
-						Choice
-					</label>
-					<Stack
-						direction="column"
-						gap={1}>
-						{index?.map((item, i) => (
-							<Stack
-								direction="row"
-								gap={1}
-								alignItems="center">
-								<ListIcon fontSize="medium" />
-								<TextField
-									placeholder="Type here"
-									fullWidth
-									onChange={(e) => handleChange(e, i)}
-								/>
-								{i === index.length - 1 && (
-									<AddIcon
-										fontSize="medium"
-										onClick={() => onAdd()}
+			currentQuestion.type === "MultipleChoice" ? (
+				<>
+					<FormControl
+						fullWidth
+						sx={{ my: 2 }}>
+						<label
+							htmlFor=""
+							style={{ marginLeft: "25px", fontWeight: 500 }}>
+							Choice
+						</label>
+						<Stack
+							direction="column"
+							gap={1}>
+							{index?.map((item, i) => (
+								<Stack
+									direction="row"
+									gap={1}
+									key={i}
+									alignItems="center">
+									<ListIcon fontSize="medium" />
+									<TextField
+										placeholder="Type here"
+										fullWidth
+										onChange={(e) => handleChange(e, i)}
 									/>
-								)}
-							</Stack>
-						))}
-					</Stack>
-				</FormControl>
+									{i === index.length - 1 && (
+										<AddIcon
+											fontSize="medium"
+											onClick={() => onAdd()}
+										/>
+									)}
+								</Stack>
+							))}
+						</Stack>
+					</FormControl>
+					<FormControlLabel
+						label={<Typography fontSize={15}>Enable "Other" option</Typography>}
+						control={
+							<Checkbox
+								color="success"
+								onChange={(e) =>
+									setCurrentQuestion((prev) => ({
+										...prev,
+										other: e.target.checked,
+									}))
+								}
+							/>
+						}
+						sx={{ my: 2 }}
+					/>
+					{currentQuestion.type === "MultipleChoice" ? (
+						<FormControl
+							fullWidth
+							sx={{ my: 2 }}>
+							<label htmlFor="">Max choice allowed</label>
+							<TextField
+								value={q?.maxChoice}
+								type="number"
+								placeholder="Enter number of choice allowed here"
+								onChange={(e) => {
+									setCurrentQuestion((prev) => ({
+										...prev,
+										maxChoice: parseInt(e.target.value.toString()) as number,
+									}));
+								}}
+							/>
+						</FormControl>
+					) : (
+						""
+					)}
+				</>
 			) : currentQuestion.type === "YesNo" ? (
 				<FormControlLabel
 					label={

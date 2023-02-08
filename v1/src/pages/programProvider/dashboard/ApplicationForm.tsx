@@ -3,89 +3,105 @@ import {
 	ProfileForm,
 	QuestionsForm,
 	CreateProgramLayout,
+	CoverImage,
 } from "../../../components/ProgramProviderComponents";
 import { Box, Stack, Button, Typography } from "@mui/material";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ApplicationFormTemplateType } from "../../../types";
+import { ApplicationFormCard } from "../../../components";
 
 const ApplicationForm = () => {
+	const [personalInformation, setPersonalInformation] = useState<any>({
+		firstName: {
+			internalUse: false,
+			show: true,
+		},
+		lastName: {
+			internalUse: false,
+			show: true,
+		},
+		emailId: {
+			internalUse: false,
+			show: true,
+		},
+		phoneNumber: {
+			internalUse: false,
+			show: false,
+		},
+		nationality: {
+			internalUse: false,
+			show: false,
+		},
+		currentResidence: {
+			internalUse: false,
+			show: false,
+		},
+		idNumber: {
+			internalUse: false,
+			show: false,
+		},
+		dateOfBirth: {
+			internalUse: false,
+			show: false,
+		},
+		gender: {
+			internalUse: false,
+			show: false,
+		},
+	});
+	const [profile, setProfile] = useState<any>({
+		education: {
+			mandatory: false,
+			show: false,
+		},
+		experience: {
+			mandatory: false,
+			show: false,
+		},
+		resume: {
+			mandatory: false,
+			show: false,
+		},
+		profileQuestions: [
+			{
+				id: "",
+				type: "",
+				question: "",
+				choices: "",
+				disquality: false,
+				other: false,
+			},
+		],
+	});
+	const programId = localStorage.getItem("programId") ?? "";
+	const [customisedQuestions, setCustomisedQuestions] = useState<any>([
+		{
+			id: programId,
+			type: "Paragraph",
+			question: "",
+			choices: [],
+			maxChoice: 0,
+			disquality: false,
+			other: false,
+		},
+	]);
 	const [applicationData, setApplicationData] =
 		useState<ApplicationFormTemplateType>({
-			programGUID: "",
-			firstName: "",
-			lastName: "",
-			phone: {
-				id: "",
-				controlName: "",
-				info: 0,
-				internalUse: false,
-				show: false,
-			},
-			nationality: {
-				id: "",
-				controlName: "",
-				info: "",
-				internalUse: false,
-				show: false,
-			},
-			currentlyBased: {
-				id: "",
-				controlName: "",
-				info: "",
-				internalUse: false,
-				show: false,
-			},
-			nationalIDNumber: {
-				id: "",
-				controlName: "",
-				info: "",
-				internalUse: false,
-				show: false,
-			},
-			dateOfBirth: {
-				id: "",
-				controlName: "",
-				info: "",
-				internalUse: false,
-				show: false,
-			},
-			gender: {
-				id: "",
-				controlName: "",
-				info: 0,
-				internalUse: false,
-				show: false,
-			},
-			education: {
-				id: "",
-				controlName: "",
-				info: "",
-				internalUse: false,
-				show: false,
-			},
-			experience: {
-				id: "",
-				controlName: "",
-				info: "",
-				internalUse: false,
-				show: false,
-			},
-			resume: {
-				id: "",
-				controlName: "",
-				info: "",
-				internalUse: false,
-				show: false,
-			},
-			listOfQuestions: [
-				{
-					id: "",
-					question: "",
-					answer: "",
-				},
-			],
+			coverImage: "http://example.com",
+			personalInformation: personalInformation,
+			profile: profile,
+			customisedQuestions: customisedQuestions,
 		});
+	useEffect(() => {
+		setApplicationData({
+			...applicationData,
+			personalInformation: personalInformation,
+			profile: profile,
+			customisedQuestions: customisedQuestions,
+		});
+	}, [personalInformation, profile, customisedQuestions]);
+	console.log("applicationData", applicationData);
 
 	return (
 		<CreateProgramLayout
@@ -98,9 +114,9 @@ const ApplicationForm = () => {
 					justifyContent="end"
 					marginY={1}>
 					<Box>
-						<Button sx={{ fontSize: 16, fontWeight: 600 }}>
+						{/* <Button sx={{ fontSize: 16, fontWeight: 600 }}>
 							<RemoveRedEyeIcon sx={{ mr: 1 }} /> Preview
-						</Button>
+						</Button> */}
 						<Button sx={{ fontSize: 16, fontWeight: 600 }}>Save draft</Button>
 					</Box>
 				</Stack>
@@ -110,23 +126,31 @@ const ApplicationForm = () => {
 					justifyContent="space-between">
 					<Box mt={-3}>
 						{/* Personal Info Card */}
+
+						<ApplicationFormCard title="Upload cover image">
+							<CoverImage
+								setApplicationData={setApplicationData}
+								applicationData={applicationData}
+							/>
+						</ApplicationFormCard>
+
 						<PersonalInformationForm
-							setApplicationData={setApplicationData}
-							applicationData={applicationData}
+							setApplicationData={setPersonalInformation}
+							applicationData={personalInformation}
 						/>
 						{/* Profile Card */}
 						<ProfileForm
-							setApplicationData={setApplicationData}
-							applicationData={applicationData}
+							setApplicationData={setProfile}
+							applicationData={profile}
 						/>
 						{/* QuestionsForm */}
 						<QuestionsForm
-							setApplicationData={setApplicationData}
-							applicationData={applicationData}
+							setApplicationData={setCustomisedQuestions}
+							applicationData={customisedQuestions}
 						/>
 					</Box>
 					{/* Preview Coming soon */}
-					<Box
+					{/* <Box
 						sx={{
 							height: "663px",
 							background: "white",
@@ -143,7 +167,7 @@ const ApplicationForm = () => {
 							sx={{ color: "var(--spanish-grey)" }}>
 							Preview coming soon
 						</Typography>
-					</Box>
+					</Box> */}
 				</Stack>
 			</Box>
 		</CreateProgramLayout>

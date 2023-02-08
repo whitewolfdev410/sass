@@ -102,8 +102,11 @@ const AllProgrames = () => {
 					gap={4}
 					marginY={10}
 					marginX="auto">
-					{programList?.map((data) => (
-						<ProviderStats data={data} />
+					{programList?.map((data, index) => (
+						<ProviderStats
+							data={data}
+							key={index}
+						/>
 					))}
 				</Stack>
 			</SidebarLayout>

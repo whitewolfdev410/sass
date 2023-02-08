@@ -11,11 +11,22 @@ type Props = {
 	name?: string;
 };
 
-const InputGroupMandatory = ({ label, mandatory, show, setApplicationData, applicationData, name }: Props) => {
+const InputGroupMandatory = ({
+	label,
+	mandatory,
+	show,
+	setApplicationData,
+	applicationData,
+	name,
+}: Props) => {
 	let [mandatoryState, setMandatoryState] = useState(mandatory);
 	let [showState, setShowState] = useState(show);
 	return (
-		<Stack direction="row" justifyContent="space-between" width="100%" marginY={2}>
+		<Stack
+			direction="row"
+			justifyContent="space-between"
+			width="100%"
+			marginY={2}>
 			<label htmlFor="">{label}</label>
 
 			<Box
@@ -31,7 +42,13 @@ const InputGroupMandatory = ({ label, mandatory, show, setApplicationData, appli
 							color="success"
 							onChange={(event) => {
 								setMandatoryState((prev) => !prev);
-								setApplicationData({...applicationData, [`${name}`] : {...applicationData[`${name}`], internalUse:  event.target.checked}})
+								setApplicationData({
+									...applicationData,
+									[`${name}`]: {
+										...applicationData[`${name}`],
+										mandatory: event.target.checked,
+									},
+								});
 							}}
 						/>
 					}
@@ -44,7 +61,13 @@ const InputGroupMandatory = ({ label, mandatory, show, setApplicationData, appli
 							color="success"
 							onChange={(event) => {
 								setShowState((prev) => !prev);
-								setApplicationData({...applicationData, [`${name}`] : {...applicationData[`${name}`], show:  event.target.checked}})
+								setApplicationData({
+									...applicationData,
+									[`${name}`]: {
+										...applicationData[`${name}`],
+										show: event.target.checked,
+									},
+								});
 							}}
 						/>
 					}

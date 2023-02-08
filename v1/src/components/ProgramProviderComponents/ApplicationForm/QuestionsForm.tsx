@@ -20,52 +20,60 @@ export type Props = {
 };
 
 const QuestionsForm = ({ setApplicationData, applicationData }: Props) => {
+	const programId = localStorage.getItem("programId") ?? "";
 	const [questionList, setQuestionList] = useState<QuestionProps[]>([
 		{
+			id: programId,
 			type: "Paragraph",
 			question: "Please tell me about your self in less than 500 words",
+			other: false,
 		},
 		{
+			id: programId,
 			type: "Dropdown",
 			question: "Please select the year of graduation from the dropdown below",
 			choices: ["option1", "option2"],
+			other: false,
 		},
 		{
+			id: programId,
 			type: "YesNo",
 			question: "Have you ever been rejected by the UK embassy?",
 			disqualify: true,
+			other: false,
 		},
 	]);
 	const [newQuestion, setNewQuestion] = useState(false);
 
 	useEffect(() => {
-		if (setApplicationData) {
-			setApplicationData({
-				...applicationData,
-				listOfQuestions: questionList || [],
-			});
-		}
-	}, []);
+		setApplicationData(questionList);
+	}, [questionList]);
 
 	const onSaveNew = (newQ: QuestionProps, option: any) => {
 		let data = {};
 		if (newQ.type === "YesNo") {
 			data = {
+				id: programId,
 				type: "YesNo",
+				other: false,
 				question: newQ.question,
 				disqualify: newQ.disqualify,
 			};
-		} else if (newQ.type === "Dropdown" || newQ.type === "Multiple choice") {
+		} else if (newQ.type === "Dropdown" || newQ.type === "MultipleChoice") {
 			const choice = option.map((item: any) => item.value);
 			data = {
+				id: programId,
 				type: newQ.type,
 				question: newQ.question,
 				choices: choice,
+				other: newQ.other,
 			};
 		} else {
 			data = {
+				id: programId,
 				type: newQ.type,
 				question: newQ.question,
+				other: false,
 			};
 		}
 		// @ts-ignore
@@ -81,19 +89,22 @@ const QuestionsForm = ({ setApplicationData, applicationData }: Props) => {
 		setQuestionList(data);
 	};
 
-	const onSaveEdit = () => {};
+	const onSaveEdit = () => {
+		setQuestionList({ ...questionList });
+	};
 
 	return (
 		<ApplicationFormCard title="Create customised questions">
-			{questionList.map((q, index) => (
-				<>
-					<Accordion sx={{ border: "none", boxShadow: "none" }}>
+			{questionList &&
+				questionList?.map((q, index) => (
+					<Accordion
+						sx={{ border: "none", boxShadow: "none" }}
+						key={index}>
 						<AccordionSummary sx={{ p: 2 }}>
 							<SavedQuestion
 								type={q.type}
 								question={q.question}
 								editable
-								key={index}
 							/>
 						</AccordionSummary>
 						<AccordionDetails>
@@ -105,8 +116,7 @@ const QuestionsForm = ({ setApplicationData, applicationData }: Props) => {
 							/>
 						</AccordionDetails>
 					</Accordion>
-				</>
-			))}
+				))}
 
 			{newQuestion && (
 				<QuestionInput

@@ -1,16 +1,19 @@
 export type QuestionTypes =
 	| "Paragraph"
-	| "Short answer"
+	| "ShortAnswer"
 	| "YesNo"
 	| "Dropdown"
-	| "Multiple choice"
+	| "MultipleChoice"
 	| "Date"
 	| "Number"
-	| "File upload";
+	| "FileUpload";
 
 export type QuestionInputType = {
+	id: string;
 	type: QuestionTypes;
 	question: string;
 	disqualify?: boolean;
 	choices?: any;
+	maxChoice?: number;
+	other: boolean;
 };
