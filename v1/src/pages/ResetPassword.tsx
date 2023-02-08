@@ -13,25 +13,22 @@ import {
   InputAdornment,
   TextField,
 } from "@mui/material";
-import { AuthPageLayout } from "../../../components";
+import { AuthPageLayout } from "../components";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import {
-  useAppDispatch,
-  programProviderLogin as login,
-} from "../../../appStore";
+import { useAppDispatch, programProviderLogin as login } from "../appStore";
 
 /**
- * ForgotPassword component for program providers
+ * ResetPassword component for program providers
  */
 
-const ForgotPassword = () => {
+const ResetPassword = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    email: "",
+    password: "",
+    confirmPassword: "",
   });
-  const [editEmail, setEditEmail] = useState(false);
   const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = ev.target;
     setFormData({ ...formData, [name]: value });
@@ -39,11 +36,11 @@ const ForgotPassword = () => {
   const handleSubmit = (ev: React.SyntheticEvent) => {
     ev.preventDefault();
   };
-  const { email } = formData;
+  const { password, confirmPassword } = formData;
   return (
     <AuthPageLayout title="Reset Password" logo>
       <Typography variant="h1" component="h1">
-        Forgot Password?
+        Reset your password
       </Typography>
       <Typography sx={{ mb: 3 }}>
         No worries, we will email you the instruction
@@ -51,12 +48,21 @@ const ForgotPassword = () => {
 
       <form action="" onSubmit={handleSubmit}>
         <FormControl variant="standard" fullWidth sx={{ mt: 3, mb: 1 }}>
-          <label>Your email</label>
+          <label>Password</label>
           <Input
             onChange={handleChange}
-            type="text"
-            name="email"
-            value={email}
+            type="password"
+            name="password"
+            value={password}
+          />
+        </FormControl>
+        <FormControl variant="standard" fullWidth sx={{ mt: 3, mb: 1 }}>
+          <label>Re-enter</label>
+          <Input
+            onChange={handleChange}
+            type="password"
+            name="confirmPassword"
+            value={confirmPassword}
           />
         </FormControl>
 
@@ -67,7 +73,7 @@ const ForgotPassword = () => {
           sx={{ mt: 3, py: 3 }}
           type="submit"
         >
-          Reset password
+          Confirm & login
           <ArrowForwardIosIcon sx={{ ml: 1 }} />
         </Button>
       </form>
@@ -75,4 +81,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default ResetPassword;
