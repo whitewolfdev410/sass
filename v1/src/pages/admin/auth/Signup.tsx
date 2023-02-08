@@ -15,7 +15,6 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import {
   useAppDispatch,
   useAppSelector,
-  programProviderSignup as signup,
   selectProviderProfile,
 } from "../../../appStore";
 import { ProviderSignupType } from "../../../types";
@@ -24,9 +23,9 @@ import { ProviderSignupType } from "../../../types";
  * Signup component for program providers
  */
 
-interface SignupType extends ProviderSignupType {
-  confirmPassword: string;
-}
+// interface SignupType extends ProviderSignupType {
+//   confirmPassword: string;
+// }
 
 const Signup = () => {
   const dispatch = useAppDispatch();
@@ -35,45 +34,44 @@ const Signup = () => {
 
   const { invitationCode } = useParams();
 
-  const [formData, setFormData] = useState<SignupType>({
-    firstName: providerProfile.firstName ?? "",
-    lastName: providerProfile.lastName ?? "",
-    email: providerProfile.email ?? "",
-    password: "",
-    confirmPassword: "",
-    invitationCode: invitationCode ?? "",
-    jobTitle: providerProfile.jobTitle ?? "",
-    phoneNumber: providerProfile.phoneNumber ?? "",
-  });
+  // const [formData, setFormData] = useState<SignupType>({
+  //   firstName: providerProfile.firstName ?? "",
+  //   lastName: providerProfile.lastName ?? "",
+  //   email: providerProfile.email ?? "",
+  //   password: "",
+  //   confirmPassword: "",
+  //   invitationCode: invitationCode ?? "",
+  //   jobTitle: providerProfile.jobTitle ?? "",
+  //   phoneNumber: providerProfile.phoneNumber ?? "",
+  // });
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { name, value } = event.target;
+  //   setFormData({ ...formData, [name]: value });
+  // };
   const handleSubmit = async (ev: React.SyntheticEvent) => {
     ev.preventDefault();
-    const res = await dispatch(signup(formData));
-    if (res.payload) {
-      navigate("/provider/signin");
-    }
+    // const res = await dispatch(signup(formData));
+    // if (res.payload) {
+    //   navigate("/provider/signin");
+    // }
   };
-  const {
-    email,
-    password,
-    confirmPassword,
-    firstName,
-    lastName,
-    jobTitle,
-    phoneNumber,
-  } = formData;
+  // const {
+  //   email,
+  //   password,
+  //   confirmPassword,
+  //   firstName,
+  //   lastName,
+  //   jobTitle,
+  //   phoneNumber,
+  // } = formData;
   return (
     <AuthPageLayout title="Signup" logo>
-      <Typography variant="h1" component="h1" sx={{ mb: 3 }}>
-        Get Access to <br /> Manage Programs
+      {/* <Typography variant="h1" component="h1" sx={{ mb: 3 }}>
+        Get Access to <br /> Admin Account
       </Typography>
 
       <form action="" onSubmit={handleSubmit}>
-        {/*  */}
         <Grid container columnSpacing={4}>
           <Grid item md={6}>
             <FormControl variant="standard" sx={{ my: 3 }}>
@@ -172,7 +170,7 @@ const Signup = () => {
             Sign in
           </a>
         </Typography>
-      </form>
+      </form> */}
     </AuthPageLayout>
   );
 };

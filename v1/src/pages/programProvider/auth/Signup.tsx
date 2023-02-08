@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import {
   FormControl,
   FormControlLabel,
@@ -17,47 +17,39 @@ import {
   useAppSelector,
   programProviderSignup as signup,
   selectProviderProfile,
+  verifyInviteCode as verify,
 } from "../../../appStore";
 import { ProviderSignupType } from "../../../types";
-import Alert from "../../Alert";
+import { checkIfEmail, isEmpty } from "../../../utils/functions";
 
 /**
  * Signup component for program providers
  */
 
 interface SignupType extends ProviderSignupType {
-  confirmPassword: string;
+  confirmPassword?: string;
 }
 
 const Signup = () => {
   const dispatch = useAppDispatch();
   const providerProfile = useAppSelector(selectProviderProfile);
   const navigate = useNavigate();
-
-  const { invitationCode } = useParams();
+  const { provider } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [formData, setFormData] = useState<SignupType>({
-    firstName: providerProfile.firstName ?? "",
-    lastName: providerProfile.lastName ?? "",
-    email: providerProfile.email ?? "",
+    firstName: "",
+    lastName: "",
+    email: "",
     password: "",
     confirmPassword: "",
-    invitationCode: invitationCode ?? "",
-    jobTitle: providerProfile.jobTitle ?? "",
-    phoneNumber: providerProfile.phoneNumber ?? "",
+    invitationCode: searchParams.get("invitationCode") ?? "",
+    jobTitle: "",
+    phoneNumber: "",
+    provider: provider as string,
   });
+  const [isValidated, setIsValidated] = useState<boolean>(false);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
-  };
-  const handleSubmit = async (ev: React.SyntheticEvent) => {
-    ev.preventDefault();
-    const res = await dispatch(signup(formData));
-    if (res.payload) {
-      navigate("/provider/signin");
-    }
-  };
   const {
     email,
     password,
@@ -67,6 +59,53 @@ const Signup = () => {
     jobTitle,
     phoneNumber,
   } = formData;
+
+  useEffect(() => {
+    dispatch(
+      verify({
+        email: searchParams.get("email") as string,
+        inviteCode: searchParams.get("invitationCode") as string,
+        provider: provider as string,
+      })
+    );
+  }, []);
+
+  useEffect(() => {
+    setFormData({
+      ...formData,
+      firstName: providerProfile.firstName ?? "",
+      lastName: providerProfile.lastName ?? "",
+      email: providerProfile.email ?? "",
+      jobTitle: providerProfile.jobTitle ?? "",
+      phoneNumber: providerProfile.phoneNumber ?? "",
+    });
+  }, [providerProfile]);
+
+  useEffect(() => {
+    if (
+      !checkIfEmail(email) ||
+      password !== confirmPassword ||
+      isEmpty(firstName, lastName, jobTitle, phoneNumber, password)
+    ) {
+      setIsValidated(false);
+    } else {
+      setIsValidated(true);
+    }
+  }, [formData]);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (ev: React.SyntheticEvent) => {
+    ev.preventDefault();
+    delete formData.confirmPassword;
+    const res = await dispatch(signup(formData));
+    if (res.payload) {
+      navigate("../../signin");
+    }
+  };
   return (
     <AuthPageLayout title="Signup" logo>
       <Typography variant="h1" component="h1" sx={{ mb: 3 }}>
@@ -162,6 +201,7 @@ const Signup = () => {
           fullWidth
           sx={{ my: 3, py: 3 }}
           type="submit"
+          disabled={!isValidated}
         >
           Create an account
           <ArrowForwardIosIcon sx={{ ml: 1 }} />

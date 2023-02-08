@@ -19,10 +19,10 @@ import {
 import { ProgramProviderType } from "../../../types";
 
 /**
- * Invite component for program providers
+ * InviteClient component for program providers
  */
 
-const Invite = () => {
+const InviteClient = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -173,4 +173,4 @@ const Invite = () => {
   );
 };
 
-export default Invite;
+export default InviteClient;

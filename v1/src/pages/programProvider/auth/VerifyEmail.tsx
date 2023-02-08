@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { AuthPageLayout } from "../../../components";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { useAppDispatch, verifyInviteCode } from "../../../appStore";
+import { useAppDispatch } from "../../../appStore";
 
 /**
  * VerifyEmail component for program providers
@@ -22,7 +22,7 @@ const VerifyEmail = () => {
 
   const [formData, setFormData] = useState({
     email: "",
-    invitationCode: "",
+    verificationCode: "",
   });
   const [editEmail, setEditEmail] = useState(false);
   const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,15 +31,11 @@ const VerifyEmail = () => {
   };
   const handleSubmit = async (ev: React.SyntheticEvent) => {
     ev.preventDefault();
-    const res = await dispatch(verifyInviteCode(formData));
-    if (res.payload) {
-      navigate(`/provider/signup/${invitationCode}`);
-    }
   };
   const resendCode = () => {
     setEditEmail(false);
   };
-  const { email, invitationCode } = formData;
+  const { email, verificationCode } = formData;
   return (
     <AuthPageLayout title="Verify Email" logo>
       <Typography variant="h1" component="h1" sx={{ mb: 3 }}>
@@ -84,8 +80,8 @@ const VerifyEmail = () => {
           <Input
             onChange={handleChange}
             type="text"
-            name="invitationCode"
-            value={invitationCode}
+            name="verificationCode"
+            value={verificationCode}
           />
         </FormControl>
 

@@ -24,7 +24,6 @@ import {
   useAppDispatch,
   programProviderLogin as login,
 } from "../../../appStore";
-import "../../../styles/auth-select.css";
 
 /**
  * InviteCoworker component for program providers
@@ -36,20 +35,15 @@ const InviteCoworker = () => {
 
   const [formData, setFormData] = useState({
     email: "",
-    userPermission: "",
   });
   const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = ev.target;
     setFormData({ ...formData, [name]: value });
   };
-  const handleUserPermissionChange = (ev: SelectChangeEvent<string>) => {
-    console.log("select value changed", ev.target.value);
-    setFormData({ ...formData, userPermission: ev.target.value as string });
-  };
   const handleSubmit = (ev: React.SyntheticEvent) => {
     ev.preventDefault();
   };
-  const { email, userPermission } = formData;
+  const { email } = formData;
   return (
     <AuthPageLayout
       title="Reset Password"
@@ -104,18 +98,6 @@ const InviteCoworker = () => {
             value={email}
           />
         </FormControl>
-        <FormControl fullWidth>
-          <label>{"User permission"}</label>
-          <Select
-            variant="standard"
-            value={userPermission}
-            onChange={handleUserPermissionChange}
-          >
-            <MenuItem value={"admin"}>{"Super Admin / Manager"}</MenuItem>
-            <MenuItem value={"user"}>{"Standard user / Assistant"}</MenuItem>
-            <MenuItem value={"guest"}>{"Read-only access"}</MenuItem>
-          </Select>
-        </FormControl>
 
         <Button
           variant="contained"
@@ -124,7 +106,7 @@ const InviteCoworker = () => {
           sx={{ mt: 3, py: 3 }}
           type="submit"
         >
-          Invite member
+          Invite admin
           <ArrowForwardIosIcon sx={{ ml: 1 }} />
         </Button>
       </form>
