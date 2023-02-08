@@ -38,7 +38,7 @@ const CreateProgramForm = ({ setData, data }: Props) => {
 				action=""
 				className="custom-form">
 				{/* Cover Image */}
-				<CoverImage />
+				{/* <CoverImage /> */}
 
 				{/* Program title  */}
 				<FormControl
@@ -49,6 +49,7 @@ const CreateProgramForm = ({ setData, data }: Props) => {
 					</label>
 					<InputBase
 						placeholder="Summer Internship Program"
+						type="text"
 						name="title"
 						onChange={onHandleChange}
 					/>
@@ -98,8 +99,11 @@ const CreateProgramForm = ({ setData, data }: Props) => {
 				<Stack
 					gap={1}
 					direction="row">
-					{skillsList.map((skill) => (
-						<SkillsChip label={skill} />
+					{skillsList.map((skill, index) => (
+						<SkillsChip
+							label={skill}
+							key={index}
+						/>
 					))}
 				</Stack>
 

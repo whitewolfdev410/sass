@@ -1,8 +1,25 @@
+import React, { useState, useEffect } from "react";
 import { ApplicationFormCard } from "../../../components";
-import { InputGroupInternal } from "../../../components/ProgramProviderComponents";
+import {
+	InputGroupInternal,
+	QuestionInput,
+	QuestionInputType as QuestionProps,
+	SavedQuestion,
+} from "../../../components/ProgramProviderComponents";
 
-import { FormControl, TextField, Stack, Typography } from "@mui/material";
+import {
+	FormControl,
+	TextField,
+	Stack,
+	Typography,
+	Divider,
+	Button,
+	Accordion,
+	AccordionSummary,
+	AccordionDetails,
+} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { Add } from "@mui/icons-material";
 
 export type Props = {
 	setApplicationData?: any;
@@ -19,6 +36,49 @@ const PersonalInformationForm = ({
 			[event.target.name]: event.target.value,
 		});
 	};
+	const [newQuestion, setNewQuestion] = useState(false);
+	const [questionList, setQuestionList] = useState<QuestionProps[]>([]);
+	const programId = localStorage.getItem("programId") ?? "";
+	const onSaveNew = (newQ: QuestionProps, option: any) => {
+		let data = {};
+		if (newQ.type === "YesNo") {
+			data = {
+				id: programId,
+				type: "YesNo",
+				other: false,
+				question: newQ.question,
+				disqualify: newQ.disqualify,
+			};
+		} else if (newQ.type === "Dropdown" || newQ.type === "MultipleChoice") {
+			const choice = option.map((item: any) => item.value);
+			data = {
+				id: programId,
+				type: newQ.type,
+				question: newQ.question,
+				choices: choice,
+				other: newQ.other,
+			};
+		} else {
+			data = {
+				id: programId,
+				type: newQ.type,
+				question: newQ.question,
+				other: false,
+			};
+		}
+		// @ts-ignore
+		setQuestionList((prev) => [...prev, data]);
+	};
+
+	const onDeleteNew = () => {
+		setNewQuestion(false);
+	};
+	useEffect(() => {
+		setApplicationData({
+			...applicationData,
+			personalQuestions: questionList,
+		});
+	}, [questionList]);
 
 	const handleChange = (event: any) => {
 		setApplicationData({
@@ -29,76 +89,48 @@ const PersonalInformationForm = ({
 			},
 		});
 	};
+	const onDeleteEdit = (index: any) => {
+		const data = questionList.filter((item, i) => i !== index);
+		setQuestionList(data);
+	};
+	const onSaveEdit = () => {};
 
 	return (
 		<ApplicationFormCard title="Personal Information">
-			<Stack
-				direction="row"
-				columnGap={4}>
-				<FormControl
-					sx={{ my: 2 }}
-					fullWidth>
-					<label>First Name</label>
-					<TextField
-						placeholder="Type here"
-						type="text"
-						disabled
-						name="firstName"
-						onChange={handleOnChange}
-					/>
-				</FormControl>
+			<FormControl
+				sx={{ my: 2 }}
+				fullWidth>
+				<label>First Name</label>
+			</FormControl>
+			<Divider />
 
-				<FormControl
-					sx={{ my: 2 }}
-					fullWidth>
-					<label>Last Name</label>
-					<TextField
-						placeholder="Type here"
-						disabled
-						name="lastName"
-						onChange={handleOnChange}
-					/>
-				</FormControl>
-			</Stack>
-
-			<InputGroupInternal
-				label="EmailID"
-				name="EmailID"
-				setApplicationData={setApplicationData}
-				applicationData={applicationData}
-				input={
-					<TextField
-						disabled
-						placeholder="Type here"
-						type="email"
-						name="EmailID"
-						onChange={handleChange}
-					/>
-				}
-				internal={false}
-				show={false}
-			/>
+			<FormControl
+				sx={{ my: 2 }}
+				fullWidth>
+				<label>Last Name</label>
+			</FormControl>
+			<Divider />
+			<FormControl
+				sx={{ my: 2 }}
+				fullWidth>
+				<label>EmailId</label>
+			</FormControl>
+			<Divider />
 
 			<InputGroupInternal
 				label={
 					<span>
-						Phone <Typography fontSize={15}>(without dial code)</Typography>
+						Phone Number
+						<Typography fontSize={15}>(without dial code)</Typography>
 					</span>
 				}
 				internal={false}
 				show={false}
-				name="phone"
+				name="phoneNumber"
 				setApplicationData={setApplicationData}
 				applicationData={applicationData}
-				input={
-					<TextField
-						disabled
-						placeholder="Type here"
-						name="phone"
-						onChange={handleChange}
-					/>
-				}
 			/>
+			<Divider />
 
 			<InputGroupInternal
 				label="Nationality"
@@ -107,55 +139,28 @@ const PersonalInformationForm = ({
 				name="nationality"
 				setApplicationData={setApplicationData}
 				applicationData={applicationData}
-				input={
-					<TextField
-						disabled
-						placeholder="Type here"
-						name="nationality"
-						onChange={handleChange}
-					/>
-				}
 			/>
+			<Divider />
 
 			<InputGroupInternal
 				label="Country of residence"
 				internal={false}
 				show={false}
-				name="currentlyBased"
+				name="currentResidence"
 				setApplicationData={setApplicationData}
 				applicationData={applicationData}
-				input={
-					<TextField
-						disabled
-						name="currentlyBased"
-						onChange={handleChange}
-						placeholder="Select location"
-						type="email"
-						InputProps={{
-							startAdornment: (
-								<SearchIcon sx={{ color: "var(--spanish-grey)", mr: 1 }} />
-							),
-						}}
-					/>
-				}
 			/>
+			<Divider />
 
 			<InputGroupInternal
-				label="Saudi ID number"
+				label="Id Number"
 				internal={false}
 				show={false}
-				name="NationalIDNumber"
+				name="idNumber"
 				setApplicationData={setApplicationData}
 				applicationData={applicationData}
-				input={
-					<TextField
-						disabled
-						placeholder="Please type your number here"
-						name="NationalIDNumber"
-						onChange={handleChange}
-					/>
-				}
 			/>
+			<Divider />
 			<InputGroupInternal
 				label="Date of birth"
 				internal={false}
@@ -163,16 +168,8 @@ const PersonalInformationForm = ({
 				name="dateOfBirth"
 				setApplicationData={setApplicationData}
 				applicationData={applicationData}
-				input={
-					<TextField
-						disabled
-						placeholder="Type here"
-						type="date"
-						name="dateOfBirth"
-						onChange={handleChange}
-					/>
-				}
 			/>
+			<Divider />
 
 			<InputGroupInternal
 				label="Gender"
@@ -181,22 +178,58 @@ const PersonalInformationForm = ({
 				name="gender"
 				setApplicationData={setApplicationData}
 				applicationData={applicationData}
-				input={
-					<TextField
-						disabled
-						placeholder="Type here"
-						name="gender"
-						onChange={handleChange}
-					/>
-				}
 			/>
+			<Divider />
+			{questionList &&
+				questionList?.map((q, index) => (
+					<Accordion
+						sx={{ border: "none", boxShadow: "none" }}
+						key={index}>
+						<AccordionSummary sx={{ p: 2 }}>
+							<SavedQuestion
+								type={q.type}
+								question={q.question}
+								editable
+							/>
+						</AccordionSummary>
+						<AccordionDetails>
+							<QuestionInput
+								type={q.type}
+								q={q}
+								onDelete={() => onDeleteEdit(index)}
+								onSave={onSaveEdit}
+							/>
+						</AccordionDetails>
+					</Accordion>
+				))}
 
-			<Typography
-				fontSize={12}
-				sx={{ color: "var(--spanish-grey)" }}>
-				We ask the gender information to ensure that we provide equal
-				opportunity for everyone.{" "}
-			</Typography>
+			{newQuestion && (
+				<QuestionInput
+					typeInput
+					key={questionList?.length + 1}
+					onDelete={onDeleteNew}
+					onSave={onSaveNew}
+					setNewQuestion={setNewQuestion}
+				/>
+			)}
+			<Button
+				sx={{ m: 2 }}
+				onClick={() => {
+					setNewQuestion(true);
+				}}>
+				{" "}
+				<Add
+					fontSize="large"
+					color="primary"
+					sx={{ mr: 2 }}
+				/>
+				<Typography
+					color="primary.main"
+					fontSize={15}
+					fontWeight={600}>
+					Add a question
+				</Typography>
+			</Button>
 		</ApplicationFormCard>
 	);
 };

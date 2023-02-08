@@ -38,19 +38,23 @@ const ApplicationForm = ({
 		};
 		if (screen === "programDetail") {
 			// @ts-ignore
-			response = await dispatch(
+			const res = await dispatch(
 				saveNewProgramDetails({
 					type: "program",
 					attributes: data,
 				})
 			);
 			if (response?.payload) {
-				localStorage.setItem("programId", response?.payload?.ProgramGUID);
+				localStorage.setItem("programId", res.payload.data.id);
 			}
 		} else if (screen === "applicationForm") {
 			// @ts-ignore
 			response = await dispatch(
-				saveNewProgramApplicationTemplate({ data, programId })
+				saveNewProgramApplicationTemplate({
+					id: programId,
+					type: "applicationForm",
+					attributes: data,
+				})
 			);
 		} else if (screen === "workFlow") {
 			// @ts-ignore

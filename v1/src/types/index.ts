@@ -67,77 +67,77 @@ export type ProgramDetailsType = {
 };
 
 export type ApplicationFormTemplateType = {
-	programGUID: string;
-	firstName: string;
-	lastName: string;
-	phone: {
-		id: string;
-		controlName: string;
-		info: number;
-		internalUse: boolean;
-		show: boolean;
+	coverImage: string;
+	personalInformation: {
+		firstName: {
+			internalUse: boolean;
+			show: boolean;
+		};
+		lastName: {
+			internalUse: boolean;
+			show: boolean;
+		};
+		emailId: {
+			internalUse: boolean;
+			show: boolean;
+		};
+		phoneNumber: {
+			internalUse: boolean;
+			show: boolean;
+		};
+		nationality: {
+			internalUse: boolean;
+			show: boolean;
+		};
+		currentResidence: {
+			internalUse: boolean;
+			show: boolean;
+		};
+		nationalIDNumber: {
+			internalUse: boolean;
+			show: boolean;
+		};
+		dateOfBirth: {
+			internalUse: boolean;
+			show: boolean;
+		};
+		gender: {
+			internalUse: boolean;
+			show: boolean;
+		};
 	};
-	nationality: {
-		id: string;
-		controlName: string;
-		info: string;
-		internalUse: boolean;
-		show: boolean;
+	profile: {
+		education: {
+			mandatory: boolean;
+			show: boolean;
+		};
+		experience: {
+			mandatory: boolean;
+			show: boolean;
+		};
+		resume: {
+			mandatory: boolean;
+			show: boolean;
+		};
+		profileQuestions: [
+			{
+				id: string;
+				type: string;
+				question: string;
+				choices: string;
+				disquality: boolean;
+				other: boolean;
+			}
+		];
 	};
-	currentlyBased: {
-		id: string;
-		controlName: string;
-		info: string;
-		internalUse: boolean;
-		show: boolean;
-	};
-	nationalIDNumber: {
-		id: string;
-		controlName: string;
-		info: string;
-		internalUse: boolean;
-		show: boolean;
-	};
-	dateOfBirth: {
-		id: string;
-		controlName: string;
-		info: string;
-		internalUse: boolean;
-		show: boolean;
-	};
-	gender: {
-		id: string;
-		controlName: string;
-		info: number;
-		internalUse: boolean;
-		show: boolean;
-	};
-	education: {
-		id: string;
-		controlName: string;
-		info: string;
-		internalUse: boolean;
-		show: boolean;
-	};
-	experience: {
-		id: string;
-		controlName: string;
-		info: string;
-		internalUse: boolean;
-		show: boolean;
-	};
-	resume: {
-		id: string;
-		controlName: string;
-		info: string;
-		internalUse: boolean;
-		show: boolean;
-	};
-	listOfQuestions: [
+	customisedQuestions: [
 		{
 			id: string;
+			type: string;
 			question: string;
-			answer: string;
+			choices: string;
+			disquality: boolean;
+			other: boolean;
 		}
 	];
 };
@@ -191,7 +191,7 @@ export type ProviderSignupType = {
 	invitationCode: string;
 	jobTitle: string;
 	phoneNumber: string;
-}
+};
 
 export type StageType = {
 	stageName: string;
