@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { AuthPageLayout } from "../../../components";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { useAppDispatch, verifyInviteCode as verify } from "../../../appStore";
+import { useAppDispatch } from "../../../appStore";
 
 /**
  * VerifyInviteCode component for program providers
@@ -34,11 +34,11 @@ const VerifyInviteCode = () => {
   };
   const handleSubmit = async (ev: React.SyntheticEvent) => {
     ev.preventDefault();
-    const res = await dispatch(verify(formData));
-    if (res.payload) {
-      navigate(`/provider/signup/${invitationCode}`);
-    } else {
-    }
+    // const res = await dispatch(verify(formData));
+    // if (res.payload) {
+    //   navigate(`/provider/signup/${invitationCode}`);
+    // } else {
+    // }
   };
   const { email, invitationCode } = formData;
   return (

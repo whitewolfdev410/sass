@@ -1,5 +1,6 @@
-import { Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { Helmet } from "react-helmet";
+import bgImg from "../assets/bg/404.jpg";
 
 /**
  * 404 ( not found ) component
@@ -12,9 +13,14 @@ const NotFound = () => (
       <title>Signin</title>
     </Helmet>
 
-    <Typography variant="h1" component="h1">
-      404
-    </Typography>
+    <Stack
+      sx={{
+        width: "100vw",
+        height: "100vh",
+        backgroundImage: `url(${bgImg})`,
+        backgroundSize: "cover",
+      }}
+    ></Stack>
   </>
 );
 export default NotFound;
