@@ -29,7 +29,7 @@ export const getProgramSummary = createAsyncThunk(
 	"programDashboard/getProgramSummary",
 	async () => {
 		try {
-			const response = await PROGRAM_CLIENT.get(`/program`, {
+			const response = await PROGRAM_CLIENT.get(`/programs`, {
 				headers: {
 					"Content-Type": "application/json",
 				},
@@ -113,7 +113,7 @@ export const saveNewProgramDetails = createAsyncThunk(
 	async (data: { type: string; attributes: ProgramDetailsType }) => {
 		try {
 			const response = await PROGRAM_CLIENT.post(
-				`/program`,
+				`/programs`,
 				{
 					data: {
 						...data,
@@ -153,7 +153,7 @@ export const saveNewProgramApplicationTemplate = createAsyncThunk(
 		try {
 			// data.programGUID = programId;
 			const response = await PROGRAM_CLIENT.put(
-				`program/${data.id}/applicationForm`,
+				`programs/${data.id}/application-form`,
 				{ data },
 				{
 					headers: {
