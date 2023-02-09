@@ -6,7 +6,8 @@ export const baseUserURL: string =
 export const baseProgramURL: string =
 	"https://stoplight.io/mocks/surija/cp/134330842/api/1.0";
 export const baseWorkflowURL: string =
-	"https://cpworkflowmicroservice.azurewebsites.net/api/";
+	// "https://cpworkflowmicroservice.azurewebsites.net/api/";
+	"https://stoplight.io/mocks/surija/cp/134330842/api/1.0";
 
 export const USER_CLIENT = axios.create({
 	baseURL: baseUserURL,

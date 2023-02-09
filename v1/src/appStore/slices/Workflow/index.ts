@@ -1,10 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { WorkflowType } from "../../../types";
-import { createWorkflow, getAllWorkflows } from "./thunks";
+import { WorkflowType, WorkFlowWholeType } from "../../../types";
+import { createWorkflow, getAllWorkflows, getSelectedWorkFlow } from "./thunks";
 
-const initialState: { allWorkflows: WorkflowType[]; currentWorkflow: WorkflowType | null } = {
+type initialProps = {
+	selectedWorkFlow: WorkFlowWholeType;
+	allWorkflows: WorkflowType[];
+	currentWorkflow: WorkflowType | null;
+};
+const initialState: initialProps = {
 	allWorkflows: [],
 	currentWorkflow: null,
+	selectedWorkFlow: {} as WorkFlowWholeType,
 };
 
 const programSlice = createSlice({
@@ -15,6 +21,9 @@ const programSlice = createSlice({
 		builder
 			.addCase(getAllWorkflows.fulfilled, (state, action) => {
 				state.allWorkflows = action.payload;
+			})
+			.addCase(getSelectedWorkFlow.fulfilled, (state, action) => {
+				state.selectedWorkFlow = action.payload;
 			})
 			.addCase(createWorkflow.fulfilled, (state, action) => {
 				state.currentWorkflow = action.payload;

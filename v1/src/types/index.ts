@@ -44,6 +44,13 @@ export type ProgramProviderType = {
 	phoneNumber: string;
 	userToken: string;
 };
+export type newProgramType = {
+	data: {
+		id: string;
+		type: string;
+		attributes: ProgramDetailsType;
+	};
+};
 
 export type ProgramDetailsType = {
 	title: string;
@@ -203,6 +210,30 @@ export type workFlowType = {
 	stageName: string;
 	stageType: number;
 	stageShownToCandidate: boolean;
+};
+export type WorkFlowWholeType = {
+	data: {
+		id: string;
+		type: string;
+		attributes: {
+			stages: workStageType[];
+		};
+	};
+};
+export type workStageType = {
+	id: string;
+	name: string;
+	type: string;
+	hideFromCandidate: boolean;
+	interviewQuestions: interviewQuestionType[];
+};
+export type interviewQuestionType = {
+	id?: string;
+	question: string;
+	description: string;
+	duration: number;
+	durationType: string;
+	deadlineInDays: number;
 };
 
 export type WorkflowType = {
