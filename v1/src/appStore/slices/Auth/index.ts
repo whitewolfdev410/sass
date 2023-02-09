@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { authLogin } from "..";
+import { authLogin, getProviderInfo } from "..";
+import { ProviderType } from "../../../types";
 
 type AuthProps = {
   accessToken: string;
@@ -9,7 +10,8 @@ type AuthProps = {
     id: string;
     displayName: string;
     email: string;
-    provider: string;
+    provider: null | ProviderType;
+    currentRole?: number;
     roles: [
       {
         persona: string;
@@ -27,7 +29,8 @@ const initialState: AuthProps = {
     id: "",
     displayName: "",
     email: "",
-    provider: "",
+    provider: null,
+    currentRole: 0,
     roles: [
       {
         persona: "",
@@ -37,7 +40,7 @@ const initialState: AuthProps = {
   },
 };
 
-const candidateSlice = createSlice({
+const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
@@ -46,12 +49,25 @@ const candidateSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(authLogin.fulfilled, (state, action) => {
-      return { ...state, ...(action.payload as unknown as AuthProps) };
-    });
+    builder
+      .addCase(authLogin.fulfilled, (state, action) => {
+        return { ...state, ...(action.payload as unknown as AuthProps) };
+      })
+      .addCase(getProviderInfo.fulfilled, (state, action) => {
+        return {
+          ...state,
+          account: { ...state.account, provider: action.payload },
+        };
+      })
+      .addCase(getProviderInfo.rejected, (state, action) => {
+        return {
+          ...state,
+          account: { ...state.account, provider: null },
+        };
+      });
   },
 });
 
-export const {} = candidateSlice.actions;
+export const {} = authSlice.actions;
 
-export default candidateSlice.reducer;
+export default authSlice.reducer;

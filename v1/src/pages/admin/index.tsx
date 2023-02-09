@@ -1,21 +1,40 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Signup from "./auth/Signup";
 import InviteClient from "./auth/InviteClient";
 import InviteCoworker from "./auth/InviteCoworker";
 import ClientList from "./dashboard/ClientList";
 import ClientProfile from "./dashboard/ClientProfile";
 import SetPassword from "./auth/SetPassword";
+import Login from "./auth/Login";
+import RouteSwitcher from "../../utils/routing/RouteSwitcher";
 
 const Admin = () => {
   return (
     <Routes>
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/set-password" element={<SetPassword />} />
-      <Route path="/invite-client" element={<InviteClient />} />
-      <Route path="/invite-coworker" element={<InviteCoworker />} />
+      <Route index element={<Navigate to="signin" />} />
+      <Route path="/signin" element={<RouteSwitcher component={Login} />} />
+      <Route path="/signup" element={<RouteSwitcher component={Signup} />} />
+      <Route
+        path="/set-password"
+        element={<RouteSwitcher component={SetPassword} />}
+      />
+      <Route
+        path="/invite-client"
+        element={<RouteSwitcher loggedIn={true} component={InviteClient} />}
+      />
+      <Route
+        path="/invite-coworker"
+        element={<RouteSwitcher loggedIn={true} component={InviteCoworker} />}
+      />
       <Route path="/dashboard">
-        <Route index element={<ClientList />}></Route>
-        <Route path="client-profile/:id" element={<ClientProfile />}></Route>
+        <Route
+          index
+          element={<RouteSwitcher loggedIn={true} component={ClientList} />}
+        ></Route>
+        <Route
+          path="client-profile/:id"
+          element={<RouteSwitcher loggedIn={true} component={ClientProfile} />}
+        ></Route>
       </Route>
     </Routes>
   );

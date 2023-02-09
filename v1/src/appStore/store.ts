@@ -24,6 +24,8 @@ import {
   WorkflowReducer,
   ProgramReducer,
   AuthReducer,
+  AdminReducer,
+  AlertReducer,
 } from "./slices";
 
 const persistConfig = {
@@ -39,14 +41,13 @@ const appReducer = combineReducers({
   workflow: WorkflowReducer,
   program: ProgramReducer,
   auth: AuthReducer,
+  admin: AdminReducer,
+  alert: AlertReducer,
 });
 
 // implement the signout action here to clear out state and return an empty object to redux persist
 const rootReducer: Reducer = (state: RootState, action: AnyAction) => {
-  if (
-    action.type === "programProvider/signout" ||
-    action.type === "candidate/signout"
-  ) {
+  if (action.type === "auth/signout") {
     // this applies to all keys defined in persistConfig(s)
     storage.removeItem("persist:root");
     window.location.href = window.location.origin + "/login";

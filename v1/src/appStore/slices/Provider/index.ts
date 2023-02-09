@@ -30,14 +30,10 @@ const programProviderSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(programProviderLogin.fulfilled, (state, action) => {
-        return state;
-      })
-      .addCase(verifyInviteCode.fulfilled, (state, action) => ({
-        ...state,
-        ...(action.payload as unknown as ProgramProviderType),
-      }));
+    builder.addCase(verifyInviteCode.fulfilled, (state, action) => ({
+      ...state,
+      ...(action.payload as unknown as ProgramProviderType),
+    }));
   },
 });
 

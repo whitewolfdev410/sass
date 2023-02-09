@@ -45,6 +45,13 @@ export type ProgramProviderType = {
   userToken: string;
 };
 
+export type ProviderType = {
+  companyName: string;
+  providerId: string;
+  providerAlias: string;
+  companyLogo?: string;
+};
+
 export type ProgramDetailsType = {
   title: string;
   summary: string;
@@ -276,4 +283,10 @@ export type CandidateProfileType = {
       Disqualify: string | null;
     }
   ];
+};
+
+export type AlertProps = {
+  title: string;
+  type: "error" | "success" | "info";
+  msg: string;
 };

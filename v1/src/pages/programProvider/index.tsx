@@ -1,7 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import Signup from "./auth/Signup";
-import VerifyEmail from "./auth/VerifyEmail";
-import VerifyInviteCode from "./auth/VerifyInviteCode";
 import InviteCoworker from "./auth/InviteCoworker";
 import AllProgrammes from "./dashboard/AllProgrammes";
 import ApplicationForm from "./dashboard/ApplicationForm";
@@ -9,6 +7,7 @@ import CreateProgram from "./dashboard/CreateProgram";
 import Workflow from "./dashboard/Workflow";
 import Preview from "./dashboard/Preview";
 import SingleProgram from "./dashboard/SingleProgram";
+import RouteSwitcher from "../../utils/routing/RouteSwitcher";
 
 /**
  * Base Program Provider component.
@@ -18,15 +17,38 @@ import SingleProgram from "./dashboard/SingleProgram";
 const ProgramProvider = () => {
   return (
     <Routes>
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/invite-coworker" element={<InviteCoworker />} />
+      <Route path="/signup" element={<RouteSwitcher component={Signup} />} />
+      <Route
+        path="/invite-coworker"
+        element={<RouteSwitcher loggedIn={true} component={InviteCoworker} />}
+      />
       <Route path="/dashboard">
-        <Route index element={<AllProgrammes />} />
-        <Route element={<CreateProgram />} path="create-program" />
-        <Route element={<ApplicationForm />} path="application-form" />
-        <Route element={<Workflow />} path="workflow" />
-        <Route element={<Preview />} path="preview" />
-        <Route element={<SingleProgram />} path="program/:id" />
+        <Route
+          index
+          element={<RouteSwitcher loggedIn={true} component={AllProgrammes} />}
+        />
+        <Route
+          element={<RouteSwitcher loggedIn={true} component={CreateProgram} />}
+          path="create-program"
+        />
+        <Route
+          element={
+            <RouteSwitcher loggedIn={true} component={ApplicationForm} />
+          }
+          path="application-form"
+        />
+        <Route
+          element={<RouteSwitcher loggedIn={true} component={Workflow} />}
+          path="workflow"
+        />
+        <Route
+          element={<RouteSwitcher loggedIn={true} component={Preview} />}
+          path="preview"
+        />
+        <Route
+          element={<RouteSwitcher loggedIn={true} component={SingleProgram} />}
+          path="program/:id"
+        />
       </Route>
     </Routes>
   );

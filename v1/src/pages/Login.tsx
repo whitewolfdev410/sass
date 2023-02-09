@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   FormControl,
   FormControlLabel,
@@ -17,25 +17,31 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { authLogin, useAppDispatch } from "../appStore";
+import { USER_CLIENT } from "../appStore/axiosInstance";
 
 /**
  * Login component for program providers
  */
 
 const Login = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { provider } = useParams();
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    provider: provider as string,
   });
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = ev.target;
     setFormData({ ...formData, [name]: value });
   };
-  const handleSubmit = (ev: React.SyntheticEvent) => {
+  const handleSubmit = async (ev: React.SyntheticEvent) => {
     ev.preventDefault();
+    dispatch(authLogin(formData));
   };
   const handlePasswordVisibility = () => {
     setPasswordVisibility(!passwordVisibility);

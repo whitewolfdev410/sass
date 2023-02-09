@@ -14,12 +14,10 @@ import {
 } from "@mui/material";
 import { AuthPageLayout } from "../../../components";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import {
-  useAppDispatch,
-  programProviderLogin as login,
-} from "../../../appStore";
+import { useAppDispatch, adminLogin as login } from "../../../appStore";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { addNewAlert } from "../../../utils/functions/addNewAlert";
 
 /**
  * Login component for program providers
@@ -38,9 +36,17 @@ const Login = () => {
     const { name, value } = ev.target;
     setFormData({ ...formData, [name]: value });
   };
-  const handleSubmit = (ev: React.SyntheticEvent) => {
+  const handleSubmit = async (ev: React.SyntheticEvent) => {
     ev.preventDefault();
-    dispatch(login(formData));
+    const action = await dispatch(login(formData));
+    if (action.meta.requestStatus === "fulfilled") {
+    } else if (action.meta.requestStatus === "rejected") {
+      addNewAlert(dispatch, {
+        type: "error",
+        title: "Login failed",
+        msg: action.payload,
+      });
+    }
   };
   const handlePasswordVisibility = () => {
     setPasswordVisibility(!passwordVisibility);
@@ -49,7 +55,7 @@ const Login = () => {
   return (
     <AuthPageLayout title="Signin">
       <Typography variant="h1" component="h1" sx={{ mb: 3 }}>
-        Sign In
+        Sign In as an Admin
       </Typography>
 
       <form action="" onSubmit={handleSubmit}>

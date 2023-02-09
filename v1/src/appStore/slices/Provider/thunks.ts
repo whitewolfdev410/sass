@@ -20,7 +20,7 @@ export const programProviderLogin = createAsyncThunk(
 );
 export const programProviderSignup = createAsyncThunk(
   "programProvider/signup",
-  async (data: ProviderSignupType, {}) => {
+  async (data: ProviderSignupType, { rejectWithValue }) => {
     try {
       await USER_CLIENT.post(`providers/signup`, data);
       return "success";
@@ -29,6 +29,7 @@ export const programProviderSignup = createAsyncThunk(
       if (!error.response) {
         console.error("providers signup error", err);
       }
+      return rejectWithValue(err.response.data);
     }
   }
 );
@@ -73,7 +74,11 @@ export const getProgramProviderByID = createAsyncThunk(
 
 export const verifyInviteCode = createAsyncThunk(
   "programProvider/verifyInvite",
-  async (formData: { email: string; inviteCode: string; provider: string }) => {
+  async (formData: {
+    email: string;
+    invitationCode: string;
+    provider: string;
+  }) => {
     try {
       const res = await USER_CLIENT.post("/providers/verifyinvite", {
         ...formData,

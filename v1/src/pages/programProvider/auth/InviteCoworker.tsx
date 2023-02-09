@@ -2,17 +2,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   FormControl,
-  FormControlLabel,
-  Checkbox,
   Input,
   Typography,
   Stack,
   Button,
-  Link,
-  IconButton,
-  InputAdornment,
-  TextField,
-  InputLabel,
   Select,
   MenuItem,
   SelectChangeEvent,
@@ -20,10 +13,7 @@ import {
 } from "@mui/material";
 import { ApplicationFormCard, AuthPageLayout } from "../../../components";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import {
-  useAppDispatch,
-  programProviderLogin as login,
-} from "../../../appStore";
+import { useAppDispatch } from "../../../appStore";
 import "../../../styles/auth-select.css";
 
 /**
@@ -31,9 +21,6 @@ import "../../../styles/auth-select.css";
  */
 
 const InviteCoworker = () => {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     email: "",
     userPermission: "",
