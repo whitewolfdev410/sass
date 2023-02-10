@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Stack } from "@mui/material";
 import SnackbarContent from "@mui/material/SnackbarContent";
-import { useAppSelector } from "../appStore";
-import { getAllAlerts } from "../appStore/slices/Alert/selectors";
+import { getAllAlerts, useAppSelector } from "../appStore";
 
 const Alert = () => {
   const allAlerts = useAppSelector(getAllAlerts);
@@ -15,6 +14,7 @@ const Alert = () => {
     <Stack sx={{ position: "fixed", top: 10, right: 10 }} rowGap={2}>
       {allAlerts.map((alert) => (
         <SnackbarContent
+          key={alert.id}
           action={<small>{alert.title}</small>}
           message={alert.msg}
           sx={{
@@ -23,13 +23,6 @@ const Alert = () => {
           }}
         />
       ))}
-      <SnackbarContent
-        message="I will never disappear"
-        sx={{
-          backgroundColor: "white",
-          color: "black",
-        }}
-      />
     </Stack>
   );
 };

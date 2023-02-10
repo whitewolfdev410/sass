@@ -17,8 +17,13 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { authLogin, useAppDispatch } from "../appStore";
-import { USER_CLIENT } from "../appStore/axiosInstance";
+import {
+  authLogin,
+  selectProviderInfo,
+  useAppDispatch,
+  useAppSelector,
+} from "../appStore";
+import { addNewAlert } from "../utils/functions/addNewAlert";
 
 /**
  * Login component for program providers
@@ -26,13 +31,12 @@ import { USER_CLIENT } from "../appStore/axiosInstance";
 
 const Login = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const { provider } = useParams();
+  const providerInfo = useAppSelector(selectProviderInfo);
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    provider: provider as string,
+    providerId: providerInfo?.providerId as string,
   });
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,7 +45,15 @@ const Login = () => {
   };
   const handleSubmit = async (ev: React.SyntheticEvent) => {
     ev.preventDefault();
-    dispatch(authLogin(formData));
+    const action = await dispatch(authLogin(formData));
+    if (action.meta.requestStatus === "fulfilled") {
+    } else if (action.meta.requestStatus === "rejected") {
+      addNewAlert(dispatch, {
+        type: "error",
+        title: "Login failed",
+        msg: action.payload,
+      });
+    }
   };
   const handlePasswordVisibility = () => {
     setPasswordVisibility(!passwordVisibility);

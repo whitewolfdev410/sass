@@ -290,3 +290,5 @@ export type AlertProps = {
   type: "error" | "success" | "info";
   msg: string;
 };
+
+export const ADMIN_ROUTE = 'admin';

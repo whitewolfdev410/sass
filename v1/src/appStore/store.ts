@@ -18,6 +18,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage/session";
 import {
+  ProgramProviderReducer,
   ProviderReducer,
   CandidateReducer,
   ProgramDashboardReducer,
@@ -35,7 +36,7 @@ const persistConfig = {
 };
 
 const appReducer = combineReducers({
-  programProvider: ProviderReducer,
+  programProvider: ProgramProviderReducer,
   candidate: CandidateReducer,
   programDashboard: ProgramDashboardReducer,
   workflow: WorkflowReducer,
@@ -43,6 +44,7 @@ const appReducer = combineReducers({
   auth: AuthReducer,
   admin: AdminReducer,
   alert: AlertReducer,
+  provider: ProviderReducer,
 });
 
 // implement the signout action here to clear out state and return an empty object to redux persist

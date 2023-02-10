@@ -14,7 +14,13 @@ import {
 } from "@mui/material";
 import { AuthPageLayout } from "../../../components";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { useAppDispatch, adminLogin as login } from "../../../appStore";
+import {
+  useAppDispatch,
+  authLogin,
+  getFullProviderInfo,
+  useAppSelector,
+  selectProviderInfo,
+} from "../../../appStore";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { addNewAlert } from "../../../utils/functions/addNewAlert";
@@ -25,11 +31,13 @@ import { addNewAlert } from "../../../utils/functions/addNewAlert";
 
 const Login = () => {
   const dispatch = useAppDispatch();
+  const providerInfo = useAppSelector(selectProviderInfo);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    providerId: null,
   });
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,8 +46,11 @@ const Login = () => {
   };
   const handleSubmit = async (ev: React.SyntheticEvent) => {
     ev.preventDefault();
-    const action = await dispatch(login(formData));
+    const action = await dispatch(authLogin(formData));
     if (action.meta.requestStatus === "fulfilled") {
+      if (providerInfo !== null) {
+        dispatch(getFullProviderInfo(providerInfo.providerId));
+      }
     } else if (action.meta.requestStatus === "rejected") {
       addNewAlert(dispatch, {
         type: "error",

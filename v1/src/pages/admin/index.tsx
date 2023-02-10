@@ -20,20 +20,24 @@ const Admin = () => {
       />
       <Route
         path="/invite-client"
-        element={<RouteSwitcher loggedIn={true} component={InviteClient} />}
+        element={<RouteSwitcher requireLogin={true} component={InviteClient} />}
       />
       <Route
         path="/invite-coworker"
-        element={<RouteSwitcher loggedIn={true} component={InviteCoworker} />}
+        element={
+          <RouteSwitcher requireLogin={true} component={InviteCoworker} />
+        }
       />
       <Route path="/dashboard">
         <Route
           index
-          element={<RouteSwitcher loggedIn={true} component={ClientList} />}
+          element={<RouteSwitcher requireLogin={true} component={ClientList} />}
         ></Route>
         <Route
           path="client-profile/:id"
-          element={<RouteSwitcher loggedIn={true} component={ClientProfile} />}
+          element={
+            <RouteSwitcher requireLogin={true} component={ClientProfile} />
+          }
         ></Route>
       </Route>
     </Routes>

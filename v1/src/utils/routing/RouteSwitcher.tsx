@@ -1,24 +1,36 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { getCurrentRole, isLoggedin, useAppSelector } from "../../appStore";
+import {
+  selectFullProviderInfo,
+  selectCurrentRole,
+  isLoggedin,
+  useAppSelector,
+} from "../../appStore";
 
 const RouteSwitcher = ({
   component: Component,
-  loggedIn = false,
+  requireLogin = false,
 }: {
   component: React.FC;
-  loggedIn?: boolean;
+  requireLogin?: boolean;
 }) => {
   const isAuthenticated = useAppSelector(isLoggedin);
-  const currentRole = useAppSelector(getCurrentRole);
-  if (isAuthenticated === loggedIn) {
+  const currentRole = useAppSelector(selectCurrentRole);
+  const fullProviderInfo = useAppSelector(selectFullProviderInfo);
+  if (isAuthenticated === requireLogin) {
     return <Component />;
   }
 
-  if (loggedIn) {
-    return <Navigate to="/signin" />;
+  if (isAuthenticated) {
+    if (fullProviderInfo === null) {
+      return <Navigate to={`/dashboard`} />;
+    } else {
+      return (
+        <Navigate to={`/${currentRole.persona.toLowerCase()}/dashboard`} />
+      );
+    }
   } else {
-    return <Navigate to={`${currentRole.persona}/dashboard`} />;
+    return <Navigate to="/signin" />;
   }
 };
 

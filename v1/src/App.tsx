@@ -19,13 +19,17 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import {
   getAccessToken,
+  selectProviderInfo,
   getProviderInfo,
   useAppDispatch,
   useAppSelector,
+  selectIsValidProvider,
+  selectFullProviderInfo,
 } from "./appStore";
 import Loading from "./utils/routing/Loading";
 import { USER_CLIENT } from "./appStore/axiosInstance";
 import RouteSwitcher from "./utils/routing/RouteSwitcher";
+import { ADMIN_ROUTE } from "./types";
 
 type ProviderStatusType = "loading" | "notFound" | "validURL";
 
@@ -41,25 +45,38 @@ function App() {
   }, [accessToken]);
   /***************************************** */
 
+  /** Analyze identifier in the URL */
+  const dispatch = useAppDispatch();
   const [providerStatus, setProviderStatus] =
     useState<ProviderStatusType>("loading");
+  const fullProviderInfo = useAppSelector(selectFullProviderInfo);
   const identifier: string = window.location.pathname.split("/")[1];
-  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getProviderInfo(identifier))
-      .then((action) => {
-        if (action.meta.requestStatus === "rejected") {
-          setProviderStatus("notFound");
-        }
-        if (action.meta.requestStatus === "fulfilled") {
-          setProviderStatus("validURL");
-        }
-      })
-      .catch((err) => {
-        console.error("dispatch error", err);
-      });
+    dispatch(getProviderInfo(identifier)).then((action) => {
+      if (action.meta.requestStatus === "fulfilled") {
+        setProviderStatus("validURL");
+      } else if (action.meta.requestStatus === "rejected") {
+        setProviderStatus("notFound");
+      }
+    });
   }, []);
+
+  const newURL = `${window.location.href
+    .split("/")
+    .slice(0, 3)
+    .join("/")}/${identifier}/signin`;
+  if (accessToken && window.location.href !== newURL) {
+    if (
+      (fullProviderInfo === null && identifier !== ADMIN_ROUTE) ||
+      (fullProviderInfo !== null &&
+        identifier !== fullProviderInfo.providerAlias)
+    ) {
+      window.history.go(-1);
+    }
+  }
+
+  /************************************* */
 
   if (providerStatus === "loading") {
     return <Loading />;
@@ -69,7 +86,7 @@ function App() {
   return (
     <Router basename={"/" + identifier}>
       <Alert />
-      {identifier === "admin" ? (
+      {identifier === ADMIN_ROUTE ? (
         <Admin />
       ) : (
         <Routes>

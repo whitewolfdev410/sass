@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { authLogin, getProviderInfo } from "..";
+import {
+  authLogin,
+  authLogout,
+  getFullProviderInfo,
+  setCurrentRoleIndexTo,
+} from "..";
 import { ProviderType } from "../../../types";
 
 type AuthProps = {
@@ -12,12 +17,10 @@ type AuthProps = {
     email: string;
     provider: null | ProviderType;
     currentRole?: number;
-    roles: [
-      {
-        persona: string;
-        role: string;
-      }
-    ];
+    roles: {
+      persona: string;
+      role: string;
+    }[];
   };
 };
 
@@ -31,12 +34,7 @@ const initialState: AuthProps = {
     email: "",
     provider: null,
     currentRole: 0,
-    roles: [
-      {
-        persona: "",
-        role: "",
-      },
-    ],
+    roles: [],
   },
 };
 
@@ -51,18 +49,32 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(authLogin.fulfilled, (state, action) => {
-        return { ...state, ...(action.payload as unknown as AuthProps) };
+        let incomingState: AuthProps = action.payload as unknown as AuthProps;
+        incomingState.account.currentRole = 0;
+        return { ...state, ...incomingState };
       })
-      .addCase(getProviderInfo.fulfilled, (state, action) => {
+      .addCase(authLogout.fulfilled, (state, action) => {
+        return initialState;
+      })
+      .addCase(getFullProviderInfo.fulfilled, (state, action) => {
         return {
           ...state,
           account: { ...state.account, provider: action.payload },
         };
       })
-      .addCase(getProviderInfo.rejected, (state, action) => {
+      .addCase(getFullProviderInfo.rejected, (state, action) => {
         return {
           ...state,
           account: { ...state.account, provider: null },
+        };
+      })
+      .addCase(setCurrentRoleIndexTo.fulfilled, (state, action) => {
+        return {
+          ...state,
+          account: {
+            ...state.account,
+            currentRole: action.payload,
+          },
         };
       });
   },
