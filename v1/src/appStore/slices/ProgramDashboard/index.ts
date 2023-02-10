@@ -5,6 +5,7 @@ import {
 	NewProgramType,
 	ProgramDashboardType,
 	ProgramDetailsType,
+	ProgramPreviewType,
 	ProgramSummaryType,
 } from "../../../types";
 import {
@@ -15,6 +16,7 @@ import {
 	getAllDashboardProgramsByLocation,
 	getCandidateProfileData,
 	getProgramSummary,
+	getProgramPreview,
 } from "./thunks";
 
 type initialProps = {
@@ -24,6 +26,7 @@ type initialProps = {
 	newProgramDetails: ProgramDetailsType;
 	newProgramApplicationTemplate: ApplicationFormTemplateType;
 	candidateProfileData: CandidateProfileType;
+	programPreviewData: ProgramPreviewType;
 };
 
 const initialState: initialProps = {
@@ -33,6 +36,7 @@ const initialState: initialProps = {
 	newProgramDetails: {} as ProgramDetailsType,
 	newProgramApplicationTemplate: {} as ApplicationFormTemplateType,
 	candidateProfileData: {} as CandidateProfileType,
+	programPreviewData: {} as ProgramPreviewType,
 };
 
 const programProviderSlice = createSlice({
@@ -61,6 +65,9 @@ const programProviderSlice = createSlice({
 			})
 			.addCase(getProgramSummary.fulfilled, (state, action) => {
 				state.programSummary = action.payload;
+			})
+			.addCase(getProgramPreview.fulfilled, (state, action) => {
+				state.programPreviewData = action.payload;
 			});
 	},
 });

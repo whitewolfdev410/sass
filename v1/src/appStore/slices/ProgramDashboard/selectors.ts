@@ -25,3 +25,7 @@ export const allProgramSummary = createSelector(
 	[(state: RootState) => state?.programDashboard.programSummary],
 	(programs) => programs
 );
+export const programPreviewData = createSelector(
+	[(state: RootState) => state?.programDashboard.programPreviewData],
+	(programs) => programs
+);

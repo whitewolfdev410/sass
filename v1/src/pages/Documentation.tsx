@@ -112,11 +112,16 @@ const Documentation = () => {
 				data={data}
 			/>
 			<ProgramStatusCard />
-			<SteppedStageGroup stages={["stage1", "stage2", "stage3", "stage4"]} />
+			<SteppedStageGroup
+				stages={[
+					{ id: "1", name: "stage1" },
+					{ id: "2", name: "stage2" },
+					{ id: "3", name: "stage3" },
+				]}
+			/>
 			<Divider />
 		</Stack>
 	);
-	// >>>>>>> c6ee55327449213632b34fb00d2ae8c62430a74b
 };
 export default Documentation;
 

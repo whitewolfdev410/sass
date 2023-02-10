@@ -117,18 +117,11 @@ const ProgramStatus = () => {
 export default ProgramStatus;
 
 let stages = [
-	"Applied",
-	"Shortlisted",
-	"Video interview",
-	"1st Round Zoom Interview",
-	"In person meeting",
-	"Placement",
-	"Offered",
-	"Applied",
-	"Shortlisted",
-	"Video interview",
-	"1st Round Zoom Interview",
-	"In person meeting",
-	"Placement",
-	"Offered",
+	{ id: "1", name: "Applied" },
+	{ id: "2", name: "Shortlisted" },
+	{ id: "3", name: "Video interview" },
+	{ id: "4", name: "1st Round Zoom Interview" },
+	{ id: "5", name: "In person meeting" },
+	{ id: "6", name: "Placement" },
+	{ id: "7", name: "Offered" },
 ];

@@ -51,23 +51,40 @@ const ProgramProviderNav = () => {
 				"a:hover + .MuiDivider-root, a:active + .MuiDivider-root": {
 					display: "none",
 				},
-				".MuiDivider-root:has(+a:active, +a:hover, +a.active)": { display: "none" },
+				".MuiDivider-root:has(+a:active, +a:hover, +a.active)": {
+					display: "none",
+				},
 			}}>
-			<NavLink to="/provider/dashboard/create-program" className={({ isActive }) => (isActive ? "active" : undefined)}>
+			<NavLink
+				to="/provider/dashboard/create-program"
+				className={({ isActive }) => (isActive ? "active" : undefined)}>
 				Program Details
 			</NavLink>
-			<Divider orientation="vertical" variant="middle" />
+			<Divider
+				orientation="vertical"
+				variant="middle"
+			/>
 			<NavLink
 				to="/provider/dashboard/application-form"
 				className={({ isActive }) => (isActive ? "active" : undefined)}>
 				Application Form
 			</NavLink>
-			<Divider orientation="vertical" variant="middle" />
-			<NavLink to="/provider/dashboard/workflow" className={({ isActive }) => (isActive ? "active" : undefined)}>
+			<Divider
+				orientation="vertical"
+				variant="middle"
+			/>
+			<NavLink
+				to="/provider/dashboard/workflow"
+				className={({ isActive }) => (isActive ? "active" : undefined)}>
 				Workflow
 			</NavLink>
-			<Divider orientation="vertical" variant="middle" />
-			<NavLink to="/provider/dashboard/preview" className={({ isActive }) => (isActive ? "active" : undefined)}>
+			<Divider
+				orientation="vertical"
+				variant="middle"
+			/>
+			<NavLink
+				to="/provider/dashboard/preview"
+				className={({ isActive }) => (isActive ? "active" : undefined)}>
 				Preview
 			</NavLink>
 		</Stack>

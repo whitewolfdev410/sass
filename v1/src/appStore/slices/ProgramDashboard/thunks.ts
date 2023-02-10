@@ -220,3 +220,50 @@ export const createProgram = createAsyncThunk(
 		}
 	}
 );
+export const getProgramPreview = createAsyncThunk(
+	"programDashboard/getProgramPreview",
+	async ({ id }: { id: string }) => {
+		try {
+			const response = await PROGRAM_CLIENT.get(
+				`/programs/${id}/preview?programId=${id}`,
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				}
+			);
+			return response.data;
+		} catch (err: any) {
+			let error: AxiosError<any> = err;
+			if (!error.response) {
+				console.log(err);
+			}
+		}
+	}
+);
+export const publishProgram = createAsyncThunk(
+	"programDashboard/publishProgram",
+	async ({
+		data,
+	}: {
+		data: { id: string; type: string; attributes: { status: string } };
+	}) => {
+		try {
+			const response = await PROGRAM_CLIENT.patch(
+				`/programs/${data.id}/status`,
+				{ data },
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				}
+			);
+			return response.data;
+		} catch (err: any) {
+			let error: AxiosError<any> = err;
+			if (!error.response) {
+				console.log(err);
+			}
+		}
+	}
+);
