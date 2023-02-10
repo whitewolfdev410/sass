@@ -49,14 +49,7 @@ const appReducer = combineReducers({
 
 // implement the signout action here to clear out state and return an empty object to redux persist
 const rootReducer: Reducer = (state: RootState, action: AnyAction) => {
-  if (action.type === "auth/signout") {
-    // this applies to all keys defined in persistConfig(s)
-    storage.removeItem("persist:root");
-    window.location.href = window.location.origin + "/login";
-
-    return (state = {} as RootState);
-  }
-  return appReducer(state, action);
+  return appReducer(state ?? prevState, action);
 };
 
 const persistedReducer: typeof appReducer = persistReducer(
@@ -64,8 +57,21 @@ const persistedReducer: typeof appReducer = persistReducer(
   rootReducer
 );
 
+const prevState = JSON.parse(
+  (localStorage.getItem("persist:root") ?? "")
+    /** remove { and } */
+    .replace(/"{/g, "{")
+    .replace(/}"/g, "}")
+    /** remove [ and ] */
+    .replace(/"\[/g, "[")
+    .replace(/\]"/g, "]")
+    /** remove all '\' */
+    .replace(/\\/g, "")
+);
+
 export const store = configureStore({
   reducer: persistedReducer,
+  preloadedState: prevState,
   // disable serializable check for redux persist actions
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

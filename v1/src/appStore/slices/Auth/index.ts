@@ -41,11 +41,7 @@ const initialState: AuthProps = {
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {
-    signout: () => {
-      // deliberately left empty
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(authLogin.fulfilled, (state, action) => {

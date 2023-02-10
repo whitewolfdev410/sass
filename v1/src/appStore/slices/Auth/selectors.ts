@@ -37,3 +37,8 @@ export const selectFullProviderInfo = createSelector(
   ],
   (user) => user
 );
+
+export const selectUserDisplayName = createSelector(
+  [(state: RootState) => state.auth.account.displayName],
+  (user) => user
+);

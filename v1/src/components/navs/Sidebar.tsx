@@ -8,6 +8,7 @@ import {
   authLogout,
   selectCurrentRoleIndex,
   selectRoles,
+  selectUserDisplayName,
   setCurrentRoleIndexTo,
   useAppDispatch,
   useAppSelector,
@@ -34,6 +35,9 @@ const Sidebar = (props: Props) => {
   const [currentRoles, setCurrentRoles] = useState(useAppSelector(selectRoles));
   const [currentRoleIndex, setCurrentRoleIndex] = useState(
     useAppSelector(selectCurrentRoleIndex)
+  );
+  const [displayName, setDisplayName] = useState(
+    useAppSelector(selectUserDisplayName).split(" ")
   );
 
   const switchRoleTo = (index: number) => {
@@ -102,7 +106,10 @@ const Sidebar = (props: Props) => {
               fontSize: 14,
             }}
           >
-            NT
+            {(displayName.length === 1
+              ? displayName[0].slice(0, 2)
+              : `${displayName[0][0]}${displayName[1][0]}`
+            ).toUpperCase()}
           </Avatar>
         }
       >
