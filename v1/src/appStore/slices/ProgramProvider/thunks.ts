@@ -107,3 +107,19 @@ export const inviteProviderCoworker = createAsyncThunk(
     }
   }
 );
+
+export const getProgramProviderProfile = createAsyncThunk(
+  "programProvider/getProfile",
+  async (
+    data: { providerId: string; persona: string },
+    { rejectWithValue }
+  ) => {
+    try {
+      const res = await USER_CLIENT.post("/provider/profile", data);
+      return res.data;
+    } catch (err: any) {
+      console.error("get provider profile error", err);
+      rejectWithValue(err.response.data);
+    }
+  }
+);

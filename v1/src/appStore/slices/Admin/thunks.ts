@@ -72,3 +72,19 @@ export const verifyAdminInviteCode = createAsyncThunk(
     }
   }
 );
+
+export const getAdminProfile = createAsyncThunk(
+  "adminProvider/getProfile",
+  async (
+    data: { providerId: string; persona: string },
+    { rejectWithValue }
+  ) => {
+    try {
+      const res = await USER_CLIENT.post("/admin/profile", data);
+      return res.data;
+    } catch (err: any) {
+      console.error("get admin profile error", err);
+      rejectWithValue(err.response.data);
+    }
+  }
+);

@@ -78,3 +78,19 @@ export const checkCandidateEmail = createAsyncThunk(
     }
   }
 );
+
+export const getCandidateProfile = createAsyncThunk(
+  "candidate/getProfile",
+  async (
+    data: { providerId: string; persona: string },
+    { rejectWithValue }
+  ) => {
+    try {
+      const res = await USER_CLIENT.post("/candidate/profile", data);
+      return res.data;
+    } catch (err: any) {
+      console.error("get candidate profile error", err);
+      rejectWithValue(err.response.data);
+    }
+  }
+);

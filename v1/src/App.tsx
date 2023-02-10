@@ -23,7 +23,7 @@ import {
   getProviderInfo,
   useAppDispatch,
   useAppSelector,
-  selectIsValidProvider,
+  selectCurrentRole,
   selectFullProviderInfo,
 } from "./appStore";
 import Loading from "./utils/routing/Loading";
@@ -51,6 +51,7 @@ function App() {
     useState<ProviderStatusType>("loading");
   const fullProviderInfo = useAppSelector(selectFullProviderInfo);
   const identifier: string = window.location.pathname.split("/")[1];
+  const currentRole = useAppSelector(selectCurrentRole);
 
   useEffect(() => {
     dispatch(getProviderInfo(identifier)).then((action) => {
@@ -62,17 +63,23 @@ function App() {
     });
   }, []);
 
-  const newURL = `${window.location.href
-    .split("/")
-    .slice(0, 3)
-    .join("/")}/${identifier}/signin`;
-  if (accessToken && window.location.href !== newURL) {
+  if (accessToken) {
     if (
       (fullProviderInfo === null && identifier !== ADMIN_ROUTE) ||
       (fullProviderInfo !== null &&
         identifier !== fullProviderInfo.providerAlias)
     ) {
-      window.history.go(-1);
+      window.location.href = `${window.location.href
+        .split("/")
+        .slice(0, 3)
+        .join("/")}/${
+        fullProviderInfo === null
+          ? "admin/dashboard"
+          : fullProviderInfo.providerAlias +
+            "/" +
+            currentRole.persona.toLowerCase() +
+            "/dashboard"
+      }`;
     }
   }
 

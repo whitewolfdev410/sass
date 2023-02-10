@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { adminLogin } from "..";
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
+import { adminLogin, getAdminProfile } from "..";
 import { AdminSignupType } from "../../../types";
 
 type AdminProps = {
@@ -23,9 +23,12 @@ const adminSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(adminLogin.fulfilled, (state, action) => {
-      return { ...state, ...(action.payload as unknown as AdminProps) };
-    });
+    builder.addMatcher(
+      isAnyOf(adminLogin.fulfilled, getAdminProfile.fulfilled),
+      (state, action) => {
+        return { ...state, ...(action.payload as unknown as AdminProps) };
+      }
+    );
   },
 });
 

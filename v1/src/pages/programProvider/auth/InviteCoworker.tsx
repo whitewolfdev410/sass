@@ -18,6 +18,7 @@ import {
   useAppDispatch,
 } from "../../../appStore";
 import { addNewAlert } from "../../../utils/functions/addNewAlert";
+import { CONTRIBUTOR, GUEST, OWNER } from "../../../types";
 
 /**
  * InviteCoworker component for program providers
@@ -87,11 +88,11 @@ const InviteCoworker = () => {
             value={userPermission}
             onChange={handleUserPermissionChange}
           >
-            <MenuItem value={"Admin"}>{"Super Admin / Manager"}</MenuItem>
-            <MenuItem value={"Contributor"}>
+            <MenuItem value={OWNER}>{"Super Admin / Manager"}</MenuItem>
+            <MenuItem value={CONTRIBUTOR}>
               {"Standard user / Assistant"}
             </MenuItem>
-            <MenuItem value={"Guest"}>{"Read-only access"}</MenuItem>
+            <MenuItem value={GUEST}>{"Read-only access"}</MenuItem>
           </Select>
         </FormControl>
 
