@@ -16,6 +16,7 @@ import {
 import { ProgramType, summaryProgramType } from "../../../types";
 import { useRef, useState } from "react";
 import FormDialog from "../shared/FormDialog";
+import { publishProgram, useAppDispatch } from "../../../appStore";
 
 /**
  * @TODO type the @param data object after schema is gotten from API
@@ -39,6 +40,20 @@ const ProviderStats = ({ data }: { data: Partial<summaryProgramType> }) => {
 
 	const handleConfirm = () => {
 		setOpen(false);
+		handlePublish("Closed");
+	};
+	const dispatch = useAppDispatch();
+	const handlePublish = async (ev: string) => {
+		const programId = data.programId as string;
+		dispatch(
+			publishProgram({
+				data: {
+					id: programId,
+					type: "program",
+					attributes: { status: ev },
+				},
+			})
+		);
 	};
 
 	return (
@@ -110,7 +125,11 @@ const ProviderStats = ({ data }: { data: Partial<summaryProgramType> }) => {
 					<ButtonGroup
 						variant="contained"
 						color="success">
-						<Button>Publish</Button>
+						<Button
+							value="Open"
+							onClick={() => handlePublish("Open")}>
+							Publish
+						</Button>
 						{/* @ts-ignore */}
 						<Button
 							sx={{ px: 0.5 }}

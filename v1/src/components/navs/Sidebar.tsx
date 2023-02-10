@@ -1,13 +1,12 @@
-import { useRef, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Avatar, Box, Button, Menu, Stack } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
 import { Logo } from "..";
 // import HomeIcon from "../../assets/icons/home-sidebar-icon.svg";
 // import ListIcon from "../../assets/icons/list-sidebar-icon.svg";
 // import BackIcon from "../../assets/icons/back-sidebar-icon.svg";
 import HomeIconPrimary from "../../assets/icons/home-sidebar-icon-primary.svg";
-import ListIconPrimary from "../../assets/icons/list-sidebar-icon-primary.svg";
+// import ListIconPrimary from "../../assets/icons/list-sidebar-icon-primary.svg";
 import BackIconPrimary from "../../assets/icons/back-sidebar-icon-primary.svg";
 
 type Props = {
@@ -21,9 +20,8 @@ type Props = {
  */
 
 const Sidebar = (props: Props) => {
-
 	const navigate = useNavigate();
-	const flag = localStorage.getItem("login")
+	const flag = localStorage.getItem("login");
 	const [avatarRef, setavatarRef] = useState<null | HTMLElement>(null);
 	const showLogout = Boolean(avatarRef);
 	const openLogout = (event: React.MouseEvent<HTMLElement>) => {
@@ -73,7 +71,7 @@ const Sidebar = (props: Props) => {
 						},
 					},
 				}}>
-				<Button onClick={()=> navigate(`${props.screen}`, {replace: true})}>
+				<Button onClick={() => navigate(`${props.screen}`, { replace: true })}>
 					<img
 						src={BackIconPrimary}
 						width="24px"
@@ -81,31 +79,46 @@ const Sidebar = (props: Props) => {
 					/>
 				</Button>
 
-				{flag === "true" &&<Button>
-					<img src={HomeIconPrimary} width="24px" height="24px" />
-				</Button>}
+				{flag === "true" && (
+					<Button>
+						<img
+							src={HomeIconPrimary}
+							width="24px"
+							height="24px"
+						/>
+					</Button>
+				)}
 			</Stack>
 
-			{flag === "true" && <Box sx={{ position: "relative", mt: "auto" }}>
-				<Avatar sx={{ bgcolor: "info.main", width: "28px", height: "28px", fontSize: 14 }} onMouseEnter={openLogout}>
-					NT
-				</Avatar>
+			{flag === "true" && (
+				<Box sx={{ position: "relative", mt: "auto" }}>
+					<Avatar
+						sx={{
+							bgcolor: "info.main",
+							width: "28px",
+							height: "28px",
+							fontSize: 14,
+						}}
+						onMouseEnter={openLogout}>
+						NT
+					</Avatar>
 
-				<Menu
-					open={showLogout}
-					anchorEl={avatarRef}
-					onClose={closeLogout}
-					anchorOrigin={{
-						vertical: "bottom",
-						horizontal: "left",
-					}}
-					transformOrigin={{
-						vertical: "top",
-						horizontal: "left",
-					}}>
-					<Box sx={{ width: "100px", p: "0px 13px" }}>Log out</Box>
-				</Menu>
-			</Box>}
+					<Menu
+						open={showLogout}
+						anchorEl={avatarRef}
+						onClose={closeLogout}
+						anchorOrigin={{
+							vertical: "bottom",
+							horizontal: "left",
+						}}
+						transformOrigin={{
+							vertical: "top",
+							horizontal: "left",
+						}}>
+						<Box sx={{ width: "100px", p: "0px 13px" }}>Log out</Box>
+					</Menu>
+				</Box>
+			)}
 		</Box>
 	);
 };
