@@ -18,6 +18,7 @@ export const programProviderLogin = createAsyncThunk(
     }
   }
 );
+
 export const programProviderSignup = createAsyncThunk(
   "programProvider/signup",
   async (data: ProviderSignupType, { rejectWithValue }) => {
@@ -72,19 +73,19 @@ export const getProgramProviderByID = createAsyncThunk(
   }
 );
 
-export const verifyInviteCode = createAsyncThunk(
+export const verifyProviderInviteCode = createAsyncThunk(
   "programProvider/verifyInvite",
   async (
     formData: {
       email: string;
       invitationCode: string;
-      provider: string;
+      providerId: string;
     },
     { rejectWithValue }
   ) => {
     try {
       const res = await USER_CLIENT.post("/providers/verifyinvite", formData);
-      console.log("verify invite code success", res.data);
+      console.log("verify provider invite code success", res.data);
       return res.data;
     } catch (err: any) {
       console.error("verify invite error", err);
@@ -93,15 +94,15 @@ export const verifyInviteCode = createAsyncThunk(
   }
 );
 
-export const inviteCoworker = createAsyncThunk(
+export const inviteProviderCoworker = createAsyncThunk(
   "programProvider/inviteCoworker",
   async (formData: { email: string; role: string }, { rejectWithValue }) => {
     try {
+      console.log(USER_CLIENT.defaults.headers);
       const res = await USER_CLIENT.post("/providers/invite", formData);
-      console.log("invite coworker", res.data);
       return res.data;
     } catch (err: any) {
-      console.error("invite coworker error", err);
+      console.error("invite provider coworker error", err);
       return rejectWithValue(err.response.data);
     }
   }

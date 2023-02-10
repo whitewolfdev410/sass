@@ -7,11 +7,13 @@ import {
   useAppDispatch,
   useAppSelector,
   programProviderSignup as signup,
+  selectProviderInfo,
+  verifyProviderInviteCode as verify,
   selectProviderProfile,
-  verifyInviteCode as verify,
 } from "../../../appStore";
 import { ProviderSignupType } from "../../../types";
 import { checkIfEmail, isEmpty } from "../../../utils/functions";
+import { addNewAlert } from "../../../utils/functions/addNewAlert";
 
 /**
  * Signup component for program providers
@@ -23,9 +25,10 @@ interface SignupType extends ProviderSignupType {
 
 const Signup = () => {
   const dispatch = useAppDispatch();
+  const providerId: string = useAppSelector(selectProviderInfo)
+    ?.providerId as string;
   const providerProfile = useAppSelector(selectProviderProfile);
   const navigate = useNavigate();
-  const { provider } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [formData, setFormData] = useState<SignupType>({
@@ -37,7 +40,7 @@ const Signup = () => {
     invitationCode: searchParams.get("invitationCode") ?? "",
     jobTitle: "",
     phoneNumber: "",
-    provider: provider as string,
+    providerId,
   });
   const [isValidated, setIsValidated] = useState<boolean>(false);
 
@@ -56,9 +59,23 @@ const Signup = () => {
       verify({
         email: searchParams.get("email") as string,
         invitationCode: searchParams.get("invitationCode") as string,
-        provider: provider as string,
+        providerId,
       })
-    );
+    ).then((action) => {
+      if (action.meta.requestStatus === "fulfilled") {
+        addNewAlert(dispatch, {
+          type: "success",
+          title: "Verify invite",
+          msg: "Your invitation is verified",
+        });
+      } else if (action.meta.requestStatus === "rejected") {
+        addNewAlert(dispatch, {
+          type: "error",
+          title: "Verify invite",
+          msg: "Sorry, but you are not invited to this provider",
+        });
+      }
+    });
     checkValidation();
   }, []);
 
@@ -99,7 +116,18 @@ const Signup = () => {
     delete formData.confirmPassword;
     const action = await dispatch(signup(formData));
     if (action.meta.requestStatus === "fulfilled") {
-      navigate("../../signin");
+      navigate("/signin");
+      addNewAlert(dispatch, {
+        type: "success",
+        title: "Sign up",
+        msg: "Successfully signed up",
+      });
+    } else if (action.meta.requestStatus === "rejected") {
+      addNewAlert(dispatch, {
+        type: "error",
+        title: "Sign up",
+        msg: "Sorry, but you are not invited to this provider",
+      });
     }
   };
   return (

@@ -49,7 +49,7 @@ const appReducer = combineReducers({
 
 // implement the signout action here to clear out state and return an empty object to redux persist
 const rootReducer: Reducer = (state: RootState, action: AnyAction) => {
-  return appReducer(state ?? prevState, action);
+  return appReducer(state, action);
 };
 
 const persistedReducer: typeof appReducer = persistReducer(
@@ -57,29 +57,31 @@ const persistedReducer: typeof appReducer = persistReducer(
   rootReducer
 );
 
-const prevState = JSON.parse(
-  (localStorage.getItem("persist:root") ?? "")
-    /** remove { and } */
-    .replace(/"{/g, "{")
-    .replace(/}"/g, "}")
-    /** remove [ and ] */
-    .replace(/"\[/g, "[")
-    .replace(/\]"/g, "]")
-    /** remove all '\' */
-    .replace(/\\/g, "")
-);
-
-export const store = configureStore({
+const storeConfiguration: any = {
   reducer: persistedReducer,
-  preloadedState: prevState,
   // disable serializable check for redux persist actions
-  middleware: (getDefaultMiddleware) =>
+  middleware: (getDefaultMiddleware: any) =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
-});
+};
+
+if (localStorage.getItem("persist:root")) {
+  storeConfiguration.preloadedState = JSON.parse(
+    (localStorage.getItem("persist:root") ?? "{}")
+      /** remove { and } */
+      .replace(/"{/g, "{")
+      .replace(/}"/g, "}")
+      /** remove [ and ] */
+      .replace(/"\[/g, "[")
+      .replace(/\]"/g, "]")
+      /** remove all '\' */
+      .replace(/\\"/g, '"')
+  );
+}
+export const store = configureStore(storeConfiguration);
 
 // create a persistor
 export const persistor = persistStore(store);

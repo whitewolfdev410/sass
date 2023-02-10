@@ -9,6 +9,7 @@ import Preview from "./dashboard/Preview";
 import SingleProgram from "./dashboard/SingleProgram";
 import RouteSwitcher from "../../utils/routing/RouteSwitcher";
 import { selectCurrentRole, useAppSelector } from "../../appStore";
+import NotFound from "../NotFound";
 
 /**
  * Base Program Provider component.
@@ -66,6 +67,7 @@ const ProgramProvider = () => {
           path="program/:id"
         />
       </Route>
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

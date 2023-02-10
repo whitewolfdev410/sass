@@ -11,10 +11,12 @@ import {
   SelectChangeEvent,
   Divider,
 } from "@mui/material";
-import { ApplicationFormCard, AuthPageLayout } from "../../../components";
+import { ApplicationFormCard, SidebarLayout } from "../../../components";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { inviteCoworker, useAppDispatch } from "../../../appStore";
-import "../../../styles/auth-select.css";
+import {
+  inviteProviderCoworker as inviteCoworker,
+  useAppDispatch,
+} from "../../../appStore";
 import { addNewAlert } from "../../../utils/functions/addNewAlert";
 
 /**
@@ -48,53 +50,22 @@ const InviteCoworker = () => {
         msg: "Invitation successfully sent.",
       });
     } else if (action.meta.requestStatus === "rejected") {
-      addNewAlert(dispatch, {
-        type: "error",
-        title: "Invite coworker",
-        msg: action.payload,
-      });
+      try {
+        addNewAlert(dispatch, {
+          type: "error",
+          title: "Invite coworker",
+          msg:
+            typeof action.payload === "string"
+              ? action.payload
+              : "Error while sending invite to your coworker",
+        });
+      } catch (err) {
+        console.log("rejected alert dispath error", err);
+      }
     }
   };
   return (
-    <AuthPageLayout
-      title="Reset Password"
-      logo
-      extraChildren={
-        <>
-          <ApplicationFormCard
-            headerBgColor="black"
-            headerColor="white"
-            title="Members in the account"
-          >
-            <Stack divider={<Divider orientation="horizontal" flexItem />}>
-              <Stack flexDirection="row" alignItems="center">
-                <Stack sx={{ flexGrow: 1 }}>
-                  <Typography variant="h2">Junior Dawkins</Typography>
-                  <Typography>brett@microsoft.com</Typography>
-                </Stack>
-                <Stack flexDirection="column">
-                  <Button
-                    variant="text"
-                    color="error"
-                    sx={{ color: "#A80000" }}
-                  >
-                    Delete question
-                  </Button>
-                  <Button
-                    variant="text"
-                    color="error"
-                    sx={{ color: "#A80000" }}
-                  >
-                    Manage access
-                  </Button>
-                </Stack>
-              </Stack>
-              <Typography>Niranjan Thampu</Typography>
-            </Stack>
-          </ApplicationFormCard>
-        </>
-      }
-    >
+    <SidebarLayout title="Invite your coworker" logo>
       <Typography variant="h1" component="h1" sx={{ mb: 3 }}>
         Invite co-worker
       </Typography>
@@ -135,7 +106,78 @@ const InviteCoworker = () => {
           <ArrowForwardIosIcon sx={{ ml: 1 }} />
         </Button>
       </form>
-    </AuthPageLayout>
+      <Stack direction="row" flexWrap={"wrap"} rowGap={3} columnGap={3}>
+        <ApplicationFormCard
+          headerBgColor="black"
+          headerColor="white"
+          title="Members in the account"
+        >
+          <Stack divider={<Divider orientation="horizontal" flexItem />}>
+            <Stack flexDirection="row" alignItems="center">
+              <Stack sx={{ flexGrow: 1 }}>
+                <Typography variant="h2">Junior Dawkins</Typography>
+                <Typography>brett@microsoft.com</Typography>
+              </Stack>
+              <Stack flexDirection="column">
+                <Button variant="text" color="error" sx={{ color: "#A80000" }}>
+                  Delete question
+                </Button>
+                <Button variant="text" color="error" sx={{ color: "#A80000" }}>
+                  Manage access
+                </Button>
+              </Stack>
+            </Stack>
+            <Typography>Niranjan Thampu</Typography>
+          </Stack>
+        </ApplicationFormCard>
+        <ApplicationFormCard
+          headerBgColor="black"
+          headerColor="white"
+          title="Members in the account"
+        >
+          <Stack divider={<Divider orientation="horizontal" flexItem />}>
+            <Stack flexDirection="row" alignItems="center">
+              <Stack sx={{ flexGrow: 1 }}>
+                <Typography variant="h2">Junior Dawkins</Typography>
+                <Typography>brett@microsoft.com</Typography>
+              </Stack>
+              <Stack flexDirection="column">
+                <Button variant="text" color="error" sx={{ color: "#A80000" }}>
+                  Delete question
+                </Button>
+                <Button variant="text" color="error" sx={{ color: "#A80000" }}>
+                  Manage access
+                </Button>
+              </Stack>
+            </Stack>
+            <Typography>Niranjan Thampu</Typography>
+          </Stack>
+        </ApplicationFormCard>
+        <ApplicationFormCard
+          headerBgColor="black"
+          headerColor="white"
+          title="Members in the account"
+        >
+          <Stack divider={<Divider orientation="horizontal" flexItem />}>
+            <Stack flexDirection="row" alignItems="center">
+              <Stack sx={{ flexGrow: 1 }}>
+                <Typography variant="h2">Junior Dawkins</Typography>
+                <Typography>brett@microsoft.com</Typography>
+              </Stack>
+              <Stack flexDirection="column">
+                <Button variant="text" color="error" sx={{ color: "#A80000" }}>
+                  Delete question
+                </Button>
+                <Button variant="text" color="error" sx={{ color: "#A80000" }}>
+                  Manage access
+                </Button>
+              </Stack>
+            </Stack>
+            <Typography>Niranjan Thampu</Typography>
+          </Stack>
+        </ApplicationFormCard>
+      </Stack>
+    </SidebarLayout>
   );
 };
 

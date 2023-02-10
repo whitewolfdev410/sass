@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { adminLogin } from "..";
+import { AdminSignupType } from "../../../types";
 
 type AdminProps = {
   email: string;

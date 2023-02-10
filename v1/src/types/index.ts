@@ -45,11 +45,11 @@ export type ProgramProviderType = {
   userToken: string;
 };
 export type newProgramType = {
-	data: {
-		id: string;
-		type: string;
-		attributes: ProgramDetailsType;
-	};
+  data: {
+    id: string;
+    type: string;
+    attributes: ProgramDetailsType;
+  };
 };
 
 export type ProviderType = {
@@ -181,20 +181,18 @@ export type NewProgramType = Omit<ProgramDetailsType, "benefits"> & {
 };
 
 export type CandidateType = {
-  // candidateID: number | string;
   firstName: string;
   lastName: string;
-  phoneNumber: string;
+  phoneNumber?: string;
   email: string;
   nationality: string;
-  currentlyBased: string;
-  nationalIDNumber: string;
+  currentlyBased?: string;
+  nationalIDNumber?: string;
   dateOfBirth: string;
-  gender: string;
-  education: string;
-  experience: string;
-  resume: string;
-  userToken: string;
+  gender?: string;
+  education?: string;
+  experience?: string;
+  resume?: string;
 };
 
 export type ProviderSignupType = {
@@ -205,7 +203,15 @@ export type ProviderSignupType = {
   invitationCode: string;
   jobTitle: string;
   phoneNumber: string;
-  provider: string;
+  providerId: string;
+};
+
+export type AdminSignupType = {
+  email: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+  invitationCode: string;
 };
 
 export type StageType = {
@@ -220,28 +226,28 @@ export type workFlowType = {
   stageShownToCandidate: boolean;
 };
 export type WorkFlowWholeType = {
-	data: {
-		id: string;
-		type: string;
-		attributes: {
-			stages: workStageType[];
-		};
-	};
+  data: {
+    id: string;
+    type: string;
+    attributes: {
+      stages: workStageType[];
+    };
+  };
 };
 export type workStageType = {
-	id: string;
-	name: string;
-	type: string;
-	hideFromCandidate: boolean;
-	interviewQuestions: interviewQuestionType[];
+  id: string;
+  name: string;
+  type: string;
+  hideFromCandidate: boolean;
+  interviewQuestions: interviewQuestionType[];
 };
 export type interviewQuestionType = {
-	id?: string;
-	question: string;
-	description: string;
-	duration: number;
-	durationType: string;
-	deadlineInDays: number;
+  id?: string;
+  question: string;
+  description: string;
+  duration: number;
+  durationType: string;
+  deadlineInDays: number;
 };
 
 export type WorkflowType = {
@@ -322,4 +328,12 @@ export type AlertProps = {
   msg: string;
 };
 
-export const ADMIN_ROUTE = 'admin';
+export const ADMIN_ROUTE = "admin";
+export const CANDIDATE = "Candidate";
+export const EMPLOYER = "Employer";
+export const PROVIDER = "Provider";
+export const ADMIN = "Admin";
+export const OWNER = "Owner";
+export const CONTRIBUTOR = "Candidate";
+export const GUEST = "Candidate";
+export const NONE = "Candidate";
