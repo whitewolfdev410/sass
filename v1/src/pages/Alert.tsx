@@ -1,37 +1,28 @@
 import React, { useState, useEffect } from "react";
-import { Snackbar, Stack } from "@mui/material";
-import MuiAlert from "@mui/material/Alert";
+import { Stack } from "@mui/material";
 import SnackbarContent from "@mui/material/SnackbarContent";
+import { getAllAlerts, useAppSelector } from "../appStore";
 
 const Alert = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(true);
-  // useEffect(() => {
-  // setTimeout(handleClose, 3000);
-  // });
-  const handleClose = () => {
-    setIsOpen(false);
+  const allAlerts = useAppSelector(getAllAlerts);
+  const colorMap = {
+    info: "#42a5f5",
+    success: "#2e7d32",
+    error: "#ef5350",
   };
   return (
-    // <Snackbar
-    //   anchorOrigin={{ vertical: "top", horizontal: "right" }}
-    //   open={isOpen}
-    //   onClose={handleClose}
-    // >
-    //   <MuiAlert severity={"info"}>{"This is a test message."}</MuiAlert>
-    // </Snackbar>
     <Stack sx={{ position: "fixed", top: 10, right: 10 }} rowGap={2}>
-      <SnackbarContent
-        message="I will never disappear"
-        sx={{
-          opacity: isOpen ? "1" : "0",
-          transition: "all ease-in-out .2s",
-        }}
-        onClick={() => {
-          setIsOpen(false);
-        }}
-      />
-      <SnackbarContent message="Me too." />
-      <SnackbarContent message="Same here." />
+      {allAlerts.map((alert) => (
+        <SnackbarContent
+          key={alert.id}
+          action={<small>{alert.title}</small>}
+          message={alert.msg}
+          sx={{
+            backgroundColor: colorMap[alert.type],
+            color: "white",
+          }}
+        />
+      ))}
     </Stack>
   );
 };

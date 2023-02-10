@@ -18,12 +18,15 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage/session";
 import {
+  ProgramProviderReducer,
   ProviderReducer,
   CandidateReducer,
   ProgramDashboardReducer,
   WorkflowReducer,
   ProgramReducer,
   AuthReducer,
+  AdminReducer,
+  AlertReducer,
 } from "./slices";
 
 const persistConfig = {
@@ -33,27 +36,20 @@ const persistConfig = {
 };
 
 const appReducer = combineReducers({
-  programProvider: ProviderReducer,
+  programProvider: ProgramProviderReducer,
   candidate: CandidateReducer,
   programDashboard: ProgramDashboardReducer,
   workflow: WorkflowReducer,
   program: ProgramReducer,
   auth: AuthReducer,
+  admin: AdminReducer,
+  alert: AlertReducer,
+  provider: ProviderReducer,
 });
 
 // implement the signout action here to clear out state and return an empty object to redux persist
 const rootReducer: Reducer = (state: RootState, action: AnyAction) => {
-  if (
-    action.type === "programProvider/signout" ||
-    action.type === "candidate/signout"
-  ) {
-    // this applies to all keys defined in persistConfig(s)
-    storage.removeItem("persist:root");
-    window.location.href = window.location.origin + "/login";
-
-    return (state = {} as RootState);
-  }
-  return appReducer(state, action);
+  return appReducer(state ?? prevState, action);
 };
 
 const persistedReducer: typeof appReducer = persistReducer(
@@ -61,8 +57,21 @@ const persistedReducer: typeof appReducer = persistReducer(
   rootReducer
 );
 
+const prevState = JSON.parse(
+  (localStorage.getItem("persist:root") ?? "")
+    /** remove { and } */
+    .replace(/"{/g, "{")
+    .replace(/}"/g, "}")
+    /** remove [ and ] */
+    .replace(/"\[/g, "[")
+    .replace(/\]"/g, "]")
+    /** remove all '\' */
+    .replace(/\\/g, "")
+);
+
 export const store = configureStore({
   reducer: persistedReducer,
+  preloadedState: prevState,
   // disable serializable check for redux persist actions
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

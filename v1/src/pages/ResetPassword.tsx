@@ -1,30 +1,13 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import {
-  FormControl,
-  FormControlLabel,
-  Checkbox,
-  Input,
-  Typography,
-  Stack,
-  Button,
-  Link,
-  IconButton,
-  InputAdornment,
-  TextField,
-} from "@mui/material";
+import { FormControl, Input, Typography, Button } from "@mui/material";
 import { AuthPageLayout } from "../components";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { useAppDispatch, programProviderLogin as login } from "../appStore";
 
 /**
  * ResetPassword component for program providers
  */
 
 const ResetPassword = () => {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     password: "",
     confirmPassword: "",

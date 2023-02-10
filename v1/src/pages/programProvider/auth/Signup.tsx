@@ -1,15 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import {
-  FormControl,
-  FormControlLabel,
-  Checkbox,
-  Input,
-  Typography,
-  Stack,
-  Button,
-  Grid,
-} from "@mui/material";
+import { FormControl, Input, Typography, Button, Grid } from "@mui/material";
 import { AuthPageLayout } from "../../../components";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import {
@@ -64,11 +55,16 @@ const Signup = () => {
     dispatch(
       verify({
         email: searchParams.get("email") as string,
-        inviteCode: searchParams.get("invitationCode") as string,
+        invitationCode: searchParams.get("invitationCode") as string,
         provider: provider as string,
       })
     );
+    checkValidation();
   }, []);
+
+  useEffect(() => {
+    checkValidation();
+  }, [formData]);
 
   useEffect(() => {
     setFormData({
@@ -81,7 +77,7 @@ const Signup = () => {
     });
   }, [providerProfile]);
 
-  useEffect(() => {
+  const checkValidation = () => {
     if (
       !checkIfEmail(email) ||
       password !== confirmPassword ||
@@ -91,7 +87,7 @@ const Signup = () => {
     } else {
       setIsValidated(true);
     }
-  }, [formData]);
+  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -101,8 +97,8 @@ const Signup = () => {
   const handleSubmit = async (ev: React.SyntheticEvent) => {
     ev.preventDefault();
     delete formData.confirmPassword;
-    const res = await dispatch(signup(formData));
-    if (res.payload) {
+    const action = await dispatch(signup(formData));
+    if (action.meta.requestStatus === "fulfilled") {
       navigate("../../signin");
     }
   };

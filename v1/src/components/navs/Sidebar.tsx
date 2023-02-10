@@ -1,13 +1,19 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Avatar, Box, Button, Menu, Stack } from "@mui/material";
+import { Avatar, Box, Button, MenuItem, Stack } from "@mui/material";
 import { Logo } from "..";
-// import HomeIcon from "../../assets/icons/home-sidebar-icon.svg";
-// import ListIcon from "../../assets/icons/list-sidebar-icon.svg";
-// import BackIcon from "../../assets/icons/back-sidebar-icon.svg";
 import HomeIconPrimary from "../../assets/icons/home-sidebar-icon-primary.svg";
-// import ListIconPrimary from "../../assets/icons/list-sidebar-icon-primary.svg";
 import BackIconPrimary from "../../assets/icons/back-sidebar-icon-primary.svg";
+import {
+	authLogout,
+	selectCurrentRoleIndex,
+	selectRoles,
+	selectUserDisplayName,
+	setCurrentRoleIndexTo,
+	useAppDispatch,
+	useAppSelector,
+} from "../../appStore";
+import MenuDropdown from "../layout/MenuDropdown";
 
 type Props = {
 	logo?: boolean;
@@ -20,15 +26,22 @@ type Props = {
  */
 
 const Sidebar = (props: Props) => {
+	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const flag = localStorage.getItem("login");
-	const [avatarRef, setavatarRef] = useState<null | HTMLElement>(null);
-	const showLogout = Boolean(avatarRef);
-	const openLogout = (event: React.MouseEvent<HTMLElement>) => {
-		setavatarRef(event.currentTarget);
+	const handleLogout = () => {
+		dispatch(authLogout());
 	};
-	const closeLogout = () => {
-		setavatarRef(null);
+	const [currentRoles, setCurrentRoles] = useState(useAppSelector(selectRoles));
+	const [currentRoleIndex, setCurrentRoleIndex] = useState(
+		useAppSelector(selectCurrentRoleIndex)
+	);
+	const [displayName, setDisplayName] = useState(
+		useAppSelector(selectUserDisplayName).split(" ")
+	);
+
+	const switchRoleTo = (index: number) => {
+		dispatch(setCurrentRoleIndexTo(index));
 	};
 
 	return (
@@ -89,36 +102,38 @@ const Sidebar = (props: Props) => {
 					</Button>
 				)}
 			</Stack>
-
-			{flag === "true" && (
-				<Box sx={{ position: "relative", mt: "auto" }}>
+			<MenuDropdown
+				title={
 					<Avatar
 						sx={{
 							bgcolor: "info.main",
 							width: "28px",
 							height: "28px",
 							fontSize: 14,
-						}}
-						onMouseEnter={openLogout}>
-						NT
-					</Avatar>
-
-					<Menu
-						open={showLogout}
-						anchorEl={avatarRef}
-						onClose={closeLogout}
-						anchorOrigin={{
-							vertical: "bottom",
-							horizontal: "left",
-						}}
-						transformOrigin={{
-							vertical: "top",
-							horizontal: "left",
 						}}>
-						<Box sx={{ width: "100px", p: "0px 13px" }}>Log out</Box>
-					</Menu>
-				</Box>
-			)}
+						{(displayName.length === 1
+							? displayName[0].slice(0, 2)
+							: `${displayName[0][0]}${displayName[1][0]}`
+						).toUpperCase()}
+					</Avatar>
+				}>
+				<>
+					{currentRoles.map(
+						({ persona }: { persona: string; role: string }, index) => {
+							if (index !== currentRoleIndex) {
+								return (
+									<MenuItem
+										key={persona}
+										onClick={() => switchRoleTo(index)}>
+										Go as {persona}
+									</MenuItem>
+								);
+							}
+						}
+					)}
+					<MenuItem onClick={handleLogout}>Logout</MenuItem>
+				</>
+			</MenuDropdown>
 		</Box>
 	);
 };

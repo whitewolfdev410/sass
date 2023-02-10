@@ -1,28 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ProgramProviderType } from "../../../types";
-import {
-  programProviderLogin,
-  programProviderSignup,
-  verifyInviteCode,
-} from "..";
+import { getProviderInfo } from "..";
+import { ProviderType } from "../../../types";
 
-type initialProps = ProgramProviderType & {
-  isLoggedIn: boolean;
+type ProviderStateProps = {
+  provider: ProviderType | null;
+  valid: boolean;
 };
 
-const initialState: initialProps = {
-  programProviderID: 0,
-  firstName: "",
-  lastName: "",
-  email: "",
-  jobTitle: "",
-  phoneNumber: "",
-  userToken: "",
-  isLoggedIn: false,
+const initialState: ProviderStateProps = {
+  provider: {
+    companyName: "",
+    providerId: "",
+    providerAlias: "",
+  },
+  valid: false,
 };
 
-const programProviderSlice = createSlice({
-  name: "programProvider",
+const providerSlice = createSlice({
+  name: "admin",
   initialState,
   reducers: {
     signout: () => {
@@ -31,16 +26,18 @@ const programProviderSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(programProviderLogin.fulfilled, (state, action) => {
-        return state;
+      .addCase(getProviderInfo.fulfilled, (state, action) => {
+        return {
+          provider: action.payload as unknown as ProviderType,
+          valid: true,
+        };
       })
-      .addCase(verifyInviteCode.fulfilled, (state, action) => ({
-        ...state,
-        ...(action.payload as unknown as ProgramProviderType),
-      }));
+      .addCase(getProviderInfo.rejected, (state, action) => {
+        return { provider: null, valid: false };
+      });
   },
 });
 
-export const { signout } = programProviderSlice.actions;
+export const {} = providerSlice.actions;
 
-export default programProviderSlice.reducer;
+export default providerSlice.reducer;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   FormControl,
   FormControlLabel,
@@ -17,25 +17,43 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import {
+  authLogin,
+  selectProviderInfo,
+  useAppDispatch,
+  useAppSelector,
+} from "../appStore";
+import { addNewAlert } from "../utils/functions/addNewAlert";
 
 /**
  * Login component for program providers
  */
 
 const Login = () => {
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const providerInfo = useAppSelector(selectProviderInfo);
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    providerId: providerInfo?.providerId as string,
   });
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = ev.target;
     setFormData({ ...formData, [name]: value });
   };
-  const handleSubmit = (ev: React.SyntheticEvent) => {
+  const handleSubmit = async (ev: React.SyntheticEvent) => {
     ev.preventDefault();
+    const action = await dispatch(authLogin(formData));
+    if (action.meta.requestStatus === "fulfilled") {
+    } else if (action.meta.requestStatus === "rejected") {
+      addNewAlert(dispatch, {
+        type: "error",
+        title: "Login failed",
+        msg: action.payload,
+      });
+    }
   };
   const handlePasswordVisibility = () => {
     setPasswordVisibility(!passwordVisibility);
