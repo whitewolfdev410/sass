@@ -52,6 +52,13 @@ export type newProgramType = {
 	};
 };
 
+export type ProviderType = {
+  companyName: string;
+  providerId: string;
+  providerAlias: string;
+  companyLogo?: string;
+};
+
 export type ProgramDetailsType = {
   title: string;
   summary: string;
@@ -308,3 +315,11 @@ export type CandidateProfileType = {
     }
   ];
 };
+
+export type AlertProps = {
+  title: string;
+  type: "error" | "success" | "info";
+  msg: string;
+};
+
+export const ADMIN_ROUTE = 'admin';

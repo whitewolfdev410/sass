@@ -2,17 +2,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   FormControl,
-  FormControlLabel,
-  Checkbox,
   Input,
   Typography,
   Stack,
   Button,
-  Link,
-  IconButton,
-  InputAdornment,
-  TextField,
-  InputLabel,
   Select,
   MenuItem,
   SelectChangeEvent,
@@ -20,11 +13,9 @@ import {
 } from "@mui/material";
 import { ApplicationFormCard, AuthPageLayout } from "../../../components";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import {
-  useAppDispatch,
-  programProviderLogin as login,
-} from "../../../appStore";
+import { inviteCoworker, useAppDispatch } from "../../../appStore";
 import "../../../styles/auth-select.css";
+import { addNewAlert } from "../../../utils/functions/addNewAlert";
 
 /**
  * InviteCoworker component for program providers
@@ -32,12 +23,11 @@ import "../../../styles/auth-select.css";
 
 const InviteCoworker = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     email: "",
     userPermission: "",
   });
+  const { email, userPermission } = formData;
   const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = ev.target;
     setFormData({ ...formData, [name]: value });
@@ -46,10 +36,25 @@ const InviteCoworker = () => {
     console.log("select value changed", ev.target.value);
     setFormData({ ...formData, userPermission: ev.target.value as string });
   };
-  const handleSubmit = (ev: React.SyntheticEvent) => {
+  const handleSubmit = async (ev: React.SyntheticEvent) => {
     ev.preventDefault();
+    const action = await dispatch(
+      inviteCoworker({ email, role: userPermission })
+    );
+    if (action.meta.requestStatus === "fulfilled") {
+      addNewAlert(dispatch, {
+        type: "success",
+        title: "Invite coworker",
+        msg: "Invitation successfully sent.",
+      });
+    } else if (action.meta.requestStatus === "rejected") {
+      addNewAlert(dispatch, {
+        type: "error",
+        title: "Invite coworker",
+        msg: action.payload,
+      });
+    }
   };
-  const { email, userPermission } = formData;
   return (
     <AuthPageLayout
       title="Reset Password"
@@ -111,9 +116,11 @@ const InviteCoworker = () => {
             value={userPermission}
             onChange={handleUserPermissionChange}
           >
-            <MenuItem value={"admin"}>{"Super Admin / Manager"}</MenuItem>
-            <MenuItem value={"user"}>{"Standard user / Assistant"}</MenuItem>
-            <MenuItem value={"guest"}>{"Read-only access"}</MenuItem>
+            <MenuItem value={"Admin"}>{"Super Admin / Manager"}</MenuItem>
+            <MenuItem value={"Contributor"}>
+              {"Standard user / Assistant"}
+            </MenuItem>
+            <MenuItem value={"Guest"}>{"Read-only access"}</MenuItem>
           </Select>
         </FormControl>
 
