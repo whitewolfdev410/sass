@@ -229,7 +229,18 @@ export type candidateWorkflowStageType = {
   name: string;
 };
 
-export type ProviderSignupType = {
+export type ProgramProviderSignupType = {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  invitationCode: string;
+  jobTitle: string;
+  phoneNumber: string;
+  providerId: string;
+};
+
+export type EmployerSignupType = {
   email: string;
   password: string;
   firstName: string;

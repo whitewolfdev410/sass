@@ -3,13 +3,7 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { FormControl, Input, Typography, Button, Grid } from "@mui/material";
 import { AuthPageLayout } from "../../../components";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import {
-  useAppDispatch,
-  useAppSelector,
-  adminSignup as signup,
-  selectProviderInfo,
-  selectProviderProfile,
-} from "../../../appStore";
+import { useAppDispatch, adminSignup as signup } from "../../../appStore";
 import { AdminSignupType } from "../../../types";
 import { checkIfEmail, isEmpty } from "../../../utils/functions";
 import { addNewAlert } from "../../../utils/functions/addNewAlert";

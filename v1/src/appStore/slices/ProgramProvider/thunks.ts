@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
-import { ProviderSignupType } from "../../../types";
+import { ProgramProviderSignupType } from "../../../types";
 import { USER_CLIENT } from "../../axiosInstance";
 
 export const programProviderLogin = createAsyncThunk(
@@ -21,7 +21,7 @@ export const programProviderLogin = createAsyncThunk(
 
 export const programProviderSignup = createAsyncThunk(
   "programProvider/signup",
-  async (data: ProviderSignupType, { rejectWithValue }) => {
+  async (data: ProgramProviderSignupType, { rejectWithValue }) => {
     try {
       await USER_CLIENT.post(`providers/signup`, data);
       return "success";
@@ -115,7 +115,7 @@ export const getProgramProviderProfile = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const res = await USER_CLIENT.post("/provider/profile", data);
+      const res = await USER_CLIENT.post("/providers/profile", data);
       return res.data;
     } catch (err: any) {
       console.error("get provider profile error", err);

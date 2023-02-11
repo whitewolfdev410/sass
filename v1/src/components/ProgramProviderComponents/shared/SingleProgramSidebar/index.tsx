@@ -12,12 +12,9 @@ import SearchIcon from "@mui/icons-material/Search";
 import SidebarTabs from "./SidebarTabs";
 import { useEffect, useState } from "react";
 import CandidateInfo from "./CandidateInfo";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import DropDownComponent from "./DropDownComponent";
 import {
-  getAllCandidates,
   getCandidateProfileData,
-  selectProviderProfile,
   useAppDispatch,
   useAppSelector,
   selectCandidateProfileData,

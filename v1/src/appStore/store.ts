@@ -27,6 +27,7 @@ import {
   AuthReducer,
   AdminReducer,
   AlertReducer,
+  EmployerReducer,
 } from "./slices";
 
 const persistConfig = {
@@ -45,6 +46,7 @@ const appReducer = combineReducers({
   admin: AdminReducer,
   alert: AlertReducer,
   provider: ProviderReducer,
+  employer: EmployerReducer,
 });
 
 // implement the signout action here to clear out state and return an empty object to redux persist

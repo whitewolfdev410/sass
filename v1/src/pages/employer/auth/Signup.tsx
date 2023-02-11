@@ -6,12 +6,12 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import {
   useAppDispatch,
   useAppSelector,
-  programProviderSignup as signup,
+  employerSignup as signup,
   selectProviderInfo,
-  verifyProviderInviteCode as verify,
-  selectProgramProviderProfile,
+  verifyEmployerInviteCode as verify,
+  selectEmployerProfile,
 } from "../../../appStore";
-import { ProgramProviderSignupType } from "../../../types";
+import { EmployerSignupType } from "../../../types";
 import { checkIfEmail, isEmpty } from "../../../utils/functions";
 import { addNewAlert } from "../../../utils/functions/addNewAlert";
 
@@ -19,7 +19,7 @@ import { addNewAlert } from "../../../utils/functions/addNewAlert";
  * Signup component for program providers
  */
 
-interface SignupType extends ProgramProviderSignupType {
+interface SignupType extends EmployerSignupType {
   confirmPassword?: string;
 }
 
@@ -27,7 +27,7 @@ const Signup = () => {
   const dispatch = useAppDispatch();
   const providerId: string = useAppSelector(selectProviderInfo)
     ?.providerId as string;
-  const providerProfile = useAppSelector(selectProgramProviderProfile);
+  const employerProfile = useAppSelector(selectEmployerProfile);
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -86,13 +86,13 @@ const Signup = () => {
   useEffect(() => {
     setFormData({
       ...formData,
-      firstName: providerProfile.firstName ?? "",
-      lastName: providerProfile.lastName ?? "",
-      email: providerProfile.email ?? "",
-      jobTitle: providerProfile.jobTitle ?? "",
-      phoneNumber: providerProfile.phoneNumber ?? "",
+      firstName: employerProfile.firstName ?? "",
+      lastName: employerProfile.lastName ?? "",
+      email: employerProfile.email ?? "",
+      jobTitle: employerProfile.jobTitle ?? "",
+      phoneNumber: employerProfile.phoneNumber ?? "",
     });
-  }, [providerProfile]);
+  }, [employerProfile]);
 
   const checkValidation = () => {
     if (
@@ -133,7 +133,7 @@ const Signup = () => {
   return (
     <AuthPageLayout title="Signup" logo>
       <Typography variant="h1" component="h1" sx={{ mb: 3 }}>
-        Get Access to <br /> Manage Programs
+        Employer <br /> Invitation to Join
       </Typography>
 
       <form action="" onSubmit={handleSubmit}>
