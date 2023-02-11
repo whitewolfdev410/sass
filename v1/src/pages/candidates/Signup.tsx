@@ -1,237 +1,209 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import {
-	FormControl,
-	FormControlLabel,
-	Checkbox,
-	Input,
-	Typography,
-	Stack,
-	Button,
-	Grid,
-	Select,
+  FormControl,
+  Input,
+  Typography,
+  Stack,
+  Button,
+  Grid,
+  Select,
+  MenuItem,
+  SelectChangeEvent,
 } from "@mui/material";
 // import Select from "react-select";
-// import { Country }  from 'country-state-city';
+import { Country } from "country-state-city";
 import { AuthPageLayout } from "../../components";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import {
-	candidateLogin,
-	candidateSignup,
-	programProviderSignup as signup,
-} from "../../appStore/slices";
+import { candidateSignup as signup } from "../../appStore/slices";
 import { useAppDispatch } from "../../appStore";
+import "../../styles/auth-select.css";
+import { addNewAlert } from "../../utils/functions/addNewAlert";
 
 /**
  * Signup component for program providers
  */
 
 const Signup = () => {
-	const dispatch = useAppDispatch();
-	const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-	// const countries = Country.getAllCountries();
-	//
-	// const updatedCountries = countries.map((country: any) => ({
-	// 	label: country.name,
-	// 	value: country.id,
-	// 	...country
-	// }));
+  const [countries, setCountries] = useState(Country.getAllCountries());
+  //
+  // const updatedCountries = countries.map((country: any) => ({
+  // 	label: country.name,
+  // 	value: country.id,
+  // 	...country
+  // }));
 
-	const [form, setForm] = useState({
-		programProviderID: 0,
-		firstName: "",
-		lastName: "",
-		email: "",
-		nationality: "",
-		dateOfBirth: "",
-		userToken: "",
-		candidateID: "",
-		phoneNumber: "",
-		currentlyBased: "",
-		nationalIDNumber: "",
-		gender: "",
-		education: "",
-		experience: "",
-		resume: "",
-	});
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    nationality: "",
+    dateOfBirth: "",
+  });
+  const {
+    firstName,
+    lastName,
+    email,
+    password,
+    confirmPassword,
+    nationality,
+    dateOfBirth,
+  } = formData;
 
-	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = event.target;
-		setForm({ ...form, [name]: value });
-	};
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-	return (
-		<AuthPageLayout title="Signin">
-			<Typography
-				variant="h1"
-				component="h1"
-				sx={{ mb: 3 }}>
-				Sign up to <br /> Apply for Programs
-			</Typography>
+  const handleNationalitySelectChange = (ev: SelectChangeEvent<string>) => {
+    setFormData({ ...formData, nationality: ev.target.value as string });
+  };
 
-			<form
-				action=""
-				onSubmit={async (e) => {
-					e.preventDefault();
-					const response = await dispatch(candidateSignup(form));
-					console.log("response", response);
-					navigate("/candidate/dashboard", { replace: true });
-				}}>
-				{/*  */}
-				<Grid
-					container
-					columnSpacing={4}>
-					<Grid
-						item
-						md={6}>
-						<FormControl
-							variant="standard"
-							sx={{ my: 3 }}>
-							<label>First Name*</label>
-							<Input
-								onChange={handleChange}
-								value={form.firstName}
-								name="firstName"
-								required
-							/>
-						</FormControl>
-					</Grid>
-					<Grid
-						item
-						md={6}>
-						<FormControl
-							variant="standard"
-							sx={{ my: 3 }}>
-							<label>Last Name*</label>
-							<Input
-								onChange={handleChange}
-								value={form.lastName}
-								name="lastName"
-								required
-							/>
-						</FormControl>
-					</Grid>
-				</Grid>
+  const handleSubmit = async (ev: React.SyntheticEvent) => {
+    ev.preventDefault();
+    const action = await dispatch(signup(formData));
+    if (action.meta.requestStatus === "fulfilled") {
+      navigate("/signin");
+      addNewAlert(dispatch, {
+        type: "success",
+        title: "Sign up",
+        msg: "Successfully signed up",
+      });
+    } else if (action.meta.requestStatus === "rejected") {
+      addNewAlert(dispatch, {
+        type: "error",
+        title: "Sign up",
+        msg:
+          typeof action.payload === "string"
+            ? action.payload
+            : "Sorry, error occured while signing up",
+      });
+    }
+  };
 
-				<FormControl
-					variant="standard"
-					fullWidth
-					sx={{ mt: 3, mb: 1 }}>
-					<label>Email*</label>
-					<Input
-						onChange={handleChange}
-						value={form.email}
-						name="email"
-						required
-					/>
-				</FormControl>
+  return (
+    <AuthPageLayout title="Signin">
+      <Typography variant="h1" component="h1" sx={{ mb: 3 }}>
+        Sign up to <br /> Apply for Programs
+      </Typography>
 
-				<Grid
-					container
-					columnSpacing={4}>
-					<Grid
-						item
-						md={6}>
-						<FormControl
-							variant="standard"
-							sx={{ my: 3 }}
-							fullWidth>
-							<label>Nationality </label>
-							<Select
-								id="country"
-								name="country"
-								// label="country"
-								// options={updatedCountries}
-								value={form.nationality}
-								onChange={(value: any) => {
-									setForm({ ...form, nationality: value });
-								}}
-							/>
-						</FormControl>
-					</Grid>
-					<Grid
-						item
-						md={6}>
-						<FormControl
-							variant="standard"
-							sx={{ my: 3 }}
-							fullWidth>
-							<label>Date of birth</label>
-							<Input
-								type="date"
-								onChange={handleChange}
-								value={form.dateOfBirth}
-								name="dateOfBirth"
-							/>
-						</FormControl>
-					</Grid>
-				</Grid>
+      <form action="" onSubmit={handleSubmit}>
+        {/*  */}
+        <Grid container columnSpacing={4}>
+          <Grid item md={6}>
+            <FormControl variant="standard" sx={{ my: 3 }}>
+              <label>First Name*</label>
+              <Input
+                onChange={handleChange}
+                value={firstName}
+                name="firstName"
+                required
+              />
+            </FormControl>
+          </Grid>
+          <Grid item md={6}>
+            <FormControl variant="standard" sx={{ my: 3 }}>
+              <label>Last Name*</label>
+              <Input
+                onChange={handleChange}
+                value={lastName}
+                name="lastName"
+                required
+              />
+            </FormControl>
+          </Grid>
+        </Grid>
 
-				<Grid
-					container
-					columnSpacing={4}>
-					<Grid
-						item
-						md={6}>
-						<FormControl
-							variant="standard"
-							sx={{ my: 3 }}>
-							<label>Password*</label>
-							<Input
-								onChange={handleChange}
-								value={form.userToken}
-								name="userToken"
-								required
-							/>
-						</FormControl>
-					</Grid>
-					<Grid
-						item
-						md={6}>
-						<FormControl
-							variant="standard"
-							sx={{ my: 3 }}>
-							<label>Re enter Password*</label>
-							<Input
-								onChange={handleChange}
-								name=""
-								required
-							/>
-						</FormControl>
-					</Grid>
-				</Grid>
+        <FormControl variant="standard" fullWidth sx={{ mt: 3, mb: 1 }}>
+          <label>Email*</label>
+          <Input onChange={handleChange} value={email} name="email" required />
+        </FormControl>
 
-				<Typography
-					fontSize={9}
-					textAlign="center">
-					By creating the account, I have agreed to the Terms and Conditions and
-					Privacy Policy.
-				</Typography>
+        <Grid container columnSpacing={4} alignItems={"center"}>
+          <Grid item md={6}>
+            <FormControl fullWidth>
+              <label>{"Nationality"}</label>
+              <Select
+                variant="standard"
+                value={nationality}
+                onChange={handleNationalitySelectChange}
+              >
+                {countries.map((country: any) => (
+                  <MenuItem value={country.name}>{country.name}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item md={6}>
+            <FormControl variant="standard" sx={{ my: 3 }} fullWidth>
+              <label>Date of birth</label>
+              <Input
+                type="date"
+                onChange={handleChange}
+                value={dateOfBirth}
+                name="dateOfBirth"
+              />
+            </FormControl>
+          </Grid>
+        </Grid>
 
-				<Button
-					variant="contained"
-					size="large"
-					fullWidth
-					sx={{ my: 3, py: 3 }}
-					type="submit">
-					Create an account
-					<ArrowForwardIosIcon sx={{ ml: 1 }} />
-				</Button>
+        <Grid container columnSpacing={4}>
+          <Grid item md={6}>
+            <FormControl variant="standard" sx={{ my: 3 }}>
+              <label>Password*</label>
+              <Input
+                type="password"
+                onChange={handleChange}
+                value={password}
+                name="password"
+                required
+              />
+            </FormControl>
+          </Grid>
+          <Grid item md={6}>
+            <FormControl variant="standard" sx={{ my: 3 }}>
+              <label>Re enter Password*</label>
+              <Input
+                type="password"
+                onChange={handleChange}
+                name="confirmPassword"
+                value={confirmPassword}
+                required
+              />
+            </FormControl>
+          </Grid>
+        </Grid>
 
-				<Typography
-					fontFamily="Inter"
-					textAlign="center">
-					Already have an account?{" "}
-					<a
-						href=""
-						style={{ textDecoration: "underline" }}>
-						Sign in
-					</a>
-				</Typography>
-			</form>
-		</AuthPageLayout>
-	);
+        <Typography fontSize={9} textAlign="center">
+          By creating the account, I have agreed to the Terms and Conditions and
+          Privacy Policy.
+        </Typography>
+
+        <Button
+          variant="contained"
+          size="large"
+          fullWidth
+          sx={{ my: 3, py: 3 }}
+          type="submit"
+        >
+          Create an account
+          <ArrowForwardIosIcon sx={{ ml: 1 }} />
+        </Button>
+
+        <Typography fontFamily="Inter" textAlign="center">
+          Already have an account?{" "}
+          <a href="" style={{ textDecoration: "underline" }}>
+            Sign in
+          </a>
+        </Typography>
+      </form>
+    </AuthPageLayout>
+  );
 };
 
 export default Signup;

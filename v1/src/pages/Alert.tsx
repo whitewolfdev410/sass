@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Stack } from "@mui/material";
 import SnackbarContent from "@mui/material/SnackbarContent";
 import { getAllAlerts, useAppSelector } from "../appStore";
+import { AlertProps } from "../types";
 
 const Alert = () => {
   const allAlerts = useAppSelector(getAllAlerts);
@@ -12,7 +13,7 @@ const Alert = () => {
   };
   return (
     <Stack sx={{ position: "fixed", top: 10, right: 10 }} rowGap={2}>
-      {allAlerts.map((alert) => (
+      {allAlerts.map((alert: AlertProps & { id: string }) => (
         <SnackbarContent
           key={alert.id}
           action={<small>{alert.title}</small>}

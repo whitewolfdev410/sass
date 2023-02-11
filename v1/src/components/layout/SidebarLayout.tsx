@@ -1,11 +1,13 @@
 import { Box } from "@mui/material";
+import { Helmet } from "react-helmet-async";
 import { Outlet } from "react-router-dom";
 import { Sidebar } from "../.";
 
 type Props = {
-	logo?: boolean;
-	children?: React.ReactNode;
-	screen?: any;
+  title?: string;
+  logo?: boolean;
+  children?: React.ReactNode;
+  screen?: any;
 };
 
 /**
@@ -14,24 +16,30 @@ type Props = {
  */
 
 const SidebarLayout = (props: Props) => {
-	return (
-		<Box sx={{ display: "flex", flexDirection: { xs: "column", lg: "row" } }}>
-			<Sidebar logo={props.logo || false} screen={props.screen}/>
-			<Box
-				sx={{
-					p: {
-						xs: "20px 15px",
-						lg: "50px 44px 50px 50px",
-						xl: "80px 44px 50px 50px",
-					},
-					flexGrow: "1",
-					minWidth: 0,
-				}}>
-				<Outlet />
-				{props.children}
-			</Box>
-		</Box>
-	);
+  return (
+    <>
+      <Helmet>
+        <title>{props.title}</title>
+      </Helmet>
+      <Box sx={{ display: "flex", flexDirection: { xs: "column", lg: "row" } }}>
+        <Sidebar logo={props.logo || false} screen={props.screen} />
+        <Box
+          sx={{
+            p: {
+              xs: "20px 15px",
+              lg: "50px 44px 50px 50px",
+              xl: "80px 44px 50px 50px",
+            },
+            flexGrow: "1",
+            minWidth: 0,
+          }}
+        >
+          <Outlet />
+          {props.children}
+        </Box>
+      </Box>
+    </>
+  );
 };
 
 export default SidebarLayout;

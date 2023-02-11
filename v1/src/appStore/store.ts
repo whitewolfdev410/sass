@@ -16,7 +16,7 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import storage from "redux-persist/lib/storage/session";
+import storage from "redux-persist/lib/storage";
 import {
   ProgramProviderReducer,
   ProviderReducer,
@@ -49,7 +49,7 @@ const appReducer = combineReducers({
 
 // implement the signout action here to clear out state and return an empty object to redux persist
 const rootReducer: Reducer = (state: RootState, action: AnyAction) => {
-  return appReducer(state ?? prevState, action);
+  return appReducer(state, action);
 };
 
 const persistedReducer: typeof appReducer = persistReducer(
@@ -57,21 +57,8 @@ const persistedReducer: typeof appReducer = persistReducer(
   rootReducer
 );
 
-const prevState = JSON.parse(
-  (localStorage.getItem("persist:root") ?? "")
-    /** remove { and } */
-    .replace(/"{/g, "{")
-    .replace(/}"/g, "}")
-    /** remove [ and ] */
-    .replace(/"\[/g, "[")
-    .replace(/\]"/g, "]")
-    /** remove all '\' */
-    .replace(/\\/g, "")
-);
-
 export const store = configureStore({
   reducer: persistedReducer,
-  preloadedState: prevState,
   // disable serializable check for redux persist actions
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

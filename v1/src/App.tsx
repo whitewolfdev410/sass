@@ -1,37 +1,28 @@
 import React, { useEffect, useState } from "react";
-import {
-  Route,
-  Routes,
-  Navigate,
-  BrowserRouter as Router,
-} from "react-router-dom";
-import Login from "./pages/Login";
-import ProgramProvider from "./pages/programProvider";
-import Candidates from "./pages/candidates";
+import { BrowserRouter as Router, Navigate } from "react-router-dom";
 import Admin from "./pages/admin";
 import NotFound from "./pages/NotFound";
-import Doc from "./pages/Documentation";
 //
 import "./styles/root.css";
 import Alert from "./pages/Alert";
-import SiteMap from "./pages/SiteMap";
-import ForgotPassword from "./pages/ForgotPassword";
-import ResetPassword from "./pages/ResetPassword";
 import {
   getAccessToken,
-  selectProviderInfo,
   getProviderInfo,
   useAppDispatch,
   useAppSelector,
-  selectIsValidProvider,
-  selectFullProviderInfo,
 } from "./appStore";
 import Loading from "./utils/routing/Loading";
 import { USER_CLIENT } from "./appStore/axiosInstance";
-import RouteSwitcher from "./utils/routing/RouteSwitcher";
-import { ADMIN_ROUTE } from "./types";
-
-type ProviderStatusType = "loading" | "notFound" | "validURL";
+import {
+  ADMIN_ROUTE,
+  FULFILLED,
+  LOADING,
+  NOT_FOUND,
+  REJECTED,
+  VALID_BASENAME,
+} from "./types";
+import Provider from "./pages/Provider";
+import DefaultRoute from "./utils/routing/DefaultRoute";
 
 function App() {
   /** Set authToken to Axois Defaults Header */
@@ -47,69 +38,45 @@ function App() {
 
   /** Analyze identifier in the URL */
   const dispatch = useAppDispatch();
-  const [providerStatus, setProviderStatus] =
-    useState<ProviderStatusType>("loading");
-  const fullProviderInfo = useAppSelector(selectFullProviderInfo);
-  const identifier: string = window.location.pathname.split("/")[1];
+  const [providerStatus, setProviderStatus] = useState<string>(LOADING);
+  const [basename, setBasename] = useState<string>(
+    window.location.pathname.split("/")[1].trim()
+  );
 
   useEffect(() => {
-    dispatch(getProviderInfo(identifier)).then((action) => {
-      if (action.meta.requestStatus === "fulfilled") {
-        setProviderStatus("validURL");
-      } else if (action.meta.requestStatus === "rejected") {
-        setProviderStatus("notFound");
-      }
-    });
+    if (basename) {
+      dispatch(getProviderInfo(basename)).then((action) => {
+        if (action.meta.requestStatus === FULFILLED) {
+          setProviderStatus(VALID_BASENAME);
+        } else if (action.meta.requestStatus === REJECTED) {
+          setProviderStatus(NOT_FOUND);
+        }
+      });
+    } else {
+      setProviderStatus(VALID_BASENAME);
+    }
   }, []);
 
-  const newURL = `${window.location.href
-    .split("/")
-    .slice(0, 3)
-    .join("/")}/${identifier}/signin`;
-  if (accessToken && window.location.href !== newURL) {
-    if (
-      (fullProviderInfo === null && identifier !== ADMIN_ROUTE) ||
-      (fullProviderInfo !== null &&
-        identifier !== fullProviderInfo.providerAlias)
-    ) {
-      window.history.go(-1);
-    }
-  }
+  const adjustBasename = (newBasename: string) => {
+    setBasename(newBasename);
+  };
 
   /************************************* */
 
-  if (providerStatus === "loading") {
+  if (providerStatus === LOADING) {
     return <Loading />;
-  } else if (providerStatus === "notFound") {
+  } else if (providerStatus === NOT_FOUND) {
     return <NotFound />;
   }
   return (
-    <Router basename={"/" + identifier}>
+    <Router basename={"/" + basename}>
       <Alert />
-      {identifier === ADMIN_ROUTE ? (
-        <Admin />
+      {basename === ADMIN_ROUTE ? (
+        <Admin adjustBasename={adjustBasename} />
+      ) : basename ? (
+        <Provider adjustBasename={adjustBasename} />
       ) : (
-        <Routes>
-          {/** Public routes */}
-          <Route index element={<Navigate to="signin" />} />
-          <Route path="/sitemap" element={<SiteMap />} />
-          <Route path="/doc" element={<Doc />} />
-          <Route path="*" element={<NotFound />} />
-          {/** Only unauthorized users */}
-          <Route path="/signin" element={<RouteSwitcher component={Login} />} />
-          <Route path="/alert" element={<RouteSwitcher component={Alert} />} />
-          <Route
-            path="/forgot-password"
-            element={<RouteSwitcher component={ForgotPassword} />}
-          />
-          <Route
-            path="/reset-password"
-            element={<RouteSwitcher component={ResetPassword} />}
-          />
-          {/** Only authorized routes */}
-          <Route path="/provider/*" element={<ProgramProvider />} />
-          <Route path="/candidate/*" element={<Candidates />} />
-        </Routes>
+        <DefaultRoute adjustBasename={adjustBasename} />
       )}
     </Router>
   );

@@ -1,77 +1,92 @@
-import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import {
-  FormControl,
-  FormControlLabel,
-  Checkbox,
-  Input,
-  Typography,
-  Stack,
-  Button,
-  Grid,
-} from "@mui/material";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { FormControl, Input, Typography, Button, Grid } from "@mui/material";
 import { AuthPageLayout } from "../../../components";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import {
   useAppDispatch,
   useAppSelector,
+  adminSignup as signup,
+  selectProviderInfo,
   selectProviderProfile,
 } from "../../../appStore";
-import { ProviderSignupType } from "../../../types";
+import { AdminSignupType } from "../../../types";
+import { checkIfEmail, isEmpty } from "../../../utils/functions";
+import { addNewAlert } from "../../../utils/functions/addNewAlert";
 
 /**
- * Signup component for program providers
+ * Signup component for admins
  */
 
-// interface SignupType extends ProviderSignupType {
-//   confirmPassword: string;
-// }
+interface SignupType extends AdminSignupType {
+  confirmPassword?: string;
+}
 
 const Signup = () => {
   const dispatch = useAppDispatch();
-  const providerProfile = useAppSelector(selectProviderProfile);
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const { invitationCode } = useParams();
+  const [formData, setFormData] = useState<SignupType>({
+    firstName: "",
+    lastName: "",
+    email: searchParams.get("email") ?? "",
+    password: "",
+    confirmPassword: "",
+    invitationCode: searchParams.get("invitationCode") ?? "",
+  });
+  const [isValidated, setIsValidated] = useState<boolean>(false);
 
-  // const [formData, setFormData] = useState<SignupType>({
-  //   firstName: providerProfile.firstName ?? "",
-  //   lastName: providerProfile.lastName ?? "",
-  //   email: providerProfile.email ?? "",
-  //   password: "",
-  //   confirmPassword: "",
-  //   invitationCode: invitationCode ?? "",
-  //   jobTitle: providerProfile.jobTitle ?? "",
-  //   phoneNumber: providerProfile.phoneNumber ?? "",
-  // });
+  const { email, password, confirmPassword, firstName, lastName } = formData;
 
-  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { name, value } = event.target;
-  //   setFormData({ ...formData, [name]: value });
-  // };
+  useEffect(() => {
+    checkValidation();
+  }, [formData]);
+
+  const checkValidation = () => {
+    if (
+      !checkIfEmail(email) ||
+      password !== confirmPassword ||
+      isEmpty(firstName, lastName, password)
+    ) {
+      setIsValidated(false);
+    } else {
+      setIsValidated(true);
+    }
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
   const handleSubmit = async (ev: React.SyntheticEvent) => {
     ev.preventDefault();
-    // const res = await dispatch(signup(formData));
-    // if (res.payload) {
-    //   navigate("/provider/signin");
-    // }
+    delete formData.confirmPassword;
+    const action = await dispatch(signup(formData));
+    if (action.meta.requestStatus === "fulfilled") {
+      navigate("/signin");
+      addNewAlert(dispatch, {
+        type: "success",
+        title: "Sign up",
+        msg: "Successfully signed up",
+      });
+    } else if (action.meta.requestStatus === "rejected") {
+      addNewAlert(dispatch, {
+        type: "error",
+        title: "Sign up",
+        msg: "Sorry, but you are not invited to this provider",
+      });
+    }
   };
-  // const {
-  //   email,
-  //   password,
-  //   confirmPassword,
-  //   firstName,
-  //   lastName,
-  //   jobTitle,
-  //   phoneNumber,
-  // } = formData;
   return (
     <AuthPageLayout title="Signup" logo>
-      {/* <Typography variant="h1" component="h1" sx={{ mb: 3 }}>
-        Get Access to <br /> Admin Account
+      <Typography variant="h1" component="h1" sx={{ mb: 3 }}>
+        Get Access to <br /> Manage Programs
       </Typography>
 
       <form action="" onSubmit={handleSubmit}>
+        {/*  */}
         <Grid container columnSpacing={4}>
           <Grid item md={6}>
             <FormControl variant="standard" sx={{ my: 3 }}>
@@ -101,25 +116,6 @@ const Signup = () => {
           <label>Email*</label>
           <Input onChange={handleChange} value={email} name="email" required />
         </FormControl>
-
-        <Grid container columnSpacing={4}>
-          <Grid item md={6}>
-            <FormControl variant="standard" sx={{ my: 3 }}>
-              <label>Job title</label>
-              <Input onChange={handleChange} value={jobTitle} name="jobTitle" />
-            </FormControl>
-          </Grid>
-          <Grid item md={6}>
-            <FormControl variant="standard" sx={{ my: 3 }}>
-              <label>Phone number</label>
-              <Input
-                onChange={handleChange}
-                value={phoneNumber}
-                name="phoneNumber"
-              />
-            </FormControl>
-          </Grid>
-        </Grid>
 
         <Grid container columnSpacing={4}>
           <Grid item md={6}>
@@ -159,6 +155,7 @@ const Signup = () => {
           fullWidth
           sx={{ my: 3, py: 3 }}
           type="submit"
+          disabled={!isValidated}
         >
           Create an account
           <ArrowForwardIosIcon sx={{ ml: 1 }} />
@@ -170,7 +167,7 @@ const Signup = () => {
             Sign in
           </a>
         </Typography>
-      </form> */}
+      </form>
     </AuthPageLayout>
   );
 };
