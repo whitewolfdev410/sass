@@ -2,8 +2,9 @@ import { ButtonGroup, Button, Box, Stack } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useRef } from "react";
 import { CustomStepper } from ".";
+import { candidateWorkflowStageType } from "../../../types";
 
-const StageGroup = ({ stages }: { stages: string[] }) => {
+const StageGroup = ({ stages }: { stages: candidateWorkflowStageType[] }) => {
 	const ref = useRef<HTMLDivElement | null>(null);
 
 	return (
@@ -26,10 +27,21 @@ const StageGroup = ({ stages }: { stages: string[] }) => {
 				{/* Stepper */}
 				<CustomStepper numOfStages={stages.length} />
 				{/* Stepper */}
-				<ButtonGroup variant="text" sx={{ minWidth: "100%" }} color="inherit">
+				<ButtonGroup
+					variant="text"
+					sx={{ minWidth: "100%" }}
+					color="inherit">
 					{stages.map((stage) => (
-						<Button sx={{ px: 2, py: 0.5, width: "160px", ":hover": { bgcolor: "transparent" } }} disableRipple>
-							{stage}
+						<Button
+							key={stage.id}
+							sx={{
+								px: 2,
+								py: 0.5,
+								width: "160px",
+								":hover": { bgcolor: "transparent" },
+							}}
+							disableRipple>
+							{stage.name}
 						</Button>
 					))}
 				</ButtonGroup>
@@ -39,7 +51,10 @@ const StageGroup = ({ stages }: { stages: string[] }) => {
 				aria-role="button"
 				onClick={() => {
 					console.log("working", ref.current?.scrollLeft);
-					ref.current?.scrollTo({ left: ref.current?.scrollLeft + 200, behavior: "smooth" });
+					ref.current?.scrollTo({
+						left: ref.current?.scrollLeft + 200,
+						behavior: "smooth",
+					});
 				}}
 				sx={{
 					borderRadius: "50%",

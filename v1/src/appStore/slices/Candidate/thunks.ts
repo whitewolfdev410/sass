@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { CandidateType } from "../../../types";
-import { USER_CLIENT } from "../../axiosInstance";
+import { PROGRAM_CLIENT, USER_CLIENT } from "../../axiosInstance";
 
 export const candidateSignup = createAsyncThunk(
   "candidate/signup",
@@ -78,6 +78,27 @@ export const checkCandidateEmail = createAsyncThunk(
     }
   }
 );
+export const getApplicationStatus = createAsyncThunk(
+  "candidate/applicationStatus",
+  async ({ candidateId }: { candidateId: string }) => {
+    try {
+      let response = await PROGRAM_CLIENT.get(
+        `/candidates/${candidateId}/applications?candidateId=${candidateId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (err: any) {
+      let error: AxiosError<any> = err;
+      if (!error.response) {
+        console.log(err);
+      }
+    }
+  }
+);
 
 export const getCandidateProfile = createAsyncThunk(
   "candidate/getProfile",
@@ -86,7 +107,7 @@ export const getCandidateProfile = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const res = await USER_CLIENT.post("/candidate/profile", data);
+      const res = await USER_CLIENT.post("/candidates/profile", data);
       return res.data;
     } catch (err: any) {
       console.error("get candidate profile error", err);

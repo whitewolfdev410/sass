@@ -3,7 +3,7 @@ import CompleteIcon from "../../../assets/icons/check-circle-primary.svg";
 import CanceledIcon from "../../../assets/icons/x-circle-error.svg";
 
 const StepperGroup = ({
-	currentStage = 3,
+	currentStage = 1,
 	error,
 	numOfStages = 12,
 }: {
@@ -50,9 +50,19 @@ const StepperGroup = ({
 				}}>
 				{[...Array(currentStage)].map((stage, i) => {
 					if (i == currentStage - 1 && error) {
-						return <img src={CanceledIcon} alt="" />;
+						return (
+							<img
+								src={CanceledIcon}
+								alt=""
+							/>
+						);
 					} else {
-						return <img src={CompleteIcon} alt="" />;
+						return (
+							<img
+								src={CompleteIcon}
+								alt=""
+							/>
+						);
 					}
 				})}
 			</Stack>

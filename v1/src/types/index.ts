@@ -79,6 +79,16 @@ export type ProgramDetailsType = {
   programProviderId: string;
   coverImage: string;
 };
+export type ProgramPreviewType = {
+  data: {
+    id: string;
+    type: string;
+    attributes: {
+      applicationForm: ApplicationFormTemplateType;
+      programDetails: ProgramDetailsType;
+    };
+  };
+};
 
 export type ApplicationFormTemplateType = {
   coverImage: string;
@@ -193,6 +203,30 @@ export type CandidateType = {
   education?: string;
   experience?: string;
   resume?: string;
+};
+export type CandidateAppStatusType = {
+  data: {
+    id: string;
+    type: string;
+    attributes: {
+      applications: applicationType[];
+    };
+  };
+};
+export type applicationType = {
+  id: string;
+  programId: string;
+  programCoverImage: string;
+  programTitle: string;
+  status: string;
+  appliedOn: string;
+  currentStage: string;
+  workflowLastUpdatedOn: string;
+  workflowStages: candidateWorkflowStageType[];
+};
+export type candidateWorkflowStageType = {
+  id: string;
+  name: string;
 };
 
 export type ProviderSignupType = {

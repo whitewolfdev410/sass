@@ -8,6 +8,7 @@ import { selectCurrentRole, useAppSelector } from "../../appStore";
 import NotFound from "../NotFound";
 import RouteSwitcher from "../../utils/routing/RouteSwitcher";
 import { CANDIDATE } from "../../types";
+import ApplicationStatus from "./ApplicationStatus";
 
 const Candidates = () => {
   const currentRole = useAppSelector(selectCurrentRole);
@@ -47,6 +48,13 @@ const Candidates = () => {
             <RouteSwitcher requireLogin={true} component={ProgramStatus} />
           }
           path="program-status"
+        />
+
+        <Route
+          index
+          element={
+            <RouteSwitcher requireLogin={true} component={ApplicationStatus} />
+          }
         />
         <Route path="*" element={<NotFound />} />
       </Route>
