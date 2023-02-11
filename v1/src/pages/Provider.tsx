@@ -1,6 +1,4 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import SiteMap from "./SiteMap";
-import Doc from "./Documentation";
 import RouteSwitcher from "../utils/routing/RouteSwitcher";
 import Login from "./Login";
 import ForgotPassword from "./ForgotPassword";
@@ -29,8 +27,6 @@ const Provider = ({ adjustBasename }: ProviderProps) => {
     <Routes>
       {/** Public routes */}
       <Route index element={<Navigate to="signin" />} />
-      <Route path="/sitemap" element={<SiteMap />} />
-      <Route path="/doc" element={<Doc />} />
       {/** Only unauthorized users */}
       <Route path="/signin" element={<RouteSwitcher component={Login} />} />
       <Route

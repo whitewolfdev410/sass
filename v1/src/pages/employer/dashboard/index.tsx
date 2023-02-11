@@ -63,7 +63,9 @@ const EmployerDashboard = () => {
                 <Typography>13 Jan 2023</Typography>
               </Stack>
             </Stack>
-            <Button></Button>
+            <Button variant="contained" color="success">
+              Post opportunity
+            </Button>
           </OpportunityCard>
         </Box>
       </SidebarLayout>
