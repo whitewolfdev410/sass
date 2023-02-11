@@ -11,6 +11,7 @@ import RouteSwitcher from "../../utils/routing/RouteSwitcher";
 import { selectCurrentRole, useAppSelector } from "../../appStore";
 import NotFound from "../NotFound";
 import { PROVIDER } from "../../types";
+import EmployerDashboard from "../employer/dashboard";
 
 /**
  * Base Program Provider component.
@@ -36,7 +37,8 @@ const ProgramProvider = () => {
         <Route
           index
           element={
-            <RouteSwitcher requireLogin={true} component={AllProgrammes} />
+            // <RouteSwitcher requireLogin={true} component={AllProgrammes} />
+            <RouteSwitcher requireLogin={true} component={EmployerDashboard} />
           }
         />
         <Route

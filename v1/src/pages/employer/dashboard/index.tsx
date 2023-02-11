@@ -1,6 +1,7 @@
 import React from "react";
-import { Box, Stack, Typography } from "@mui/material";
-import { SidebarLayout } from "../../../components";
+import { Box, Button, Stack, Typography } from "@mui/material";
+import { OpportunityCard, SidebarLayout } from "../../../components";
+import companyLogo from "../../../assets/bg/404.jpg";
 
 /**
  * Dashboard for program providers showing current programs and their statistics
@@ -32,6 +33,39 @@ const EmployerDashboard = () => {
         </Stack>
 
         {/* Statistics */}
+        <Box
+          sx={{ width: "100%" }}
+          boxShadow={2}
+          borderRadius={3}
+          marginTop={3}
+        >
+          <OpportunityCard
+            title={
+              <Typography variant="h2">
+                Virtual work experience
+                <br />
+                in London
+              </Typography>
+            }
+            coverImage={companyLogo}
+          >
+            <Stack direction="row" columnGap={3}>
+              <Stack>
+                <Typography>Programme type:</Typography>
+                <Typography>Intership</Typography>
+              </Stack>
+              <Stack>
+                <Typography>Duration:</Typography>
+                <Typography>6 weeks</Typography>
+              </Stack>
+              <Stack>
+                <Typography>Programme start:</Typography>
+                <Typography>13 Jan 2023</Typography>
+              </Stack>
+            </Stack>
+            <Button></Button>
+          </OpportunityCard>
+        </Box>
       </SidebarLayout>
     </div>
   );

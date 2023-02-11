@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { FormControl, Input, Typography, Button, Grid } from "@mui/material";
 import { AuthPageLayout } from "../../../components";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -157,7 +157,7 @@ const Signup = () => {
 
         <Typography fontFamily="Inter" textAlign="center">
           Already have an account?{" "}
-          <a href="" style={{ textDecoration: "underline" }}>
+          <a href="/signin" style={{ textDecoration: "underline" }}>
             Sign in
           </a>
         </Typography>

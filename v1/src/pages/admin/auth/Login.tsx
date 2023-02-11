@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   FormControl,
   FormControlLabel,
@@ -32,7 +31,6 @@ import { addNewAlert } from "../../../utils/functions/addNewAlert";
 const Login = () => {
   const dispatch = useAppDispatch();
   const providerInfo = useAppSelector(selectProviderInfo);
-  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     email: "",

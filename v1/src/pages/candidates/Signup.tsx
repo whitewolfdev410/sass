@@ -4,7 +4,6 @@ import {
   FormControl,
   Input,
   Typography,
-  Stack,
   Button,
   Grid,
   Select,
@@ -197,7 +196,7 @@ const Signup = () => {
 
         <Typography fontFamily="Inter" textAlign="center">
           Already have an account?{" "}
-          <a href="" style={{ textDecoration: "underline" }}>
+          <a href="/signin" style={{ textDecoration: "underline" }}>
             Sign in
           </a>
         </Typography>
