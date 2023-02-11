@@ -1,5 +1,5 @@
 import { Stack, Typography } from "@mui/material";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import bgImg from "../assets/bg/404.jpg";
 
 /**
@@ -10,7 +10,7 @@ import bgImg from "../assets/bg/404.jpg";
 const NotFound = () => (
   <>
     <Helmet>
-      <title>Signin</title>
+      <title>Not Found</title>
     </Helmet>
 
     <Stack

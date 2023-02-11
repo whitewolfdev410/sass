@@ -16,7 +16,7 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import storage from "redux-persist/lib/storage/session";
+import storage from "redux-persist/lib/storage";
 import {
   ProgramProviderReducer,
   ProviderReducer,
@@ -57,31 +57,16 @@ const persistedReducer: typeof appReducer = persistReducer(
   rootReducer
 );
 
-const storeConfiguration: any = {
+export const store = configureStore({
   reducer: persistedReducer,
   // disable serializable check for redux persist actions
-  middleware: (getDefaultMiddleware: any) =>
+  middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
-};
-
-if (localStorage.getItem("persist:root")) {
-  storeConfiguration.preloadedState = JSON.parse(
-    (localStorage.getItem("persist:root") ?? "{}")
-      /** remove { and } */
-      .replace(/"{/g, "{")
-      .replace(/}"/g, "}")
-      /** remove [ and ] */
-      .replace(/"\[/g, "[")
-      .replace(/\]"/g, "]")
-      /** remove all '\' */
-      .replace(/\\"/g, '"')
-  );
-}
-export const store = configureStore(storeConfiguration);
+});
 
 // create a persistor
 export const persistor = persistStore(store);

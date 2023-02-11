@@ -7,8 +7,22 @@ import ClientProfile from "./dashboard/ClientProfile";
 import SetPassword from "./auth/SetPassword";
 import Login from "./auth/Login";
 import RouteSwitcher from "../../utils/routing/RouteSwitcher";
+import {
+  selectFullProviderInfo,
+  selectIsAuthenticated,
+  useAppSelector,
+} from "../../appStore";
 
-const Admin = () => {
+type AdminProps = {
+  adjustBasename: (arg: string) => void;
+};
+
+const Admin = ({ adjustBasename }: AdminProps) => {
+  const fullProviderInfo = useAppSelector(selectFullProviderInfo);
+  const isLoggedIn = useAppSelector(selectIsAuthenticated);
+  if (isLoggedIn && fullProviderInfo !== null) {
+    adjustBasename(fullProviderInfo.providerAlias);
+  }
   return (
     <Routes>
       <Route index element={<Navigate to="signin" />} />

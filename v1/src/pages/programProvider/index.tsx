@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Signup from "./auth/Signup";
 import InviteCoworker from "./auth/InviteCoworker";
 import AllProgrammes from "./dashboard/AllProgrammes";
@@ -10,6 +10,7 @@ import SingleProgram from "./dashboard/SingleProgram";
 import RouteSwitcher from "../../utils/routing/RouteSwitcher";
 import { selectCurrentRole, useAppSelector } from "../../appStore";
 import NotFound from "../NotFound";
+import { PROVIDER } from "../../types";
 
 /**
  * Base Program Provider component.
@@ -17,15 +18,13 @@ import NotFound from "../NotFound";
  */
 
 const ProgramProvider = () => {
-  const navigate = useNavigate();
   const currentRole = useAppSelector(selectCurrentRole);
-  if (currentRole === undefined) {
-    navigate("/signin");
-  } else if (currentRole.persona !== "Provider") {
-    navigate(-1);
+  if (currentRole && currentRole.persona !== PROVIDER) {
+    return <Navigate to={`/${currentRole.persona.toLowerCase()}/dashboard`} />;
   }
   return (
     <Routes>
+      <Route index element={<Navigate to="/provider/signup" />} />
       <Route path="/signup" element={<RouteSwitcher component={Signup} />} />
       <Route
         path="/invite-coworker"

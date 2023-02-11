@@ -7,19 +7,17 @@ import ProgramStatus from "./ProgramStatus";
 import { selectCurrentRole, useAppSelector } from "../../appStore";
 import NotFound from "../NotFound";
 import RouteSwitcher from "../../utils/routing/RouteSwitcher";
+import { CANDIDATE } from "../../types";
 
 const Candidates = () => {
-  const navigate = useNavigate();
   const currentRole = useAppSelector(selectCurrentRole);
-  if (currentRole === undefined) {
-    navigate("/signin");
-  } else if (currentRole.persona !== "Candidate") {
-    navigate(-1);
+  if (currentRole && currentRole.persona !== CANDIDATE) {
+    return <Navigate to={`/${currentRole.persona.toLowerCase()}/dashboard`} />;
   }
   return (
     <Routes>
       <Route index element={<Navigate to="/candidate/signup" />} />
-      <Route path="/signup" element={<Signup />} />
+      <Route path="/signup" element={<RouteSwitcher component={Signup} />} />
       <Route
         path="/dashboard"
         element={<RouteSwitcher requireLogin={true} component={Dashboard} />}

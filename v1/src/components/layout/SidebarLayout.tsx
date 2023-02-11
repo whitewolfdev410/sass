@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { Outlet } from "react-router-dom";
 import { Sidebar } from "../.";
 

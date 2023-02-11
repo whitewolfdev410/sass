@@ -337,3 +337,10 @@ export const OWNER = "Owner";
 export const CONTRIBUTOR = "Candidate";
 export const GUEST = "Candidate";
 export const NONE = "Candidate";
+
+export const LOADING = "loading";
+export const NOT_FOUND = "not_found";
+export const VALID_BASENAME = "valid_basename";
+
+export const FULFILLED = "fulfilled";
+export const REJECTED = "rejected";

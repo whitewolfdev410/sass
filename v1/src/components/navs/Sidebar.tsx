@@ -15,7 +15,7 @@ import {
   selectIsAuthenticated,
 } from "../../appStore";
 import MenuDropdown from "../layout/MenuDropdown";
-import { ADMIN, CANDIDATE, PROVIDER } from "../../types";
+import { ADMIN, PROVIDER } from "../../types";
 
 type Props = {
   logo?: boolean;
@@ -47,6 +47,92 @@ const Sidebar = (props: Props) => {
   const handleLogout = () => {
     dispatch(authLogout());
   };
+  const userLinks = (
+    <>
+      <Button
+        onClick={() =>
+          navigate(
+            `/${
+              currentPersona === ADMIN ? "" : currentPersona.toLowerCase()
+            }/dashboard`
+          )
+        }
+      >
+        <img src={HomeIconPrimary} width="20" height="20" />
+      </Button>
+      {currentPersona === PROVIDER && (
+        <Button
+          onClick={() => navigate("/provider/invite-coworker")}
+          sx={{ fontSize: "12px", padding: "initial", height: "70px" }}
+          fullWidth
+        >
+          Invite Corworker
+        </Button>
+      )}
+      {currentPersona === ADMIN && (
+        <>
+          <Button
+            onClick={() => navigate("/invite-coworker")}
+            sx={{ fontSize: "12px", padding: "initial", height: "70px" }}
+            fullWidth
+          >
+            Invite Corworker
+          </Button>
+          <Button
+            onClick={() => navigate("/invite-client")}
+            sx={{ fontSize: "12px", padding: "initial", height: "70px" }}
+            fullWidth
+          >
+            Invite Client
+          </Button>
+        </>
+      )}
+      <MenuDropdown
+        title={
+          <Avatar
+            sx={{
+              bgcolor: "info.main",
+              width: "28px",
+              height: "28px",
+              fontSize: 14,
+            }}
+          >
+            {(displayName.length === 1
+              ? displayName[0].slice(0, 2)
+              : `${displayName[0][0]}${displayName[1][0]}`
+            ).toUpperCase()}
+          </Avatar>
+        }
+      >
+        <>
+          {currentRoles.map(
+            ({ persona }: { persona: string; role: string }, index) => {
+              if (index !== currentRoleIndex) {
+                return (
+                  <MenuItem key={persona} onClick={() => switchRoleTo(index)}>
+                    Go as {persona}
+                  </MenuItem>
+                );
+              }
+            }
+          )}
+          <Divider orientation="horizontal" variant="middle" />
+          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+        </>
+      </MenuDropdown>
+    </>
+  );
+  const guestLinks = (
+    <>
+      <Button
+        onClick={() => navigate("/signin")}
+        sx={{ fontSize: "12px", padding: "initial", height: "70px" }}
+        fullWidth
+      >
+        Sign In
+      </Button>
+    </>
+  );
   return (
     <Box
       sx={{
@@ -67,14 +153,9 @@ const Sidebar = (props: Props) => {
     >
       {props.logo && (
         <Box sx={{ maxWidth: "50px" }}>
-          {" "}
           <Logo />
         </Box>
       )}
-
-      {/* <Button sx={{ color: "black", mb: props.logo ? 0 : 3 }}>
-				<MenuIcon fontSize="medium" />
-			</Button> */}
 
       <Stack
         spacing={2}
@@ -90,88 +171,12 @@ const Sidebar = (props: Props) => {
         }}
         divider={<Divider orientation="horizontal" variant="middle" />}
       >
-        <Button onClick={() => navigate(`${props.screen}`, { replace: true })}>
+        <Button onClick={() => navigate(-1)}>
           <img src={BackIconPrimary} width="24px" height="24px" />
         </Button>
 
-        {isLoggedIn && (
-          <>
-            <Button
-              onClick={() =>
-                navigate(
-                  `/${
-                    currentPersona === ADMIN ? "" : currentPersona.toLowerCase()
-                  }/dashboard`
-                )
-              }
-            >
-              <img src={HomeIconPrimary} width="20" height="20" />
-            </Button>
-            {currentPersona === PROVIDER && (
-              <Button
-                onClick={() => navigate("/provider/invite-coworker")}
-                sx={{ fontSize: "12px", padding: "initial", height: "70px" }}
-                fullWidth
-              >
-                Invite Corworker
-              </Button>
-            )}
-            {currentPersona === ADMIN && (
-              <>
-                <Button
-                  onClick={() => navigate("/invite-coworker")}
-                  sx={{ fontSize: "12px", padding: "initial", height: "70px" }}
-                  fullWidth
-                >
-                  Invite Corworker
-                </Button>
-                <Button
-                  onClick={() => navigate("/invite-client")}
-                  sx={{ fontSize: "12px", padding: "initial", height: "70px" }}
-                  fullWidth
-                >
-                  Invite Client
-                </Button>
-              </>
-            )}
-          </>
-        )}
+        {isLoggedIn ? userLinks : guestLinks}
       </Stack>
-      {isLoggedIn && (
-        <MenuDropdown
-          title={
-            <Avatar
-              sx={{
-                bgcolor: "info.main",
-                width: "28px",
-                height: "28px",
-                fontSize: 14,
-              }}
-            >
-              {(displayName.length === 1
-                ? displayName[0].slice(0, 2)
-                : `${displayName[0][0]}${displayName[1][0]}`
-              ).toUpperCase()}
-            </Avatar>
-          }
-        >
-          <>
-            {currentRoles.map(
-              ({ persona }: { persona: string; role: string }, index) => {
-                if (index !== currentRoleIndex) {
-                  return (
-                    <MenuItem key={persona} onClick={() => switchRoleTo(index)}>
-                      Go as {persona}
-                    </MenuItem>
-                  );
-                }
-              }
-            )}
-            <Divider orientation="horizontal" variant="middle" />
-            <MenuItem onClick={handleLogout}>Logout</MenuItem>
-          </>
-        </MenuDropdown>
-      )}
     </Box>
   );
 };

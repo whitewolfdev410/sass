@@ -30,6 +30,7 @@ const RouteSwitcher = ({
       );
     }
   } else {
+    console.log("route switcher gets here maybe?", document.referrer);
     return <Navigate to="/signin" />;
   }
 };
