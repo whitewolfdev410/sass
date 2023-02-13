@@ -180,35 +180,20 @@ export type candidatePersonalQuestionType = {
 	disqualify: boolean;
 	other: boolean;
 };
-
-export type ApplicationFormTemplateType = {
-	coverImage: string;
-	personalInformation: personalInformationType;
-	profile: {
-		education: {
-			mandatory: boolean;
-			show: boolean;
-		};
-		experience: {
-			mandatory: boolean;
-			show: boolean;
-		};
-		resume: {
-			mandatory: boolean;
-			show: boolean;
-		};
-		profileQuestions: [
-			{
-				id: string;
-				type: string;
-				question: string;
-				choices: string;
-				disquality: boolean;
-				other: boolean;
-			}
-		];
+export type candidateProfileApplicationType = {
+	education: {
+		mandatory: boolean;
+		show: boolean;
 	};
-	customisedQuestions: [
+	experience: {
+		mandatory: boolean;
+		show: boolean;
+	};
+	resume: {
+		mandatory: boolean;
+		show: boolean;
+	};
+	profileQuestions: [
 		{
 			id: string;
 			type: string;
@@ -218,6 +203,21 @@ export type ApplicationFormTemplateType = {
 			other: boolean;
 		}
 	];
+};
+
+export type ApplicationFormTemplateType = {
+	coverImage: string;
+	personalInformation: personalInformationType;
+	profile: candidateProfileApplicationType;
+	customisedQuestions: candidateCustomisedQuestionType[];
+};
+export type candidateCustomisedQuestionType = {
+	id: string;
+	type: string;
+	question: string;
+	choices: string;
+	disquality: boolean;
+	other: boolean;
 };
 
 export type ProgramDashboardType = ProgramType[];
@@ -245,20 +245,18 @@ export type NewProgramType = Omit<ProgramDetailsType, "benefits"> & {
 };
 
 export type CandidateType = {
-	// candidateID: number | string;
 	firstName: string;
 	lastName: string;
-	phoneNumber: string;
+	phoneNumber?: string;
 	email: string;
 	nationality: string;
-	currentlyBased: string;
-	nationalIDNumber: string;
+	currentlyBased?: string;
+	nationalIDNumber?: string;
 	dateOfBirth: string;
-	gender: string;
-	education: string;
-	experience: string;
-	resume: string;
-	userToken: string;
+	gender?: string;
+	education?: string;
+	experience?: string;
+	resume?: string;
 };
 export type CandidateAppStatusType = {
 	data: {
@@ -293,7 +291,15 @@ export type ProviderSignupType = {
 	invitationCode: string;
 	jobTitle: string;
 	phoneNumber: string;
-	provider: string;
+	providerId: string;
+};
+
+export type AdminSignupType = {
+	email: string;
+	firstName: string;
+	lastName: string;
+	password: string;
+	invitationCode: string;
 };
 
 export type StageType = {
@@ -411,3 +417,18 @@ export type AlertProps = {
 };
 
 export const ADMIN_ROUTE = "admin";
+export const CANDIDATE = "Candidate";
+export const EMPLOYER = "Employer";
+export const PROVIDER = "Provider";
+export const ADMIN = "Admin";
+export const OWNER = "Owner";
+export const CONTRIBUTOR = "Candidate";
+export const GUEST = "Candidate";
+export const NONE = "Candidate";
+
+export const LOADING = "loading";
+export const NOT_FOUND = "not_found";
+export const VALID_BASENAME = "valid_basename";
+
+export const FULFILLED = "fulfilled";
+export const REJECTED = "rejected";

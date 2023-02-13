@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 import {
   selectFullProviderInfo,
   selectCurrentRole,
-  isLoggedin,
+  selectIsAuthenticated,
   useAppSelector,
 } from "../../appStore";
 
@@ -14,7 +14,7 @@ const RouteSwitcher = ({
   component: React.FC;
   requireLogin?: boolean;
 }) => {
-  const isAuthenticated = useAppSelector(isLoggedin);
+  const isAuthenticated = useAppSelector(selectIsAuthenticated);
   const currentRole = useAppSelector(selectCurrentRole);
   const fullProviderInfo = useAppSelector(selectFullProviderInfo);
   if (isAuthenticated === requireLogin) {
@@ -30,6 +30,7 @@ const RouteSwitcher = ({
       );
     }
   } else {
+    console.log("route switcher gets here maybe?", document.referrer);
     return <Navigate to="/signin" />;
   }
 };

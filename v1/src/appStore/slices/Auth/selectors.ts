@@ -1,8 +1,7 @@
 import { createSelector } from "@reduxjs/toolkit";
-import { ProviderType } from "../../../types";
 import { RootState } from "../../store";
 
-export const isLoggedin = createSelector(
+export const selectIsAuthenticated = createSelector(
   [(state: RootState) => !!state.auth.accessToken],
   (user) => user
 );

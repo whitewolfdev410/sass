@@ -1,10 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ProgramProviderType } from "../../../types";
-import {
-  programProviderLogin,
-  programProviderSignup,
-  verifyInviteCode,
-} from "..";
+import { verifyProviderInviteCode } from "..";
 
 type initialProps = ProgramProviderType & {
   isLoggedIn: boolean;
@@ -30,7 +26,7 @@ const programProviderSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(verifyInviteCode.fulfilled, (state, action) => ({
+    builder.addCase(verifyProviderInviteCode.fulfilled, (state, action) => ({
       ...state,
       ...(action.payload as unknown as ProgramProviderType),
     }));

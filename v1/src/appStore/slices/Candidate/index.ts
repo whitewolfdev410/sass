@@ -5,7 +5,6 @@ import {
 	CandidateType,
 } from "../../../types";
 import {
-	candidateLogin,
 	candidateSignup,
 	getAllCandidates,
 	getCandidateByID,
@@ -41,12 +40,6 @@ const candidateSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder
-			.addCase(candidateLogin.fulfilled, (state, action) => {
-				state.loggedInCandidate = {
-					...(action.payload as unknown as CandidateType),
-					isLoggedIn: true,
-				};
-			})
 			.addCase(candidateSignup.fulfilled, (state, action) => {
 				state.loggedInCandidate = {
 					...(action.payload as unknown as CandidateType),

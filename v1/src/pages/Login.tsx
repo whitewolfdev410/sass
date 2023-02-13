@@ -24,6 +24,7 @@ import {
   useAppSelector,
 } from "../appStore";
 import { addNewAlert } from "../utils/functions/addNewAlert";
+import { CANDIDATE, EMPLOYER, PROVIDER } from "../types";
 
 /**
  * Login component for program providers
@@ -47,6 +48,24 @@ const Login = () => {
     ev.preventDefault();
     const action = await dispatch(authLogin(formData));
     if (action.meta.requestStatus === "fulfilled") {
+      const roles = action.payload.account.roles;
+      // roles.forEach((role: { persona: string; role: string }) => {
+      //   const payload = {
+      //     providerId: providerInfo.providerId,
+      //     persona: PROVIDER,
+      //   };
+      //   switch (role.persona) {
+      //     case PROVIDER:
+      //       dispatch(getProviderProfile(payload));
+      //       return;
+      //     case CANDIDATE:
+      //       dispatch(getCandidateProfile(payload));
+      //       return;
+      //     case EMPLOYER:
+      //       dispatch(getEmployerProfile(payload));
+      //       return;
+      //   }
+      // });
     } else if (action.meta.requestStatus === "rejected") {
       addNewAlert(dispatch, {
         type: "error",

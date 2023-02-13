@@ -1,5 +1,5 @@
 import "../../styles/auth.css";
-import Helmet from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { Logo } from "../";
 import { Box, Typography } from "@mui/material";
 

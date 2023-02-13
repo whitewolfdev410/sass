@@ -1,13 +1,10 @@
 import { useState, useEffect } from "react";
 import { ApplicationFormCard } from "../../cards";
-import { FormControl, MenuItem, Select, Stack, TextField } from "@mui/material";
-import {
-	CountryRegionData,
-	RegionDropdown,
-} from "react-country-region-selector";
-import { Multiselect } from "multiselect-react-dropdown";
+import { FormControl, Stack } from "@mui/material";
+import { RegionDropdown } from "react-country-region-selector";
 import "./style.css";
 import {
+	candidateCustomisedQuestionType,
 	candidatePersonalQuestionType,
 	candidatePersonAnswerType,
 } from "../../../types";
@@ -15,7 +12,7 @@ import QuestionRender from "./QuestionRender";
 export type Props = {
 	setCandidateData?: any;
 	candidateData?: any;
-	candidateFormData: candidatePersonalQuestionType[];
+	candidateFormData: candidateCustomisedQuestionType[];
 };
 type AnswerType = {
 	booleanAnswer: boolean | null;

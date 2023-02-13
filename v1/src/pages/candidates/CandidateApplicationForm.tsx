@@ -3,16 +3,12 @@ import { useNavigate } from "react-router";
 import { Box, Button, Stack } from "@mui/material";
 import Hidden from "@mui/material/Hidden";
 import { SidebarLayout } from "../../components";
-import {
-	CandidateApplicationNav,
-	ProgramSummaryCard,
-} from "../../components/CandidatesComponents";
+import { CandidateApplicationNav } from "../../components/CandidatesComponents";
 import CandidatePersonalInformation from "../../components/CandidatesComponents/programApplication/candidateForm";
 import Profile from "../../components/CandidatesComponents/programApplication/profile";
 import Resume from "../../components/CandidatesComponents/programApplication/resume";
 import AdditionalQuestion from "../../components/CandidatesComponents/programApplication/additionalQuestion";
 import {
-	checkCandidateEmail,
 	getCandidateAppForm,
 	selectCandidateApplicationForm,
 	// getApplicationTemplate,
@@ -20,11 +16,12 @@ import {
 } from "../../appStore/slices";
 import { useAppDispatch, useAppSelector } from "../../appStore";
 import {
+	candidateCustomisedQuestionType,
 	candidateEducationType,
 	candidateFormProfileType,
 	candidatePersonalInfoType,
-	candidatePersonalQuestionType,
 	candidatePersonAnswerType,
+	candidateProfileApplicationType,
 	candidateWorkExperienceType,
 	personalInformationType,
 } from "../../types";
@@ -43,11 +40,11 @@ const CandidateApplicationForm = () => {
 	const [candidateFormData] = useState<personalInformationType>(
 		applicationFormData?.data?.attributes?.personalInformation
 	);
-	const [profileFormData] = useState<candidateFormProfileType>(
+	const [profileFormData] = useState<candidateProfileApplicationType>(
 		applicationFormData?.data?.attributes?.profile
 	);
 	const [customisedAnswerData, setCustomisedAnswerData] = useState<
-		candidatePersonalQuestionType[]
+		candidateCustomisedQuestionType[]
 	>(applicationFormData?.data?.attributes?.customisedQuestions);
 	const [personalAnswers, setPersonalAnswers] = useState<
 		candidatePersonAnswerType[]
