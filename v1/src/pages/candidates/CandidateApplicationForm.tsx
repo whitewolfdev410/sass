@@ -11,100 +11,132 @@ import CandidatePersonalInformation from "../../components/CandidatesComponents/
 import Profile from "../../components/CandidatesComponents/programApplication/profile";
 import Resume from "../../components/CandidatesComponents/programApplication/resume";
 import AdditionalQuestion from "../../components/CandidatesComponents/programApplication/additionalQuestion";
-import VideoQuestion from "../../components/CandidatesComponents/programApplication/videoQuestion";
 import {
 	checkCandidateEmail,
-	getApplicationTemplate,
+	getCandidateAppForm,
+	selectCandidateApplicationForm,
+	// getApplicationTemplate,
 	SaveCandidateApplicationForm,
 } from "../../appStore/slices";
-import { useAppDispatch } from "../../appStore";
+import { useAppDispatch, useAppSelector } from "../../appStore";
+import {
+	candidateEducationType,
+	candidateFormProfileType,
+	candidatePersonalInfoType,
+	candidatePersonalQuestionType,
+	candidatePersonAnswerType,
+	candidateWorkExperienceType,
+	personalInformationType,
+} from "../../types";
 
 const CandidateApplicationForm = () => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
-	const programId = localStorage.getItem("programId");
-
-	const [candidateData, setCandidateData] = useState({
-		firstName: "",
-		lastName: "",
-		email: "",
-		PhoneNumber: "",
-		nationality: "",
-		currentlyBased: "",
-		NationalIDNumber: "",
-		dateOfBirth: "",
-		gender: "",
-		education: "",
-		experience: "",
-		resume: "",
-		questionApplication: "",
-	});
-	const [profileData, setProfileData] = useState({
-		candidateEducationListDTO: [
-			{
-				schoolName: "saint jain",
-				degree: "BE",
-				courseName: "IT",
-				locationOfStudy: "India",
-				startDate: "2023-01-19",
-				endDate: "2023-01-19",
-				currentlyStudyHere: false,
-			},
-		],
-		candidateWorkExperienceListDTO: [
-			{
-				companyName: "infotech",
-				title: "admin",
-				workLocation: "india",
-				startDate: "2023-01-19",
-				endDate: "2023-01-19",
-				currentlyStudyHere: false,
-			},
-		],
-	});
-
+	const programId = localStorage.getItem("programId") ?? "";
 	useEffect(() => {
-		getQuestionList();
+		dispatch(getCandidateAppForm({ programId: programId }));
 	}, []);
+	const [applicationFormData] = useState(
+		useAppSelector(selectCandidateApplicationForm)
+	);
 
-	const getQuestionList = async () => {
-		// @ts-ignore
-		const response = await dispatch(
-			getApplicationTemplate({ programID: programId ?? "" })
-		);
-		console.log("response", response);
-	};
+	const [candidateFormData] = useState<personalInformationType>(
+		applicationFormData?.data?.attributes?.personalInformation
+	);
+	const [profileFormData] = useState<candidateFormProfileType>(
+		applicationFormData?.data?.attributes?.profile
+	);
+	const [customisedAnswerData, setCustomisedAnswerData] = useState<
+		candidatePersonalQuestionType[]
+	>(applicationFormData?.data?.attributes?.customisedQuestions);
+	const [personalAnswers, setPersonalAnswers] = useState<
+		candidatePersonAnswerType[]
+	>([
+		{
+			id: "",
+			answer: "",
+			selectedChoices: [],
+			question: "",
+			type: "",
+			disqualify: false,
+			other: false,
+			booleanAnswer: null,
+			dateAnswer: null,
+			numberAnswer: null,
+		},
+	]);
 
-	const onSaveApplication = async () => {
-		const data = {
-			programID: programId,
-			firstName: candidateData?.firstName,
-			lastName: candidateData?.lastName,
-			emailID: candidateData?.email,
-			phoneNumber: candidateData?.PhoneNumber,
-			nationality: candidateData?.nationality,
-			currentlyBased: candidateData?.currentlyBased,
-			nationalIDNumber: candidateData?.NationalIDNumber,
-			dateOfBirth: candidateData?.dateOfBirth,
-			gender: candidateData?.gender,
-			educationList: profileData?.candidateEducationListDTO,
-			workExperienceList: profileData?.candidateWorkExperienceListDTO,
-			resume: "",
-			questionApplication: candidateData?.questionApplication,
-		};
-		const candidateResponse = await dispatch(
-			SaveCandidateApplicationForm({ data })
-		);
-		console.log("===============", candidateResponse);
-		localStorage.setItem("candidateData", JSON.stringify(candidateData));
-		const response = await dispatch(
-			checkCandidateEmail({ emailID: candidateData?.email })
-		);
-		if (response?.payload) {
-			navigate("/candidate/apply/program-status", { replace: true });
-		} else {
-			navigate("/candidate/apply/create-account", { replace: true });
+	const [candidateData, setCandidateData] = useState<candidatePersonalInfoType>(
+		{
+			firstName: "",
+			lastName: "",
+			emailId: "",
+			phoneNumber: "",
+			nationality: "",
+			currentResidence: "",
+			idNumber: "",
+			dateOfBirth: "",
+			gender: "",
+			personalAnswers: personalAnswers,
 		}
+	);
+	const [educationData, setEducationData] = useState<candidateEducationType[]>(
+		[]
+	);
+	const [workExperienceData, setWorkExperienceData] = useState<
+		candidateWorkExperienceType[]
+	>([]);
+	const [profileAnswerData, setProfileAnswersData] = useState<
+		candidatePersonAnswerType[]
+	>([]);
+	const [profileData, setProfileData] = useState<candidateFormProfileType>({
+		education: educationData,
+		workExperience: workExperienceData,
+		profileAnswers: profileAnswerData,
+	});
+	const [resume, setResume] = useState<string>("http://example.com");
+	const [stage, setStage] = useState<string>(
+		"9f09bdb0-89bd-4a1a-b468-0312474f1023"
+	);
+	const [status, setStatus] = useState<string>("Active");
+	const [overallScore] = useState<string>("N/A");
+	const [data, setData] = useState({
+		personalInformation: candidateData,
+		profile: profileData,
+		resume: resume,
+		customisedAnswers: customisedAnswerData,
+		stage: stage,
+		status: status,
+		overallScore: overallScore,
+	});
+	useEffect(() => {
+		setData({
+			...data,
+			personalInformation: candidateData,
+			profile: profileData,
+			resume: resume,
+			stage: stage,
+			status: status,
+			overallScore: overallScore,
+		});
+	}, [candidateData, profileData, resume, stage, status]);
+	const onSaveApplication = async () => {
+		const candidateResponse = await dispatch(
+			SaveCandidateApplicationForm({
+				data: { type: "candidateApplication", attributes: data },
+				programId,
+			})
+		);
+		// console.log("===============", candidateResponse);
+		// localStorage.setItem("candidateData", JSON.stringify(candidateData));
+		// const response = await dispatch(
+		// 	checkCandidateEmail({ emailID: candidateData?.email })
+		// );
+		// if (response?.payload) {
+		// 	navigate("/candidate/apply/program-status", { replace: true });
+		// } else {
+		// 	navigate("/candidate/apply/create-account", { replace: true });
+		// }
 	};
 
 	return (
@@ -112,32 +144,39 @@ const CandidateApplicationForm = () => {
 			<Box
 				sx={{ mt: "-50px" }}
 				className="header">
-				<CandidateApplicationNav completed={1} />
+				<CandidateApplicationNav completed={2} />
 			</Box>
 			<Stack
 				direction="row"
 				flexWrap="wrap"
 				gap={5}
+				mt="115px"
+				ml="110px"
 				className="content-wrapper"
 				justifyContent="space-between">
-				<Box>
+				<Box mt="-24px">
 					<CandidatePersonalInformation
 						setCandidateData={setCandidateData}
 						candidateData={candidateData}
+						candidateFormData={candidateFormData}
 					/>
 					<Profile
 						setProfileData={setProfileData}
 						profileData={profileData}
+						profileFormData={profileFormData}
 					/>
-					<Resume
-						setCandidateData={setCandidateData}
-						candidateData={candidateData}
-					/>
+					{profileFormData?.resume?.show && (
+						<Resume
+							setCandidateData={setResume}
+							candidateData={resume}
+						/>
+					)}
 					<AdditionalQuestion
-						setCandidateData={setCandidateData}
-						candidateData={candidateData}
+						setCandidateData={setData}
+						candidateData={data}
+						candidateFormData={customisedAnswerData}
 					/>
-					<VideoQuestion />
+					{/* <VideoQuestion /> */}
 					<Button
 						onClick={() => onSaveApplication()}
 						variant="contained"
@@ -152,11 +191,11 @@ const CandidateApplicationForm = () => {
 					</Button>
 				</Box>
 				<Hidden smDown>
-					<Box>
-						<ProgramSummaryCard
+					<Box paddingRight="57px">
+						{/* <ProgramSummaryCard
 							image
 							data={data}
-						/>
+						/> */}
 					</Box>
 				</Hidden>
 			</Stack>
@@ -165,22 +204,22 @@ const CandidateApplicationForm = () => {
 };
 export default CandidateApplicationForm;
 
-let data = {
-	id: "string",
-	programID: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-	title: "string",
-	description: "string",
-	summary: "string",
-	keySkills: "string",
-	programBenefits: "string",
-	applicationCriteria: "string",
-	programType: 0,
-	minQualification: 0,
-	startDate: "2023-01-22T00:20:41.450Z",
-	appOpenDate: "2023-01-22T00:20:41.450Z",
-	appCloseDate: "2023-01-22T00:20:41.450Z",
-	duration: "string",
-	locationID: 0,
-	maxAppCount: 0,
-	createdOn: "2023-01-22T00:20:41.450Z",
-};
+// let data = {
+// 	id: "string",
+// 	programID: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+// 	title: "string",
+// 	description: "string",
+// 	summary: "string",
+// 	keySkills: "string",
+// 	programBenefits: "string",
+// 	applicationCriteria: "string",
+// 	programType: 0,
+// 	minQualification: 0,
+// 	startDate: "2023-01-22T00:20:41.450Z",
+// 	appOpenDate: "2023-01-22T00:20:41.450Z",
+// 	appCloseDate: "2023-01-22T00:20:41.450Z",
+// 	duration: "string",
+// 	locationID: 0,
+// 	maxAppCount: 0,
+// 	createdOn: "2023-01-22T00:20:41.450Z",
+// };

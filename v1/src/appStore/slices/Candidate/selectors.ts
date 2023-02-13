@@ -7,3 +7,7 @@ export const getApplicationStatusData = createSelector(
 	[(state: RootState) => state?.candidate.applicationStatus],
 	(candidate) => candidate
 );
+export const selectCandidateApplicationForm = createSelector(
+	[(state: RootState) => state?.candidate.applicationForm],
+	(candidate) => candidate
+);

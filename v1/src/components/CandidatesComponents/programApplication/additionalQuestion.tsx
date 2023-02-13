@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { ApplicationFormCard } from "../../cards";
 import { FormControl, MenuItem, Select, Stack, TextField } from "@mui/material";
 import {
@@ -7,9 +7,20 @@ import {
 } from "react-country-region-selector";
 import { Multiselect } from "multiselect-react-dropdown";
 import "./style.css";
+import {
+	candidatePersonalQuestionType,
+	candidatePersonAnswerType,
+} from "../../../types";
+import QuestionRender from "./QuestionRender";
 export type Props = {
 	setCandidateData?: any;
 	candidateData?: any;
+	candidateFormData: candidatePersonalQuestionType[];
+};
+type AnswerType = {
+	booleanAnswer: boolean | null;
+	numberAnswer: number | null;
+	dateAnswer: string | null;
 };
 const style = {
 	chips: {
@@ -24,35 +35,129 @@ const style = {
 	},
 };
 
-const AdditionalQuestion = ({ setCandidateData, candidateData }: Props) => {
-	const questionList = [
-		{ label: "question  1", id: 1 },
-		{ label: "question  2", id: 2 },
-	];
+const AdditionalQuestion = ({
+	setCandidateData,
+	candidateData,
+	candidateFormData,
+}: Props) => {
 	const options = [
 		{ name: "Srigar", id: 1 },
 		{ name: "Sam", id: 2 },
 	];
 	const [items, setItems] = useState([]);
 
-	const handleSubmit = (e: any) => {
-		e.preventDefault();
-		console.log(items);
+	// const [questionLists] = useState(candidateFormData);
+	const [questionLists] = useState([
+		{
+			id: "497f6ec-53cbbbba6f08",
+			type: "Paragraph",
+			question: "Please tell me about youself",
+			choices: [],
+			maxChoice: 0,
+			disqualify: false,
+			other: false,
+		},
+		{
+			id: "497f6eca-6276-4993-bfbbbba6f08",
+			type: "ShortAnswer",
+			question: "Brief introduction?",
+			choices: [],
+			maxChoice: 0,
+			disqualify: false,
+			other: false,
+		},
+		{
+			id: "497f6eca3-bfeb-53cbbbba6f08",
+			type: "YesNo",
+			question: "Have you ever been rejected?",
+			choices: [],
+			maxChoice: 0,
+			disqualify: true,
+			other: false,
+		},
+		{
+			id: "497f6eca-6276-49bfeb-53cbbbba6f08",
+			type: "Dropdown",
+			question: "Select options",
+			choices: ["option1", "option2", "option3"],
+			maxChoice: 0,
+			disqualify: false,
+			other: true,
+		},
+		{
+			id: "497a-6276-4993-bfeb-53cbbbba6f08",
+			type: "MultipleChoice",
+			question: "Select options",
+			choices: ["option1", "option2", "option3"],
+			maxChoice: 2,
+			disqualify: false,
+			other: true,
+		},
+		{
+			id: "497f6ec276-4993-bfeb-53cbbbba6f08",
+			type: "Date",
+			question: "Please tell me when did you graduate?",
+			choices: [],
+			maxChoice: 0,
+			disqualify: false,
+			other: false,
+		},
+		{
+			id: "497f6eca-6276-4993-bfeb-53cbba6f08",
+			type: "Number",
+			question: "How many years of experience do you have?",
+			choices: [],
+			maxChoice: 0,
+			disqualify: false,
+			other: false,
+		},
+		{
+			id: "497f6eca-6276-4993-bfeb-53cbbbba6f8",
+			type: "FileUpload",
+			question: "Please upload your cover letter.",
+			choices: [],
+			maxChoice: 0,
+			disqualify: false,
+			other: false,
+		},
+	]);
+	const [personalAnswers, setPersonalAnswers] = useState<
+		candidatePersonAnswerType[]
+	>(
+		questionLists.map((personalQuestion: candidatePersonalQuestionType) => {
+			const answers: AnswerType = {
+				booleanAnswer: null,
+				numberAnswer: null,
+				dateAnswer: null,
+			};
+			return {
+				...personalQuestion,
+				...answers,
+			};
+		})
+	);
+	const handleAnswer = (id: string, ev: any) => {
+		const index = personalAnswers.findIndex(
+			(answer: candidatePersonAnswerType) => answer.id === id
+		);
+		const temp = personalAnswers[index];
+		if (temp.type === "Paragraph" || temp.type === "ShortAnswer")
+			temp.answer = ev.target.value;
+		else if (temp.type === "Date") temp.dateAnswer = ev.target.value;
+		else if (temp.type === "Number")
+			temp.numberAnswer = parseInt(ev.target.value.toString());
+		else if (temp.type === "Dropdown") temp.selectedChoices = ev;
+		else if (temp.type === "MultipleChoice") temp.selectedChoices = ev;
+		else if (temp.type === "YesNo") temp.booleanAnswer = ev;
+		setPersonalAnswers(personalAnswers.splice(index, 1));
+		setPersonalAnswers([...personalAnswers, temp]);
 	};
-
-	const handleSelect = (selectedList: any) => {
-		setItems(selectedList);
-	};
-
-	const handleRemove = (selectedList: any) => {
-		setItems(selectedList);
-	};
-	const handleOnChange = (event: any) => {
+	useEffect(() => {
 		setCandidateData({
 			...candidateData,
-			[event.target.name]: event.target.value,
+			customisedAnswers: personalAnswers,
 		});
-	};
+	}, [personalAnswers]);
 	const handleRegion = (val: any) => {
 		setCandidateData({
 			...candidateData,
@@ -74,59 +179,12 @@ const AdditionalQuestion = ({ setCandidateData, candidateData }: Props) => {
 					/>
 				</FormControl>
 			</Stack>
-			<Stack>
-				<FormControl
-					sx={{ my: 2 }}
-					fullWidth>
-					<label>
-						What inspire you to apply for this program? It should be no more
-						than 100 words
-					</label>
-					<textarea
-						name="summary"
-						onChange={handleOnChange}
-						style={{ height: "130px" }}
-						placeholder="Please type your answer here"
-					/>
-				</FormControl>
-			</Stack>
-			<Stack>
-				<FormControl
-					sx={{ my: 2 }}
-					fullWidth>
-					<label>Have you studied abroad in the past 12 months? </label>
-					<Select
-						name="questionApplication"
-						sx={{ mb: "25px" }}
-						value={candidateData?.questionApplication}
-						placeholder="select from the list"
-						onChange={handleOnChange}>
-						{questionList.map((item: any) => (
-							<MenuItem value={item?.label}>{item?.label}</MenuItem>
-						))}
-					</Select>
-					<TextField
-						placeholder='Please specify "Other"'
-						name="question"
-						onChange={handleOnChange}
-					/>
-				</FormControl>
-			</Stack>
-			<Stack>
-				<FormControl
-					sx={{ my: 2 }}
-					fullWidth>
-					<label>Multiple choice display at the front </label>
-					<Multiselect
-						style={style}
-						options={options} // Options to display in the dropdown
-						selectedValues={items} // Preselected value to persist in dropdown
-						onSelect={handleSelect} // Function will trigger on select event
-						onRemove={handleRemove} // Function will trigger on remove event
-						displayValue="name" // Property name to display in the dropdown options
-					/>
-				</FormControl>
-			</Stack>
+			{questionLists && (
+				<QuestionRender
+					questionLists={questionLists}
+					handleAnswer={handleAnswer}
+				/>
+			)}
 		</ApplicationFormCard>
 	);
 };

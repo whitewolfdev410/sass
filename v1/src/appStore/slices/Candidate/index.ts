@@ -1,11 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { CandidateAppStatusType, CandidateType } from "../../../types";
+import {
+	CandidateApplicationFormType,
+	CandidateAppStatusType,
+	CandidateType,
+} from "../../../types";
 import {
 	candidateLogin,
 	candidateSignup,
 	getAllCandidates,
 	getCandidateByID,
 	getApplicationStatus,
+	getCandidateAppForm,
 } from "..";
 
 type initialProps = CandidateType & {
@@ -17,11 +22,13 @@ const initialState: {
 	allCandidates: CandidateType[];
 	currentCandidate: CandidateType | null;
 	applicationStatus: CandidateAppStatusType;
+	applicationForm: CandidateApplicationFormType;
 } = {
 	loggedInCandidate: null,
 	allCandidates: [],
 	currentCandidate: null,
 	applicationStatus: {} as CandidateAppStatusType,
+	applicationForm: {} as CandidateApplicationFormType,
 };
 
 const candidateSlice = createSlice({
@@ -54,6 +61,9 @@ const candidateSlice = createSlice({
 			})
 			.addCase(getApplicationStatus.fulfilled, (state, action) => {
 				state.applicationStatus = action.payload;
+			})
+			.addCase(getCandidateAppForm.fulfilled, (state, action) => {
+				state.applicationForm = action.payload;
 			});
 	},
 });

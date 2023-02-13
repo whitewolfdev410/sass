@@ -35,7 +35,6 @@ const Workflow = (): JSX.Element => {
 
 	const [stageFlag, setStageFlag] = useState(false);
 	const [selectedStage, setselectedStage] = useState<StageTypes>();
-	const [stageName, setStageName] = useState<string>("");
 	const [interviewQuestion, setInterviewQuestion] = useState<
 		interviewQuestionType[]
 	>([
@@ -48,7 +47,7 @@ const Workflow = (): JSX.Element => {
 			deadlineInDays: 0,
 		},
 	]);
-	const workFlowDataList = useAppSelector(selectedWorkFlowData);
+	const [workFlowDataList] = useState(useAppSelector(selectedWorkFlowData));
 	const [stage, setStage] = useState<workStageType[]>(
 		workFlowDataList.data.attributes.stages
 	);
@@ -98,10 +97,6 @@ const Workflow = (): JSX.Element => {
 			hideFromCandidate: false,
 			interviewQuestions: interviewQuestion,
 		});
-	};
-
-	const handleChange = (e: any) => {
-		setStageName(e.target.value);
 	};
 
 	const onAddStage = () => {

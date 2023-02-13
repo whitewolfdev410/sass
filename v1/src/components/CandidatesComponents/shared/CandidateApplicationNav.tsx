@@ -42,13 +42,13 @@ const CandidateApplicationNav = ({ completed }: { completed?: 1 | 2 | 3 }) => {
 					height: 0,
 					borderLeft: "21px solid transparent",
 					borderRight: "21px solid transparent",
-					borderTop: "21px solid var(--dark-grey)",
+					borderTop: "21px solid var(--green-grey)",
 				},
 				"a:hover, .active": {
-					bgcolor: "var(--dark-grey)",
+					bgcolor: "var(--green-grey)",
 				},
 				".completed, .completed:hover": {
-					bgcolor: "primary.main",
+					bgcolor: "var(--green)",
 					color: "white",
 				},
 				// divider
@@ -60,20 +60,28 @@ const CandidateApplicationNav = ({ completed }: { completed?: 1 | 2 | 3 }) => {
 				"a:hover + .MuiDivider-root, a:active + .MuiDivider-root": {
 					display: "none",
 				},
-				".MuiDivider-root:has(+a:active, +a:hover, +a.active)": { display: "none" },
+				".MuiDivider-root:has(+a:active, +a:hover, +a.active)": {
+					display: "none",
+				},
 			}}>
 			<CustomLink
 				completed={(completed && completed >= 1) || false}
-				href="/candidate/apply/program-application"
-				label="Program Application"
-			/>
-			<Divider orientation="vertical" variant="middle" />
-			<CustomLink
-				completed={(completed && completed >= 2) || false}
 				href="/candidate/apply/create-account"
 				label="Create your account"
 			/>
-			<Divider orientation="vertical" variant="middle" />
+			<Divider
+				orientation="vertical"
+				variant="middle"
+			/>
+			<CustomLink
+				completed={(completed && completed >= 2) || false}
+				href="/candidate/apply/program-application"
+				label="Program Application"
+			/>
+			<Divider
+				orientation="vertical"
+				variant="middle"
+			/>
 			<CustomLink
 				completed={(completed && completed >= 3) || false}
 				href="/candidate/apply/program-status"
@@ -83,10 +91,28 @@ const CandidateApplicationNav = ({ completed }: { completed?: 1 | 2 | 3 }) => {
 	);
 };
 
-const CustomLink = ({ completed, href, label }: { completed: boolean; href: string; label: string }) => {
+const CustomLink = ({
+	completed,
+	href,
+	label,
+}: {
+	completed: boolean;
+	href: string;
+	label: string;
+}) => {
 	return (
-		<NavLink to={href} className={({ isActive }) => (isActive ? "active" : completed ? "completed" : undefined)}>
-			{completed ? <img src={CompletedIcon} alt="" /> : null} {label}
+		<NavLink
+			to={href}
+			className={({ isActive }) =>
+				isActive ? "active" : completed ? "completed" : undefined
+			}>
+			{completed ? (
+				<img
+					src={CompletedIcon}
+					alt=""
+				/>
+			) : null}{" "}
+			{label}
 		</NavLink>
 	);
 };

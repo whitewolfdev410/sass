@@ -17,7 +17,9 @@ const ApplicationStatus = () => {
 		// @ts-ignore
 		dispatch(getApplicationStatus({ candidateId: candidateId }));
 	}, []);
-	const applicationSummary = useAppSelector(getApplicationStatusData);
+	const [applicationSummary] = useState(
+		useAppSelector(getApplicationStatusData)
+	);
 	const [applicationData] = useState(
 		applicationSummary.data.attributes.applications
 	);
@@ -31,7 +33,7 @@ const ApplicationStatus = () => {
 					All applied programs
 				</Typography>
 			</Box>
-			{applicationData.map((data) => (
+			{applicationData.map((data: any) => (
 				<Box
 					key={data.programId}
 					sx={{

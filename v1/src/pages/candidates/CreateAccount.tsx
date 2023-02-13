@@ -44,7 +44,7 @@ const CreateAccount = () => {
 			<Box
 				sx={{ mt: "-50px" }}
 				className="header">
-				<CandidateApplicationNav completed={2} />
+				<CandidateApplicationNav completed={1} />
 			</Box>
 			<Stack
 				direction="row"

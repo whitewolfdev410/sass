@@ -2,7 +2,6 @@ import { Box, Button, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { SidebarLayout } from "../../../components";
 import { ProviderStats } from "../../../components/ProgramProviderComponents";
-import { ProgramType } from "../../../types";
 import { useState, useEffect } from "react";
 import {
 	allProgramSummary,
@@ -17,7 +16,7 @@ import {
 
 const AllProgrames = () => {
 	const dispatch = useAppDispatch();
-	const programs = useAppSelector(allProgramSummary);
+	const [programs] = useState(useAppSelector(allProgramSummary));
 	const programList = programs?.data?.attributes?.programs;
 	// const programs = [
 	// 	{
@@ -102,10 +101,10 @@ const AllProgrames = () => {
 					gap={4}
 					marginY={10}
 					marginX="auto">
-					{programList?.map((data, index) => (
+					{programList?.map((data: any, index: any) => (
 						<ProviderStats
 							data={data}
-							key={index}
+							key={index.toString()}
 						/>
 					))}
 				</Stack>
