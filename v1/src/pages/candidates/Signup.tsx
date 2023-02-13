@@ -18,6 +18,7 @@ import { candidateSignup as signup } from "../../appStore/slices";
 import { useAppDispatch } from "../../appStore";
 import "../../styles/auth-select.css";
 import { addNewAlert } from "../../utils/functions/addNewAlert";
+import "../../styles/auth-select-disable.css";
 
 /**
  * Signup component for program providers

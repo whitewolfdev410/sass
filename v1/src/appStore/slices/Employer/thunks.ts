@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
-import { EmployerSignupType } from "../../../types";
-import { USER_CLIENT } from "../../axiosInstance";
+import { EmployerSignupType, NewOpportunityFormProps } from "../../../types";
+import { PROGRAM_CLIENT, USER_CLIENT } from "../../axiosInstance";
 
 export const employerSignup = createAsyncThunk(
   "employer/signup",
@@ -52,6 +52,48 @@ export const getEmployerProfile = createAsyncThunk(
     } catch (err: any) {
       console.error("get provider profile error", err);
       rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const employerGetPrograms = createAsyncThunk(
+  "employer/getPrograms",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await PROGRAM_CLIENT.get("/employers/opportunities");
+      console.log(res.data);
+      return res.data.data.attributes.programs;
+    } catch (err: any) {
+      console.error("employer get programs error", err);
+      rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const postNewOpportunity = createAsyncThunk(
+  "employer/postNewOpportunity",
+  async (
+    {
+      programId,
+      formData,
+    }: { programId: string; formData: NewOpportunityFormProps },
+    { rejectWithValue, dispatch }
+  ) => {
+    try {
+      const res = await PROGRAM_CLIENT.post(
+        `/programs/${programId}/opportunities`,
+        {
+          data: {
+            type: "Opportunity",
+            attributes: formData,
+          },
+        }
+      );
+      dispatch(employerGetPrograms());
+      return res.data.data.attributes;
+    } catch (err: any) {
+      console.error("employer post new opportunity error", err);
+      return rejectWithValue(err.response.data);
     }
   }
 );

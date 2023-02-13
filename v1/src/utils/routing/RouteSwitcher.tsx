@@ -6,6 +6,7 @@ import {
   selectIsAuthenticated,
   useAppSelector,
 } from "../../appStore";
+import { ADMIN, PROVIDER } from "../../types";
 
 const RouteSwitcher = ({
   component: Component,
@@ -25,9 +26,11 @@ const RouteSwitcher = ({
     if (fullProviderInfo === null) {
       return <Navigate to={`/dashboard`} />;
     } else {
-      return (
-        <Navigate to={`/${currentRole.persona.toLowerCase()}/dashboard`} />
-      );
+      let subRoute = currentRole.persona.toLowerCase();
+      if (subRoute === ADMIN) {
+        subRoute = PROVIDER;
+      }
+      return <Navigate to={`/${subRoute}/dashboard`} />;
     }
   } else {
     console.log("route switcher gets here maybe?", document.referrer);

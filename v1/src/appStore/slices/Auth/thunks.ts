@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { ADMIN_ROUTE } from "../../../types";
 import { USER_CLIENT } from "../../axiosInstance";
+import { RootState } from "../../store";
 
 export const authLogin = createAsyncThunk(
   "auth/login",
@@ -40,6 +41,27 @@ export const getFullProviderInfo = createAsyncThunk(
 export const authLogout = createAsyncThunk("auth/logout", () => {
   return "logout";
 });
+
+export const refreshAccessToken = createAsyncThunk(
+  "auth/refreshAccessToken",
+  async (_, { getState, rejectWithValue, dispatch }) => {
+    try {
+      const state = getState() as RootState;
+      const res = await USER_CLIENT.post(`auth/refresh`, {
+        accessToken: state.auth.accessToken,
+        refreshToken: state.auth.refreshToken,
+        providerId: state.auth.account.provider?.providerId,
+      });
+      return res.data;
+    } catch (err: any) {
+      if (err.response.status === 401) {
+        dispatch(authLogout());
+      }
+      console.error("auth refresh access token", err);
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
 
 export const setCurrentRoleIndexTo = createAsyncThunk(
   "auth/switchRole",

@@ -10,7 +10,7 @@ import SingleProgram from "./dashboard/SingleProgram";
 import RouteSwitcher from "../../utils/routing/RouteSwitcher";
 import { selectCurrentRole, useAppSelector } from "../../appStore";
 import NotFound from "../NotFound";
-import { PROVIDER } from "../../types";
+import { ADMIN, PROVIDER } from "../../types";
 import EmployerDashboard from "../employer/dashboard";
 
 /**
@@ -20,7 +20,11 @@ import EmployerDashboard from "../employer/dashboard";
 
 const ProgramProvider = () => {
   const currentRole = useAppSelector(selectCurrentRole);
-  if (currentRole && currentRole.persona !== PROVIDER) {
+  if (
+    currentRole &&
+    currentRole.persona !== PROVIDER &&
+    currentRole.persona !== ADMIN
+  ) {
     return <Navigate to={`/${currentRole.persona.toLowerCase()}/dashboard`} />;
   }
   return (

@@ -251,6 +251,55 @@ export type EmployerSignupType = {
   providerId: string;
 };
 
+export type ProgramProps = {
+  id: string;
+  title: string;
+  programType: string;
+  startDate: string;
+  duration: string;
+  location: string;
+  status: string;
+  coverImage: string;
+  opportunities: ProgramOpportunityProps[];
+};
+
+export type ProgramOpportunityProps = {
+  id: string;
+  jobTitle: string;
+  location: string;
+  typeOfWork: string;
+  status: string;
+  employer: EmployerProps;
+  opportunityStages: OpportunityStageProps[];
+};
+
+export type EmployerProps = {
+  id: string;
+  logo: string;
+  name: string;
+  website: string;
+};
+
+export type OpportunityStageProps = {
+  stageId: string;
+  name: string;
+  count: number;
+};
+
+export type NewOpportunityFormProps = {
+  jobTitle?: string;
+  companyName?: string;
+  location?: string;
+  seats?: number;
+  typeOfWork?: string;
+  maxApplications?: number;
+  skills?: string[];
+  description?: string;
+  status?: "Closed" | "Open";
+  showToCandidate?: boolean;
+  employerId?: string;
+};
+
 export type AdminSignupType = {
   email: string;
   firstName: string;

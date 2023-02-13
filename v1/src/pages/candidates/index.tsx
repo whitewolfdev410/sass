@@ -7,12 +7,16 @@ import ProgramStatus from "./ProgramStatus";
 import { selectCurrentRole, useAppSelector } from "../../appStore";
 import NotFound from "../NotFound";
 import RouteSwitcher from "../../utils/routing/RouteSwitcher";
-import { CANDIDATE } from "../../types";
+import { ADMIN, CANDIDATE } from "../../types";
 import ApplicationStatus from "./ApplicationStatus";
 
 const Candidates = () => {
   const currentRole = useAppSelector(selectCurrentRole);
-  if (currentRole && currentRole.persona !== CANDIDATE) {
+  if (
+    currentRole &&
+    currentRole.persona !== CANDIDATE &&
+    currentRole.persona !== ADMIN
+  ) {
     return <Navigate to={`/${currentRole.persona.toLowerCase()}/dashboard`} />;
   }
   return (

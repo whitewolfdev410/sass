@@ -1,5 +1,6 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit";
-import { employerSignup, getEmployerProfile } from "..";
+import { employerGetPrograms, employerSignup, getEmployerProfile } from "..";
+import { ProgramProps } from "../../../types";
 
 type EmployerProps = {
   email: string;
@@ -7,6 +8,7 @@ type EmployerProps = {
   lastName: string;
   jobTitle: string;
   phoneNumber: string;
+  programs: ProgramProps[];
 };
 
 const initialState: EmployerProps = {
@@ -15,6 +17,7 @@ const initialState: EmployerProps = {
   lastName: "",
   jobTitle: "",
   phoneNumber: "",
+  programs: [],
 };
 
 const employerSlice = createSlice({
@@ -22,12 +25,16 @@ const employerSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addMatcher(
-      isAnyOf(employerSignup.fulfilled, getEmployerProfile.fulfilled),
-      (state, action) => {
-        return { ...state, ...(action.payload as unknown as EmployerProps) };
-      }
-    );
+    builder
+      .addCase(employerGetPrograms.fulfilled, (state, action) => {
+        return { ...state, programs: [...action.payload] };
+      })
+      .addMatcher(
+        isAnyOf(employerSignup.fulfilled, getEmployerProfile.fulfilled),
+        (state, action) => {
+          return { ...state, ...(action.payload as unknown as EmployerProps) };
+        }
+      );
   },
 });
 

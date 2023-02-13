@@ -41,3 +41,8 @@ export const selectUserDisplayName = createSelector(
   [(state: RootState) => state.auth.account.displayName],
   (user) => user
 );
+
+export const selectUserId = createSelector(
+  [(state: RootState) => state.auth.account.id],
+  (user) => user
+);
