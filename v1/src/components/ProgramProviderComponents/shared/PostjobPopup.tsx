@@ -17,7 +17,13 @@ import {
 } from "@mui/material";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { TextEditor } from "../../form";
-import { CANDIDATE, EMPLOYER, NewOpportunityFormProps } from "../../../types";
+import {
+  ADMIN,
+  CANDIDATE,
+  EMPLOYER,
+  NewOpportunityFormProps,
+  PROVIDER,
+} from "../../../types";
 import {
   postNewOpportunity,
   selectUserId,
@@ -28,6 +34,7 @@ import {
 interface PostjobPopupPropTypes {
   open: boolean;
   children?: React.ReactNode;
+  employerList?: string[];
   persona: string;
   programId: string;
   data: NewOpportunityFormProps;
@@ -38,6 +45,7 @@ interface PostjobPopupPropTypes {
 const PostjobPopup = ({
   open,
   persona,
+  employerList,
   programId,
   data,
   handleClose,
@@ -115,14 +123,37 @@ const PostjobPopup = ({
             />
           </Stack>
           <Stack paddingBottom={2}>
-            <label>Company*</label>
-            <TextField
-              label="Company name"
-              variant="outlined"
-              name="companyName"
-              value={companyName}
-              onChange={handleChange}
-            />
+            {persona === PROVIDER ? (
+              <FormControl fullWidth>
+                <label>Company name*</label>
+                <FormControl fullWidth>
+                  <InputLabel id="company-name-lable-id">
+                    {"Please select"}
+                  </InputLabel>
+                  <Select
+                    labelId="company-name-lable-id"
+                    label="Please select"
+                    name="companyName"
+                    value={companyName}
+                    onChange={handleChange}
+                  >
+                    <MenuItem value="Internship">Internship</MenuItem>
+                    <MenuItem value="Training">Training</MenuItem>
+                  </Select>
+                </FormControl>
+              </FormControl>
+            ) : (
+              <>
+                <label>Company*</label>
+                <TextField
+                  label="Company name"
+                  variant="outlined"
+                  name="companyName"
+                  value={companyName}
+                  onChange={handleChange}
+                />
+              </>
+            )}
           </Stack>
           <Stack paddingBottom={2} direction="row" columnGap={2}>
             <FormControl fullWidth>
@@ -151,11 +182,11 @@ const PostjobPopup = ({
             <FormControl fullWidth>
               <label>Type of work</label>
               <FormControl fullWidth>
-                <InputLabel id="video-duration-in-sec-or-min-label">
+                <InputLabel id="typeofwork-label-id">
                   {"Please select"}
                 </InputLabel>
                 <Select
-                  labelId="video-duration-in-sec-or-min-label"
+                  labelId="typeofwork-label-id"
                   label="Please select"
                   name="typeOfWork"
                   value={typeOfWork}

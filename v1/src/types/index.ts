@@ -438,3 +438,7 @@ export const VALID_BASENAME = "valid_basename";
 
 export const FULFILLED = "fulfilled";
 export const REJECTED = "rejected";
+
+export const OPEN = "Open";
+export const CLOSED = "Closed";
+export const DRAFT = "Draft";

@@ -1,5 +1,10 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit";
-import { employerGetPrograms, employerSignup, getEmployerProfile } from "..";
+import {
+  patchNewApplicationStatus,
+  employerGetPrograms,
+  employerSignup,
+  getEmployerProfile,
+} from "..";
 import { ProgramProps } from "../../../types";
 
 type EmployerProps = {
@@ -28,6 +33,22 @@ const employerSlice = createSlice({
     builder
       .addCase(employerGetPrograms.fulfilled, (state, action) => {
         return { ...state, programs: [...action.payload] };
+      })
+      .addCase(patchNewApplicationStatus.fulfilled, (state, action) => {
+        const temp = { ...state };
+        const { programId, opportunityId, status } = action.payload;
+        const changedProgram =
+          temp.programs[
+            state.programs.findIndex((program) => program.id === programId)
+          ];
+        if (changedProgram) {
+          changedProgram.opportunities[
+            changedProgram.opportunities.findIndex(
+              (opportunity) => opportunity.id === opportunityId
+            )
+          ].status = status;
+        }
+        return { ...temp };
       })
       .addMatcher(
         isAnyOf(employerSignup.fulfilled, getEmployerProfile.fulfilled),

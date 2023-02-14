@@ -1,34 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
-import { OpportunityCard, SidebarLayout } from "../../../components";
+import { OpportunityCard, SidebarLayout } from "../../components";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CorporateFareIcon from "@mui/icons-material/CorporateFare";
-import PostjobPopup from "../../../components/ProgramProviderComponents/shared/PostjobPopup";
+import PostjobPopup from "../../components/ProgramProviderComponents/shared/PostjobPopup";
 import {
   employerGetPrograms,
   employerSelectPrograms,
   useAppDispatch,
   useAppSelector,
-  patchNewApplicationStatus,
-} from "../../../appStore";
+} from "../../appStore";
 import {
   CLOSED,
   EMPLOYER,
   NewOpportunityFormProps,
   OPEN,
   ProgramProps,
-} from "../../../types";
+} from "../../types";
 
 /**
  * Dashboard for program providers showing current programs and their statistics
  */
 
-const EmployerDashboard = () => {
+const OpportunityHub = () => {
   const dispatch = useAppDispatch();
   const loadedPrograms = useAppSelector(employerSelectPrograms);
   const [loading, setLoading] = useState(false);
   const [programs, setPrograms] = useState<ProgramProps[]>(loadedPrograms);
   const [programId, setProgramId] = useState<string>("");
+  const [employerList, setEmployerList] = useState<string[]>([]);
   const [open, setOpen] = useState<boolean>(false);
   const [formData, setFormData] = useState<NewOpportunityFormProps>({});
 
@@ -51,19 +51,15 @@ const EmployerDashboard = () => {
     setOpen(false);
   };
   /** Post new opportunity */
-  const postNewOpportunity = (currentProgramId: string) => {
+  const postNewOpportunity = () => {
     openModal();
-    setFormData({ companyName: "Google Inc" });
-    setProgramId(currentProgramId);
   };
   const changeApplicationStatus = (
     programId: string,
     opportunityId: string,
     currentStatus: string
   ) => {
-    dispatch(
-      patchNewApplicationStatus({ programId, opportunityId, currentStatus })
-    );
+    // dispatch(changeApplicationStatus(programId, opportunityId, currentStatus))
   };
   return (
     <div>
@@ -119,7 +115,7 @@ const EmployerDashboard = () => {
                 variant="contained"
                 color="success"
                 sx={{ color: "white" }}
-                onClick={() => postNewOpportunity(program.id)}
+                onClick={postNewOpportunity}
               >
                 Post opportunity
               </Button>
@@ -218,6 +214,7 @@ const EmployerDashboard = () => {
         persona={EMPLOYER}
         programId={programId}
         data={formData}
+        employerList={employerList}
         handleClose={closeModal}
         handleConfirm={confirmModal}
       />
@@ -225,4 +222,4 @@ const EmployerDashboard = () => {
   );
 };
 
-export default EmployerDashboard;
+export default OpportunityHub;

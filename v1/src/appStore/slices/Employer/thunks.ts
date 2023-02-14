@@ -1,6 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
-import { EmployerSignupType, NewOpportunityFormProps } from "../../../types";
+import {
+  CLOSED,
+  EmployerSignupType,
+  NewOpportunityFormProps,
+  OPEN,
+} from "../../../types";
 import { PROGRAM_CLIENT, USER_CLIENT } from "../../axiosInstance";
 
 export const employerSignup = createAsyncThunk(
@@ -93,6 +98,38 @@ export const postNewOpportunity = createAsyncThunk(
       return res.data.data.attributes;
     } catch (err: any) {
       console.error("employer post new opportunity error", err);
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const patchNewApplicationStatus = createAsyncThunk(
+  "employer/changeApplicationStatus",
+  async (
+    {
+      programId,
+      opportunityId,
+      currentStatus,
+    }: { programId: string; opportunityId: string; currentStatus: string },
+    { dispatch, rejectWithValue }
+  ) => {
+    try {
+      const res = await PROGRAM_CLIENT.patch(
+        `/programs/${programId}/opportunities/${opportunityId}/status`,
+        {
+          data: {
+            type: "status",
+            attributes: { status: currentStatus === OPEN ? CLOSED : OPEN },
+          },
+        }
+      );
+      return {
+        programId,
+        opportunityId,
+        status: res.data.data.attirbutes.status,
+      };
+    } catch (err: any) {
+      console.error("programs change application status", err);
       return rejectWithValue(err.response.data);
     }
   }
