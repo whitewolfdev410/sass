@@ -14,7 +14,9 @@ import { useEffect, useState } from "react";
 import CandidateInfo from "./CandidateInfo";
 import DropDownComponent from "./DropDownComponent";
 import {
+  getAllCandidates,
   getCandidateProfileData,
+  selectProviderProfile,
   useAppDispatch,
   useAppSelector,
   selectCandidateProfileData,
@@ -28,7 +30,9 @@ const SingleProgramSidebar = () => {
   };
   const candidataID = "ae7489ce-5496-495b-aaca-df191546006f";
   const dispatch = useAppDispatch();
-  const candidateProfileData = useAppSelector(selectCandidateProfileData);
+  const [candidateProfileData] = useState(
+    useAppSelector(selectCandidateProfileData)
+  );
   useEffect(() => {
     dispatch(getCandidateProfileData({ candidateID: candidataID }));
   }, []);

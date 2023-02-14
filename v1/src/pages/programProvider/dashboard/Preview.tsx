@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Box, Divider, Stack, Typography, Button } from "@mui/material";
 import { ApplicationFormCard } from "../../../components";
 import {
-	ProfileForm,
 	SkillsChip,
 	CreateProgramLayout,
 } from "../../../components/ProgramProviderComponents";
@@ -17,7 +16,7 @@ import {
 	useAppDispatch,
 	useAppSelector,
 } from "../../../appStore";
-import PersonalInfoPreview from "../../../components/ProgramProviderComponents/ApplicationForm/PersonalInfoPreview";
+// import PersonalInfoPreview from "../../../components/ProgramProviderComponents/ApplicationForm/PersonalInfoPreview";
 
 const Preview = () => {
 	const dispatch = useAppDispatch();
@@ -37,13 +36,13 @@ const Preview = () => {
 			})
 		);
 	};
-	const previewData = useAppSelector(programPreviewData);
-	const [personalInfo, setPersonalInfo] = useState(
-		previewData?.data?.attributes?.applicationForm.personalInformation
-	);
-	const [profileData, setProfileData] = useState(
-		previewData?.data?.attributes.applicationForm.profile
-	);
+	const [previewData] = useState(useAppSelector(programPreviewData));
+	// const [personalInfo, setPersonalInfo] = useState(
+	// 	previewData?.data?.attributes?.applicationForm.personalInformation
+	// );
+	// const [profileData, setProfileData] = useState(
+	// 	previewData?.data?.attributes.applicationForm.profile
+	// );
 	const [data, setData] = useState<ProgramDetailsType>(
 		previewData?.data?.attributes.programDetails
 	);

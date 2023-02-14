@@ -90,72 +90,111 @@ export type ProgramPreviewType = {
     };
   };
 };
-
-export type ApplicationFormTemplateType = {
-  coverImage: string;
-  personalInformation: {
-    firstName: {
-      internalUse: boolean;
-      show: boolean;
-    };
-    lastName: {
-      internalUse: boolean;
-      show: boolean;
-    };
-    emailId: {
-      internalUse: boolean;
-      show: boolean;
-    };
-    phoneNumber: {
-      internalUse: boolean;
-      show: boolean;
-    };
-    nationality: {
-      internalUse: boolean;
-      show: boolean;
-    };
-    currentResidence: {
-      internalUse: boolean;
-      show: boolean;
-    };
-    nationalIDNumber: {
-      internalUse: boolean;
-      show: boolean;
-    };
-    dateOfBirth: {
-      internalUse: boolean;
-      show: boolean;
-    };
-    gender: {
-      internalUse: boolean;
-      show: boolean;
+export type candidateApplicationDataType = {
+  data: {
+    id: string;
+    type: string;
+    attributes: {
+      personalInformation: candidatePersonalInfoType;
     };
   };
-  profile: {
-    education: {
-      mandatory: boolean;
-      show: boolean;
-    };
-    experience: {
-      mandatory: boolean;
-      show: boolean;
-    };
-    resume: {
-      mandatory: boolean;
-      show: boolean;
-    };
-    profileQuestions: [
-      {
-        id: string;
-        type: string;
-        question: string;
-        choices: string;
-        disquality: boolean;
-        other: boolean;
-      }
-    ];
+};
+export type candidateFormProfileType = {
+  education: candidateEducationType[];
+  workExperience: candidateWorkExperienceType[];
+  profileAnswers: candidatePersonAnswerType[];
+  resume?: {
+    mandatory: boolean;
+    show: boolean;
   };
-  customisedQuestions: [
+};
+export type candidateEducationType = {
+  school: string;
+  degree: string;
+  course: string;
+  location: string;
+  startDate: string;
+  endDate: string;
+  currentlyStudyHere: boolean;
+};
+export type candidateWorkExperienceType = {
+  company: string;
+  title: string;
+  location: string;
+  startDate: string;
+  endDate: string;
+  currentlyWorkHere: boolean;
+};
+export type candidatePersonalInfoType = {
+  firstName: string;
+  lastName: string;
+  emailId?: string;
+  phoneNumber?: string;
+  nationality?: string;
+  currentResidence?: string;
+  idNumber?: string;
+  dateOfBirth?: string;
+  gender?: string;
+  personalAnswers: candidatePersonAnswerType[];
+};
+export type candidatePersonAnswerType = {
+  id: string;
+  answer?: string;
+  selectedChoices?: string[];
+  question?: string;
+  type?: string;
+  disqualify?: boolean;
+  other?: boolean;
+  booleanAnswer: boolean | null;
+  numberAnswer: number | null;
+  dateAnswer: string | null;
+};
+export type CandidateApplicationFormType = {
+  data: {
+    id: string;
+    type: string;
+    attributes: ApplicationFormTemplateType;
+  };
+};
+export type commonType = {
+  internalUse: boolean;
+  show: boolean;
+};
+export type personalInformationType = {
+  firstName: commonType;
+  lastName: commonType;
+  emailId: commonType;
+  phoneNumber: commonType;
+  nationality: commonType;
+  currentResidence: commonType;
+  idNumber: commonType;
+  dateOfBirth: commonType;
+  gender: commonType;
+  personalQuestions: candidatePersonalQuestionType[];
+};
+export type candidatePersonalQuestionType = {
+  id: string;
+  type: string;
+  question: string;
+  choices: string[];
+  maxChoice: number;
+  disqualify: boolean;
+  other: boolean;
+};
+export type candidateProfileApplicationType = {
+  education: {
+    mandatory: boolean;
+    show: boolean;
+  };
+  experience: {
+    mandatory: boolean;
+    show: boolean;
+  };
+  resume: {
+    mandatory: boolean;
+    show: boolean;
+  };
+  profileQuestions: [
     {
       id: string;
       type: string;
@@ -165,6 +204,21 @@ export type ApplicationFormTemplateType = {
       other: boolean;
     }
   ];
+};
+
+export type ApplicationFormTemplateType = {
+  coverImage: string;
+  personalInformation: personalInformationType;
+  profile: candidateProfileApplicationType;
+  customisedQuestions: candidateCustomisedQuestionType[];
+};
+export type candidateCustomisedQuestionType = {
+  id: string;
+  type: string;
+  question: string;
+  choices: string;
+  disquality: boolean;
+  other: boolean;
 };
 
 export type ProgramDashboardType = ProgramType[];

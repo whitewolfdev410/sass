@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState, useRef } from "react";
+import { ChangeEvent, useState, useRef } from "react";
 import { ApplicationFormCard } from "../../cards";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { Stack, Typography } from "@mui/material";
@@ -15,7 +15,7 @@ const Resume = ({ setCandidateData, candidateData }: Props) => {
 	const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
 		if (e.target.files) {
 			setFile(e.target.files[0]);
-			setCandidateData({ ...candidateData, resume: e.target.files[0] });
+			setCandidateData(e.target.files[0]);
 		}
 	};
 	const handleClick = () => {
