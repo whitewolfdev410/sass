@@ -64,7 +64,7 @@ const Login = () => {
   };
   const { email, password } = formData;
   return (
-    <AuthPageLayout title="Signin">
+    <AuthPageLayout title="Sign in - Admin">
       <Typography variant="h1" component="h1" sx={{ mb: 3 }}>
         Sign In as an Admin
       </Typography>

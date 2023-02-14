@@ -18,6 +18,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import {
   authLogin,
+  getFullProviderInfo,
   selectProviderInfo,
   useAppDispatch,
   useAppSelector,
@@ -48,7 +49,9 @@ const Login = () => {
     ev.preventDefault();
     const action = await dispatch(authLogin(formData));
     if (action.meta.requestStatus === "fulfilled") {
-      const roles = action.payload.account.roles;
+      if (providerInfo !== null) {
+        dispatch(getFullProviderInfo(providerInfo.providerId));
+      }
       // roles.forEach((role: { persona: string; role: string }) => {
       //   const payload = {
       //     providerId: providerInfo.providerId,
@@ -79,7 +82,7 @@ const Login = () => {
   };
   const { email, password } = formData;
   return (
-    <AuthPageLayout title="Signin">
+    <AuthPageLayout title={`Sign in - ${providerInfo?.companyName}`}>
       <Typography variant="h1" component="h1" sx={{ mb: 3 }}>
         Welcome to Log in
       </Typography>
