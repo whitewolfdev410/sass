@@ -14,9 +14,7 @@ import { useEffect, useState } from "react";
 import CandidateInfo from "./CandidateInfo";
 import DropDownComponent from "./DropDownComponent";
 import {
-  getAllCandidates,
   getCandidateProfileData,
-  selectProviderProfile,
   useAppDispatch,
   useAppSelector,
   selectCandidateProfileData,
