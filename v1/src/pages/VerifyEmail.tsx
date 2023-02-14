@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   FormControl,
@@ -8,9 +8,15 @@ import {
   Button,
   Link,
 } from "@mui/material";
-import { AuthPageLayout } from "../../../components";
+import { AuthPageLayout } from "../components";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { useAppDispatch } from "../../../appStore";
+import {
+  selectCurrentEmail,
+  useAppDispatch,
+  useAppSelector,
+  verifyEmail,
+} from "../appStore";
+import { addNewAlert } from "../utils/functions/addNewAlert";
 
 /**
  * VerifyEmail component for program providers
@@ -19,18 +25,36 @@ import { useAppDispatch } from "../../../appStore";
 const VerifyEmail = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const currentEmail = useAppSelector(selectCurrentEmail);
 
   const [formData, setFormData] = useState({
     email: "",
     verificationCode: "",
   });
   const [editEmail, setEditEmail] = useState(false);
+  useEffect(() => {
+    setFormData({ ...formData, email: currentEmail });
+  }, [currentEmail]);
   const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = ev.target;
     setFormData({ ...formData, [name]: value });
   };
   const handleSubmit = async (ev: React.SyntheticEvent) => {
     ev.preventDefault();
+    const action = await dispatch(verifyEmail({ verificationCode }));
+    if (action.meta.requestStatus === "fulfilled") {
+      addNewAlert(dispatch, {
+        type: "success",
+        title: "Verify Email",
+        msg: "Successfly verified",
+      });
+    } else if (action.meta.requestStatus === "rejected") {
+      addNewAlert(dispatch, {
+        type: "error",
+        title: "Verify Email",
+        msg: "Error occured verifying your email",
+      });
+    }
   };
   const resendCode = () => {
     setEditEmail(false);
@@ -57,12 +81,9 @@ const VerifyEmail = () => {
             )}
           </FormControl>
           {editEmail ? (
-            <Link
-              onClick={resendCode}
-              sx={{ cursor: "pointer", whiteSpace: "nowrap" }}
-            >
+            <Button type="submit" onClick={resendCode}>
               Resend the code
-            </Link>
+            </Button>
           ) : (
             <Link
               onClick={() => {
@@ -102,9 +123,9 @@ const VerifyEmail = () => {
           sx={{ mt: 3 }}
         >
           <Typography>Didn't receive the email?</Typography>
-          <Link onClick={resendCode} sx={{ cursor: "pointer" }}>
+          <Button type="submit" onClick={resendCode}>
             Resend 0.50 sec
-          </Link>
+          </Button>
         </Stack>
       </form>
     </AuthPageLayout>

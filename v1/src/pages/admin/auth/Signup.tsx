@@ -1,15 +1,9 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { FormControl, Input, Typography, Button, Grid } from "@mui/material";
 import { AuthPageLayout } from "../../../components";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import {
-  useAppDispatch,
-  useAppSelector,
-  adminSignup as signup,
-  selectProviderInfo,
-  selectProviderProfile,
-} from "../../../appStore";
+import { useAppDispatch, adminSignup as signup } from "../../../appStore";
 import { AdminSignupType } from "../../../types";
 import { checkIfEmail, isEmpty } from "../../../utils/functions";
 import { addNewAlert } from "../../../utils/functions/addNewAlert";
@@ -62,8 +56,9 @@ const Signup = () => {
 
   const handleSubmit = async (ev: React.SyntheticEvent) => {
     ev.preventDefault();
-    delete formData.confirmPassword;
-    const action = await dispatch(signup(formData));
+    const data = { ...formData };
+    delete data.confirmPassword;
+    const action = await dispatch(signup(data));
     if (action.meta.requestStatus === "fulfilled") {
       navigate("/signin");
       addNewAlert(dispatch, {
@@ -163,7 +158,7 @@ const Signup = () => {
 
         <Typography fontFamily="Inter" textAlign="center">
           Already have an account?{" "}
-          <a href="" style={{ textDecoration: "underline" }}>
+          <a href="/signin" style={{ textDecoration: "underline" }}>
             Sign in
           </a>
         </Typography>

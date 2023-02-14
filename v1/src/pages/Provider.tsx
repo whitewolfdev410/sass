@@ -1,6 +1,4 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import SiteMap from "./SiteMap";
-import Doc from "./Documentation";
 import RouteSwitcher from "../utils/routing/RouteSwitcher";
 import Login from "./Login";
 import ForgotPassword from "./ForgotPassword";
@@ -14,6 +12,7 @@ import {
   useAppSelector,
 } from "../appStore";
 import { ADMIN_ROUTE } from "../types";
+import VerifyEmail from "./VerifyEmail";
 
 type ProviderProps = {
   adjustBasename: (arg: string) => void;
@@ -29,8 +28,6 @@ const Provider = ({ adjustBasename }: ProviderProps) => {
     <Routes>
       {/** Public routes */}
       <Route index element={<Navigate to="signin" />} />
-      <Route path="/sitemap" element={<SiteMap />} />
-      <Route path="/doc" element={<Doc />} />
       {/** Only unauthorized users */}
       <Route path="/signin" element={<RouteSwitcher component={Login} />} />
       <Route
@@ -40,6 +37,10 @@ const Provider = ({ adjustBasename }: ProviderProps) => {
       <Route
         path="/reset-password"
         element={<RouteSwitcher component={ResetPassword} />}
+      />
+      <Route
+        path="/verify-email"
+        element={<RouteSwitcher verifying={true} component={VerifyEmail} />}
       />
       {/** Only authorized routes */}
       <Route path="/provider/*" element={<ProgramProvider />} />

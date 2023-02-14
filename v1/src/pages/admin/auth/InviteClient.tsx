@@ -2,21 +2,24 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   FormControl,
-  FormControlLabel,
-  Checkbox,
   Input,
   Typography,
   Stack,
   Button,
   Grid,
+  Box,
+  Select,
+  MenuItem,
 } from "@mui/material";
-import { AuthPageLayout, FileUpload } from "../../../components";
+import { Country } from "country-state-city";
+import { FileUpload, SidebarLayout } from "../../../components";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import {
   useAppDispatch,
-  programProviderSignup as signup,
+  createProviderAccount as createAccount,
 } from "../../../appStore";
-import { ProgramProviderType } from "../../../types";
+import { ProviderSignupType } from "../../../types";
+import { addNewAlert } from "../../../utils/functions/addNewAlert";
 
 /**
  * InviteClient component for program providers
@@ -26,150 +29,173 @@ const InviteClient = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const [form, setForm] = useState<ProgramProviderType>({
-    programProviderID: 0,
+  const [formData, setFormData] = useState<ProviderSignupType>({
     firstName: "",
     lastName: "",
     email: "",
-    userToken: "",
-    phoneNumber: "",
     jobTitle: "",
+    phoneNumber: "",
+    country: "",
+    companyName: "",
   });
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const {
+    firstName,
+    lastName,
+    email,
+    jobTitle,
+    phoneNumber,
+    country,
+    companyName,
+  } = formData;
+  const [countries, setCountries] = useState(Country.getAllCountries());
+  const handleChange = (event: any) => {
     const { name, value } = event.target;
-    setForm({ ...form, [name]: value });
+    setFormData({ ...formData, [name]: value });
   };
-  const handleUpload = (acceptedFiles: any) => {};
+  const handleUpload = (acceptedFiles: any) => {
+    console.log(acceptedFiles);
+  };
+
+  const handleSubmit = async (ev: React.SyntheticEvent) => {
+    ev.preventDefault();
+    const action = await dispatch(createAccount(formData));
+    if (action.meta.requestStatus === "fulfilled") {
+      addNewAlert(dispatch, {
+        type: "success",
+        title: "Sign up",
+        msg: "Successfully signed up",
+      });
+    } else if (action.meta.requestStatus === "rejected") {
+      addNewAlert(dispatch, {
+        type: "error",
+        title: "Sign up",
+        msg: "Sorry, but you are not invited to this provider",
+      });
+    }
+  };
   return (
-    <AuthPageLayout title="Signup" logo>
-      <Stack flexDirection="row" alignItems="center" sx={{ width: "100%" }}>
-        <Typography
-          variant="h1"
-          component="h1"
-          sx={{ mb: 3, whiteSpace: "nowrap", flexGrow: 1 }}
-        >
-          Create Master
-          <br />
-          Client Account
-        </Typography>
-        <FileUpload
-          onUpload={handleUpload}
-          title=""
-          desc="Click here to upload company logo"
-          logo={false}
-          customStyle={{ width: "150px", height: "100px" }}
-        />
-      </Stack>
+    <SidebarLayout title="Invite your client" logo>
+      <Box marginX={"auto"} maxWidth={"600px"}>
+        <Box padding={5} marginBottom={2} borderRadius={2} boxShadow={3}>
+          <Stack flexDirection="row" alignItems="center" sx={{ width: "100%" }}>
+            <Typography
+              variant="h1"
+              component="h1"
+              sx={{ mb: 3, whiteSpace: "nowrap", flexGrow: 1 }}
+            >
+              Create Master
+              <br />
+              Client Account
+            </Typography>
+            <FileUpload
+              onUpload={handleUpload}
+              title=""
+              desc="Click here to upload company logo"
+              logo={false}
+              customStyle={{ width: "150px", height: "100px" }}
+            />
+          </Stack>
 
-      <form
-        action=""
-        onSubmit={(ev) => {
-          ev.preventDefault();
-        }}
-      >
-        {/*  */}
-        <Grid container columnSpacing={4}>
-          <Grid item md={6}>
-            <FormControl variant="standard" sx={{ my: 3 }}>
-              <label>First Name*</label>
+          <form action="" onSubmit={handleSubmit}>
+            {/*  */}
+            <Grid container columnSpacing={4}>
+              <Grid item md={6}>
+                <FormControl variant="standard" sx={{ my: 3 }}>
+                  <label>First Name*</label>
+                  <Input
+                    onChange={handleChange}
+                    value={firstName}
+                    name="firstName"
+                    required
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item md={6}>
+                <FormControl variant="standard" sx={{ my: 3 }}>
+                  <label>Last Name*</label>
+                  <Input
+                    onChange={handleChange}
+                    value={lastName}
+                    name="lastName"
+                    required
+                  />
+                </FormControl>
+              </Grid>
+            </Grid>
+
+            <FormControl variant="standard" fullWidth sx={{ mt: 3, mb: 1 }}>
+              <label>Email*</label>
               <Input
                 onChange={handleChange}
-                value={form.firstName}
-                name="firstName"
+                value={email}
+                name="email"
                 required
               />
             </FormControl>
-          </Grid>
-          <Grid item md={6}>
-            <FormControl variant="standard" sx={{ my: 3 }}>
-              <label>Last Name*</label>
-              <Input
-                onChange={handleChange}
-                value={form.lastName}
-                name="lastName"
-                required
-              />
-            </FormControl>
-          </Grid>
-        </Grid>
 
-        <FormControl variant="standard" fullWidth sx={{ mt: 3, mb: 1 }}>
-          <label>Email*</label>
-          <Input
-            onChange={handleChange}
-            value={form.email}
-            name="email"
-            required
-          />
-        </FormControl>
+            <Grid container columnSpacing={4}>
+              <Grid item md={6}>
+                <FormControl variant="standard" sx={{ my: 3 }}>
+                  <label>Job Title</label>
+                  <Input
+                    name="jobTitle"
+                    value={jobTitle}
+                    onChange={handleChange}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item md={6}>
+                <FormControl variant="standard" sx={{ my: 3 }}>
+                  <label>Company Name*</label>
+                  <Input
+                    name="companyName"
+                    value={companyName}
+                    onChange={handleChange}
+                  />
+                </FormControl>
+              </Grid>
+            </Grid>
 
-        <Grid container columnSpacing={4}>
-          <Grid item md={6}>
-            <FormControl variant="standard" sx={{ my: 3 }}>
-              <label>Job title</label>
-              <Input
-                onChange={handleChange}
-                value={form.jobTitle}
-                name="jobTitle"
-              />
-            </FormControl>
-          </Grid>
-          <Grid item md={6}>
-            <FormControl variant="standard" sx={{ my: 3 }}>
-              <label>Phone number</label>
-              <Input
-                onChange={handleChange}
-                value={form.phoneNumber}
-                name="phoneNumber"
-              />
-            </FormControl>
-          </Grid>
-        </Grid>
-
-        <Grid container columnSpacing={4}>
-          <Grid item md={6}>
-            <FormControl variant="standard" sx={{ my: 3 }}>
-              <label>Password*</label>
-              <Input
-                onChange={handleChange}
-                value={form.userToken}
-                name="userToken"
-                required
-              />
-            </FormControl>
-          </Grid>
-          <Grid item md={6}>
-            <FormControl variant="standard" sx={{ my: 3 }}>
-              <label>Re enter Password*</label>
-              <Input onChange={handleChange} name="" required />
-            </FormControl>
-          </Grid>
-        </Grid>
-
-        <Typography fontSize={9} textAlign="center">
-          By creating the account, I have agreed to the Terms and Conditions and
-          Privacy Policy.
-        </Typography>
-
-        <Button
-          variant="contained"
-          size="large"
-          fullWidth
-          sx={{ my: 3, py: 3 }}
-          type="submit"
-        >
-          Create an account
-          <ArrowForwardIosIcon sx={{ ml: 1 }} />
-        </Button>
-
-        <Typography fontFamily="Inter" textAlign="center">
-          Already have an account?{" "}
-          <a href="" style={{ textDecoration: "underline" }}>
-            Sign in
-          </a>
-        </Typography>
-      </form>
-    </AuthPageLayout>
+            <Grid container columnSpacing={4} alignItems={"center"}>
+              <Grid item md={6}>
+                <FormControl fullWidth>
+                  <label>{"Nationality"}</label>
+                  <Select
+                    variant="standard"
+                    value={country}
+                    onChange={handleChange}
+                  >
+                    {countries.map((country: any) => (
+                      <MenuItem value={country.name}>{country.name}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item md={6}>
+                <FormControl variant="standard" sx={{ my: 3 }} fullWidth>
+                  <label>Contact Number</label>
+                  <Input
+                    name="phoneNumber"
+                    value={phoneNumber}
+                    onChange={handleChange}
+                  />
+                </FormControl>
+              </Grid>
+            </Grid>
+            <Button
+              variant="contained"
+              size="large"
+              fullWidth
+              sx={{ my: 3, py: 3 }}
+              type="submit"
+            >
+              Invite to join
+              <ArrowForwardIosIcon sx={{ ml: 1 }} />
+            </Button>
+          </form>
+        </Box>
+      </Box>
+    </SidebarLayout>
   );
 };
 

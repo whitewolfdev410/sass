@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   FormControl,
   FormControlLabel,
@@ -24,6 +23,7 @@ import {
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { addNewAlert } from "../../../utils/functions/addNewAlert";
+import { useNavigate } from "react-router-dom";
 
 /**
  * Login component for program providers
@@ -31,8 +31,8 @@ import { addNewAlert } from "../../../utils/functions/addNewAlert";
 
 const Login = () => {
   const dispatch = useAppDispatch();
-  const providerInfo = useAppSelector(selectProviderInfo);
   const navigate = useNavigate();
+  const providerInfo = useAppSelector(selectProviderInfo);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -64,7 +64,7 @@ const Login = () => {
   };
   const { email, password } = formData;
   return (
-    <AuthPageLayout title="Signin">
+    <AuthPageLayout title="Sign in - Admin">
       <Typography variant="h1" component="h1" sx={{ mb: 3 }}>
         Sign In as an Admin
       </Typography>
@@ -114,15 +114,13 @@ const Login = () => {
             }
             control={<Checkbox />}
           />
-
-          <Link
-            fontSize={14}
-            fontFamily="Inter"
-            color="primary.main"
-            href="/provider/forgot-password"
+          <Button
+            variant="text"
+            sx={{ fontSize: "14px" }}
+            onClick={() => navigate("/forgot-password")}
           >
-            Forgot Password
-          </Link>
+            Forgot password
+          </Button>
         </Stack>
 
         <Button

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const baseUserURL: string =
-  "https://cp-services-dev.azurewebsites.net/api/1.0/";
+  "https://cp-services-development.azurewebsites.net/api/1.0";
 export const baseProgramURL: string =
   "https://stoplight.io/mocks/surija/cp/134330842/api/1.0";
 export const baseWorkflowURL: string =

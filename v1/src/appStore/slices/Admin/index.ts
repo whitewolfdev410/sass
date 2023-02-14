@@ -1,6 +1,5 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { adminLogin, getAdminProfile } from "..";
-import { AdminSignupType } from "../../../types";
 
 type AdminProps = {
   email: string;

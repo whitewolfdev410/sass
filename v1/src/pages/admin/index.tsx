@@ -12,6 +12,8 @@ import {
   selectIsAuthenticated,
   useAppSelector,
 } from "../../appStore";
+import ForgotPassword from "../ForgotPassword";
+import ResetPassword from "../ResetPassword";
 
 type AdminProps = {
   adjustBasename: (arg: string) => void;
@@ -27,6 +29,14 @@ const Admin = ({ adjustBasename }: AdminProps) => {
     <Routes>
       <Route index element={<Navigate to="signin" />} />
       <Route path="/signin" element={<RouteSwitcher component={Login} />} />
+      <Route
+        path="/forgot-password"
+        element={<RouteSwitcher component={ForgotPassword} />}
+      />
+      <Route
+        path="/reset-password"
+        element={<RouteSwitcher component={ResetPassword} />}
+      />
       <Route path="/signup" element={<RouteSwitcher component={Signup} />} />
       <Route
         path="/set-password"

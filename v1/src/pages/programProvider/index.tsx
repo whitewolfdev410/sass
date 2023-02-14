@@ -10,7 +10,8 @@ import SingleProgram from "./dashboard/SingleProgram";
 import RouteSwitcher from "../../utils/routing/RouteSwitcher";
 import { selectCurrentRole, useAppSelector } from "../../appStore";
 import NotFound from "../NotFound";
-import { PROVIDER } from "../../types";
+import { ADMIN, PROVIDER } from "../../types";
+import EmployerDashboard from "../employer/dashboard";
 
 /**
  * Base Program Provider component.
@@ -19,7 +20,11 @@ import { PROVIDER } from "../../types";
 
 const ProgramProvider = () => {
   const currentRole = useAppSelector(selectCurrentRole);
-  if (currentRole && currentRole.persona !== PROVIDER) {
+  if (
+    currentRole &&
+    currentRole.persona !== PROVIDER &&
+    currentRole.persona !== ADMIN
+  ) {
     return <Navigate to={`/${currentRole.persona.toLowerCase()}/dashboard`} />;
   }
   return (
@@ -36,7 +41,8 @@ const ProgramProvider = () => {
         <Route
           index
           element={
-            <RouteSwitcher requireLogin={true} component={AllProgrammes} />
+            // <RouteSwitcher requireLogin={true} component={AllProgrammes} />
+            <RouteSwitcher requireLogin={true} component={EmployerDashboard} />
           }
         />
         <Route
