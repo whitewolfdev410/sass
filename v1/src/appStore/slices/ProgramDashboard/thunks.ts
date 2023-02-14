@@ -65,27 +65,27 @@ export const getAllDashboardProgramsByLocation = createAsyncThunk(
 	}
 );
 
-export const getApplicationTemplate = createAsyncThunk(
-	"programDashboard/GetApplicationTemplate",
-	async ({ programID }: { programID: string }) => {
-		try {
-			const response = await PROGRAM_CLIENT.get(
-				`ProgramDashboard/GetApplicationTemplate?programID=${programID}`,
-				{
-					headers: {
-						accept: "*/*",
-					},
-				}
-			);
-			return response.data;
-		} catch (err: any) {
-			let error: AxiosError<any> = err;
-			if (!error.response) {
-				console.log(err);
-			}
-		}
-	}
-);
+// export const getApplicationTemplate = createAsyncThunk(
+// 	"programDashboard/GetApplicationTemplate",
+// 	async ({ programID }: { programID: string }) => {
+// 		try {
+// 			const response = await PROGRAM_CLIENT.get(
+// 				`ProgramDashboard/GetApplicationTemplate?programID=${programID}`,
+// 				{
+// 					headers: {
+// 						accept: "*/*",
+// 					},
+// 				}
+// 			);
+// 			return response.data;
+// 		} catch (err: any) {
+// 			let error: AxiosError<any> = err;
+// 			if (!error.response) {
+// 				console.log(err);
+// 			}
+// 		}
+// 	}
+// );
 export const getCandidateProfileData = createAsyncThunk(
 	"programDashboard/getCandidateProfileData",
 	async ({ candidateID }: { candidateID: string }) => {
@@ -177,11 +177,17 @@ export const saveNewProgramApplicationTemplate = createAsyncThunk(
 
 export const SaveCandidateApplicationForm = createAsyncThunk(
 	"programDashboard/SaveCandidateApplication",
-	async ({ data }: { data: any }) => {
+	async ({
+		data,
+		programId,
+	}: {
+		data: { type: string; attributes: any };
+		programId: string;
+	}) => {
 		try {
 			const response = await PROGRAM_CLIENT.post(
-				`ProgramDashboard/SaveCandidateApplicationForm`,
-				data,
+				`programs/${programId}/candidate-applications?programId=${programId}`,
+				{ data },
 				{
 					headers: {
 						accept: "*/*",

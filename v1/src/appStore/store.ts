@@ -1,71 +1,71 @@
 import {
-  configureStore,
-  ThunkAction,
-  Action,
-  Reducer,
-  combineReducers,
-  AnyAction,
+	configureStore,
+	ThunkAction,
+	Action,
+	Reducer,
+	combineReducers,
+	AnyAction,
 } from "@reduxjs/toolkit";
 import {
-  persistReducer,
-  persistStore,
-  PAUSE,
-  REHYDRATE,
-  FLUSH,
-  PERSIST,
-  PURGE,
-  REGISTER,
+	persistReducer,
+	persistStore,
+	PAUSE,
+	REHYDRATE,
+	FLUSH,
+	PERSIST,
+	PURGE,
+	REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import {
-  ProgramProviderReducer,
-  ProviderReducer,
-  CandidateReducer,
-  ProgramDashboardReducer,
-  WorkflowReducer,
-  ProgramReducer,
-  AuthReducer,
-  AdminReducer,
-  AlertReducer,
+	ProgramProviderReducer,
+	ProviderReducer,
+	CandidateReducer,
+	ProgramDashboardReducer,
+	WorkflowReducer,
+	ProgramReducer,
+	AuthReducer,
+	AdminReducer,
+	AlertReducer,
 } from "./slices";
 
 const persistConfig = {
-  key: "root",
-  version: 6,
-  storage,
+	key: "root",
+	version: 6,
+	storage,
 };
 
 const appReducer = combineReducers({
-  programProvider: ProgramProviderReducer,
-  candidate: CandidateReducer,
-  programDashboard: ProgramDashboardReducer,
-  workflow: WorkflowReducer,
-  program: ProgramReducer,
-  auth: AuthReducer,
-  admin: AdminReducer,
-  alert: AlertReducer,
-  provider: ProviderReducer,
+	programProvider: ProgramProviderReducer,
+	candidate: CandidateReducer,
+	programDashboard: ProgramDashboardReducer,
+	workflow: WorkflowReducer,
+	program: ProgramReducer,
+	auth: AuthReducer,
+	admin: AdminReducer,
+	alert: AlertReducer,
+	provider: ProviderReducer,
 });
 
 // implement the signout action here to clear out state and return an empty object to redux persist
 const rootReducer: Reducer = (state: RootState, action: AnyAction) => {
-  return appReducer(state, action);
+	return appReducer(state, action);
 };
 
 const persistedReducer: typeof appReducer = persistReducer(
-  persistConfig,
-  rootReducer
+	persistConfig,
+	rootReducer
 );
 
 export const store = configureStore({
-  reducer: persistedReducer,
-  // disable serializable check for redux persist actions
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }),
+	reducer: persistedReducer,
+	// disable serializable check for redux persist actions
+	middleware: (getDefaultMiddleware) =>
+		getDefaultMiddleware({
+			serializableCheck: {
+				ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+			},
+		}),
 });
 
 // create a persistor
@@ -74,8 +74,8 @@ export const persistor = persistStore(store);
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
 export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
+	ReturnType,
+	RootState,
+	unknown,
+	Action<string>
 >;

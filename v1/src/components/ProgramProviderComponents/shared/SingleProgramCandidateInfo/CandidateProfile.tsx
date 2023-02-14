@@ -24,7 +24,9 @@ const options = {
 	standardFontDataUrl: "standard_fonts/",
 };
 const CandidateProfile = () => {
-	const candidateProfileData = useAppSelector(selectCandidateProfileData);
+	const [candidateProfileData] = useState(
+		useAppSelector(selectCandidateProfileData)
+	);
 	const EducationList = candidateProfileData.EducationList;
 	const ExperienceList = candidateProfileData.WorkExperienceList;
 	const Answers = candidateProfileData.Answers;

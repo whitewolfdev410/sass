@@ -115,3 +115,24 @@ export const getCandidateProfile = createAsyncThunk(
     }
   }
 );
+export const getCandidateAppForm = createAsyncThunk(
+	"candidate/applicationForm",
+	async ({ programId }: { programId: string }) => {
+		try {
+			let response = await PROGRAM_CLIENT.get(
+				`/programs/${programId}/application-form?candidateId=${programId}`,
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				}
+			);
+			return response.data;
+		} catch (err: any) {
+			let error: AxiosError<any> = err;
+			if (!error.response) {
+				console.log(err);
+			}
+		}
+	}
+);

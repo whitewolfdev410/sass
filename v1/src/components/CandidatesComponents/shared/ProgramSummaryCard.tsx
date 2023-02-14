@@ -80,7 +80,7 @@ const ProgramSummaryCard = ({
 							gridTemplateColumns: "2fr 1fr",
 							fontSize: 14,
 							fontWeight: 500,
-							"> :nth-child(2)": { textAlign: "right" },
+							"> :nth-of-type(2)": { textAlign: "right" },
 						},
 					}}>
 					<p>
