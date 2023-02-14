@@ -23,6 +23,7 @@ import {
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { addNewAlert } from "../../../utils/functions/addNewAlert";
+import { useNavigate } from "react-router-dom";
 
 /**
  * Login component for program providers
@@ -30,6 +31,7 @@ import { addNewAlert } from "../../../utils/functions/addNewAlert";
 
 const Login = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const providerInfo = useAppSelector(selectProviderInfo);
 
   const [formData, setFormData] = useState({
@@ -112,15 +114,13 @@ const Login = () => {
             }
             control={<Checkbox />}
           />
-
-          <Link
-            fontSize={14}
-            fontFamily="Inter"
-            color="primary.main"
-            href="/provider/forgot-password"
+          <Button
+            variant="text"
+            sx={{ fontSize: "14px" }}
+            onClick={() => navigate("/forgot-password")}
           >
-            Forgot Password
-          </Link>
+            Forgot password
+          </Button>
         </Stack>
 
         <Button

@@ -73,10 +73,10 @@ function App() {
   return (
     <Router basename={"/" + basename}>
       <Alert />
-      <Routes>
+      {/* <Routes>
         <Route path="/sitemap" element={<SiteMap />} />
         <Route path="/doc" element={<Doc />} />
-      </Routes>
+      </Routes> */}
       {basename === ADMIN_ROUTE ? (
         <Admin adjustBasename={adjustBasename} />
       ) : basename ? (

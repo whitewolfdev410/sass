@@ -8,7 +8,6 @@ import {
   Typography,
   Stack,
   Button,
-  Link,
   IconButton,
   InputAdornment,
 } from "@mui/material";
@@ -32,6 +31,7 @@ import { CANDIDATE, EMPLOYER, PROVIDER } from "../types";
 
 const Login = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const providerInfo = useAppSelector(selectProviderInfo);
 
   const [formData, setFormData] = useState({
@@ -129,15 +129,13 @@ const Login = () => {
             }
             control={<Checkbox />}
           />
-
-          <Link
-            fontSize={14}
-            fontFamily="Inter"
-            color="primary.main"
-            href="/provider/forgot-password"
+          <Button
+            variant="text"
+            sx={{ fontSize: "14px" }}
+            onClick={() => navigate("/forgot-password")}
           >
-            Forgot Password
-          </Link>
+            Forgot password
+          </Button>
         </Stack>
 
         <Button

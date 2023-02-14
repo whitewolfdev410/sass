@@ -35,15 +35,16 @@ export type TeamMemberType = {
   displayPicture: string;
 };
 
-export type ProgramProviderType = {
-  programProviderID: number;
+export type ProviderSignupType = {
   firstName: string;
   lastName: string;
   email: string;
   jobTitle: string;
   phoneNumber: string;
-  userToken: string;
+  country: string;
+  companyName: string;
 };
+
 export type newProgramType = {
   data: {
     id: string;

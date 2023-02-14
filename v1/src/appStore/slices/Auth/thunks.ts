@@ -1,5 +1,4 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { AxiosError } from "axios";
 import { ADMIN_ROUTE } from "../../../types";
 import { USER_CLIENT } from "../../axiosInstance";
 import { RootState } from "../../store";
@@ -66,4 +65,53 @@ export const refreshAccessToken = createAsyncThunk(
 export const setCurrentRoleIndexTo = createAsyncThunk(
   "auth/switchRole",
   (index: number) => index
+);
+
+export const sendResetPasswordRequest = createAsyncThunk(
+  "auth/sendResetPasswordRequest",
+  async ({ email }: { email: string }, { rejectWithValue, getState }) => {
+    try {
+      const state = getState() as RootState;
+      const res = await USER_CLIENT.post("/account/resetpassword", {
+        email,
+        providerId: state.auth.account.provider?.providerId ?? null,
+      });
+      return res.data;
+    } catch (err: any) {
+      console.error("auth send reset password request", err);
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const resetPassword = createAsyncThunk(
+  "auth/resetPassword",
+  async (
+    formData: { email: string; resetCode: string; newPassword: string },
+    { rejectWithValue }
+  ) => {
+    try {
+      const res = await USER_CLIENT.post("/account/changepassword", formData);
+      return res.data;
+    } catch (err: any) {
+      console.error("auth reset password error", err);
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const verifyEmail = createAsyncThunk(
+  "auth/verifyEmail",
+  async (formData: { verificationCode: string }, { rejectWithValue }) => {
+    try {
+      const res = await USER_CLIENT.post(
+        "/account/sendemailverifycode",
+        formData
+      );
+      return "success";
+    } catch (err: any) {
+      console.error("auth email verify error", err);
+      return rejectWithValue(err.response.data);
+    }
+  }
 );

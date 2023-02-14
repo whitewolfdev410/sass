@@ -113,8 +113,9 @@ const Signup = () => {
 
   const handleSubmit = async (ev: React.SyntheticEvent) => {
     ev.preventDefault();
-    delete formData.confirmPassword;
-    const action = await dispatch(signup(formData));
+    const data = { ...formData };
+    delete data.confirmPassword;
+    const action = await dispatch(signup(data));
     if (action.meta.requestStatus === "fulfilled") {
       navigate("/signin");
       addNewAlert(dispatch, {

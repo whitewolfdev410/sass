@@ -6,8 +6,18 @@ export const selectIsAuthenticated = createSelector(
   (user) => user
 );
 
+export const selectIsVerified = createSelector(
+  [(state: RootState) => state.auth.account.emailVerified],
+  (user) => user
+);
+
 export const getAccessToken = createSelector(
   [(state: RootState) => state.auth.accessToken],
+  (user) => user
+);
+
+export const selectCurrentEmail = createSelector(
+  [(state: RootState) => state.auth.account.email],
   (user) => user
 );
 

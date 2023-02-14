@@ -12,6 +12,7 @@ import {
   useAppSelector,
 } from "../appStore";
 import { ADMIN_ROUTE } from "../types";
+import VerifyEmail from "./VerifyEmail";
 
 type ProviderProps = {
   adjustBasename: (arg: string) => void;
@@ -36,6 +37,10 @@ const Provider = ({ adjustBasename }: ProviderProps) => {
       <Route
         path="/reset-password"
         element={<RouteSwitcher component={ResetPassword} />}
+      />
+      <Route
+        path="/verify-email"
+        element={<RouteSwitcher verifying={true} component={VerifyEmail} />}
       />
       {/** Only authorized routes */}
       <Route path="/provider/*" element={<ProgramProvider />} />
