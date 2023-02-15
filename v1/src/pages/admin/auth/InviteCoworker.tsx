@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   FormControl,
@@ -6,17 +6,17 @@ import {
   Typography,
   Stack,
   Button,
-  Select,
-  MenuItem,
-  SelectChangeEvent,
   Divider,
   Box,
 } from "@mui/material";
 import { ApplicationFormCard, SidebarLayout } from "../../../components";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import {
+  adminGetMemberAccounts,
   inviteAdminCoworker as inviteCoworker,
+  selectAdminMemberAccounts,
   useAppDispatch,
+  useAppSelector,
 } from "../../../appStore";
 import { addNewAlert } from "../../../utils/functions/addNewAlert";
 
@@ -26,10 +26,18 @@ import { addNewAlert } from "../../../utils/functions/addNewAlert";
 
 const InviteCoworker = () => {
   const dispatch = useAppDispatch();
+  const accounts = useAppSelector(selectAdminMemberAccounts);
+  const [memberAccounts, setMemberAccounts] = useState(accounts);
   const [formData, setFormData] = useState({
     email: "",
   });
   const { email } = formData;
+  useEffect(() => {
+    dispatch(adminGetMemberAccounts());
+  }, []);
+  useEffect(() => {
+    setMemberAccounts(accounts);
+  }, [accounts]);
   const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = ev.target;
     setFormData({ ...formData, [name]: value });
@@ -96,91 +104,30 @@ const InviteCoworker = () => {
             title="Members in the account"
           >
             <Stack divider={<Divider orientation="horizontal" flexItem />}>
-              <Stack flexDirection="row" alignItems="center">
-                <Stack sx={{ flexGrow: 1 }}>
-                  <Typography variant="h2">Junior Dawkins</Typography>
-                  <Typography>brett@microsoft.com</Typography>
+              {memberAccounts.map((account) => (
+                <Stack flexDirection="row" alignItems="center">
+                  <Stack sx={{ flexGrow: 1 }}>
+                    <Typography variant="h2">{`${account.firstName} ${account.lastName}`}</Typography>
+                    <Typography>{account.email}</Typography>
+                  </Stack>
+                  <Stack flexDirection="column">
+                    <Button
+                      variant="text"
+                      color="error"
+                      sx={{ color: "#A80000" }}
+                    >
+                      Delete question
+                    </Button>
+                    <Button
+                      variant="text"
+                      color="error"
+                      sx={{ color: "#A80000" }}
+                    >
+                      Manage access
+                    </Button>
+                  </Stack>
                 </Stack>
-                <Stack flexDirection="column">
-                  <Button
-                    variant="text"
-                    color="error"
-                    sx={{ color: "#A80000" }}
-                  >
-                    Delete question
-                  </Button>
-                  <Button
-                    variant="text"
-                    color="error"
-                    sx={{ color: "#A80000" }}
-                  >
-                    Manage access
-                  </Button>
-                </Stack>
-              </Stack>
-              <Typography>Niranjan Thampu</Typography>
-            </Stack>
-          </ApplicationFormCard>
-          <ApplicationFormCard
-            headerBgColor="black"
-            headerColor="white"
-            title="Members in the account"
-          >
-            <Stack divider={<Divider orientation="horizontal" flexItem />}>
-              <Stack flexDirection="row" alignItems="center">
-                <Stack sx={{ flexGrow: 1 }}>
-                  <Typography variant="h2">Junior Dawkins</Typography>
-                  <Typography>brett@microsoft.com</Typography>
-                </Stack>
-                <Stack flexDirection="column">
-                  <Button
-                    variant="text"
-                    color="error"
-                    sx={{ color: "#A80000" }}
-                  >
-                    Delete question
-                  </Button>
-                  <Button
-                    variant="text"
-                    color="error"
-                    sx={{ color: "#A80000" }}
-                  >
-                    Manage access
-                  </Button>
-                </Stack>
-              </Stack>
-              <Typography>Niranjan Thampu</Typography>
-            </Stack>
-          </ApplicationFormCard>
-          <ApplicationFormCard
-            headerBgColor="black"
-            headerColor="white"
-            title="Members in the account"
-          >
-            <Stack divider={<Divider orientation="horizontal" flexItem />}>
-              <Stack flexDirection="row" alignItems="center">
-                <Stack sx={{ flexGrow: 1 }}>
-                  <Typography variant="h2">Junior Dawkins</Typography>
-                  <Typography>brett@microsoft.com</Typography>
-                </Stack>
-                <Stack flexDirection="column">
-                  <Button
-                    variant="text"
-                    color="error"
-                    sx={{ color: "#A80000" }}
-                  >
-                    Delete question
-                  </Button>
-                  <Button
-                    variant="text"
-                    color="error"
-                    sx={{ color: "#A80000" }}
-                  >
-                    Manage access
-                  </Button>
-                </Stack>
-              </Stack>
-              <Typography>Niranjan Thampu</Typography>
+              ))}
             </Stack>
           </ApplicationFormCard>
         </Stack>

@@ -14,7 +14,9 @@ import {
   selectCurrentEmail,
   useAppDispatch,
   useAppSelector,
-  verifyEmail,
+  verifyEmail as verify,
+  sendEmailVerifyCode as resend,
+  authLogout,
 } from "../appStore";
 import { addNewAlert } from "../utils/functions/addNewAlert";
 
@@ -39,25 +41,43 @@ const VerifyEmail = () => {
     const { name, value } = ev.target;
     setFormData({ ...formData, [name]: value });
   };
-  const handleSubmit = async (ev: React.SyntheticEvent) => {
-    ev.preventDefault();
-    const action = await dispatch(verifyEmail({ verificationCode }));
+  const verifyEmail = async () => {
+    const action = await dispatch(verify({ verificationCode }));
     if (action.meta.requestStatus === "fulfilled") {
       addNewAlert(dispatch, {
         type: "success",
         title: "Verify Email",
-        msg: "Successfly verified",
+        msg: "Successfully verified",
+      });
+    } else if (action.meta.requestStatus === "rejected") {
+      console.log(action.payload);
+      addNewAlert(dispatch, {
+        type: "error",
+        title: "Verify Email",
+        msg:
+          typeof action.payload === "string"
+            ? action.payload
+            : "Error occured verifying your email",
+      });
+    }
+  };
+
+  const resendCode = async () => {
+    setEditEmail(false);
+    const action = await dispatch(resend());
+    if (action.meta.requestStatus === "fulfilled") {
+      addNewAlert(dispatch, {
+        type: "success",
+        title: "Send verify email",
+        msg: "Successfly sent",
       });
     } else if (action.meta.requestStatus === "rejected") {
       addNewAlert(dispatch, {
         type: "error",
-        title: "Verify Email",
-        msg: "Error occured verifying your email",
+        title: "Send verify email",
+        msg: "Error occured sending verify email",
       });
     }
-  };
-  const resendCode = () => {
-    setEditEmail(false);
   };
   const { email, verificationCode } = formData;
   return (
@@ -65,69 +85,65 @@ const VerifyEmail = () => {
       <Typography variant="h1" component="h1" sx={{ mb: 3 }}>
         Verify your email <br /> address
       </Typography>
-
-      <form action="" onSubmit={handleSubmit}>
-        <Stack flexDirection={"row"} alignItems={"center"}>
-          <FormControl variant="standard" fullWidth sx={{ my: 3, flexGrow: 1 }}>
-            {editEmail ? (
-              <Input
-                onChange={handleChange}
-                type="email"
-                name="email"
-                value={email}
-              />
-            ) : (
-              <Typography>{email}</Typography>
-            )}
-          </FormControl>
+      <Stack flexDirection={"row"} alignItems={"center"}>
+        <FormControl variant="standard" fullWidth sx={{ my: 3, flexGrow: 1 }}>
           {editEmail ? (
-            <Button type="submit" onClick={resendCode}>
-              Resend the code
-            </Button>
+            <Input
+              onChange={handleChange}
+              type="email"
+              name="email"
+              value={email}
+            />
           ) : (
-            <Link
-              onClick={() => {
-                setEditEmail(true);
-              }}
-              sx={{ cursor: "pointer" }}
-            >
-              Edit
-            </Link>
+            <Typography>{email}</Typography>
           )}
-        </Stack>
-
-        <FormControl variant="standard" fullWidth sx={{ mt: 3, mb: 1 }}>
-          <label>Verification Code</label>
-          <Input
-            onChange={handleChange}
-            type="text"
-            name="verificationCode"
-            value={verificationCode}
-          />
         </FormControl>
-
-        <Button
-          variant="contained"
-          size="large"
-          fullWidth
-          sx={{ mt: 3, py: 3 }}
-          type="submit"
-        >
-          Verify
-          <ArrowForwardIosIcon sx={{ ml: 1 }} />
-        </Button>
-        <Stack
-          flexDirection="row"
-          alignItems="center"
-          justifyContent="center"
-          sx={{ mt: 3 }}
-        >
-          <Typography>Didn't receive the email?</Typography>
+        {editEmail ? (
           <Button type="submit" onClick={resendCode}>
-            Resend 0.50 sec
+            Resend the code
           </Button>
-        </Stack>
-      </form>
+        ) : (
+          <Link
+            onClick={() => {
+              // setEditEmail(true);
+            }}
+            sx={{ cursor: "pointer" }}
+          >
+            Edit
+          </Link>
+        )}
+      </Stack>
+
+      <FormControl variant="standard" fullWidth sx={{ mt: 3, mb: 1 }}>
+        <label>Verification Code</label>
+        <Input
+          onChange={handleChange}
+          type="text"
+          name="verificationCode"
+          value={verificationCode}
+        />
+      </FormControl>
+
+      <Button
+        variant="contained"
+        size="large"
+        fullWidth
+        sx={{ mt: 3, py: 3 }}
+        onClick={verifyEmail}
+      >
+        Verify
+        <ArrowForwardIosIcon sx={{ ml: 1 }} />
+      </Button>
+      <Stack
+        flexDirection="row"
+        alignItems="center"
+        justifyContent="center"
+        sx={{ mt: 3 }}
+      >
+        <Typography>Didn't receive the email?</Typography>
+        <Button onClick={resendCode}>Resend 0.50 sec</Button>
+      </Stack>
+      <Button onClick={() => dispatch(authLogout())}>Logout</Button>
     </AuthPageLayout>
   );
 };

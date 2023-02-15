@@ -41,8 +41,7 @@ const ProgramProvider = () => {
         <Route
           index
           element={
-            // <RouteSwitcher requireLogin={true} component={AllProgrammes} />
-            <RouteSwitcher requireLogin={true} component={EmployerDashboard} />
+            <RouteSwitcher requireLogin={true} component={AllProgrammes} />
           }
         />
         <Route

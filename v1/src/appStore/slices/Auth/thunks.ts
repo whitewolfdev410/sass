@@ -53,10 +53,10 @@ export const refreshAccessToken = createAsyncThunk(
       });
       return res.data;
     } catch (err: any) {
+      console.error("auth refresh access token", err);
       if (err.response.status === 401) {
         dispatch(authLogout());
       }
-      console.error("auth refresh access token", err);
       return rejectWithValue(err.response.data);
     }
   }
@@ -104,10 +104,7 @@ export const verifyEmail = createAsyncThunk(
   "auth/verifyEmail",
   async (formData: { verificationCode: string }, { rejectWithValue }) => {
     try {
-      const res = await USER_CLIENT.post(
-        "/account/sendemailverifycode",
-        formData
-      );
+      const res = await USER_CLIENT.post("/account/verifyEmail", formData);
       return "success";
     } catch (err: any) {
       console.error("auth email verify error", err);
@@ -115,3 +112,20 @@ export const verifyEmail = createAsyncThunk(
     }
   }
 );
+
+export const sendEmailVerifyCode = createAsyncThunk(
+  "auth/sendEmailVerifyCode",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await USER_CLIENT.post("/account/sendemailverifycode");
+      return "success";
+    } catch (err: any) {
+      console.error("auth email verify error", err);
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const setRole = createAsyncThunk("auth/setRole", (role: string) => {
+  return role;
+});
