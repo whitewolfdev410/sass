@@ -2,8 +2,10 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import {
 	ApplicationFormTemplateType,
+	CandidateProfileType,
 	NewProgramType,
 	ProgramDetailsType,
+	ProviderFilterCandidateDataType,
 } from "../../../types";
 import { PROGRAM_CLIENT } from "../../axiosInstance";
 
@@ -88,13 +90,47 @@ export const getAllDashboardProgramsByLocation = createAsyncThunk(
 // );
 export const getCandidateProfileData = createAsyncThunk(
 	"programDashboard/getCandidateProfileData",
-	async ({ candidateID }: { candidateID: string }) => {
+	async ({
+		applicationId,
+		programId,
+	}: {
+		applicationId: string;
+		programId: string;
+	}) => {
 		try {
 			const response = await PROGRAM_CLIENT.get(
-				`ProgramDashboard/getCandidateProfileData?candidateID=${candidateID}`,
+				`programs/${programId}/candidate-applications/${applicationId}`,
 				{
 					headers: {
-						accept: "*/*",
+						"Content-Type": "application/json",
+					},
+				}
+			);
+			return response.data;
+		} catch (err: any) {
+			let error: AxiosError<any> = err;
+			if (!error.response) {
+				console.log(err);
+			}
+		}
+	}
+);
+export const updateCandidateApplication = createAsyncThunk(
+	"programDashboard/updateCandidateApplication",
+	async ({
+		data,
+		programId,
+	}: {
+		data: CandidateProfileType;
+		programId: string;
+	}) => {
+		try {
+			const response = await PROGRAM_CLIENT.put(
+				`programs/${programId}/candidate-applications/${data?.data?.id}`,
+				data,
+				{
+					headers: {
+						"Content-Type": "application/json",
 					},
 				}
 			);
@@ -258,6 +294,44 @@ export const publishProgram = createAsyncThunk(
 			const response = await PROGRAM_CLIENT.patch(
 				`/programs/${data.id}/status`,
 				{ data },
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				}
+			);
+			return response.data;
+		} catch (err: any) {
+			let error: AxiosError<any> = err;
+			if (!error.response) {
+				console.log(err);
+			}
+		}
+	}
+);
+export const getProviderFilterCandidateData = createAsyncThunk(
+	"programDashboard/getProviderFilterCandidateData",
+	async ({
+		programId,
+		stageId,
+		status,
+		attributes,
+	}: {
+		programId: string;
+		stageId: string;
+		status: string;
+		attributes: ProviderFilterCandidateDataType;
+	}) => {
+		try {
+			const response = await PROGRAM_CLIENT.post(
+				`/programs/${programId}/stages/${stageId}/candidates/${status}?programId=${programId}&stageId=${stageId}&status=${status}`,
+				{
+					data: {
+						id: programId,
+						type: "filterRequest",
+						attributes: attributes,
+					},
+				},
 				{
 					headers: {
 						"Content-Type": "application/json",

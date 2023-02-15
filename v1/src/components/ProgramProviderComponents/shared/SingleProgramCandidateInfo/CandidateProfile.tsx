@@ -1,20 +1,27 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
 	Box,
 	Stack,
-	Grid,
 	Checkbox,
 	FormControlLabel,
 	Typography,
 } from "@mui/material";
 import ActionCard from "../ActionCard";
 import pencil from "../../../../assets/downloadImgjul.png";
-import MyPdfViewer from "./MyPdfViewer";
 import { Document, Page, pdfjs } from "react-pdf";
 import {
 	selectCandidateProfileData,
+	updateCandidateApplication,
 	useAppSelector,
+	useAppDispatch,
 } from "../../../../appStore";
+import {
+	candidateEducationType,
+	candidatePersonalInfoType,
+	candidatePersonAnswerType,
+	CandidateProfileType,
+	candidateWorkExperienceType,
+} from "../../../../types";
 // import taskPDF from "https://www.nypl.org/sites/default/files/Learn_ESOL_Aug_2010.pdf";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -24,22 +31,57 @@ const options = {
 	standardFontDataUrl: "standard_fonts/",
 };
 const CandidateProfile = () => {
-	const [candidateProfileData] = useState(
-		useAppSelector(selectCandidateProfileData)
+	const candidateWholeData = useAppSelector(selectCandidateProfileData);
+	const candidateProfileDatas = candidateWholeData?.data?.attributes;
+	const applicationId = candidateWholeData?.data?.id;
+	const [candidateProfileData, setCandidateProfileData] = useState(
+		candidateProfileDatas
 	);
-	const EducationList = candidateProfileData.EducationList;
-	const ExperienceList = candidateProfileData.WorkExperienceList;
-	const Answers = candidateProfileData.Answers;
+	const [personalInfo, setPersonalInfo] = useState(
+		candidateProfileData?.personalInformation as candidatePersonalInfoType
+	);
+	const EducationList = candidateProfileData?.profile
+		?.education as candidateEducationType[];
+	const ExperienceList = candidateProfileData?.profile
+		?.workExperience as candidateWorkExperienceType[];
+	const Answers = candidateProfileData?.profile
+		?.profileAnswers as candidatePersonAnswerType[];
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [file, setFile] = useState<any>("");
 	const [numPages, setNumPages] = useState(null);
 	const [showDropDown, setShowDropDown] = useState<boolean>(false);
+	const [currentlyEditing, setCurrentlyEditing] = useState(false);
+	const handleSave = () => {
+		if (currentlyEditing)
+			setCandidateProfileData({
+				...candidateProfileData,
+				personalInformation: personalInfo,
+				profile: {
+					education: EducationList,
+					workExperience: ExperienceList,
+					profileAnswers: Answers,
+				},
+			});
+		setCurrentlyEditing(!currentlyEditing);
+		onSaveData();
+	};
+	const dispatch = useAppDispatch();
+	const programId = localStorage.getItem("programId") ?? "";
+	const onSaveData = async () => {
+		const data = {
+			data: {
+				id: applicationId,
+				type: "candidateApplication",
+				attributes: candidateProfileData,
+			},
+		} as CandidateProfileType;
+		const response = await dispatch(
+			updateCandidateApplication({ data, programId })
+		);
+	};
 	const onFileChange = (event: any) => {
 		setFile(event.target.files[0]);
 	};
-
-	// console.log(taskPDF);
-
 	const handleFileUpload = () => {
 		if (fileInputRef.current) {
 			fileInputRef.current.click();
@@ -63,6 +105,18 @@ const CandidateProfile = () => {
 	const onClickHandler = (option: string): void => {
 		// citySelection(option);
 	};
+	const handleChange = (e: any) => {
+		setPersonalInfo({
+			...personalInfo,
+			[e.target.name]: e.target.value,
+		});
+	};
+	const handleProfile = (e: any) => {
+		console.log(e.target.value);
+	};
+	useEffect(() => {
+		setCandidateProfileData(candidateProfileDatas);
+	}, [candidateProfileDatas]);
 	return (
 		<Box
 			sx={{
@@ -94,7 +148,10 @@ const CandidateProfile = () => {
 				{/* Contact information */}
 				<ActionCard
 					editable
-					title={`${candidateProfileData?.FirstName} ${candidateProfileData?.LastName}`}>
+					currentlyEditing={currentlyEditing}
+					setCurrentlyEditing={handleSave}
+					key={personalInfo?.emailId}
+					title={`${personalInfo?.firstName} ${personalInfo?.lastName}`}>
 					<Stack
 						direction="row"
 						sx={{
@@ -105,7 +162,11 @@ const CandidateProfile = () => {
 						}}>
 						{" "}
 						<Typography>Current Location</Typography>
-						<input value={candidateProfileData?.CurrentlyBased} />
+						<input
+							value={personalInfo?.currentResidence}
+							name="currentResidence"
+							onChange={handleChange}
+						/>
 					</Stack>
 					<Stack
 						direction="row"
@@ -117,7 +178,11 @@ const CandidateProfile = () => {
 						}}>
 						{" "}
 						<Typography>Phone</Typography>
-						<input value={candidateProfileData?.PhoneNumber} />
+						<input
+							value={personalInfo?.phoneNumber}
+							name="phoneNumber"
+							onChange={handleChange}
+						/>
 					</Stack>
 					<Stack
 						direction="row"
@@ -129,12 +194,19 @@ const CandidateProfile = () => {
 						}}>
 						{" "}
 						<Typography>Email</Typography>
-						<input value={candidateProfileData?.EmailID} />
+						<input
+							value={personalInfo?.emailId}
+							name="emailId"
+							onChange={handleChange}
+						/>
 					</Stack>
 				</ActionCard>{" "}
 				{/* Personal Information */}
 				<ActionCard
 					editable
+					currentlyEditing={currentlyEditing}
+					setCurrentlyEditing={handleSave}
+					key={personalInfo?.idNumber}
 					title="Personal Information">
 					<Stack
 						direction="row"
@@ -146,7 +218,11 @@ const CandidateProfile = () => {
 						}}>
 						{" "}
 						<Typography>Nationality</Typography>
-						<input value={candidateProfileData?.Nationality} />
+						<input
+							value={personalInfo?.nationality}
+							name="nationality"
+							onChange={handleChange}
+						/>
 					</Stack>
 					<Stack
 						direction="row"
@@ -158,7 +234,11 @@ const CandidateProfile = () => {
 						}}>
 						{" "}
 						<Typography>National ID</Typography>
-						<input value={candidateProfileData?.NationalIDNumber} />
+						<input
+							value={personalInfo?.idNumber}
+							name="idNumber"
+							onChange={handleChange}
+						/>
 					</Stack>
 					<Stack
 						direction="row"
@@ -171,7 +251,9 @@ const CandidateProfile = () => {
 						{" "}
 						<Typography>Gender</Typography>
 						<input
-							value={candidateProfileData?.Gender === "M" ? "Male" : "Female"}
+							value={personalInfo?.gender}
+							name="gender"
+							onChange={handleChange}
 						/>
 					</Stack>
 				</ActionCard>
@@ -201,11 +283,15 @@ const CandidateProfile = () => {
 
 				<ActionCard
 					editable
+					currentlyEditing={currentlyEditing}
+					setCurrentlyEditing={handleSave}
+					key="Education"
 					title="Education">
 					{EducationList &&
-						EducationList.map((Education: any) => {
+						EducationList.map((Education: any, index: number) => {
 							return (
 								<Stack
+									key={index.toString()}
 									sx={{
 										display: "grid",
 										gridTemplateColumns: "1fr 2fr",
@@ -214,11 +300,12 @@ const CandidateProfile = () => {
 									}}>
 									{" "}
 									<Typography>
-										{new Date(Education.StartDate).toLocaleDateString()} –{" "}
-										{new Date(Education.EndDate).toLocaleDateString()}
+										{new Date(Education.startDate).toLocaleDateString()} –{" "}
+										{new Date(Education.endDate).toLocaleDateString()}
 									</Typography>
 									<textarea
-										value={`${Education?.CourseName} ${Education?.SchoolName} ${Education?.LocationOfStudy}`}
+										value={`${Education?.course}, ${Education?.school}, ${Education?.location}`}
+										onChange={handleProfile}
 									/>
 								</Stack>
 							);
@@ -227,10 +314,14 @@ const CandidateProfile = () => {
 
 				<ActionCard
 					editable
+					currentlyEditing={currentlyEditing}
+					setCurrentlyEditing={handleSave}
+					key="Experience"
 					title="Experience">
-					{ExperienceList?.map((Experience: any) => {
+					{ExperienceList?.map((Experience: any, index: number) => {
 						return (
 							<Stack
+								key={index.toString()}
 								direction="row"
 								sx={{
 									display: "grid",
@@ -239,17 +330,20 @@ const CandidateProfile = () => {
 									margin: "0.5rem 0",
 								}}>
 								{" "}
-								{Experience?.CurrentlyWorkHere ? (
+								{Experience?.currentlyWorkHere ? (
 									<Typography>{`${new Date(
-										Experience?.StartDate
+										Experience?.startDate
 									).toLocaleDateString()} - NOW`}</Typography>
 								) : (
 									<Typography>{`${new Date(
-										Experience?.StartDate
-									).toLocaleDateString()} - ${Experience?.EndDate.toLocaleDateString()}`}</Typography>
+										Experience?.startDate
+									).toLocaleDateString()} - ${new Date(
+										Experience?.endDate
+									).toLocaleDateString()}`}</Typography>
 								)}
 								<textarea
-									value={`${Experience?.Title}-${Experience?.CompanyName}-${Experience?.WorkLocation}`}
+									value={`${Experience?.title}-${Experience?.company}-${Experience?.location}`}
+									onChange={handleProfile}
 								/>
 							</Stack>
 						);
@@ -397,7 +491,9 @@ const CandidateProfile = () => {
 							{
 								if (Answer?.Type === "yesNo")
 									return (
-										<div style={{ color: "#A5A5A5" }}>
+										<div
+											style={{ color: "#A5A5A5" }}
+											key={Answer.id}>
 											<p style={{ marginBottom: "0" }}>{Answer?.Question}</p>
 											{Answer?.Answer === "yes" ? (
 												<FormControlLabel
@@ -423,11 +519,13 @@ const CandidateProfile = () => {
 							padding: "0px 30px",
 							fontSize: "12px",
 						}}>
-						{Answers?.map((Answer: any) => {
+						{Answers?.map((Answer: any, index: number) => {
 							{
 								if (Answer?.Type === "paragraph")
 									return (
-										<div style={{ color: "#A5A5A5" }}>
+										<div
+											style={{ color: "#A5A5A5" }}
+											key={index.toString()}>
 											<p>
 												{Answer?.Question}
 												<br />
@@ -450,7 +548,9 @@ const CandidateProfile = () => {
 							{
 								if (Answer?.Type === "dropDown")
 									return (
-										<div style={{ color: "#A5A5A5" }}>
+										<div
+											style={{ color: "#A5A5A5" }}
+											key={Answer?.id}>
 											<p>
 												{Answer?.Question}
 												<br />
@@ -470,11 +570,11 @@ const CandidateProfile = () => {
 														e: React.FocusEvent<HTMLButtonElement>
 													): void => dismissHandler(e)}>
 													<div>
-														{Answer?.Answer ? Answer?.Answer : "No Answer"}{" "}
+														{Answer?.answer ? Answer?.answer : "No Answer"}{" "}
 													</div>
 													{showDropDown && (
 														<div>
-															{Answer.SelectedChoices.map(
+															{Answer?.selectedChoices.map(
 																(
 																	option: string,
 																	index: number

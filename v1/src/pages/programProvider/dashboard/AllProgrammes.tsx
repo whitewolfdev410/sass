@@ -16,7 +16,8 @@ import {
 
 const AllProgrames = () => {
 	const dispatch = useAppDispatch();
-	const [programs] = useState(useAppSelector(allProgramSummary));
+	const allPrograms = useAppSelector(allProgramSummary);
+	const [programs, setPrograms] = useState(allPrograms);
 	const programList = programs?.data?.attributes?.programs;
 	// const programs = [
 	// 	{
@@ -60,6 +61,10 @@ const AllProgrames = () => {
 	// 		],
 	// 	},
 	// ];
+
+	useEffect(() => {
+		setPrograms(allPrograms);
+	}, [allPrograms]);
 
 	useEffect(() => {
 		dispatch(getProgramSummary());

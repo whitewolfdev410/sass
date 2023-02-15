@@ -349,71 +349,89 @@ export type WorkflowType = {
 	workflowStagesList: StageType[];
 };
 export type CandidateProfileType = {
-	CandidateID: string;
-	ProgramID: string;
-	FirstName: string;
-	LastName: string;
-	EmailID: string;
-	PhoneNumber: string;
-	Nationality: string;
-	CurrentlyBased: string;
-	NationalIDNumber: string;
-	DateOfBirth: string;
-	Gender: string;
-	EducationList: [
-		{
-			SchoolName: string;
-			Degree: string;
-			CourseName: string;
-			LocationOfStudy: string;
-			StartDate: string;
-			EndDate: string;
-			CurrentlyStudyHere: boolean;
-		}
-	];
-	WorkExperienceList: [
-		{
-			CompanyName: string;
-			Title: string;
-			WorkLocation: string;
-			StartDate: string;
-			EndDate: string;
-			CurrentlyWorkHere: boolean;
-		}
-	];
-	Resume: string;
-	Answers: [
-		{
-			QuestionID: string;
-			Answer: string;
-			SelectedChoices: string | null;
-			Type: string;
-			Question: string;
-			Disqualify: string | null;
-		},
-		{
-			QuestionID: string;
-			Answer: string;
-			SelectedChoices: string | null;
-			Type: string;
-			Question: string;
-			Disqualify: boolean;
-		},
-		{
-			QuestionID: string;
-			Answer: string;
-			SelectedChoices: string[];
-			Type: string;
-			Question: string;
-			Disqualify: string | null;
-		}
-	];
+	data: {
+		id: string;
+		type: string;
+		attributes: {
+			personalInformation?: candidatePersonalInfoType;
+			profile?: {
+				education: candidateEducationType[];
+				workExperience: candidateWorkExperienceType[];
+				profileAnswers: candidatePersonAnswerType[];
+			};
+			resume?: string;
+			customisedAnswers?: candidatePersonAnswerType[];
+			stage?: string;
+			status: string;
+			overallScore?: string;
+		};
+	};
 };
 
 export type AlertProps = {
 	title: string;
 	type: "error" | "success" | "info";
 	msg: string;
+};
+export type ProviderFilterCandidateReturnDataType = {
+	data: {
+		id?: string;
+		type?: string;
+		attributes: {
+			candidates: candidateReturnDataType[];
+		};
+	};
+};
+export type candidateReturnDataType = {
+	id?: string;
+	firstName?: string;
+	lastName?: string;
+	currentResidence?: string;
+	status?: string;
+	degree?: string;
+};
+
+export type ProviderFilterCandidateDataType = {
+	skip?: number;
+	take?: number;
+	freeFilter?: string;
+	nationality?: string[];
+	countryOfResidence?: string[];
+	gender?: string;
+	location?: string[];
+	levelOfEducation?: string[];
+	dateOfGraduationFrom?: string;
+	dateOfGraduationTo?: string;
+	locationOfStudy?: string[];
+	yearsOfExperienceTo?: number;
+	yearsOfExperienceFrom?: number;
+	locationOfWork?: string[];
+	overralScoreTo?: number;
+	overralScoreFrom?: number;
+	communication?: number;
+	professionalism?: number;
+	attitude?: number;
+	subjectKnowledge?: number;
+	customProfileFilters?: customProfileFilterType[];
+	customAnswersFilters?: customAnswerFilterType[];
+};
+export type customAnswerFilterType = {
+	questionId?: string;
+	textAnswer?: string;
+	numberAnswerFrom?: number;
+	numberAnswerTo?: number;
+	dateAnswerFrom?: string;
+	dateAnswerTo?: string;
+	booleanAnswer?: boolean;
+};
+export type customProfileFilterType = {
+	questionId?: string;
+	textAnswer?: string;
+	numberAnswerFrom?: number;
+	numberAnswerTo?: number;
+	dateAnswerFrom?: string;
+	dateAnswerTo?: string;
+	booleanAnswer?: boolean;
 };
 
 export const ADMIN_ROUTE = "admin";

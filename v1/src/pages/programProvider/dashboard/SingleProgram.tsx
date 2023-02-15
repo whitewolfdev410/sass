@@ -1,4 +1,10 @@
+import { useEffect, useState } from "react";
 import { Stack, Box } from "@mui/material";
+import {
+	getProviderFilterCandidateData,
+	useAppDispatch,
+	useAppSelector,
+} from "../../../appStore";
 import { SidebarLayout } from "../../../components";
 import {
 	SingleProgramNav,
@@ -6,8 +12,79 @@ import {
 	SingleProgramCandidateInfo,
 } from "../../../components/ProgramProviderComponents";
 import SingleProgramTitle from "./SingleProgramTitle";
+import {
+	ProviderFilterCandidateDataType,
+	ProviderFilterCandidateReturnDataType,
+} from "../../../types";
+import { ProviderFilterCandidateData } from "../../../appStore/slices/ProgramDashboard/selectors";
 
 const SingleProgram = () => {
+	const programId = localStorage.getItem("programId") ?? "";
+	const stageId = localStorage.getItem("stageId") ?? "";
+	const [status] = useState<string>("Active");
+	const [filterData, setFilterData] = useState<ProviderFilterCandidateDataType>(
+		{
+			skip: 0,
+			take: 0,
+			freeFilter: "string",
+			nationality: [""],
+			countryOfResidence: [],
+			gender: "",
+			location: [""],
+			levelOfEducation: [""],
+			dateOfGraduationFrom: "",
+			dateOfGraduationTo: "",
+			locationOfStudy: [],
+			yearsOfExperienceFrom: 0,
+			yearsOfExperienceTo: 0,
+			locationOfWork: [],
+			overralScoreFrom: 0,
+			overralScoreTo: 0,
+			communication: 0,
+			professionalism: 0,
+			attitude: 0,
+			subjectKnowledge: 0,
+			customProfileFilters: [
+				{
+					questionId: "",
+					textAnswer: "",
+					numberAnswerFrom: 0,
+					numberAnswerTo: 0,
+					dateAnswerFrom: "",
+					dateAnswerTo: "",
+					booleanAnswer: true,
+				},
+			],
+			customAnswersFilters: [
+				{
+					questionId: "",
+					textAnswer: "",
+					numberAnswerFrom: 0,
+					numberAnswerTo: 0,
+					dateAnswerFrom: "",
+					dateAnswerTo: "",
+					booleanAnswer: true,
+				},
+			],
+		}
+	);
+	const dispatch = useAppDispatch();
+	useEffect(() => {
+		dispatch(
+			getProviderFilterCandidateData({
+				programId: programId,
+				stageId: stageId,
+				status: status,
+				attributes: filterData,
+			})
+		);
+	}, []);
+	const candidateDatas = useAppSelector(ProviderFilterCandidateData);
+	const [candidateData, setCandidateData] =
+		useState<ProviderFilterCandidateReturnDataType>(candidateDatas);
+	useEffect(() => {
+		setCandidateData(candidateDatas);
+	}, [candidateDatas]);
 	return (
 		<SidebarLayout>
 			<Box
@@ -18,7 +95,7 @@ const SingleProgram = () => {
 				<Stack
 					direction="row"
 					gap={2}>
-					<SingleProgramSidebar />
+					<SingleProgramSidebar candidateData={candidateData} />
 					<Box sx={{ minWidth: 0 }}>
 						<SingleProgramCandidateInfo />
 					</Box>

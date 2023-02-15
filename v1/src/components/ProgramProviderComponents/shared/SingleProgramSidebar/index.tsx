@@ -12,31 +12,41 @@ import SearchIcon from "@mui/icons-material/Search";
 import SidebarTabs from "./SidebarTabs";
 import { useEffect, useState } from "react";
 import CandidateInfo from "./CandidateInfo";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import DropDownComponent from "./DropDownComponent";
+import { getCandidateProfileData, useAppDispatch } from "../../../../appStore";
 import {
-	getAllCandidates,
-	getCandidateProfileData,
-	selectProviderProfile,
-	useAppDispatch,
-	useAppSelector,
-	selectCandidateProfileData,
-} from "../../../../appStore";
+	candidateReturnDataType,
+	ProviderFilterCandidateReturnDataType,
+} from "../../../../types";
+export type Props = {
+	candidateData: ProviderFilterCandidateReturnDataType;
+};
 
-const SingleProgramSidebar = () => {
+const SingleProgramSidebar = ({ candidateData }: Props) => {
 	const [currentTab, setCurrentTab] = useState<number>(1);
 	const [checked, setChecked] = useState(false);
 	const handleChange = () => {
 		setChecked(!checked);
 	};
-	const candidataID = "ae7489ce-5496-495b-aaca-df191546006f";
-	const dispatch = useAppDispatch();
-	const [candidateProfileData] = useState(
-		useAppSelector(selectCandidateProfileData)
+	const [candidateProfileData] = useState<candidateReturnDataType[]>(
+		candidateData?.data?.attributes?.candidates
 	);
+	const [applicationId, setApplicationId] = useState(
+		candidateProfileData?.[0]?.id
+	);
+	const setAppId = (value: string) => {
+		setApplicationId(value);
+	};
+	const dispatch = useAppDispatch();
+	const programId = localStorage.getItem("programId") ?? "";
 	useEffect(() => {
-		dispatch(getCandidateProfileData({ candidateID: candidataID }));
-	}, []);
+		dispatch(
+			getCandidateProfileData({
+				applicationId: applicationId as string,
+				programId: programId,
+			})
+		);
+	}, [applicationId]);
 
 	return (
 		<Box
@@ -110,7 +120,16 @@ const SingleProgramSidebar = () => {
 			<Divider sx={{ mb: 1 }} />
 
 			{/* Candidate Lists */}
-			<CandidateInfo data={candidateProfileData} />
+			<Stack>
+				{candidateProfileData?.map((candidate: candidateReturnDataType) => (
+					<CandidateInfo
+						candidateProfileData={candidate}
+						applicationId={applicationId}
+						setApplicationId={setAppId}
+						key={candidate.id}
+					/>
+				))}
+			</Stack>
 		</Box>
 	);
 };
