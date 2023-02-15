@@ -17,6 +17,7 @@ import { ProgramType, summaryProgramType } from "../../../types";
 import { useRef, useState } from "react";
 import FormDialog from "../shared/FormDialog";
 import { publishProgram, useAppDispatch } from "../../../appStore";
+import { useNavigate } from "react-router";
 
 /**
  * @TODO type the @param data object after schema is gotten from API
@@ -54,6 +55,12 @@ const ProviderStats = ({ data }: { data: Partial<summaryProgramType> }) => {
 				},
 			})
 		);
+	};
+	const navigate = useNavigate();
+	const handleOnClick = (stageId: string, programId: any) => {
+		localStorage.setItem("stageId", stageId);
+		localStorage.setItem("programId", programId);
+		navigate(`/provider/dashboard/program/${programId}`, { replace: true });
 	};
 
 	return (
@@ -203,8 +210,10 @@ const ProviderStats = ({ data }: { data: Partial<summaryProgramType> }) => {
 					<span className="stat-title">Applied</span>
 				</Button> */}
 
-				{data.workflowStages?.map((stage, index) => (
-					<Button key={index}>
+				{data?.workflowStages?.map((stage, index) => (
+					<Button
+						key={stage.stageId}
+						onClick={(e) => handleOnClick(stage.stageId, data?.programId)}>
 						<span className="stat-info">{stage.count}</span>
 						<span className="stat-title">{stage.name}</span>
 					</Button>
@@ -269,17 +278,3 @@ const ProviderStats = ({ data }: { data: Partial<summaryProgramType> }) => {
 };
 
 export default ProviderStats;
-let team = [
-	{
-		member_avatar_url: "",
-	},
-	{
-		member_avatar_url: "",
-	},
-	{
-		member_avatar_url: "",
-	},
-	{
-		member_avatar_url: "",
-	},
-];

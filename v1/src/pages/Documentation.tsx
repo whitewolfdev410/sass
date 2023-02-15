@@ -1,25 +1,17 @@
+import { useState } from "react";
 import { Box, Divider, Stack, Typography } from "@mui/material";
 import {
-	// <<<<<<< HEAD
 	ApplicationFormCard,
 	AuthPageLayout,
 	SidebarLayout,
 } from "../components";
 import {
-	//   CandidateApplicationNav,
-	//   CustomStepper,
-	//   ProgramInfoCard,
-	//   ProgramStatusCard,
-	//   ProgramSumaryCard,
-	//   SteppedStageGroup,
-	// =======
 	CandidateApplicationNav,
 	CustomStepper,
 	ProgramInfoCard,
 	ProgramStatusCard,
 	ProgramSummaryCard,
 	SteppedStageGroup,
-	// >>>>>>> c6ee55327449213632b34fb00d2ae8c62430a74b
 } from "../components/CandidatesComponents";
 import {
 	ActionCard,
@@ -30,8 +22,13 @@ import {
 	SingleProgramNav,
 	SingleProgramSidebar,
 } from "../components/ProgramProviderComponents";
+import { ProviderFilterCandidateReturnDataType } from "../types";
+import { ProviderFilterCandidateData, useAppSelector } from "../appStore";
 
 const Documentation = () => {
+	const [candidateData] = useState<ProviderFilterCandidateReturnDataType>(
+		useAppSelector(ProviderFilterCandidateData)
+	);
 	return (
 		<Stack
 			gap={4}
@@ -52,7 +49,7 @@ const Documentation = () => {
 
 			<Typography variant="h2">Shared throughtout program provider</Typography>
 			<SingleProgramCandidateInfo />
-			<SingleProgramSidebar />
+			<SingleProgramSidebar candidateData={candidateData} />
 			<ActionCard
 				editable
 				title="Title">

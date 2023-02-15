@@ -1,11 +1,20 @@
-import React, { useState } from "react";
 import { Box, Checkbox, Stack, Typography } from "@mui/material";
 import SchoolIcon from "@mui/icons-material/School";
 import LocationOn from "@mui/icons-material/LocationOn";
-import { CandidateProfileType } from "../../../../types";
-
-const CandidateInfo = (prop: any) => {
-	const candidateProfileData = prop.data;
+import { candidateReturnDataType } from "../../../../types";
+export type Props = {
+	candidateProfileData: candidateReturnDataType;
+	applicationId?: string;
+	setApplicationId: (arg: string) => void;
+};
+const CandidateInfo = ({
+	candidateProfileData,
+	applicationId,
+	setApplicationId,
+}: Props) => {
+	const handleChange = (value: string) => {
+		setApplicationId(value);
+	};
 	return (
 		<label>
 			<Stack
@@ -13,6 +22,8 @@ const CandidateInfo = (prop: any) => {
 				gap={2.5}>
 				<Checkbox
 					disableRipple
+					checked={applicationId === candidateProfileData?.id ? true : false}
+					onChange={() => handleChange(candidateProfileData?.id as string)}
 					sx={{
 						px: 0,
 						"&:has(>input:checked)": { color: "#60C69B" },
@@ -64,20 +75,20 @@ const CandidateInfo = (prop: any) => {
 							fontSize={16}
 							fontWeight={700}
 							mb={1}>
-							{`${candidateProfileData?.FirstName}  ${candidateProfileData?.LastName}`}
+							{`${candidateProfileData?.firstName}  ${candidateProfileData?.lastName}`}
 						</Typography>
 
 						<Typography
 							fontSize={10}
 							sx={{ display: "flex", gap: 1, mb: 0.5 }}>
 							<LocationOn sx={{ height: 14 }} />
-							{`${candidateProfileData?.CurrentlyBased}  ${candidateProfileData?.Nationality}`}
+							{`${candidateProfileData?.currentResidence}`}
 						</Typography>
 						<Typography
 							fontSize={10}
 							sx={{ display: "flex", gap: 1 }}>
 							<SchoolIcon sx={{ height: 14 }} />{" "}
-							{`${candidateProfileData?.EducationList?.[0]?.CourseName ?? ""}`}
+							{`${candidateProfileData?.degree}`}
 						</Typography>
 					</Box>
 				</Stack>
