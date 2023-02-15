@@ -7,6 +7,7 @@ import {
 	ProgramDetailsType,
 	ProgramPreviewType,
 	ProgramSummaryType,
+	ProviderFilterCandidateReturnDataType,
 } from "../../../types";
 import {
 	createProgram,
@@ -17,6 +18,7 @@ import {
 	getCandidateProfileData,
 	getProgramSummary,
 	getProgramPreview,
+	getProviderFilterCandidateData,
 } from "./thunks";
 
 type initialProps = {
@@ -27,6 +29,7 @@ type initialProps = {
 	newProgramApplicationTemplate: ApplicationFormTemplateType;
 	candidateProfileData: CandidateProfileType;
 	programPreviewData: ProgramPreviewType;
+	ProviderFilterCandidateData: ProviderFilterCandidateReturnDataType;
 };
 
 const initialState: initialProps = {
@@ -37,6 +40,7 @@ const initialState: initialProps = {
 	newProgramApplicationTemplate: {} as ApplicationFormTemplateType,
 	candidateProfileData: {} as CandidateProfileType,
 	programPreviewData: {} as ProgramPreviewType,
+	ProviderFilterCandidateData: {} as ProviderFilterCandidateReturnDataType,
 };
 
 const programProviderSlice = createSlice({
@@ -68,6 +72,9 @@ const programProviderSlice = createSlice({
 			})
 			.addCase(getProgramPreview.fulfilled, (state, action) => {
 				state.programPreviewData = action.payload;
+			})
+			.addCase(getProviderFilterCandidateData.fulfilled, (state, action) => {
+				state.ProviderFilterCandidateData = action.payload;
 			});
 	},
 });

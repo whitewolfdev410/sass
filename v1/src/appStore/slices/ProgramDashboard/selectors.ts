@@ -29,3 +29,7 @@ export const programPreviewData = createSelector(
 	[(state: RootState) => state?.programDashboard.programPreviewData],
 	(programs) => programs
 );
+export const ProviderFilterCandidateData = createSelector(
+	[(state: RootState) => state?.programDashboard.ProviderFilterCandidateData],
+	(programs) => programs
+);

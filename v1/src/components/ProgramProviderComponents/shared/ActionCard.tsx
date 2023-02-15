@@ -8,17 +8,23 @@ const ActionCard = ({
 	title,
 	children,
 	actions,
+	currentlyEditing,
+	setCurrentlyEditing,
 }: {
 	editable?: boolean;
 	title?: string;
 	children?: ReactNode;
 	actions?: ReactNode;
+	currentlyEditing?: any;
+	setCurrentlyEditing?: any;
 }) => {
-	const [currentlyEditing, setCurrentlyEditing] = useState(false);
+	// const [currentlyEditing, setCurrentlyEditing] = useState(false);
 	const content = useRef<HTMLDivElement | null>(null);
 
 	useEffect(() => {
-		let inputs = content.current ? Array.from(content.current?.querySelectorAll("input, textarea")) : [];
+		let inputs = content.current
+			? Array.from(content.current?.querySelectorAll("input, textarea"))
+			: [];
 
 		if (currentlyEditing) {
 			inputs.map((input) => {
@@ -33,7 +39,11 @@ const ActionCard = ({
 
 	return (
 		<ShadowCard>
-			<Stack sx={{ p: "18px 29px" }} direction="row" justifyContent="space-between" alignItems="center">
+			<Stack
+				sx={{ p: "18px 29px" }}
+				direction="row"
+				justifyContent="space-between"
+				alignItems="center">
 				<Typography
 					sx={{
 						maxWidth: "200px",
@@ -48,16 +58,21 @@ const ActionCard = ({
 						<Button
 							sx={{ px: 0 }}
 							onClick={() => {
-								setCurrentlyEditing((prev) => !prev);
+								setCurrentlyEditing((prev: any) => !prev);
 							}}>
 							{" "}
-							<img src={Edit} alt="" />{" "}
+							<img
+								src={Edit}
+								alt=""
+							/>{" "}
 						</Button>
 					) : null}
 				</Box>
 			</Stack>
 			{currentlyEditing ? null : <Divider />}
-			<Box sx={{ p: "18px 29px" }} ref={content}>
+			<Box
+				sx={{ p: "18px 29px" }}
+				ref={content}>
 				{children}
 			</Box>
 		</ShadowCard>
