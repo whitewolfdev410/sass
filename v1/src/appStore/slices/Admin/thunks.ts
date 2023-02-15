@@ -100,3 +100,16 @@ export const createProviderAccount = createAsyncThunk(
     }
   }
 );
+
+export const adminGetMemberAccounts = createAsyncThunk(
+  "admin/getMemberAccounts",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await USER_CLIENT.get("admin/accounts");
+      return res.data;
+    } catch (err: any) {
+      console.error("admin get member in account error", err);
+      return rejectWithValue(err.response.data);
+    }
+  }
+);

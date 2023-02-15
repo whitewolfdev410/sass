@@ -123,3 +123,16 @@ export const getProgramProviderProfile = createAsyncThunk(
     }
   }
 );
+
+export const providerGetMemberAccounts = createAsyncThunk(
+  "provider/getMemberAccounts",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await USER_CLIENT.get("providers/accounts");
+      return res.data;
+    } catch (err: any) {
+      console.error("provider get member in account error", err);
+      return rejectWithValue(err.response.data);
+    }
+  }
+);

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { verifyProviderInviteCode } from "..";
+import { providerGetMemberAccounts, verifyProviderInviteCode } from "..";
 
 type ProgramProviderType = {
   providerId?: string;
@@ -8,6 +8,15 @@ type ProgramProviderType = {
   lastName: string;
   jobTitle: string;
   phoneNumber: string;
+  accounts: MemberAccountProps[];
+};
+
+type MemberAccountProps = {
+  email?: string;
+  firstName?: string;
+  lastName?: string;
+  role?: string;
+  accountId?: string;
 };
 
 const initialState: ProgramProviderType = {
@@ -17,6 +26,7 @@ const initialState: ProgramProviderType = {
   lastName: "",
   jobTitle: "",
   phoneNumber: "",
+  accounts: [],
 };
 
 const programProviderSlice = createSlice({
@@ -27,7 +37,13 @@ const programProviderSlice = createSlice({
     builder.addCase(verifyProviderInviteCode.fulfilled, (state, action) => ({
       ...state,
       ...(action.payload as unknown as ProgramProviderType),
-    }));
+      accounts: []
+    })).addCase(providerGetMemberAccounts.fulfilled, (state, action) => {
+      return {
+        ...state,
+        ...action.payload
+      }
+    })
   },
 });
 

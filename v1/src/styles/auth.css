@@ -4,9 +4,6 @@ body {
 }
 
 .auth-wrapper {
-  background-image: url("../assets/bg/auth-bg.svg");
-  background-size: cover;
-  background-repeat: no-repeat;
   min-height: calc(100vh - 70px);
   width: 100vw;
   display: flex;
