@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
-import { AdminSignupType, OWNER } from "../../../types";
+import { AdminSignupType, OWNER, ProviderSignupType } from "../../../types";
 import { USER_CLIENT } from "../../axiosInstance";
 
 export const adminLogin = createAsyncThunk(
@@ -85,6 +85,18 @@ export const getAdminProfile = createAsyncThunk(
     } catch (err: any) {
       console.error("get admin profile error", err);
       rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const createProviderAccount = createAsyncThunk(
+  "admin/createProviderAccount",
+  async (formData: ProviderSignupType, { rejectWithValue }) => {
+    try {
+      const res = await USER_CLIENT.post("/providers", formData);
+      return res.data;
+    } catch (err: any) {
+      return rejectWithValue(err.response.data);
     }
   }
 );

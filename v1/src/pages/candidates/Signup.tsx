@@ -4,7 +4,6 @@ import {
   FormControl,
   Input,
   Typography,
-  Stack,
   Button,
   Grid,
   Select,
@@ -19,6 +18,7 @@ import { candidateSignup as signup } from "../../appStore/slices";
 import { useAppDispatch } from "../../appStore";
 import "../../styles/auth-select.css";
 import { addNewAlert } from "../../utils/functions/addNewAlert";
+import "../../styles/auth-select-disable.css";
 
 /**
  * Signup component for program providers
@@ -197,7 +197,7 @@ const Signup = () => {
 
         <Typography fontFamily="Inter" textAlign="center">
           Already have an account?{" "}
-          <a href="" style={{ textDecoration: "underline" }}>
+          <a href="/signin" style={{ textDecoration: "underline" }}>
             Sign in
           </a>
         </Typography>

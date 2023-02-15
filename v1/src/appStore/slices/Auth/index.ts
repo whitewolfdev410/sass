@@ -4,6 +4,7 @@ import {
   authLogout,
   getFullProviderInfo,
   setCurrentRoleIndexTo,
+  verifyEmail,
 } from "..";
 import { ProviderType } from "../../../types";
 
@@ -21,6 +22,7 @@ type AuthProps = {
       persona: string;
       role: string;
     }[];
+    emailVerified: boolean;
   };
 };
 
@@ -35,6 +37,7 @@ const initialState: AuthProps = {
     provider: null,
     currentRole: 0,
     roles: [],
+    emailVerified: false,
   },
 };
 
@@ -51,6 +54,9 @@ const authSlice = createSlice({
       })
       .addCase(authLogout.fulfilled, (state, action) => {
         return initialState;
+      })
+      .addCase(verifyEmail.fulfilled, (state, action) => {
+        return { ...state, account: { ...state.account, emailVerified: true } };
       })
       .addCase(getFullProviderInfo.fulfilled, (state, action) => {
         return {

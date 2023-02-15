@@ -34,3 +34,7 @@ export { default as ProviderReducer } from "./Provider";
 export * from "./Provider";
 export * from "./Provider/thunks";
 export * from "./Provider/selectors";
+export { default as EmployerReducer } from "./Employer";
+export * from "./Employer";
+export * from "./Employer/thunks";
+export * from "./Employer/selectors";

@@ -97,15 +97,13 @@ const Login = () => {
             }
             control={<Checkbox />}
           />
-
-          <Link
-            fontSize={14}
-            fontFamily="Inter"
-            color="primary.main"
-            href="/provider/forgot-password"
+          <Button
+            variant="text"
+            sx={{ fontSize: "14px" }}
+            onClick={() => navigate("/forgot-password")}
           >
-            Forgot Password
-          </Link>
+            Forgot password
+          </Button>
         </Stack>
 
         <Button

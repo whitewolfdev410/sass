@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Admin from "./pages/admin";
+import Provider from "./pages/Provider";
 import NotFound from "./pages/NotFound";
+import SiteMap from "./pages/SiteMap";
+import Doc from "./pages/Documentation";
+import Alert from "./pages/Alert";
+import DefaultRoute from "./utils/routing/DefaultRoute";
+import Loading from "./utils/routing/Loading";
 //
 import "./styles/root.css";
-import Alert from "./pages/Alert";
 import {
 	getAccessToken,
 	getProviderInfo,
 	useAppDispatch,
 	useAppSelector,
 } from "./appStore";
-import Loading from "./utils/routing/Loading";
-import { PROGRAM_CLIENT, USER_CLIENT } from "./appStore/axiosInstance";
+import { USER_CLIENT } from "./appStore/axiosInstance";
 import {
 	ADMIN_ROUTE,
 	FULFILLED,
@@ -21,8 +25,6 @@ import {
 	REJECTED,
 	VALID_BASENAME,
 } from "./types";
-import Provider from "./pages/Provider";
-import DefaultRoute from "./utils/routing/DefaultRoute";
 
 function App() {
 	/** Set authToken to Axois Defaults Header */
@@ -73,6 +75,10 @@ function App() {
 	return (
 		<Router basename={"/" + basename}>
 			<Alert />
+			{/* <Routes>
+        <Route path="/sitemap" element={<SiteMap />} />
+        <Route path="/doc" element={<Doc />} />
+      </Routes> */}
 			{basename === ADMIN_ROUTE ? (
 				<Admin adjustBasename={adjustBasename} />
 			) : basename ? (

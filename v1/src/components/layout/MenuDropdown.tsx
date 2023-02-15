@@ -4,8 +4,8 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
 type MenuDropdownProps = {
-  title: JSX.Element;
-  children: JSX.Element;
+  title: React.ReactNode;
+  children: React.ReactNode;
 };
 
 const MenuDropdown = ({ title, children }: MenuDropdownProps) => {

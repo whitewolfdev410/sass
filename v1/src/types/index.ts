@@ -35,15 +35,16 @@ export type TeamMemberType = {
 	displayPicture: string;
 };
 
-export type ProgramProviderType = {
-	programProviderID: number;
+export type ProviderSignupType = {
 	firstName: string;
 	lastName: string;
 	email: string;
 	jobTitle: string;
 	phoneNumber: string;
-	userToken: string;
+	country: string;
+	companyName: string;
 };
+
 export type newProgramType = {
 	data: {
 		id: string;
@@ -283,7 +284,7 @@ export type candidateWorkflowStageType = {
 	name: string;
 };
 
-export type ProviderSignupType = {
+export type ProgramProviderSignupType = {
 	email: string;
 	password: string;
 	firstName: string;
@@ -292,6 +293,66 @@ export type ProviderSignupType = {
 	jobTitle: string;
 	phoneNumber: string;
 	providerId: string;
+};
+
+export type EmployerSignupType = {
+	email: string;
+	password: string;
+	firstName: string;
+	lastName: string;
+	invitationCode: string;
+	jobTitle: string;
+	phoneNumber: string;
+	providerId: string;
+};
+
+export type ProgramProps = {
+	id: string;
+	title: string;
+	programType: string;
+	startDate: string;
+	duration: string;
+	location: string;
+	status: string;
+	coverImage: string;
+	opportunities: ProgramOpportunityProps[];
+};
+
+export type ProgramOpportunityProps = {
+	id: string;
+	jobTitle: string;
+	location: string;
+	typeOfWork: string;
+	status: string;
+	employer: EmployerProps;
+	opportunityStages: OpportunityStageProps[];
+};
+
+export type EmployerProps = {
+	id: string;
+	logo: string;
+	name: string;
+	website: string;
+};
+
+export type OpportunityStageProps = {
+	stageId: string;
+	name: string;
+	count: number;
+};
+
+export type NewOpportunityFormProps = {
+	jobTitle?: string;
+	companyName?: string;
+	location?: string;
+	seats?: number;
+	typeOfWork?: string;
+	maxApplications?: number;
+	skills?: string[];
+	description?: string;
+	status?: "Closed" | "Open";
+	showToCandidate?: boolean;
+	employerId?: string;
 };
 
 export type AdminSignupType = {
@@ -450,3 +511,7 @@ export const VALID_BASENAME = "valid_basename";
 
 export const FULFILLED = "fulfilled";
 export const REJECTED = "rejected";
+
+export const OPEN = "Open";
+export const CLOSED = "Closed";
+export const DRAFT = "Draft";

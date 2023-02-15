@@ -72,7 +72,9 @@ const AllProgrames = () => {
 
 	return (
 		<div>
-			<SidebarLayout logo>
+			<SidebarLayout
+				logo
+				title="Dashboard">
 				{/* Statistics Title */}
 				<Stack
 					justifyContent="space-between"
