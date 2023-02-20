@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { QuestionInputType, QuestionTypes } from "../types";
 import {
 	Box,
@@ -14,27 +14,35 @@ import {
 import ListIcon from "@mui/icons-material/List";
 import AddIcon from "@mui/icons-material/Add";
 import X from "../../../assets/icons/delete-x-danger.svg";
+import { useParams } from "react-router-dom";
 
 type Props = {
 	type?: QuestionTypes;
 	typeInput?: boolean;
 	onSave?: (q: QuestionInputType, o: any) => void;
+	onSaveEdit?: (q: QuestionInputType, o: any, index: number) => void;
 	onDelete?: () => void;
 	setNewQuestion?: any;
 	q?: any;
+	qId?: number;
+	handleExpand?: () => void;
 };
 
 const QuestionInputs = ({
 	type = "Paragraph",
 	typeInput,
 	onSave,
+	onSaveEdit,
 	onDelete,
 	setNewQuestion,
 	q,
+	qId,
+	handleExpand,
 }: Props) => {
 	const [index, setIndex] = useState([{ index: 1, value: "" }]);
-	const programId = localStorage.getItem("programId") ?? "";
-	const [currentQuestion, setCurrentQuestion] = useState<QuestionInputType>({
+	let { programId } = useParams();
+	programId = programId ?? "";
+	const initialCurrentQuestionState: QuestionInputType = {
 		id: programId,
 		type: type,
 		question: "",
@@ -42,7 +50,10 @@ const QuestionInputs = ({
 		choices: index,
 		maxChoice: 0,
 		other: true,
-	});
+	};
+	const [currentQuestion, setCurrentQuestion] = useState<QuestionInputType>(
+		q ?? initialCurrentQuestionState
+	);
 
 	const onAdd = () => {
 		setIndex((oldArray) => [
@@ -66,6 +77,7 @@ const QuestionInputs = ({
 					<label htmlFor="">Type</label>
 					<TextField
 						select
+						value={currentQuestion.type}
 						onChange={(e) => {
 							setCurrentQuestion((prev) => ({
 								...prev,
@@ -88,7 +100,7 @@ const QuestionInputs = ({
 				sx={{ my: 2 }}>
 				<label htmlFor="">Question</label>
 				<TextField
-					value={q?.question}
+					value={currentQuestion.question}
 					placeholder="Type here"
 					onChange={(e) => {
 						setCurrentQuestion((prev) => ({
@@ -216,7 +228,9 @@ const QuestionInputs = ({
 					variant="contained"
 					onClick={() => {
 						onSave && onSave(currentQuestion, index);
-						setNewQuestion(false);
+						onSaveEdit && onSaveEdit(currentQuestion, index, qId ?? 0);
+						handleExpand && handleExpand();
+						setNewQuestion && setNewQuestion(false);
 					}}>
 					Save
 				</Button>

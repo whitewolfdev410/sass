@@ -1,7 +1,13 @@
-import { EditorState, RichUtils, convertToRaw } from "draft-js";
+import {
+	EditorState,
+	ContentState,
+	RichUtils,
+	convertToRaw,
+	convertFromHTML,
+} from "draft-js";
 // @ts-ignore
 import draftToHtml from "draftjs-to-html";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import BoldIcon from "../../assets/icons/bold.svg";
 import UnderlineIcon from "../../assets/icons/underline.svg";
@@ -21,12 +27,20 @@ export type Props = {
 };
 
 const TextEditor = ({ placeholder, height, setData, data, name }: Props) => {
-	const [editorState, setEditorState] = useState(() =>
-		EditorState.createEmpty()
-	);
+	const [editorState, setEditorState] = useState<EditorState>();
+
+	useEffect(() => {
+		const blocksFromHTML =
+			convertFromHTML(data[name ?? ""] ?? "")?.contentBlocks ?? [];
+		const contentState = ContentState.createFromBlockArray(blocksFromHTML);
+		setEditorState(EditorState.createWithContent(contentState));
+	}, [data]);
 
 	const handleKeyCommand = (command: any) => {
-		const newState = RichUtils.handleKeyCommand(editorState, command);
+		const newState = RichUtils.handleKeyCommand(
+			editorState as EditorState,
+			command
+		);
 		if (newState) {
 			setEditorState(newState);
 			return "handled";

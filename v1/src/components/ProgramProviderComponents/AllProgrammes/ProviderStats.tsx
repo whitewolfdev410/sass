@@ -18,6 +18,7 @@ import { useRef, useState } from "react";
 import FormDialog from "../shared/FormDialog";
 import { publishProgram, useAppDispatch } from "../../../appStore";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 /**
  * @TODO type the @param data object after schema is gotten from API
@@ -61,6 +62,9 @@ const ProviderStats = ({ data }: { data: Partial<summaryProgramType> }) => {
 		localStorage.setItem("stageId", stageId);
 		localStorage.setItem("programId", programId);
 		navigate(`/provider/dashboard/program/${programId}`, { replace: true });
+	};
+	const handleEdit = () => {
+		navigate(`/provider/dashboard/create-program/${data.programId ?? ""}`);
 	};
 
 	return (
@@ -120,8 +124,10 @@ const ProviderStats = ({ data }: { data: Partial<summaryProgramType> }) => {
 				<Stack
 					direction={{ lg: "row" }}
 					gap={1.5}>
+					{/* <Link to="/provider/dashboard/create-program"> */}
 					<Button
 						variant="outlined"
+						onClick={handleEdit}
 						sx={{
 							color: "var(--grey)",
 							borderColor: "var(--grey)",
@@ -129,6 +135,7 @@ const ProviderStats = ({ data }: { data: Partial<summaryProgramType> }) => {
 						}}>
 						Edit
 					</Button>
+					{/* </Link> */}
 					<ButtonGroup
 						variant="contained"
 						color="success">

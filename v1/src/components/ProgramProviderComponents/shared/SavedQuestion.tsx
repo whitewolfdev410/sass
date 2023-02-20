@@ -6,9 +6,10 @@ type Props = {
 	type: QuestionTypes;
 	question: string;
 	editable: boolean;
+	handleExpand?: () => void;
 };
 
-const SavedQuestion = ({ type, question, editable }: Props) => {
+const SavedQuestion = ({ type, question, editable, handleExpand }: Props) => {
 	return (
 		<Box sx={{ my: 1 }}>
 			<Typography
@@ -26,7 +27,7 @@ const SavedQuestion = ({ type, question, editable }: Props) => {
 					{question}
 				</Typography>
 				{editable ? (
-					<Button>
+					<Button onClick={handleExpand && handleExpand}>
 						<img
 							src={Edit}
 							alt=""

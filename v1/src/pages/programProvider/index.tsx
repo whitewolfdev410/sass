@@ -19,61 +19,95 @@ import EmployerDashboard from "../employer/dashboard";
  */
 
 const ProgramProvider = () => {
-  const currentRole = useAppSelector(selectCurrentRole);
-  if (
-    currentRole &&
-    currentRole.persona !== PROVIDER &&
-    currentRole.persona !== ADMIN
-  ) {
-    return <Navigate to={`/${currentRole.persona.toLowerCase()}/dashboard`} />;
-  }
-  return (
-    <Routes>
-      <Route index element={<Navigate to="/provider/signup" />} />
-      <Route path="/signup" element={<RouteSwitcher component={Signup} />} />
-      <Route
-        path="/invite-coworker"
-        element={
-          <RouteSwitcher requireLogin={true} component={InviteCoworker} />
-        }
-      />
-      <Route path="/dashboard">
-        <Route
-          index
-          element={
-            <RouteSwitcher requireLogin={true} component={AllProgrammes} />
-          }
-        />
-        <Route
-          element={
-            <RouteSwitcher requireLogin={true} component={CreateProgram} />
-          }
-          path="create-program"
-        />
-        <Route
-          element={
-            <RouteSwitcher requireLogin={true} component={ApplicationForm} />
-          }
-          path="application-form"
-        />
-        <Route
-          element={<RouteSwitcher requireLogin={true} component={Workflow} />}
-          path="workflow"
-        />
-        <Route
-          element={<RouteSwitcher requireLogin={true} component={Preview} />}
-          path="preview"
-        />
-        <Route
-          element={
-            <RouteSwitcher requireLogin={true} component={SingleProgram} />
-          }
-          path="program/:id"
-        />
-      </Route>
-      <Route path="*" element={<NotFound />} />
-    </Routes>
-  );
+	const currentRole = useAppSelector(selectCurrentRole);
+	if (
+		currentRole &&
+		currentRole.persona !== PROVIDER &&
+		currentRole.persona !== ADMIN
+	) {
+		return <Navigate to={`/${currentRole.persona.toLowerCase()}/dashboard`} />;
+	}
+	return (
+		<Routes>
+			<Route
+				index
+				element={<Navigate to="/provider/signup" />}
+			/>
+			<Route
+				path="/signup"
+				element={<RouteSwitcher component={Signup} />}
+			/>
+			<Route
+				path="/invite-coworker"
+				element={
+					<RouteSwitcher
+						requireLogin={true}
+						component={InviteCoworker}
+					/>
+				}
+			/>
+			<Route path="/dashboard">
+				<Route
+					index
+					element={
+						<RouteSwitcher
+							requireLogin={true}
+							component={AllProgrammes}
+						/>
+					}
+				/>
+				<Route
+					element={
+						<RouteSwitcher
+							requireLogin={true}
+							component={CreateProgram}
+						/>
+					}
+					path="create-program/:programId?"
+				/>
+				<Route
+					element={
+						<RouteSwitcher
+							requireLogin={true}
+							component={ApplicationForm}
+						/>
+					}
+					path="application-form/:programId"
+				/>
+				<Route
+					element={
+						<RouteSwitcher
+							requireLogin={true}
+							component={Workflow}
+						/>
+					}
+					path="workflow/:programId"
+				/>
+				<Route
+					element={
+						<RouteSwitcher
+							requireLogin={true}
+							component={Preview}
+						/>
+					}
+					path="preview/:programId"
+				/>
+				<Route
+					element={
+						<RouteSwitcher
+							requireLogin={true}
+							component={SingleProgram}
+						/>
+					}
+					path="program/:id"
+				/>
+			</Route>
+			<Route
+				path="*"
+				element={<NotFound />}
+			/>
+		</Routes>
+	);
 };
 
 export default ProgramProvider;

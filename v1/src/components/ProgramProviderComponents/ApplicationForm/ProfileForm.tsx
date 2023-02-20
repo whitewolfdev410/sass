@@ -24,7 +24,9 @@ export type Props = {
 const ProfileForm = ({ setApplicationData, applicationData }: Props) => {
 	const [newQuestion, setNewQuestion] = useState(false);
 	const programId = localStorage.getItem("programId") ?? "";
-	const [questionList, setQuestionList] = useState<QuestionProps[]>([]);
+	const [questionList, setQuestionList] = useState<QuestionProps[]>(
+		[...applicationData?.profileQuestions] ?? []
+	);
 	const onSaveNew = (newQ: QuestionProps, option: any) => {
 		let data = {};
 		if (newQ.type === "YesNo") {
@@ -75,8 +77,8 @@ const ProfileForm = ({ setApplicationData, applicationData }: Props) => {
 		<ApplicationFormCard title="Profile">
 			<InputGroupMandatory
 				label="Education"
-				mandatory={false}
-				show={false}
+				mandatory={applicationData?.education?.mandatory ?? false}
+				show={applicationData?.education?.show ?? false}
 				name="education"
 				setApplicationData={setApplicationData}
 				applicationData={applicationData}
@@ -84,8 +86,8 @@ const ProfileForm = ({ setApplicationData, applicationData }: Props) => {
 			<Divider />
 			<InputGroupMandatory
 				label="Experience"
-				mandatory={false}
-				show={false}
+				mandatory={applicationData?.experience?.mandatory ?? false}
+				show={applicationData?.experience?.show ?? false}
 				name="experience"
 				setApplicationData={setApplicationData}
 				applicationData={applicationData}
@@ -93,8 +95,8 @@ const ProfileForm = ({ setApplicationData, applicationData }: Props) => {
 			<Divider />
 			<InputGroupMandatory
 				label="Resume"
-				mandatory={false}
-				show={false}
+				mandatory={applicationData?.resume?.mandatory ?? false}
+				show={applicationData?.resume?.show ?? false}
 				name="resume"
 				setApplicationData={setApplicationData}
 				applicationData={applicationData}

@@ -7,6 +7,7 @@ import {
 	Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { ApplicationFormCard } from "../../../components";
 import {
 	SavedQuestion,
@@ -20,29 +21,14 @@ export type Props = {
 };
 
 const QuestionsForm = ({ setApplicationData, applicationData }: Props) => {
-	const programId = localStorage.getItem("programId") ?? "";
-	const [questionList, setQuestionList] = useState<QuestionProps[]>([
-		{
-			id: programId,
-			type: "Paragraph",
-			question: "Please tell me about your self in less than 500 words",
-			other: false,
-		},
-		{
-			id: programId,
-			type: "Dropdown",
-			question: "Please select the year of graduation from the dropdown below",
-			choices: ["option1", "option2"],
-			other: false,
-		},
-		{
-			id: programId,
-			type: "YesNo",
-			question: "Have you ever been rejected by the UK embassy?",
-			disqualify: true,
-			other: false,
-		},
-	]);
+	let { programId } = useParams();
+	programId = programId ?? "";
+	const [expanded, setExpanded] = useState<boolean[]>(
+		[...Array(applicationData?.length ?? 0)].map((_) => false)
+	);
+	const [questionList, setQuestionList] = useState<QuestionProps[]>(
+		[...applicationData] ?? []
+	);
 	const [newQuestion, setNewQuestion] = useState(false);
 
 	useEffect(() => {
@@ -78,6 +64,16 @@ const QuestionsForm = ({ setApplicationData, applicationData }: Props) => {
 		}
 		// @ts-ignore
 		setQuestionList((prev) => [...prev, data]);
+		setExpanded([...expanded, false]);
+	};
+
+	const handleExpand = (index: number, state: boolean) => {
+		setExpanded(
+			expanded.map((v, i) => {
+				if (i === index) return state;
+				return v;
+			})
+		);
 	};
 
 	const onDeleteNew = () => {
@@ -89,8 +85,38 @@ const QuestionsForm = ({ setApplicationData, applicationData }: Props) => {
 		setQuestionList(data);
 	};
 
-	const onSaveEdit = () => {
-		setQuestionList({ ...questionList });
+	const onSaveEdit = (newQ: QuestionProps, option: any, index: number) => {
+		let data = {};
+		if (newQ.type === "YesNo") {
+			data = {
+				id: programId,
+				type: "YesNo",
+				other: false,
+				question: newQ.question,
+				disqualify: newQ.disqualify,
+			};
+		} else if (newQ.type === "Dropdown" || newQ.type === "MultipleChoice") {
+			const choice = option.map((item: any) => item.value);
+			data = {
+				id: programId,
+				type: newQ.type,
+				question: newQ.question,
+				choices: choice,
+				other: newQ.other,
+			};
+		} else {
+			data = {
+				id: programId,
+				type: newQ.type,
+				question: newQ.question,
+				other: false,
+			};
+		}
+		setQuestionList([
+			...questionList?.slice(0, index),
+			...questionList?.slice(index + 1),
+			data as QuestionProps,
+		]);
 	};
 
 	return (
@@ -99,20 +125,24 @@ const QuestionsForm = ({ setApplicationData, applicationData }: Props) => {
 				questionList?.map((q, index) => (
 					<Accordion
 						sx={{ border: "none", boxShadow: "none" }}
-						key={index}>
+						key={index}
+						expanded={expanded[index]}>
 						<AccordionSummary sx={{ p: 2 }}>
 							<SavedQuestion
 								type={q.type}
 								question={q.question}
 								editable
+								handleExpand={() => handleExpand(index, true)}
 							/>
 						</AccordionSummary>
 						<AccordionDetails>
 							<QuestionInput
 								type={q.type}
 								q={q}
+								qId={index}
+								handleExpand={() => handleExpand(index, false)}
 								onDelete={() => onDeleteEdit(index)}
-								onSave={onSaveEdit}
+								onSaveEdit={onSaveEdit}
 							/>
 						</AccordionDetails>
 					</Accordion>

@@ -26,12 +26,14 @@ import {
 } from "../../../appStore/slices";
 import { useAppDispatch, useAppSelector } from "../../../appStore";
 import { interviewQuestionType, workStageType } from "../../../types";
+import { useParams } from "react-router-dom";
 
 type StageTypes = "Shortlisting" | "VideoInterview" | "Placement" | undefined;
 
 const Workflow = (): JSX.Element => {
 	const dispatch = useAppDispatch();
-	const programId = localStorage.getItem("programId") ?? "";
+	let { programId: pId } = useParams();
+	const programId: string = pId ?? "";
 
 	const [stageFlag, setStageFlag] = useState(false);
 	const [selectedStage, setselectedStage] = useState<StageTypes>();
@@ -72,12 +74,13 @@ const Workflow = (): JSX.Element => {
 	const onSaveStage = async () => {
 		const payload = {
 			id: programId,
-			name: workFlowData.name,
-			type: workFlowData.type,
-			hideFromCandidate: workFlowData.hideFromCandidate,
+			name: workFlowData?.name,
+			type: workFlowData?.type,
+			hideFromCandidate: workFlowData?.hideFromCandidate,
 			interviewQuestions: interviewQuestion,
 		};
-		setStage([...stage, payload]);
+		if (stage) setStage([...stage, payload]);
+		else setStage([payload]);
 		// @ts-ignore
 		const response = await dispatch(
 			saveWorkflow({

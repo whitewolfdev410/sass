@@ -146,7 +146,10 @@ export const updateCandidateApplication = createAsyncThunk(
 
 export const saveNewProgramDetails = createAsyncThunk(
 	"programDashboard/saveDetails",
-	async (data: { type: string; attributes: ProgramDetailsType }) => {
+	async (
+		data: { type: string; attributes: ProgramDetailsType },
+		{ rejectWithValue }
+	) => {
 		try {
 			const response = await PROGRAM_CLIENT.post(
 				`/programs`,
@@ -176,16 +179,20 @@ export const saveNewProgramDetails = createAsyncThunk(
 			if (!error.response) {
 				console.log(err);
 			}
+			return rejectWithValue(err.response.data);
 		}
 	}
 );
 export const saveNewProgramApplicationTemplate = createAsyncThunk(
 	"programDashboard/saveAppTemplate",
-	async (data: {
-		id: string;
-		type: string;
-		attributes: ApplicationFormTemplateType;
-	}) => {
+	async (
+		data: {
+			id: string;
+			type: string;
+			attributes: ApplicationFormTemplateType;
+		},
+		{ rejectWithValue }
+	) => {
 		try {
 			// data.programGUID = programId;
 			const response = await PROGRAM_CLIENT.put(
@@ -207,6 +214,22 @@ export const saveNewProgramApplicationTemplate = createAsyncThunk(
 			if (!error.response) {
 				console.log(err);
 			}
+			return rejectWithValue(err.response.data);
+		}
+	}
+);
+
+export const getProgramApplicationForm = createAsyncThunk(
+	"programDashboard/getProgramApplicationForm",
+	async ({ programId }: { programId: string }, { rejectWithValue }) => {
+		try {
+			const res = await PROGRAM_CLIENT.get(
+				`/programs/${programId}/application-form`
+			);
+			return res.data.data.attributes;
+		} catch (err: any) {
+			console.error("program provider get program application form error", err);
+			return rejectWithValue(err.response.data);
 		}
 	}
 );
@@ -285,11 +308,14 @@ export const getProgramPreview = createAsyncThunk(
 );
 export const publishProgram = createAsyncThunk(
 	"programDashboard/publishProgram",
-	async ({
-		data,
-	}: {
-		data: { id: string; type: string; attributes: { status: string } };
-	}) => {
+	async (
+		{
+			data,
+		}: {
+			data: { id: string; type: string; attributes: { status: string } };
+		},
+		{ rejectWithValue }
+	) => {
 		try {
 			const response = await PROGRAM_CLIENT.patch(
 				`/programs/${data.id}/status`,
@@ -306,6 +332,7 @@ export const publishProgram = createAsyncThunk(
 			if (!error.response) {
 				console.log(err);
 			}
+			return rejectWithValue(err.response.data);
 		}
 	}
 );

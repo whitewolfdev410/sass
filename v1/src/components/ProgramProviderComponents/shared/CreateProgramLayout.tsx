@@ -2,12 +2,12 @@ import { SidebarLayout } from "../../";
 import { CreateProgramNav } from ".";
 import { Box, Stack, Button, Input } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
 	useAppDispatch,
 	saveNewProgramDetails,
 	saveNewProgramApplicationTemplate,
-	createWorkflow,
+	updateProgram,
 } from "../../../appStore";
 import { ProgramDetailsType } from "../../../types";
 
@@ -28,37 +28,44 @@ const ApplicationForm = ({
 	children,
 }: Props) => {
 	const dispatch = useAppDispatch();
-	const programId = localStorage.getItem("programId") ?? "";
+	const navigate = useNavigate();
+	let { programId } = useParams();
 
 	const handleOnClick = async () => {
-		let response = {
-			payload: {
-				ProgramGUID: "",
-			},
-		};
+		let response;
 		if (screen === "programDetail") {
 			// @ts-ignore
-			const res = await dispatch(
-				saveNewProgramDetails({
-					type: "program",
-					attributes: data,
-				})
-			);
-			if (response?.payload) {
-				localStorage.setItem("programId", res.payload.data.id);
+			if (programId) {
+				response = await dispatch(
+					updateProgram({
+						id: programId as string,
+						type: "program",
+						attributes: data,
+					})
+				);
+			} else {
+				response = await dispatch(
+					saveNewProgramDetails({
+						type: "program",
+						attributes: data,
+					})
+				);
 			}
 		} else if (screen === "applicationForm") {
 			// @ts-ignore
 			response = await dispatch(
 				saveNewProgramApplicationTemplate({
-					id: programId,
+					id: programId ?? "",
 					type: "applicationForm",
 					attributes: data,
 				})
 			);
-		} else if (screen === "workFlow") {
-			// @ts-ignore
-			response = await dispatch(createWorkflow({ data }));
+		}
+		if (response?.meta?.requestStatus === "fulfilled") {
+			if (!programId) {
+				programId = response.payload.data.id;
+			}
+			navigate(`/provider/dashboard/${nextLink}/${programId}`);
 		}
 	};
 
@@ -74,15 +81,15 @@ const ApplicationForm = ({
 					alignItems="end"
 					minHeight="50px">
 					{nextLink ? (
-						<Link to={`/provider/dashboard/${nextLink}` || ""}>
-							<Button
-								variant="contained"
-								size="large"
-								onClick={() => handleOnClick()}>
-								Save & continue <ArrowForwardIosIcon />
-							</Button>
-						</Link>
+						// <Link to={`/provider/dashboard/${nextLink}/${programId}` || ""}>
+						<Button
+							variant="contained"
+							size="large"
+							onClick={() => handleOnClick()}>
+							Save & continue <ArrowForwardIosIcon />
+						</Button>
 					) : (
+						// </Link>
 						<Link to={`/provider/dashboard` || ""}>
 							<Button
 								variant="contained"

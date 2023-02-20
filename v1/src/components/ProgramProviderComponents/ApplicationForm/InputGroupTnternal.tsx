@@ -20,15 +20,12 @@ type Props = {
 
 const InternalShowGroup = ({
 	label,
-	internal = true,
+	internal,
 	show = true,
 	setApplicationData,
 	applicationData,
 	name,
 }: Props) => {
-	let [internalUse, setinternalUse] = useState(internal);
-	let [showState, setShowState] = useState(show);
-
 	return (
 		<FormControl
 			sx={{ my: 2 }}
@@ -46,10 +43,9 @@ const InternalShowGroup = ({
 					<FormControlLabel
 						control={
 							<Checkbox
-								checked={internalUse}
+								checked={internal}
 								color="success"
 								onChange={(event) => {
-									setinternalUse((prev) => !prev);
 									setApplicationData({
 										...applicationData,
 										[`${name}`]: {
@@ -65,10 +61,9 @@ const InternalShowGroup = ({
 					<FormControlLabel
 						control={
 							<Switch
-								checked={showState}
+								checked={show}
 								color="success"
 								onChange={(event) => {
-									setShowState((prev) => !prev);
 									setApplicationData({
 										...applicationData,
 										[`${name}`]: {
@@ -79,7 +74,7 @@ const InternalShowGroup = ({
 								}}
 							/>
 						}
-						label={showState ? "Show" : "Hide"}
+						label={show ? "Show" : "Hide"}
 					/>
 				</Box>
 			</Stack>

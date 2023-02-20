@@ -8,7 +8,8 @@ import {
 import placeholder from "../../../assets/bg/placeholders/program-publish-placeholder.png";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import Edit from "../../../assets/icons/pencil-outlined.svg";
-import { ProgramDetailsType } from "../../../types";
+import { ProgramDetailsType, ProgramPreviewType } from "../../../types";
+import { useNavigate } from "react-router";
 import {
 	getProgramPreview,
 	programPreviewData,
@@ -20,13 +21,14 @@ import {
 
 const Preview = () => {
 	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
 	const programId = localStorage.getItem("programId") ?? "";
 	useEffect(() => {
 		// @ts-ignore
 		dispatch(getProgramPreview({ id: programId }));
 	}, []);
 	const handlePublish = async () => {
-		dispatch(
+		const action = await dispatch(
 			publishProgram({
 				data: {
 					id: programId,
@@ -35,17 +37,27 @@ const Preview = () => {
 				},
 			})
 		);
+		if (action.meta.requestStatus === "fulfilled") {
+			navigate(`/provider/dashboard/program/${programId}`, { replace: true });
+		} else if (action.meta.requestStatus === "rejected") {
+			console.log("error");
+		}
 	};
-	const [previewData] = useState(useAppSelector(programPreviewData));
+	const previewDatas = useAppSelector(programPreviewData);
+	const [previewData, setPreviewData] = useState<ProgramPreviewType>();
+	useEffect(() => {
+		setPreviewData(previewDatas);
+		setData(
+			previewDatas?.data?.attributes.programDetails as ProgramDetailsType
+		);
+	}, [previewDatas]);
 	// const [personalInfo, setPersonalInfo] = useState(
 	// 	previewData?.data?.attributes?.applicationForm.personalInformation
 	// );
 	// const [profileData, setProfileData] = useState(
 	// 	previewData?.data?.attributes.applicationForm.profile
 	// );
-	const [data, setData] = useState<ProgramDetailsType>(
-		previewData?.data?.attributes.programDetails
-	);
+	const [data, setData] = useState<ProgramDetailsType>();
 
 	return (
 		<CreateProgramLayout data={data}>
@@ -68,7 +80,7 @@ const Preview = () => {
 								variant="h1"
 								fontSize={{ xs: 30, xl: 40 }}
 								sx={{ my: 3 }}>
-								London internship <br /> programme{" "}
+								{data?.programType} <br /> {data?.title}
 							</Typography>
 							<Button>
 								<img
@@ -82,46 +94,12 @@ const Preview = () => {
 							fontSize={{ xs: 17, xl: 20 }}
 							fontWeight={400}
 							sx={{ my: 3 }}>
-							As an intern, you will be working for one of our partner companies
-							in London. Apart from gaining international working experience,
-							you will learn the British working culture, gain international
-							work experience, develop your communication and interper.
+							{data?.summary}
 						</Typography>
 
 						<Divider sx={{ my: 5 }} />
 
-						<Typography sx={{ my: 3 }}>
-							London is a perfect internship spot for keeping a cultural hub of
-							diversity and opportunity as its central pedestal. Our associated
-							companies span from large multinationals to start-ups working on
-							cutting-edge technology. Whether you're looking to build your
-							career or learn crucial skills to take away, our list of London
-							firms have plenty to offer, and with so much under the belt for
-							what this city has to offer, there's certainly no room for
-							boredom.
-							<ul style={{ marginTop: "16px" }}>
-								<li>
-									On-Job Training: The program is designed to enrich the
-									participant's knowledge and provide them with the skills
-									needed in this early stage of their career to be ready for
-									their professional lives.
-								</li>
-								<li>Program Name: Future Gears</li>
-								<li>Program Duration: 6 Months</li>
-							</ul>
-						</Typography>
-
-						<Typography
-							fontWeight={700}
-							sx={{ my: 3 }}>
-							Industries covered
-						</Typography>
-
-						<Typography sx={{ my: 3 }}>
-							Law, Investment Banking, Management Consulting, Marketing, IT and
-							Journalism are some of the 25+ different sectors we provide
-							internships in.
-						</Typography>
+						<Typography sx={{ my: 3 }}>{data?.description}</Typography>
 
 						<Stack
 							gap={1}
@@ -138,70 +116,13 @@ const Preview = () => {
 						<ApplicationFormCard
 							title="Program benefits"
 							editIcon>
-							<Typography>
-								<ul>
-									<li>
-										Local and global network access to founders, investors,
-										community and more.
-									</li>
-									<li>
-										Workshops and mentorship by world-class experts and mentors
-									</li>
-									<li>Zero equity</li>
-									<li>Support services and perks</li>
-									<li>Access to shared office spaces</li>
-									<li>On-going post program support</li>
-								</ul>
-							</Typography>
+							<Typography>{data?.benefits}</Typography>
 						</ApplicationFormCard>
 
 						<ApplicationFormCard
 							title="Application criteria"
 							editIcon>
-							<Typography>
-								The application criteria for this program is fairly competitive
-								and please make sure that you are meeting all the requirements
-								listed below. If you do not meet the criteria below, your
-								application will be rejected automatically.{" "}
-							</Typography>
-							<Typography>
-								<ul>
-									<li>
-										Saudi Nationals only with valid passport with at least 12
-										months of validity
-									</li>
-									<li>
-										Fresh graduates with a bachelor’s degree in 2022, 2021
-									</li>
-									<li>
-										To never have been rejected for any visa applications in the
-										past
-									</li>
-									<li>
-										Available to travel to London between 22nd October 2022 to
-										20th December 2022
-									</li>
-									<li>
-										You will need to prove your English language proficiency by
-										passing the iTEP Internship test at the B2 level or must
-										have a valid IELTS test score of 6.0 or above. Or a TOEFL
-										test score of 80 or above.
-									</li>
-									<li>
-										You will be exempted from the language test requirement if
-										you have completed your studies in UK, Canada, USA, New
-										Zeland or Australia.
-									</li>
-									<li>
-										You must have a minimum GPA score of 3.2 out of 4 or
-										equivalent
-									</li>
-									<li>
-										Strong English Proficiency - You must be a fluent and
-										confident communicator in English
-									</li>
-								</ul>
-							</Typography>
+							<Typography>{data?.applicationCriteria}</Typography>
 						</ApplicationFormCard>
 
 						{/* <Stack
@@ -253,7 +174,7 @@ const Preview = () => {
 						<Typography
 							variant="h2"
 							sx={{ maxWidth: "230px" }}>
-							London internship programme
+							{data?.title}
 						</Typography>
 
 						<Box
@@ -277,21 +198,30 @@ const Preview = () => {
 									fontSize="inherit"
 									sx={{ mr: 1 }}
 								/>
-								Riyadh, Saudi Arabia
+								{data?.location}
 							</Typography>
 
 							{/* second column */}
 							<Stack gap={2}>
 								<Typography>
-									Application open <br /> 13 Jan 2023
+									Application open <br />{" "}
+									{
+										new Date(data?.applicationOpenDate ?? "")
+											.toLocaleString()
+											.split(",")[0]
+									}
 								</Typography>
 								<Typography>
-									Programme type <br /> Internship
+									Programme type <br /> {data?.programType}
 								</Typography>
 								<Typography>
 									Programme start
 									<br />
-									13 Jan 2023
+									{
+										new Date(data?.startDate ?? "")
+											.toLocaleString()
+											.split(",")[0]
+									}
 								</Typography>
 							</Stack>
 
@@ -300,11 +230,16 @@ const Preview = () => {
 								<Typography>
 									Application close
 									<br />
-									01 March 2023
+									{
+										new Date(data?.applicationCloseDate ?? "")
+											.toLocaleString()
+											.split(",")[0]
+									}
 								</Typography>
 								<Typography>
 									Duration
-									<br />6 weeks
+									<br />
+									{data?.duration}
 								</Typography>
 							</Stack>
 						</Box>

@@ -1,15 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ProgramDashboardType, ProgramType } from "../../../types";
-import { deleteProgram, getAllPrograms, getProgramById, postProgram, updateProgram } from "./thunks";
+import {
+	newProgramType,
+	ProgramDashboardType,
+	ProgramType,
+} from "../../../types";
+import {
+	deleteProgram,
+	getAllPrograms,
+	getProgramById,
+	postProgram,
+	updateProgram,
+} from "./thunks";
 
 type initialProps = {
 	allProgrammes: ProgramDashboardType;
-	currentProgram: ProgramType | null;
+	currentProgram: newProgramType;
 };
 
 const initialState: initialProps = {
 	allProgrammes: [],
-	currentProgram: null,
+	currentProgram: {} as newProgramType,
 };
 
 const programSlice = createSlice({

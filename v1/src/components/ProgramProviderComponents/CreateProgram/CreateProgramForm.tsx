@@ -1,8 +1,14 @@
+import { useEffect } from "react";
 import { TextEditor } from "../../../components";
-import CoverImage from "./CoverImage";
 import { FormControl, InputBase, Box, Stack } from "@mui/material";
 import { useState } from "react";
 import { SkillsChip } from "../../ProgramProviderComponents";
+import {
+	getCurrentProgram,
+	getProgramById,
+	useAppDispatch,
+	useAppSelector,
+} from "../../../appStore";
 
 export type Props = {
 	setData?: any;
@@ -17,14 +23,9 @@ const CreateProgramForm = ({ setData, data }: Props) => {
 		"UX",
 		"Content Writing",
 	]);
-	const onHandleSkills = (ev: any) => {
-		setSkills([ev.target.value]);
-		setData({ ...data, skills: skills });
-	};
 	const onHandleChange = (event: any) => {
 		setData({ ...data, [event.target.name]: event.target.value });
 	};
-
 	return (
 		<Box
 			sx={{
@@ -51,6 +52,7 @@ const CreateProgramForm = ({ setData, data }: Props) => {
 						placeholder="Summer Internship Program"
 						type="text"
 						name="title"
+						value={data?.title}
 						onChange={onHandleChange}
 					/>
 				</FormControl>
@@ -63,6 +65,7 @@ const CreateProgramForm = ({ setData, data }: Props) => {
 					<textarea
 						name="summary"
 						onChange={onHandleChange}
+						value={data?.summary}
 						style={{ height: "130px" }}
 						placeholder="Please explain the program in less than 250 character. This helps the applicant  to get the glimpse of what is the offering "
 					/>
@@ -77,10 +80,17 @@ const CreateProgramForm = ({ setData, data }: Props) => {
 					</label>
 					<TextEditor
 						name="description"
-						setData={setData}
-						data={data}
-						placeholder="You can provide all information about the program here. 
-						Please make sure to set the expectation and keep it clear"
+						setData={({ description }: { description: string }) => {
+							onHandleChange({
+								target: { name: "description", value: description },
+							});
+						}}
+						data={{ description: data?.description }}
+						placeholder={
+							data?.description
+								? `You can provide all information about the program here. Please make sure to set the expectation and keep it clear`
+								: ""
+						}
 					/>
 				</FormControl>
 
@@ -92,8 +102,12 @@ const CreateProgramForm = ({ setData, data }: Props) => {
 					<InputBase
 						placeholder="Search the skills"
 						name="skills"
-						onChange={onHandleSkills}
-						value={skills}
+						onChange={(ev) =>
+							onHandleChange({
+								target: { name: "skills", value: ev.target.value.split(",") },
+							})
+						}
+						value={data?.skills?.join(",") ?? ""}
 					/>
 				</FormControl>
 				<Stack
@@ -113,10 +127,18 @@ const CreateProgramForm = ({ setData, data }: Props) => {
 					fullWidth>
 					<label htmlFor="">Program benefits</label>
 					<TextEditor
-						placeholder="Please explain the benefits on this programs. Bullet points are always a good option"
+						placeholder={
+							data?.benefits
+								? `Please explain the benefits on this programs. Bullet points are always a good option`
+								: ""
+						}
 						name="benefits"
-						setData={setData}
-						data={data}
+						setData={({ benefits }: { benefits: string }) => {
+							onHandleChange({
+								target: { name: "benefits", value: benefits },
+							});
+						}}
+						data={{ benefits: data?.benefits }}
 					/>
 				</FormControl>
 
@@ -126,10 +148,25 @@ const CreateProgramForm = ({ setData, data }: Props) => {
 					fullWidth>
 					<label htmlFor="">Application criteria</label>
 					<TextEditor
-						placeholder="In this section, please explain what is it takes to get into this program also it is important to tell the application what are the interview process so that they can better prepare"
+						placeholder={
+							data?.applicationCriteria
+								? `In this section, please explain what is it takes to get into this program also it is important to tell the application what are the interview process so that they can better prepare`
+								: ""
+						}
 						name="applicationCriteria"
-						setData={setData}
-						data={data}
+						setData={({
+							applicationCriteria,
+						}: {
+							applicationCriteria: string;
+						}) => {
+							onHandleChange({
+								target: {
+									name: "applicationCriteria",
+									value: applicationCriteria,
+								},
+							});
+						}}
+						data={{ applicationCriteria: data?.applicationCriteria }}
 					/>
 				</FormControl>
 			</form>

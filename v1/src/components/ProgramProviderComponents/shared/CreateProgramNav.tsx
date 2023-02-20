@@ -1,7 +1,14 @@
+import { useEffect, useState } from "react";
 import { Divider, Stack } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 
 const ProgramProviderNav = () => {
+	const { programId: pId } = useParams();
+	const [programId, setProgramId] = useState(pId);
+	useEffect(() => {
+		console.log("pid changed", pId);
+		setProgramId(pId);
+	}, [pId]);
 	return (
 		<Stack
 			direction="row"
@@ -56,7 +63,7 @@ const ProgramProviderNav = () => {
 				},
 			}}>
 			<NavLink
-				to="/provider/dashboard/create-program"
+				to={`/provider/dashboard/create-program/${programId}`}
 				className={({ isActive }) => (isActive ? "active" : undefined)}>
 				Program Details
 			</NavLink>
@@ -65,7 +72,7 @@ const ProgramProviderNav = () => {
 				variant="middle"
 			/>
 			<NavLink
-				to="/provider/dashboard/application-form"
+				to={`/provider/dashboard/application-form/${programId}`}
 				className={({ isActive }) => (isActive ? "active" : undefined)}>
 				Application Form
 			</NavLink>
@@ -74,7 +81,7 @@ const ProgramProviderNav = () => {
 				variant="middle"
 			/>
 			<NavLink
-				to="/provider/dashboard/workflow"
+				to={`/provider/dashboard/workflow/${programId}`}
 				className={({ isActive }) => (isActive ? "active" : undefined)}>
 				Workflow
 			</NavLink>
@@ -83,7 +90,7 @@ const ProgramProviderNav = () => {
 				variant="middle"
 			/>
 			<NavLink
-				to="/provider/dashboard/preview"
+				to={`/provider/dashboard/preview/${programId}`}
 				className={({ isActive }) => (isActive ? "active" : undefined)}>
 				Preview
 			</NavLink>

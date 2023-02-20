@@ -19,8 +19,6 @@ const InputGroupMandatory = ({
 	applicationData,
 	name,
 }: Props) => {
-	let [mandatoryState, setMandatoryState] = useState(mandatory);
-	let [showState, setShowState] = useState(show);
 	return (
 		<Stack
 			direction="row"
@@ -38,10 +36,9 @@ const InputGroupMandatory = ({
 				<FormControlLabel
 					control={
 						<Checkbox
-							checked={mandatoryState}
+							checked={mandatory}
 							color="success"
 							onChange={(event) => {
-								setMandatoryState((prev) => !prev);
 								setApplicationData({
 									...applicationData,
 									[`${name}`]: {
@@ -57,10 +54,9 @@ const InputGroupMandatory = ({
 				<FormControlLabel
 					control={
 						<Switch
-							checked={showState}
+							checked={show}
 							color="success"
 							onChange={(event) => {
-								setShowState((prev) => !prev);
 								setApplicationData({
 									...applicationData,
 									[`${name}`]: {
@@ -71,7 +67,7 @@ const InputGroupMandatory = ({
 							}}
 						/>
 					}
-					label={showState ? "Show" : "Hide"}
+					label={show ? "Show" : "Hide"}
 				/>
 			</Box>
 		</Stack>

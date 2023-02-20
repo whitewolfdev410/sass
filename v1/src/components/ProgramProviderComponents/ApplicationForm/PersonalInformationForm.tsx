@@ -37,7 +37,9 @@ const PersonalInformationForm = ({
 		});
 	};
 	const [newQuestion, setNewQuestion] = useState(false);
-	const [questionList, setQuestionList] = useState<QuestionProps[]>([]);
+	const [questionList, setQuestionList] = useState<QuestionProps[]>(
+		applicationData?.questionList ?? []
+	);
 	const programId = localStorage.getItem("programId") ?? "";
 	const onSaveNew = (newQ: QuestionProps, option: any) => {
 		let data = {};
@@ -124,8 +126,8 @@ const PersonalInformationForm = ({
 						<Typography fontSize={15}>(without dial code)</Typography>
 					</span>
 				}
-				internal={false}
-				show={false}
+				internal={applicationData?.phoneNumber?.internalUse ?? false}
+				show={applicationData?.phoneNumber?.show ?? false}
 				name="phoneNumber"
 				setApplicationData={setApplicationData}
 				applicationData={applicationData}
@@ -134,8 +136,8 @@ const PersonalInformationForm = ({
 
 			<InputGroupInternal
 				label="Nationality"
-				internal={false}
-				show={false}
+				internal={applicationData?.nationality?.internalUse ?? false}
+				show={applicationData?.nationality?.show ?? false}
 				name="nationality"
 				setApplicationData={setApplicationData}
 				applicationData={applicationData}
@@ -144,8 +146,8 @@ const PersonalInformationForm = ({
 
 			<InputGroupInternal
 				label="Country of residence"
-				internal={false}
-				show={false}
+				internal={applicationData?.currentResidence?.internalUse ?? false}
+				show={applicationData?.currentResidence?.show ?? false}
 				name="currentResidence"
 				setApplicationData={setApplicationData}
 				applicationData={applicationData}
@@ -154,8 +156,8 @@ const PersonalInformationForm = ({
 
 			<InputGroupInternal
 				label="Id Number"
-				internal={false}
-				show={false}
+				internal={applicationData?.idNumber?.internalUse ?? false}
+				show={applicationData?.idNumber?.show ?? false}
 				name="idNumber"
 				setApplicationData={setApplicationData}
 				applicationData={applicationData}
@@ -163,8 +165,8 @@ const PersonalInformationForm = ({
 			<Divider />
 			<InputGroupInternal
 				label="Date of birth"
-				internal={false}
-				show={false}
+				internal={applicationData?.dateOfBirth?.internalUse ?? false}
+				show={applicationData?.dateOfBirth?.show ?? false}
 				name="dateOfBirth"
 				setApplicationData={setApplicationData}
 				applicationData={applicationData}
@@ -173,8 +175,8 @@ const PersonalInformationForm = ({
 
 			<InputGroupInternal
 				label="Gender"
-				internal={false}
-				show={false}
+				internal={applicationData?.gender?.internalUse ?? false}
+				show={applicationData?.gender?.show ?? false}
 				name="gender"
 				setApplicationData={setApplicationData}
 				applicationData={applicationData}

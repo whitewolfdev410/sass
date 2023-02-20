@@ -8,7 +8,9 @@ export type Props = {
 };
 
 const CoverImage = ({ setApplicationData, applicationData }: Props) => {
-	const [preview, setPreview] = useState<string | undefined>();
+	const [preview, setPreview] = useState<string | undefined>(
+		applicationData.coverImage
+	);
 	useEffect(() => {
 		setApplicationData({ ...applicationData, coverImage: preview });
 	}, [preview]);

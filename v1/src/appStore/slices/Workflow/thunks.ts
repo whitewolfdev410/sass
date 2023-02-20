@@ -44,24 +44,24 @@ export const getSelectedWorkFlow = createAsyncThunk(
 	}
 );
 
-export const createWorkflow = createAsyncThunk(
-	"workflow/createWorkflow",
-	async ({ data }: { data: WorkflowType }) => {
-		try {
-			const response = await WORKFLOW_CLIENT.post(`Workflow/`, data, {
-				headers: {
-					accept: "*/*",
-				},
-			});
-			return response.data;
-		} catch (err: any) {
-			let error: AxiosError<any> = err;
-			if (!error.response) {
-				console.log(err);
-			}
-		}
-	}
-);
+// export const createWorkflow = createAsyncThunk(
+// 	"workflow/createWorkflow",
+// 	async ({ data }: { data: WorkflowType }) => {
+// 		try {
+// 			const response = await WORKFLOW_CLIENT.post(`Workflow/`, data, {
+// 				headers: {
+// 					accept: "*/*",
+// 				},
+// 			});
+// 			return response.data;
+// 		} catch (err: any) {
+// 			let error: AxiosError<any> = err;
+// 			if (!error.response) {
+// 				console.log(err);
+// 			}
+// 		}
+// 	}
+// );
 
 export const saveWorkflow = createAsyncThunk(
 	"workflow/saveWorkflow",
@@ -71,8 +71,8 @@ export const saveWorkflow = createAsyncThunk(
 		data: { id: string; type: string; attributes: { stages: workStageType[] } };
 	}) => {
 		try {
-			const response = await WORKFLOW_CLIENT.put(
-				`programs/${data.id}/workflow`,
+			const response = await PROGRAM_CLIENT.put(
+				`programs/${data.id}/workflow?programId=${data.id}`,
 				{ data },
 				{
 					headers: {

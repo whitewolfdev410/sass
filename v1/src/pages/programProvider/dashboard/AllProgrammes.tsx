@@ -1,5 +1,5 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SidebarLayout } from "../../../components";
 import { ProviderStats } from "../../../components/ProgramProviderComponents";
 import { useState, useEffect } from "react";
@@ -16,6 +16,7 @@ import {
 
 const AllProgrames = () => {
 	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
 	const allPrograms = useAppSelector(allProgramSummary);
 	const [programs, setPrograms] = useState(allPrograms);
 	const programList = programs?.data?.attributes?.programs;
@@ -70,6 +71,11 @@ const AllProgrames = () => {
 		dispatch(getProgramSummary());
 	}, []);
 
+	const handleClick = () => {
+		localStorage.removeItem("programId");
+		navigate("/provider/dashboard/create-program");
+	};
+
 	return (
 		<div>
 			<SidebarLayout
@@ -94,13 +100,14 @@ const AllProgrames = () => {
 							Your summary for today
 						</Typography>
 					</Box>
-					<Link to="/provider/dashboard/create-program">
-						<Button
-							variant="contained"
-							size="large">
-							Create a new program
-						</Button>
-					</Link>
+					{/* <Link to="/provider/dashboard/create-program"> */}
+					<Button
+						variant="contained"
+						onClick={handleClick}
+						size="large">
+						Create a new program
+					</Button>
+					{/* </Link> */}
 				</Stack>
 
 				{/* Statistics */}

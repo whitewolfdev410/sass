@@ -5,13 +5,15 @@ import {
 	CreateProgramLayout,
 	CoverImage,
 } from "../../../components/ProgramProviderComponents";
-import { Box, Stack, Button, Typography } from "@mui/material";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import { Box, Stack, Button } from "@mui/material";
 import { useState, useEffect } from "react";
 import { ApplicationFormTemplateType } from "../../../types";
 import { ApplicationFormCard } from "../../../components";
+import { useParams } from "react-router-dom";
+import { getProgramApplicationForm, useAppDispatch } from "../../../appStore";
 
 const ApplicationForm = () => {
+	const dispatch = useAppDispatch();
 	const [personalInformation, setPersonalInformation] = useState<any>({
 		firstName: {
 			internalUse: false,
@@ -74,7 +76,8 @@ const ApplicationForm = () => {
 			},
 		],
 	});
-	const programId = localStorage.getItem("programId") ?? "";
+	let { programId } = useParams();
+	programId = programId ?? "";
 	const [customisedQuestions, setCustomisedQuestions] = useState<any>([
 		{
 			id: programId,
@@ -94,6 +97,16 @@ const ApplicationForm = () => {
 			customisedQuestions: customisedQuestions,
 		});
 	useEffect(() => {
+		if (programId) {
+			dispatch(getProgramApplicationForm({ programId })).then((action) => {
+				if (action.meta.requestStatus === "fulfilled") {
+					// console.log("success here", action.payload);
+					setApplicationData({ ...action.payload });
+				}
+			});
+		}
+	}, []);
+	useEffect(() => {
 		setApplicationData({
 			...applicationData,
 			personalInformation: personalInformation,
@@ -101,7 +114,6 @@ const ApplicationForm = () => {
 			customisedQuestions: customisedQuestions,
 		});
 	}, [personalInformation, profile, customisedQuestions]);
-	console.log("applicationData", applicationData);
 
 	return (
 		<CreateProgramLayout
@@ -136,17 +148,17 @@ const ApplicationForm = () => {
 
 						<PersonalInformationForm
 							setApplicationData={setPersonalInformation}
-							applicationData={personalInformation}
+							applicationData={applicationData.personalInformation}
 						/>
 						{/* Profile Card */}
 						<ProfileForm
 							setApplicationData={setProfile}
-							applicationData={profile}
+							applicationData={applicationData.profile}
 						/>
 						{/* QuestionsForm */}
 						<QuestionsForm
 							setApplicationData={setCustomisedQuestions}
-							applicationData={customisedQuestions}
+							applicationData={applicationData.customisedQuestions}
 						/>
 					</Box>
 					{/* Preview Coming soon */}

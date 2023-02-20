@@ -22,6 +22,14 @@ const AdditionalInformationForm = ({ setData, data }: Props) => {
 		setData({ ...data, [name]: value });
 	};
 
+	const stringToDate = (dateString: string) => {
+		if (!dateString) return "";
+		const date = new Date(dateString);
+		return `${date.getFullYear()}-${(date.getMonth() + 1)
+			.toString()
+			.padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
+	};
+
 	return (
 		<Box
 			sx={{
@@ -67,6 +75,7 @@ const AdditionalInformationForm = ({ setData, data }: Props) => {
 						<label>Program start</label>
 						<TextField
 							type="date"
+							value={stringToDate(data?.startDate)}
 							onChange={onHandleChange}
 							name="startDate"
 						/>
@@ -79,6 +88,7 @@ const AdditionalInformationForm = ({ setData, data }: Props) => {
 						</label>
 						<TextField
 							type="date"
+							value={stringToDate(data?.applicationOpenDate)}
 							onChange={onHandleChange}
 							name="applicationOpenDate"
 						/>
@@ -91,6 +101,7 @@ const AdditionalInformationForm = ({ setData, data }: Props) => {
 						</label>
 						<TextField
 							type="date"
+							value={stringToDate(data?.applicationCloseDate)}
 							onChange={onHandleChange}
 							name="applicationCloseDate"
 						/>
@@ -101,6 +112,7 @@ const AdditionalInformationForm = ({ setData, data }: Props) => {
 						<label>Duration</label>
 						<TextField
 							placeholder="6 Months"
+							value={data?.duration}
 							onChange={onHandleChange}
 							name="duration"
 						/>
@@ -114,6 +126,7 @@ const AdditionalInformationForm = ({ setData, data }: Props) => {
 						<TextField
 							onChange={onHandleChange}
 							name="location"
+							value={data?.location}
 							placeholder="London, UK"
 							sx={{
 								".MuiInputBase-input": {
@@ -132,7 +145,13 @@ const AdditionalInformationForm = ({ setData, data }: Props) => {
 											sx={{ mr: 2, bgcolor: "black", my: 0.5 }}
 										/>
 										<FormControlLabel
-											control={<Radio color="primary" />}
+											control={
+												<Radio
+													color="primary"
+													value={data?.isFullyRemote}
+													onChange={onHandleChange}
+												/>
+											}
 											label="Fully Remote"
 											sx={{ fontSize: 14, flexGrow: 1 }}
 										/>
@@ -166,7 +185,7 @@ const AdditionalInformationForm = ({ setData, data }: Props) => {
 							type="number"
 							onChange={onHandleChange}
 							name="maxApplication"
-							value={data.maxApplication}
+							value={data?.maxApplication}
 						/>
 					</FormControl>
 				</Box>
